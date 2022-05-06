@@ -11,38 +11,8 @@ npm install model-explorer
 ```
 
 ## Usage
-### ModelExplorer component
-```react
-import React from 'react';
-import { ReduxDataDictionary, getModelExploreData } from 'model-explorer';
-import store from '../../store';
 
-async function getData() {
-  const response = await getModelExploreData();
-  Promise.all(
-    [
-      store.dispatch({
-        type: 'RECEIVE_DICTIONARY',
-        payload: { data: response.data },
-      }),
-      store.dispatch({
-        type: 'RECEIVE_VERSION_INFO',
-        data: response.version,
-      }),
-    ],
-  );
-}
-
-const ModelExplorer = () => {
-  getData();
-  return (
-    <ReduxDataDictionary />
-  );
-};
-
-export default ModelExplorer;
-```
-### configure redux
+### redux configuration
 ``` store
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
@@ -84,6 +54,38 @@ store.injectReducer(storeKey, (state = initialState, { type, payload }) => (
 
 export default store;
 ```
+### Create ModelExplorer component
+```react
+import React from 'react';
+import { ReduxDataDictionary, getModelExploreData } from 'model-explorer';
+import store from '../../store';
+
+async function getData() {
+  const response = await getModelExploreData();
+  Promise.all(
+    [
+      store.dispatch({
+        type: 'RECEIVE_DICTIONARY',
+        payload: { data: response.data },
+      }),
+      store.dispatch({
+        type: 'RECEIVE_VERSION_INFO',
+        data: response.version,
+      }),
+    ],
+  );
+}
+
+const ModelExplorer = () => {
+  getData();
+  return (
+    <ReduxDataDictionary />
+  );
+};
+
+export default ModelExplorer;
+```
+
 ## Scripts Available
 
 ```
