@@ -11,7 +11,7 @@ npm install model-explorer
 ```
 
 ## Usage
-
+### ModelExplorer component
 ```react
 import React from 'react';
 import { ReduxDataDictionary, getModelExploreData } from 'model-explorer';
@@ -42,7 +42,7 @@ const ModelExplorer = () => {
 
 export default ModelExplorer;
 ```
-
+### configure redux
 ``` store
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
