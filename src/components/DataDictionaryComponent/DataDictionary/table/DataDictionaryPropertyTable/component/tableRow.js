@@ -7,7 +7,7 @@ import {
 import ListComponent from './ListComponent';
 import ButtonComponent from './ButtonComponent';
 import KeyIconSvg from '../../../../assets/key_icon.svg';
-import { controlVocabConfig as config } from '../../../../../../bento/dataDictionaryData';
+import { controlVocabConfig as config } from '../../../bento/dataDictionaryData';
 
 const TableRow = ({
     classes,

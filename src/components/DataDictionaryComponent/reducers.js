@@ -6,7 +6,7 @@ import {
   baseFilters,
   filterOptions,
   filterSections,
-} from '../../bento/dataDictionaryData';
+} from './DataDictionary/bento/dataDictionaryData';
 import {
   getState,
   allFilters,
