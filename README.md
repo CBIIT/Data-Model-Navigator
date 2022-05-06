@@ -7,44 +7,82 @@ Bento UI Building Blocks is a NPM library in an attempt to reuse the shared UI c
 Use the package manager [npm](https://www.npmjs.com/) to install Bento UI Building Blocks.
 
 ```bash
-npm install bento-components
+npm install model-explorer
 ```
 
 ## Usage
 
 ```react
-//Header
-import { Header } from 'bento-components';
+import React from 'react';
+import { ReduxDataDictionary, getModelExploreData } from 'model-explorer';
+import store from '../../store';
 
-const ICDCHeader = () => <><Header /></>;
-export default ICDCHeader;
-```
-```react
-//Footer
-import { Footer } from 'bento-components';
-import FooterData from './footer.json'; //path to the json file Sample can be found in Stubs
+async function getData() {
+  const response = await getModelExploreData();
+  Promise.all(
+    [
+      store.dispatch({
+        type: 'RECEIVE_DICTIONARY',
+        payload: { data: response.data },
+      }),
+      store.dispatch({
+        type: 'RECEIVE_VERSION_INFO',
+        data: response.version,
+      }),
+    ],
+  );
+}
 
-const ICDCFooter = () => <><Footer data={FooterData} /></>;
-export default ICDCFooter
-```
-```react
-DataTable
-For now we customized moving select cell to right
-import { CustomDataTable } from 'bento-components';
-
-const columns = ["Name", "Company", "City", "State"];
-
-const data = [
- ["Joe James", "Test Corp", "Yonkers", "NY"],
- ["John Walsh", "Test Corp", "Hartford", "CT"],
- ["Bob Herm", "Test Corp", "Tampa", "FL"],
- ["James Houston", "Test Corp", "Dallas", "TX"],
-];
-
-const options = {
-  selectCellPostion: 'right', // If not specified it defaults to left
+const ModelExplorer = () => {
+  getData();
+  return (
+    <ReduxDataDictionary />
+  );
 };
-<MUIDatatable columns={columns} data={data} options={options} selectCellPostion="right" />
+
+export default ModelExplorer;
+```
+
+``` store
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import ReduxThunk from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import { modelReducers, ddgraph, versionInfo } from 'model-explorer';
+import layout from '../components/Layout/LayoutState';
+import stats from '../components/Stats/StatsState';
+const storeKey = 'submission';
+const initialState = {
+  allActiveFilters: {},
+  unfilteredDictionary: {},
+  filteredDictionary: {},
+  activeFilter: false,
+  filtersCleared: false,
+  filterGroup: '',
+  filterHashMap: new Map(),
+};
+const reducers = {
+  layout,
+  stats,
+  ddgraph,
+  versionInfo,
+};
+
+const loggerMiddleware = createLogger();
+
+const store = createStore(
+  combineReducers(reducers),
+  applyMiddleware(ReduxThunk, loggerMiddleware),
+);
+
+store.injectReducer = (key, reducer) => {
+  reducers[key] = reducer;
+  store.replaceReducer(combineReducers(reducers));
+};
+
+store.injectReducer(storeKey, (state = initialState, { type, payload }) => (
+  modelReducers[type] ? modelReducers[type](state, payload) : state));
+
+export default store;
 ```
 ## Scripts Available
 
