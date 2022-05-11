@@ -11,20 +11,7 @@ import {
   getState,
   allFilters,
   createFilterVariables,
-} from '../../utils/facetFilters';
-// import store from '../../store';
-
-const storeKey = 'submission';
-
-const initialState = {
-  allActiveFilters: {},
-  unfilteredDictionary: {},
-  filteredDictionary: {},
-  activeFilter: false,
-  filtersCleared: false,
-  filterGroup: '',
-  filterHashMap: new Map(),
-};
+} from './DataDictionary/utils/modelExplorerUtil';
 
 export const getFileNodes = (dictionary) => Object.keys(dictionary).filter((node) => dictionary[node].category === 'data_file');
 export const getNodeTypes = (dictionary) => Object.keys(dictionary).filter((node) => node.charAt(0) !== '_');
@@ -54,10 +41,6 @@ const getDictionaryWithExcludeSystemProperties = (dictionary) => {
       return acc;
     }, {});
   return ret;
-};
-
-export const clearAllFilters = () => {
-  // store.dispatch({ type: 'CLEAR_ALL_FILTERS' });
 };
 
 const toggleCheckBoxAction = (payload, currentAllFilterVariables) => {
@@ -772,6 +755,7 @@ export const reducers = {
     };
   },
   CLEAR_ALL_FILTERS: (state) => {
+    console.log('CLEAR_ALL_FILTERS');
     const subjectCountObject = generateSubjectCounts(state.unfilteredDictionary);
     return {
       ...state,
@@ -786,20 +770,26 @@ export const reducers = {
       },
     };
   },
-  REQUEST_UPLOAD: (state, action) => ({
+  REQUEST_UPLOAD: (state, action) => {
+    console.log('REQUEST_UPLOAD');
+    return {
     ...state,
     file: action.file,
     file_type: action.file_type,
-  }),
-  UPDATE_FILE: (state, action) => ({
+  }},
+  UPDATE_FILE: (state, action) => {
+    console.log('UPDATE_FILE');
+    return {
     ...state,
     file: action.file,
     file_type: action.file_type,
-  }),
-  UPDATE_FORM_SCHEMA: (state, action) => ({
+  }},
+  UPDATE_FORM_SCHEMA: (state, action) => {
+    console.log('UPDATE_FILE');
+    return {
     ...state,
     formSchema: { ...state.formSchema, ...action.formSchema },
-  }),
+  }},
   RECEIVE_PROJECTS: (state, action) => ({
     ...state,
     projects: action.data.reduce((map, p) => {
