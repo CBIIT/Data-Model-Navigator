@@ -57,11 +57,12 @@ export const moduleReducers = (state = initialState, action) => {
       console.log('FILTER_DATA_EXPLORER');
       const allActiveFilters = toggleCheckBoxAction(payload, state);
       const updatedCheckboxData = setSelectedFilterValues(facetSearchData, allActiveFilters);
+      subjectCountObj = generateSubjectCounts(state, allActiveFilters);
       const resultState = {
         ...state,
         allActiveFilters: allActiveFilters,
         checkbox: {
-          data: setSubjectCount(updatedCheckboxData, state.subjectCountObject),
+          data: setSubjectCount(updatedCheckboxData, subjectCountObj),
         },
       }
       return resultState

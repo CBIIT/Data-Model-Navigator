@@ -1,9 +1,11 @@
+import { filterGridItemsCounterSelector } from '@material-ui/data-grid';
 import _ from 'lodash';
 import {
   facetSearchData,
   baseFilters,
   filterOptions,
   filterSections,
+  types,
 } from '../bento/dataDictionaryData'
 import { clearAllFilters } from '../store/actions/actions';
 /**
@@ -85,80 +87,6 @@ export const hashMapHelper = (groupName, [key, value], hashMap) => {
       break;
   }
 };
-  
-export const initializeFilterHashMap = (dictionary) => {
-  const map = new Map();
-  filterOptions.forEach((option) => map.set(option, []));
-  Object.entries(dictionary)
-    .forEach(([key, value]) => {
-      let index = 0;
-      while (index < filterSections.length) {
-        hashMapHelper(filterSections[index], [key, value], map);
-        index += 1;
-      }
-    });
-  return map;
-};
-  
-export const setCheckboxItems = (checkboxItems, subjectCountObj) => checkboxItems.map((elem) => ({
-  ...elem,
-  subjects: subjectCountObj[elem.name.toLowerCase()],
-}));
-  
-export const setSubjectCount = (checkboxData, subjectCountObj) => checkboxData.map((elem) => ({
-  ...elem,
-  checkboxItems: setCheckboxItems(elem.checkboxItems, subjectCountObj),
-}));
-  
-export const getFileNodes = (dictionary) => Object.keys(dictionary).filter((node) => dictionary[node].category === 'data_file');
-export const getNodeTypes = (dictionary) => Object.keys(dictionary).filter((node) => node.charAt(0) !== '_');
-
-export const getDictionaryWithExcludeSystemProperties = (dictionary) => {
-  const ret = Object.keys(dictionary)
-    .map((nodeID) => {
-      const node = dictionary[nodeID];
-      if (!node.properties) return node;
-      return {
-        ...node,
-        properties: excludeSystemProperties(node),
-      };
-    })
-    .reduce((acc, node) => {
-      acc[node.id] = node;
-      return acc;
-    }, {});
-  return ret;
-};
-
-export const generateSubjectCounts = () => {
-  return {
-    'administrative': 1,
-    'analysis': 1,
-    'biospecimen': 2,
-    'case': 5,
-    'clinical': 3,
-    'clinical trial': 12,
-    'core': 18,
-    'data file': 2,
-    'extended': 15,
-    'optional': 39,
-    'preferred': 20,
-    'primary': 9,
-    'required': 62,
-    'secondary': 24,
-    'study': 7,
-  };
-}
-
-export const excludeSystemProperties = (node) => {
-  const properties = node.properties && Object.keys(node.properties)
-    .filter((key) => (node.systemProperties ? !node.systemProperties.includes(key) : true))
-    .reduce((acc, key) => {
-      acc[key] = node.properties[key];
-      return acc;
-    }, {});
-  return properties;
-};
 
 export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
   let filteredDict = [];
@@ -227,6 +155,103 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
 
   return Object.fromEntries(filteredDict);
 };
+  
+export const initializeFilterHashMap = (dictionary) => {
+  const map = new Map();
+  filterOptions.forEach((option) => map.set(option, []));
+  Object.entries(dictionary)
+    .forEach(([key, value]) => {
+      let index = 0;
+      while (index < filterSections.length) {
+        hashMapHelper(filterSections[index], [key, value], map);
+        index += 1;
+      }
+    });
+  return map;
+};
+  
+export const setCheckboxItems = (checkboxItems, subjectCountObj) => checkboxItems.map((elem) => ({
+  ...elem,
+  subjects: subjectCountObj[elem.name.toLowerCase()],
+}));
+  
+export const setSubjectCount = (checkboxData, subjectCountObj) => checkboxData.map((elem) => ({
+  ...elem,
+  checkboxItems: setCheckboxItems(elem.checkboxItems, subjectCountObj),
+}));
+  
+export const getFileNodes = (dictionary) => Object.keys(dictionary).filter((node) => dictionary[node].category === 'data_file');
+export const getNodeTypes = (dictionary) => Object.keys(dictionary).filter((node) => node.charAt(0) !== '_');
+
+export const getDictionaryWithExcludeSystemProperties = (dictionary) => {
+  const ret = Object.keys(dictionary)
+    .map((nodeID) => {
+      const node = dictionary[nodeID];
+      if (!node.properties) return node;
+      return {
+        ...node,
+        properties: excludeSystemProperties(node),
+      };
+    })
+    .reduce((acc, node) => {
+      acc[node.id] = node;
+      return acc;
+    }, {});
+  return ret;
+};
+
+export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
+  const subjectCountItems = {};
+  filterBy.forEach((section) => {
+    section.checkboxItems.forEach((item) => {
+      const key = String(item.name).toLowerCase();
+      subjectCountItems[key] = 0;
+      Object.keys(dictionary).forEach((elem) => {
+        const property = dictionary[elem][item.group];
+        if (Array.isArray(property)) {
+          subjectCountItems[key] += property.length;
+        } else {
+          if (property === key) {
+          subjectCountItems[key] += 1;
+        }}
+      });
+    });
+  });
+  return subjectCountItems;
+}
+
+export const generateSubjectCounts = (data, allActiveFilters = getAllFilters(facetSearchData)) => {
+  const processedFilters = Object.entries(allActiveFilters)
+    .filter(([, value]) => value.length > 0);
+  //** no active filters */
+  const { unfilteredDictionary } = data;
+  if (processedFilters.length == 0) {
+    return (!unfilteredDictionary)
+      ? getSubjectItemCount(data) : getSubjectItemCount(unfilteredDictionary);
+  }
+  //** check active filters */
+  const filterSections = processedFilters.map(item => item[0]);
+  const selectedSections = facetSearchData.filter(section => filterSections
+      .indexOf(section.datafield) !== -1);
+  if (processedFilters.length > 0) {
+    const filteredDict = newHandleExplorerFilter(processedFilters, data.filterHashMap);
+    const selectedSectionCounts = getSubjectItemCount(unfilteredDictionary, selectedSections);
+    const filteredDictCounts = getSubjectItemCount(filteredDict);
+    const combinedCount = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+    return combinedCount;
+  } 
+}
+
+export const excludeSystemProperties = (node) => {
+  const properties = node.properties && Object.keys(node.properties)
+    .filter((key) => (node.systemProperties ? !node.systemProperties.includes(key) : true))
+    .reduce((acc, key) => {
+      acc[key] = node.properties[key];
+      return acc;
+    }, {});
+  return properties;
+};
+
 
 /*** toggle check box action */
 export const toggleCheckBoxAction = (payload, state) => {
@@ -237,25 +262,4 @@ export const toggleCheckBoxAction = (payload, state) => {
     clearAllFilters();
   }
   return currentAllFilterVariables;
-}
-
-/** subject count method */
-export const getSubjectCounts = () => {
-  return {
-    'administrative': 1,
-    'analysis': 1,
-    'biospecimen': 2,
-    'case': 5,
-    'clinical': 3,
-    'clinical trial': 12,
-    'core': 18,
-    'data file': 2,
-    'extended': 15,
-    'optional': 39,
-    'preferred': 20,
-    'primary': 9,
-    'required': 62,
-    'secondary': 24,
-    'study': 7,
-  };
 }

@@ -1,5 +1,13 @@
 export const categories = ['Admistrative', 'Study', 'Clinical Trial', 'Case', 'Biospecimen', 'Clinical', 'Analysis', 'Data File'];
 
+export const types = {
+  CATEGORY: 'category',
+  ASSIGNMENT: 'assignment',
+  INCLUSION: 'inclusion',
+  CLASS: 'class',
+  MULTIPLICITY: 'multiplicity',
+}
+
 export const defaultFacetSectionVariables = {
   color: '#000000',
   checkBoxColorsOne: '#E8F7DC',
@@ -16,14 +24,14 @@ export const facetSearchData = [
     tooltip: 'category',
     show: true,
     checkboxItems: [
-      { name: 'Administrative', isChecked: false },
-      { name: 'Case', isChecked: false },
-      { name: 'Study', isChecked: false },
-      { name: 'Clinical', isChecked: false },
-      { name: 'Clinical_Trial', isChecked: false },
-      { name: 'Biospecimen', isChecked: false },
-      { name: 'Analysis', isChecked: false },
-      { name: 'Data_File', isChecked: false },
+      { name: 'Administrative', isChecked: false, group:'category' },
+      { name: 'Case', isChecked: false, group:'category' },
+      { name: 'Study', isChecked: false, group:'category' },
+      { name: 'Clinical', isChecked: false, group:'category' },
+      { name: 'Clinical_Trial', isChecked: false, group:'category' },
+      { name: 'Biospecimen', isChecked: false, group:'category' },
+      { name: 'Analysis', isChecked: false, group:'category' },
+      { name: 'Data_File', isChecked: false, group:'category' },
     ],
   },
   {
@@ -33,8 +41,8 @@ export const facetSearchData = [
     tooltip: 'assignment',
     show: true,
     checkboxItems: [
-      { name: 'Core', isChecked: false },
-      { name: 'Extended', isChecked: false },
+      { name: 'Core', isChecked: false, group: 'assignment' },
+      { name: 'Extended', isChecked: false, group: 'assignment'  },
     ],
   },
   {
@@ -44,8 +52,8 @@ export const facetSearchData = [
     tooltip: 'class',
     show: true,
     checkboxItems: [
-      { name: 'Primary', isChecked: false },
-      { name: 'Secondary', isChecked: false },
+      { name: 'Primary', isChecked: false, group: 'class' },
+      { name: 'Secondary', isChecked: false, group: 'class' },
     ],
   },
   {
@@ -55,10 +63,10 @@ export const facetSearchData = [
     tooltip: 'multiplicity',
     show: true,
     checkboxItems: [
-      { name: 'One_to_one', isChecked: false },
-      { name: 'One_to_many', isChecked: false },
-      { name: 'Many_to_one', isChecked: false },
-      { name: 'Many_to_many', isChecked: false },
+      { name: 'One_to_one', isChecked: false, group: 'multiplicity' },
+      { name: 'One_to_many', isChecked: false, group: 'multiplicity' },
+      { name: 'Many_to_one', isChecked: false, group: 'multiplicity' },
+      { name: 'Many_to_many', isChecked: false, group: 'multiplicity' },
     ],
   },
   {
@@ -68,9 +76,9 @@ export const facetSearchData = [
     tooltip: 'inclusion',
     show: true,
     checkboxItems: [
-      { name: 'Required', isChecked: false },
-      { name: 'Preferred', isChecked: false },
-      { name: 'Optional', isChecked: false },
+      { name: 'Required', isChecked: false, group: 'required' },
+      { name: 'Preferred', isChecked: false, group: 'preferred' },
+      { name: 'Optional', isChecked: false, group: 'optional' },
     ],
   },
 ];
