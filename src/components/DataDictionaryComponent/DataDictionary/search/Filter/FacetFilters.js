@@ -197,8 +197,6 @@ const FacetFilters = ({
   };
 
   const sideBarSections = arrangeBySections(sideBarDisplay);
-  console.log('sideBarSectoins');
-  console.log(sideBarSections);
 
   return (
     <>

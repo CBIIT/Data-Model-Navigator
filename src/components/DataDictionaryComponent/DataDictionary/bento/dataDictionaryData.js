@@ -56,19 +56,19 @@ export const facetSearchData = [
       { name: 'Secondary', isChecked: false, group: 'class' },
     ],
   },
-  {
-    groupName: 'Multiplicity',
-    datafield: 'multiplicity',
-    section: 'Filter By Relationship',
-    tooltip: 'multiplicity',
-    show: true,
-    checkboxItems: [
-      { name: 'One_to_one', isChecked: false, group: 'multiplicity' },
-      { name: 'One_to_many', isChecked: false, group: 'multiplicity' },
-      { name: 'Many_to_one', isChecked: false, group: 'multiplicity' },
-      { name: 'Many_to_many', isChecked: false, group: 'multiplicity' },
-    ],
-  },
+  // {
+  //   groupName: 'Multiplicity',
+  //   datafield: 'multiplicity',
+  //   section: 'Filter By Relationship',
+  //   tooltip: 'multiplicity',
+  //   show: true,
+  //   checkboxItems: [
+  //     { name: 'One_to_one', isChecked: false, group: 'multiplicity' },
+  //     { name: 'One_to_many', isChecked: false, group: 'multiplicity' },
+  //     { name: 'Many_to_one', isChecked: false, group: 'multiplicity' },
+  //     { name: 'Many_to_many', isChecked: false, group: 'multiplicity' },
+  //   ],
+  // },
   {
     groupName: 'Inclusion',
     datafield: 'inclusion',

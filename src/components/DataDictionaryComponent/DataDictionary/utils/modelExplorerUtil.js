@@ -220,26 +220,32 @@ export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
   return subjectCountItems;
 }
 
-export const generateSubjectCounts = (data, allActiveFilters = getAllFilters(facetSearchData)) => {
+//** filter subject count */
+export const generateSubjectCountsAndFilterData = (data, allActiveFilters = getAllFilters(facetSearchData)) => {
   const processedFilters = Object.entries(allActiveFilters)
     .filter(([, value]) => value.length > 0);
   //** no active filters */
   const { unfilteredDictionary } = data;
   if (processedFilters.length == 0) {
-    return (!unfilteredDictionary)
-      ? getSubjectItemCount(data) : getSubjectItemCount(unfilteredDictionary);
+    const dictionary = (!unfilteredDictionary) ? data : unfilteredDictionary;
+    return { subjectCounts: getSubjectItemCount(dictionary), dictionary: dictionary}
   }
   //** check active filters */
-  const filterSections = processedFilters.map(item => item[0]);
+  const filterSections = processedFilters.map((item) => item[0]);
   const selectedSections = facetSearchData.filter(section => filterSections
       .indexOf(section.datafield) !== -1);
-  if (processedFilters.length > 0) {
-    const filteredDict = newHandleExplorerFilter(processedFilters, data.filterHashMap);
+  
+  const filteredDictionary = newHandleExplorerFilter(processedFilters, data.filterHashMap);
+  const filteredDictCounts = getSubjectItemCount(filteredDictionary);
+  
+  //** filter by only one subject or one section */
+  if (processedFilters.length == 1) {
     const selectedSectionCounts = getSubjectItemCount(unfilteredDictionary, selectedSections);
-    const filteredDictCounts = getSubjectItemCount(filteredDict);
-    const combinedCount = Object.assign({}, filteredDictCounts, selectedSectionCounts);
-    return combinedCount;
-  } 
+    const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+    return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+  }
+  //** filter by multiple sections */
+  return { subjectCounts: filteredDictCounts, dictionary: filteredDictionary};
 }
 
 export const excludeSystemProperties = (node) => {
@@ -251,7 +257,6 @@ export const excludeSystemProperties = (node) => {
     }, {});
   return properties;
 };
-
 
 /*** toggle check box action */
 export const toggleCheckBoxAction = (payload, state) => {

@@ -12,14 +12,13 @@ import {
   getFileNodes,
   getNodeTypes,
   getDictionaryWithExcludeSystemProperties,
-  generateSubjectCounts,
+  generateSubjectCountsAndFilterData,
   excludeSystemProperties,
   getAllFilters,
   allFilters,
   newHandleExplorerFilter,
   toggleCheckBoxAction,
 } from '../../utils/modelExplorerUtil';
-import { filterReducers } from './facetFilter';
 
 const initialState = {
   allActiveFilters: {},
@@ -33,54 +32,52 @@ const initialState = {
 
 export const moduleReducers = (state = initialState, action) => {
   const { payload } = action;
-  let subjectCountObj;
+  let filtered;
   switch (action.type) {
     case actionTypes.RECEIVE_DICTIONARY:
-      const dict = getDictionaryWithExcludeSystemProperties(payload.data);
-      subjectCountObj = generateSubjectCounts(dict);
+      const dictionary = getDictionaryWithExcludeSystemProperties(payload.data);
+      filtered = generateSubjectCountsAndFilterData(dictionary);
       return ({
         ...state,
-        dictionary: dict,
+        dictionary: dictionary,
         nodeTypes: getNodeTypes(payload.data),
         file_nodes: getFileNodes(payload.data),
         allActiveFilters: getAllFilters(facetSearchData),
-        unfilteredDictionary: dict,
-        filteredDictionary: dict,
-        filterHashMap: initializeFilterHashMap(dict),
-        subjectCountObject: subjectCountObj,
+        unfilteredDictionary: dictionary,
+        filteredDictionary: dictionary,
+        filterHashMap: initializeFilterHashMap(dictionary),
+        subjectCountObject: filtered,
         checkbox: {
-          data: setSubjectCount(facetSearchData, subjectCountObj),
+          data: setSubjectCount(facetSearchData, filtered.subjectCounts),
         },
       });
     
     case actionTypes.FILTER_DATA_EXPLORER:
-      console.log('FILTER_DATA_EXPLORER');
       const allActiveFilters = toggleCheckBoxAction(payload, state);
       const updatedCheckboxData = setSelectedFilterValues(facetSearchData, allActiveFilters);
-      subjectCountObj = generateSubjectCounts(state, allActiveFilters);
+      filtered = generateSubjectCountsAndFilterData(state, allActiveFilters);
       const resultState = {
         ...state,
+        dictionary: filtered.dictionary,
         allActiveFilters: allActiveFilters,
         checkbox: {
-          data: setSubjectCount(updatedCheckboxData, subjectCountObj),
+          data: setSubjectCount(updatedCheckboxData, filtered.subjectCounts),
         },
       }
       return resultState
 
     case actionTypes.CLEAR_ALL_FILTERS:
-      console.log('CLEAR_ALL_FILTERS');
-      subjectCountObj = generateSubjectCounts(state.unfilteredDictionary);
-
+      filtered = generateSubjectCountsAndFilterData(state.unfilteredDictionary);
       return {
         ...state,
         dictionary: state.unfilteredDictionary,
         filteredDictionary: state.unfilteredDictionary,
-        subjectCountObject: subjectCountObj,
+        subjectCountObject: filtered,
         allActiveFilters: baseFilters,
         activeFilter: false,
         filtersCleared: true,
         checkbox: {
-          data: setSubjectCount(facetSearchData, subjectCountObj),
+          data: setSubjectCount(facetSearchData, filtered.subjectCounts),
         },
       }
 
