@@ -28,8 +28,7 @@ export default () => ({
     background: 'rgba(0, 0, 0, 0.1)',
   },
   expansionPanelDetailsRoot: {
-    paddingBottom: '8px',
-    display: 'unset',
+    display: 'block',
   },
   dropDownIconSection: {
     fill: '#000000',
@@ -43,8 +42,7 @@ export default () => ({
     paddingLeft: 0,
   },
   ExpansionPaneldropDownIcon: {
-    left: '-290px',
-    marginRight: '-20px',
+    left: '-98%',
   },
   sectionSummaryText: {
     color: '#323232',
@@ -52,7 +50,7 @@ export default () => ({
     fontSize: '15px',
     fontWeight: 'bold',
     letterSpacing: '0.25px',
-    marginLeft: '-1px',
+    marginLeft: '15px',
     lineHeight: '26px',
   },
   subSectionSummaryText: {

@@ -262,7 +262,6 @@ export const excludeSystemProperties = (node) => {
 export const toggleCheckBoxAction = (payload, state) => {
   const currentAllFilterVariables = payload === {} ? allFilters()
     : createFilterVariables(payload, state.allActiveFilters);
-  console.log(currentAllFilterVariables);
   if (_.isEqual(currentAllFilterVariables, allFilters())) {
     clearAllFilters();
   }

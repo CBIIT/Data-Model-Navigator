@@ -25,6 +25,7 @@ import {
 import CheckBoxView from './CheckBoxView';
 import { clearAllFilters, toggleCheckBox } from '../../store/actions/actions';
 import styles from './FacetFilters.style';
+import FacetFilterThemeProvider from './FacetFilterThemeConfig';
 
 const CustomAccordionSummary = withStyles({
   root: {
@@ -213,7 +214,7 @@ const FacetFilters = ({
       </Button>
       {
     sideBarSections.map((currentSection) => (
-      <>
+      <FacetFilterThemeProvider>
         <Divider
           variant="middle"
           style={{
@@ -298,7 +299,7 @@ const FacetFilters = ({
             </List>
           </AccordionDetails>
         </Accordion>
-      </>
+      </FacetFilterThemeProvider>
     ))
   }
     </>

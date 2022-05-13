@@ -30,7 +30,7 @@ const initialState = {
   filterHashMap: new Map(),
 };
 
-export const moduleReducers = (state = initialState, action) => {
+const moduleReducers = (state = initialState, action) => {
   const { payload } = action;
   let filtered;
   switch (action.type) {
@@ -85,3 +85,5 @@ export const moduleReducers = (state = initialState, action) => {
       return state;
   }
 }
+
+export { moduleReducers }
