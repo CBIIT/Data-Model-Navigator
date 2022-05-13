@@ -160,23 +160,15 @@ const generateCount = (filtered, searchGroup, searchTerm, flag,
     });
   } else {
     Object.keys(filtered).forEach((elem) => {
-      // if (filtered[elem][searchGroup].toLowerCase() === 'core') {
-      //   console.log(searchTerm);
-      //   console.log(filtered[elem]);
-      // }
       if (filtered[elem][searchGroup].toLowerCase() === searchTerm) {
         count += 1;
       }
     });
   }
-  // console.log('groupName - ', searchTerm, ' - ', searchGroup, ' - ', count);
   return count;
 };
 
 const subjectCount = (filtered, unfiltered, filterObj) => {
-  console.log(filtered);
-  console.log(unfiltered);
-  console.log(filterObj);
   return 2;
 };
 
@@ -566,7 +558,6 @@ const categoryexemptSubjectCount = (
     }
     case 'categoryunchecked':
     case '$categoryunchecked': {
-      console.log('category unchecked');
       const processedGroupName = groupName.slice(0, groupName.indexOf('unchecked'));
       let filterBy = filterObj[processedGroupName]
         ? filterObj[processedGroupName] : generateFilterBy(filterObj, processedGroupName);
@@ -630,7 +621,6 @@ const categoryexemptSubjectCount = (
 const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
   let filteredDict = [];
   let alternateFilteredDict = [];
-  console.log('selectFilters');
   selectedFilters.forEach(([key, value], index) => {
     switch (index) {
       case 0: {
@@ -710,7 +700,6 @@ export const reducers = {
   FILTER_DATA_EXPLORER: (state, action) => {
     const checkboxData = facetSearchData;
     const updatedCheckboxData = setSelectedFilterValues(checkboxData, action.allFilters);
-    console.log(updatedCheckboxData);
 
     let groupName = action.filter.isChecked ? action.filter.groupName : `${action.filter.groupName}Unchecked`;
     const processedFilters = Object.entries(action.allFilters)
@@ -718,14 +707,9 @@ export const reducers = {
     groupName = processedFilters.length > 1 ? `$${groupName}` : groupName;
 
     // refactor-init
-    console.log(state);
-    console.log(action);
     const processedFiltersObj = Object.fromEntries(processedFilters);
     const filteredDict = newHandleExplorerFilter(processedFilters, state.filterHashMap);
     const count = subjectCount(state.unfilteredDictionary, filteredDict, processedFiltersObj);
-    console.log(count);
-    console.log('---------------');
-    console.log(state);
 
     const subjectCountObj = {
       ...state.subjectCountObject,
@@ -737,8 +721,6 @@ export const reducers = {
         state.oldSubjectCountObject,
       ),
     };
-    console.log('================');
-    console.log(subjectCountObj);
 
     const finalCheckboxData = setSubjectCount(updatedCheckboxData, subjectCountObj || {});
     return {
@@ -755,7 +737,6 @@ export const reducers = {
     };
   },
   CLEAR_ALL_FILTERS: (state) => {
-    console.log('CLEAR_ALL_FILTERS');
     const subjectCountObject = generateSubjectCounts(state.unfilteredDictionary);
     return {
       ...state,
@@ -771,21 +752,18 @@ export const reducers = {
     };
   },
   REQUEST_UPLOAD: (state, action) => {
-    console.log('REQUEST_UPLOAD');
     return {
     ...state,
     file: action.file,
     file_type: action.file_type,
   }},
   UPDATE_FILE: (state, action) => {
-    console.log('UPDATE_FILE');
     return {
     ...state,
     file: action.file,
     file_type: action.file_type,
   }},
   UPDATE_FORM_SCHEMA: (state, action) => {
-    console.log('UPDATE_FILE');
     return {
     ...state,
     formSchema: { ...state.formSchema, ...action.formSchema },

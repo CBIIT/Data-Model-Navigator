@@ -22,7 +22,6 @@ export const getState = (storeKey, store) => store.getState()[storeKey];
  * @return {obj}
  */
 export const getAllFilters = (data) => {
-  console.log(data);
   const emptyFilters = data.reduce((acc, facet) => (
     { ...acc, [facet.datafield]: [] }
   ), {});
