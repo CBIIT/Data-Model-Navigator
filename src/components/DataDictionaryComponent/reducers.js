@@ -11,20 +11,7 @@ import {
   getState,
   allFilters,
   createFilterVariables,
-} from '../../utils/facetFilters';
-// import store from '../../store';
-
-const storeKey = 'submission';
-
-const initialState = {
-  allActiveFilters: {},
-  unfilteredDictionary: {},
-  filteredDictionary: {},
-  activeFilter: false,
-  filtersCleared: false,
-  filterGroup: '',
-  filterHashMap: new Map(),
-};
+} from './DataDictionary/utils/modelExplorerUtil';
 
 export const getFileNodes = (dictionary) => Object.keys(dictionary).filter((node) => dictionary[node].category === 'data_file');
 export const getNodeTypes = (dictionary) => Object.keys(dictionary).filter((node) => node.charAt(0) !== '_');
@@ -54,10 +41,6 @@ const getDictionaryWithExcludeSystemProperties = (dictionary) => {
       return acc;
     }, {});
   return ret;
-};
-
-export const clearAllFilters = () => {
-  // store.dispatch({ type: 'CLEAR_ALL_FILTERS' });
 };
 
 const toggleCheckBoxAction = (payload, currentAllFilterVariables) => {
@@ -177,23 +160,15 @@ const generateCount = (filtered, searchGroup, searchTerm, flag,
     });
   } else {
     Object.keys(filtered).forEach((elem) => {
-      // if (filtered[elem][searchGroup].toLowerCase() === 'core') {
-      //   console.log(searchTerm);
-      //   console.log(filtered[elem]);
-      // }
       if (filtered[elem][searchGroup].toLowerCase() === searchTerm) {
         count += 1;
       }
     });
   }
-  // console.log('groupName - ', searchTerm, ' - ', searchGroup, ' - ', count);
   return count;
 };
 
 const subjectCount = (filtered, unfiltered, filterObj) => {
-  console.log(filtered);
-  console.log(unfiltered);
-  console.log(filterObj);
   return 2;
 };
 
@@ -583,7 +558,6 @@ const categoryexemptSubjectCount = (
     }
     case 'categoryunchecked':
     case '$categoryunchecked': {
-      console.log('category unchecked');
       const processedGroupName = groupName.slice(0, groupName.indexOf('unchecked'));
       let filterBy = filterObj[processedGroupName]
         ? filterObj[processedGroupName] : generateFilterBy(filterObj, processedGroupName);
@@ -647,7 +621,6 @@ const categoryexemptSubjectCount = (
 const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
   let filteredDict = [];
   let alternateFilteredDict = [];
-  console.log('selectFilters');
   selectedFilters.forEach(([key, value], index) => {
     switch (index) {
       case 0: {
@@ -727,7 +700,6 @@ export const reducers = {
   FILTER_DATA_EXPLORER: (state, action) => {
     const checkboxData = facetSearchData;
     const updatedCheckboxData = setSelectedFilterValues(checkboxData, action.allFilters);
-    console.log(updatedCheckboxData);
 
     let groupName = action.filter.isChecked ? action.filter.groupName : `${action.filter.groupName}Unchecked`;
     const processedFilters = Object.entries(action.allFilters)
@@ -735,14 +707,9 @@ export const reducers = {
     groupName = processedFilters.length > 1 ? `$${groupName}` : groupName;
 
     // refactor-init
-    console.log(state);
-    console.log(action);
     const processedFiltersObj = Object.fromEntries(processedFilters);
     const filteredDict = newHandleExplorerFilter(processedFilters, state.filterHashMap);
     const count = subjectCount(state.unfilteredDictionary, filteredDict, processedFiltersObj);
-    console.log(count);
-    console.log('---------------');
-    console.log(state);
 
     const subjectCountObj = {
       ...state.subjectCountObject,
@@ -754,8 +721,6 @@ export const reducers = {
         state.oldSubjectCountObject,
       ),
     };
-    console.log('================');
-    console.log(subjectCountObj);
 
     const finalCheckboxData = setSubjectCount(updatedCheckboxData, subjectCountObj || {});
     return {
@@ -786,20 +751,23 @@ export const reducers = {
       },
     };
   },
-  REQUEST_UPLOAD: (state, action) => ({
+  REQUEST_UPLOAD: (state, action) => {
+    return {
     ...state,
     file: action.file,
     file_type: action.file_type,
-  }),
-  UPDATE_FILE: (state, action) => ({
+  }},
+  UPDATE_FILE: (state, action) => {
+    return {
     ...state,
     file: action.file,
     file_type: action.file_type,
-  }),
-  UPDATE_FORM_SCHEMA: (state, action) => ({
+  }},
+  UPDATE_FORM_SCHEMA: (state, action) => {
+    return {
     ...state,
     formSchema: { ...state.formSchema, ...action.formSchema },
-  }),
+  }},
   RECEIVE_PROJECTS: (state, action) => ({
     ...state,
     projects: action.data.reduce((map, p) => {

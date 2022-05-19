@@ -44,7 +44,6 @@ export default () => ({
     paddingRight: '21px',
     fontSize: '14px',
     lineHeight: '17px',
-    maxHeight: '65px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     paddingTop: '10px',
@@ -81,7 +80,7 @@ export default () => ({
   },
   nodeDownloadButtonGroup : {
     textAlign: 'right',
-    marginTop: '5px',
+    marginTop: '15px',
     paddingRight: '15px',
   },
   downloadGroup : {
