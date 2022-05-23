@@ -14,8 +14,9 @@ import {
   getSingleEndDescendentNodeID,
   getNodesAndLinksSummaryBetweenNodesInSubgraph,
   getAllRoutesBetweenTwoNodes,
-} from './graphStructureHelper.js';
+} from './graphStructureHelper';
 import { getCategoryColor } from '../../NodeCategories/helper';
+import { capitalizeFirstLetter } from '../../../utils';
 
 /**
  * Get a set of types from an array of nodes
@@ -23,7 +24,7 @@ import { getCategoryColor } from '../../NodeCategories/helper';
  * @returns {string[]} array of type names(duplicating names removed) of given nodes
  */
 export const getAllTypes = (nodes) => {
-  const types = nodes.map(node => node.type);
+  const types = nodes.map((node) => node.type);
   const uniqueTypes = _.uniq(types);
   return uniqueTypes;
 };
@@ -41,7 +42,7 @@ export const calculateGraphLayout = (dictionary, countsSearch, linksSearch) => {
     .then((renderedJSON) => {
       // draw nodes
       const renderedNodes = renderedJSON.objects
-        .filter(n => !n.rank)
+        .filter((n) => !n.rank)
         .map((n) => {
           const boundingBox = n._draw_[1].points.reduce((acc, cur) => {
             if (acc.x1 > cur[0]) acc.x1 = cur[0];
@@ -82,6 +83,9 @@ export const calculateGraphLayout = (dictionary, countsSearch, linksSearch) => {
           const requiredPropertiesCount = originNode.required ? originNode.required.length : 0;
           const optionalPropertiesCount = originNode.properties ?
             Object.keys(originNode.properties).length - requiredPropertiesCount : 0;
+          const preferredPropertiesCount = originNode.preferred ? originNode.preferred.length : 0;
+          const nodeClass = originNode.class ? capitalizeFirstLetter(originNode.class) : '';
+          const nodeAssignment = originNode.assignment ? capitalizeFirstLetter(originNode.assignment) : '';
           let nodeLevel = 0;
           if (originNode && originNode.positionIndex && originNode.positionIndex.length >= 2) {
             nodeLevel = originNode.positionIndex[1];
@@ -107,6 +111,9 @@ export const calculateGraphLayout = (dictionary, countsSearch, linksSearch) => {
             _gvid: n._gvid,
             requiredPropertiesCount,
             optionalPropertiesCount,
+            preferredPropertiesCount,
+            class: nodeClass,
+            assignment: nodeAssignment,
           };
         });
 
@@ -130,9 +137,8 @@ export const calculateGraphLayout = (dictionary, countsSearch, linksSearch) => {
             pathString = `M${sourePosition[0]} ${sourePosition[1]} 
               L ${targetPosition[0]} ${targetPosition[1]}`;
           }
-          const required = edges
-            .find(e => (e.source.id === sourceNode.id && e.target.id === targetNode.id))
-            .required;
+          const { required } = edges
+              .find((e) => (e.source.id === sourceNode.id && e.target.id === targetNode.id));
           return {
             source: sourceNode.id,
             target: targetNode.id,
@@ -339,7 +345,7 @@ export const calculateDataModelStructure = (
   // step.6
   resultStructure = resultStructure.map((entry) => {
     const { nodeID, nodeIDsBefore, linksBefore } = entry;
-    const category = wholeGraphNodes.find(n => n.id === nodeID).type;
+    const category = wholeGraphNodes.find((n) => n.id === nodeID).type;
     return {
       nodeID,
       nodeIDsBefore,
