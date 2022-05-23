@@ -37,9 +37,9 @@ class Canvas extends React.Component {
       .scaleExtent([this.props.minZoom, this.props.maxZoom])
       .translateExtent([this.props.topLeftTranslateLimit, this.props.bottomRightTranslateLimit])
       .on('zoom', () => {
+        this.handleCanvasUpdate();
         this.zoomTarget
           .attr('transform', d3.event.transform);
-        this.handleCanvasUpdate();
       });
     this.zoomTarget = d3.select('.canvas__container');
     this.zoomCatcher = d3.select('.canvas__overlay')
@@ -67,6 +67,14 @@ class Canvas extends React.Component {
     if (this.props.isGraphView) {
       this.updateCanvasSize();
     }
+  }
+
+  updateCanvasSize() {
+    this.setState({
+      canvasWidth: this.canvasElement.current.clientWidth,
+      canvasHeight: this.canvasElement.current.clientHeight,
+    });
+    this.handleCanvasUpdate();
   }
 
   handleCanvasUpdate = () => {
@@ -111,82 +119,60 @@ class Canvas extends React.Component {
       .call(this.zoomBehavior.transform, d3.zoomIdentity);
   }
 
-  updateCanvasSize() {
-    this.setState({
-      canvasWidth: this.canvasElement.current.clientWidth,
-      canvasHeight: this.canvasElement.current.clientHeight,
-    });
-    this.handleCanvasUpdate();
-  }
-
   render() {
     return (
-      <div className="canvas" ref={this.canvasElement} style={{ width: '100%', height: '100%' }}>
-        <div className="canvas__zoom-button-group">
+      <div className='canvas' ref={this.canvasElement} style={{ width: '100%', height: '100%' }}>
+        <div className='canvas__zoom-button-group'>
           <div
-            className="canvas__zoom-button canvas__zoom-button--reset"
+            className='canvas__zoom-button canvas__zoom-button--reset'
             onClick={this.handleReset}
             onKeyPress={this.handleReset}
-            role="button"
+            role='button'
             tabIndex={-1}
           >
-            <i className="canvas__zoom-icon g3-icon g3-icon--reset" />
+            <i className='canvas__zoom-icon g3-icon g3-icon--reset' />
           </div>
           <div
-            className="canvas__zoom-button canvas__zoom-button--zoom-in"
+            className='canvas__zoom-button canvas__zoom-button--zoom-in'
             onClick={this.handleZoomIn}
             onKeyPress={this.handleZoomIn}
-            role="button"
+            role='button'
             tabIndex={-1}
           >
-            <i className="canvas__zoom-icon g3-icon g3-icon--plus" />
+            <i className='canvas__zoom-icon g3-icon g3-icon--plus' />
           </div>
           <div
-            className="canvas__zoom-button canvas__zoom-button--zoom-out"
+            className='canvas__zoom-button canvas__zoom-button--zoom-out'
             onClick={this.handleZoomOut}
             onKeyPress={this.handleZoomOut}
-            role="button"
+            role='button'
             tabIndex={-1}
           >
-            <i className="canvas__zoom-icon canvas__zoom-icon--zoom-in g3-icon g3-icon--minus" />
+            <i className='canvas__zoom-icon canvas__zoom-icon--zoom-in g3-icon g3-icon--minus' />
           </div>
         </div>
         <svg
-          className="canvas__svg"
+          className='canvas__svg'
           ref={this.svgElement}
           width={this.state.canvasWidth}
           height={this.state.canvasHeight}
-          xmlns="http://www.w3.org/2000/svg"
         >
-          <defs>
-            <marker
-              id="markerArrow"
-              markerWidth="20"
-              markerHeight="20"
-              refX="0"
-              refY="3"
-              orient="auto"
-              markerUnits="strokeWidth"
-            >
-              <path d="M0,0 L0,6 L9,3 z" fill="black" />
-            </marker>
-          </defs>
-
           <rect
-            className="canvas__overlay"
+            className='canvas__overlay'
             width={this.state.canvasWidth}
             height={this.state.canvasHeight}
             onClick={this.handleClick}
           />
           <g
-            className="canvas__container"
+            className='canvas__container'
             ref={this.containerElement}
           >
             {
-              React.Children.map(this.props.children, (child) => React.cloneElement(child, {
+              React.Children.map(this.props.children, child => React.cloneElement(child, {
                 canvasWidth: this.state.canvasWidth,
                 canvasHeight: this.state.canvasHeight,
-              }))
+              }),
+              )
             }
           </g>
         </svg>

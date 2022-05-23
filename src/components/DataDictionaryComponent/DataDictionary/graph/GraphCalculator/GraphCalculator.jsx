@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -31,8 +30,7 @@ class GraphCalculator extends React.Component {
     }
   }
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps) {
     const newDictionary = nextProps.dictionary;
     if (this.oldDictionary !== newDictionary) {
       calculateGraphLayout(
@@ -67,8 +65,7 @@ class GraphCalculator extends React.Component {
         this.props.nodes,
       );
       this.props.onPathRelatedToSecondHighlightingNodeCalculated(
-        pathRelatedToSecondHighlightingNode,
-      );
+        pathRelatedToSecondHighlightingNode);
     }
 
     // update data model structure if update highlighting/secondHighlighting node
@@ -89,6 +86,19 @@ class GraphCalculator extends React.Component {
           dataModelStructureRelatedNodeIDs,
           routesBetweenStartEndNodes,
         );
+      } else if (newHighlightingNode) {
+        const {
+          dataModelStructure,
+          dataModelStructureRelatedNodeIDs,
+          routesBetweenStartEndNodes,
+        } = this.getDataModelStructureForHighlightedNodes(
+          newHighlightingNode,
+        );
+        this.props.onDataModelStructureCalculated(
+          dataModelStructure,
+          dataModelStructureRelatedNodeIDs,
+          routesBetweenStartEndNodes,
+        );
       } else {
         this.props.onDataModelStructureCalculated(null);
       }
@@ -96,7 +106,6 @@ class GraphCalculator extends React.Component {
 
     this.oldHighlightingNode = newHighlightingNode;
     this.oldSecondHighlightingNodeID = newSecondHighlightingNodeID;
-    this.oldDictionary = newDictionary;
   }
 
   getDataModelStructureForHighlightedNodes(newHighlightingNode) {
@@ -105,9 +114,9 @@ class GraphCalculator extends React.Component {
       this.props.nodes,
     );
     const subgraphEdges = this.props.edges
-      .filter((e) => (relatedHighlightedNodeIDs.includes(e.source)
+      .filter(e => (relatedHighlightedNodeIDs.includes(e.source)
         && relatedHighlightedNodeIDs.includes(e.target)))
-      .map((e) => ({ source: e.source, target: e.target }));
+      .map(e => ({ source: e.source, target: e.target }));
     const {
       dataModelStructure,
       routesBetweenStartEndNodes,
@@ -134,7 +143,6 @@ class GraphCalculator extends React.Component {
       newSecondHighlightingNodeID,
       this.props.nodes,
     );
-
     pathRelatedToSecondHighlightingNode.forEach((e) => {
       if (!subgraphNodeIDs.includes(e.source)) subgraphNodeIDs.push(e.source);
       if (!subgraphNodeIDs.includes(e.target)) subgraphNodeIDs.push(e.target);
@@ -156,7 +164,7 @@ class GraphCalculator extends React.Component {
   }
 
   render() {
-    return (<></>);
+    return (<React.Fragment />);
   }
 }
 

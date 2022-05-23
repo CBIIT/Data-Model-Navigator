@@ -1,6 +1,3 @@
-.canvas {
-  background-image: url('../../../assets/Model_View.png');
-}
 .canvas__zoom-button-group {
   position: absolute;
   top: 15px;

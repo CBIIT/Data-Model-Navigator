@@ -49,7 +49,6 @@ export default () => ({
     lineHeight: '40px',
     verticalAlign: 'middle',
     borderLeft: '5px solid',
-    marginBottom: '5px',
   },
   categoryText: {
     display: 'inline',
@@ -79,6 +78,9 @@ export default () => ({
   },
   property: {
     marginTop: '-5px',
+  },
+  propertyTable: {
+    padding: '10px 18px 18px 23px',
   },
   downloadButton: {
     minWidth: 'unset', /* override .g3-button's 152px min-width */
@@ -120,6 +122,74 @@ export default () => ({
     marginLeft: '10px',
     position: 'relative',
     top: '-2px',
+  },
+  nodeTitle : {
+    width: '260px',
+    flexGrow: '0',
+    flexShrink: '0',
+    '-moz-user-select': 'none',
+    '-webkit-user-select': 'none',
+    fontWeight: '900',
+    '-ms-user-select': 'none',
+    userSelect: 'none',
+    fontSize: '15px',
+    lineHeight: '14px',
+  },
+  node : {
+    backgroundColor: '#f4f5f5',
+    borderRight: '1px solid var(--dictionary-border-color)',
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '15px 5px 14px 22px',
+    borderLeftWidth: '5px',
+    borderLeftStyle: 'solid',
+    borderLeftColor: 'var(--dictionary-border-color)',
+    cursor: 'pointer',
+    marginBottom: '5px',
+    '&:last-child': {
+      marginBottom: '0',
+    },
+    '&:hover $nodeTitle': {
+      color: 'var(--g3-color__base-blue)',
+    },
+  },
+  nodeLabel: {
+    marginTop: '10px',
+    float: 'left',
+    color: '#8e8e8e',
+    fontWeight: '900',
+    marginRight: '5px',
+    borderRadius: '100px',
+    border: '1px solid #cdcdcd',
+    textAlign: 'center',
+    padding: '2px 12px',
+    background: '#fff',
+    fontSize: '12px',
+  },
+  nodeAssignmentGroup : {
+    textAlign: 'right',
+  },
+  nodeClass: {
+    marginLeft: '5px',
+    color: '#2982af',
+    fontWeight: '500',
+  },
+  nodeAssignment: {
+    marginLeft: '5px',
+    color: '#2982af',
+    fontWeight: '500',
+  },
+  categoryDivider: {
+    height: '4px',
+    display: 'block',
+    backgroundColor: '#e7e5e5',
+    borderLeft: '5px solid var(--dictionary-border-color)',
+  },
+  propertySummary: {
+    /* margin: 5px 0', */
+    color: '#7a7a7a',
+    paddingLeft: '17px',
+    marginBottom: '8px',
   },
 });
   

@@ -13,7 +13,7 @@ class Legend extends React.Component {
   }
 
   toggleLegend = () => {
-    this.setState((state) => ({
+    this.setState(state => ({
       show: !state.show,
     }));
   }
@@ -22,20 +22,23 @@ class Legend extends React.Component {
     return (
       <div className={`data-dictionary-graph-legend ${this.state.show ? '' : 'data-dictionary-graph-legend--toggled'}`}>
         {
-          this.state.show
-            ? (
-              <>
+          this.state.show ?
+            (
+              <React.Fragment>
                 <i
-                  className="data-dictionary-graph-legend__close g3-icon g3-icon--cross"
+                  className='data-dictionary-graph-legend__close g3-icon g3-icon--cross'
                   onClick={this.toggleLegend}
                   onKeyPress={this.toggleLegend}
-                  role="button"
+                  role='button'
                   tabIndex={0}
-                  aria-label="toggleLegend"
                 />
-                <div className="data-dictionary-graph-legend__item body">
-                  <i className="data-dictionary-graph-legend__required-icon data-dictionary-graph-legend__required-icon g3-icon g3-icon--minus" />
-                  <span className="data-dictionary-graph-legend__text">Relationships</span>
+                <div className='data-dictionary-graph-legend__item body'>
+                  <i className='data-dictionary-graph-legend__required-icon data-dictionary-graph-legend__required-icon--required g3-icon g3-icon--minus' />
+                  <span className='data-dictionary-graph-legend__text'>Required Link</span>
+                </div>
+                <div className='data-dictionary-graph-legend__item body'>
+                  <i className='data-dictionary-graph-legend__required-icon data-dictionary-graph-legend__required-icon g3-icon g3-icon--minus' />
+                  <span className='data-dictionary-graph-legend__text'>Optional Link</span>
                 </div>
                 {
                   this.props.items.map((category) => {
@@ -44,34 +47,34 @@ class Legend extends React.Component {
                     return (
                       <div
                         key={category}
-                        className="data-dictionary-graph-legend__item body"
+                        className='data-dictionary-graph-legend__item body'
                       >
-                        <span className="data-dictionary-graph-legend__circle-wrapper">
+                        <span className='data-dictionary-graph-legend__circle-wrapper'>
                           {
                             IconSvg ? <IconSvg /> : (
                               <span
-                                className="data-dictionary-graph-legend__circle"
+                                className='data-dictionary-graph-legend__circle'
                                 style={{ backgroundColor: itemColor }}
                               />
                             )
                           }
                         </span>
-                        <span className="data-dictionary-graph-legend__text">{capitalizeFirstLetter(category)}</span>
+                        <span className='data-dictionary-graph-legend__text'>{capitalizeFirstLetter(category)}</span>
                       </div>
                     );
                   })
                 }
-              </>
+              </React.Fragment>
             )
             : (
               <span
-                className="data-dictionary-graph-legend__info"
+                className='data-dictionary-graph-legend__info'
                 onClick={this.toggleLegend}
                 onKeyPress={this.toggleLegend}
-                role="button"
+                role='button'
                 tabIndex={0}
               >
-                <i className="data-dictionary-graph-legend__info-icon g3-icon g3-icon--question-mark" />
+                <i className='data-dictionary-graph-legend__info-icon g3-icon g3-icon--question-mark' />
               </span>
             )
         }

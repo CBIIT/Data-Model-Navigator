@@ -129,7 +129,6 @@ const FacetFilters = ({
       datafield: item.datafield,
       isChecked: !item.isChecked,
     }
-    console.log('toggle checkbox');
     onToggleCheckBox(toggleCheckBoxItem);
   };
 

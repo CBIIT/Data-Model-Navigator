@@ -56,7 +56,7 @@ class DataModelStructure extends React.Component {
       classes,
       dataModelStructure,
     } = this.props;
-    if (!dataModelStructure) return (<></>);
+    if (!dataModelStructure) return (<React.Fragment />);
     return (
       <div className={classes.dataModelStructure}>
         <h4 className={classes.header}>Data Model Structure</h4>

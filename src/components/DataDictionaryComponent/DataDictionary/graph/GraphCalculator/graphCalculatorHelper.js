@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 import Viz from 'viz.js';
 import { Module, render } from 'viz.js/full.render';
 import _ from 'underscore';
@@ -15,9 +14,8 @@ import {
   getSingleEndDescendentNodeID,
   getNodesAndLinksSummaryBetweenNodesInSubgraph,
   getAllRoutesBetweenTwoNodes,
-} from './graphStructureHelper';
+} from './graphStructureHelper.js';
 import { getCategoryColor } from '../../NodeCategories/helper';
-import { capitalizeFirstLetter } from '../../../utils';
 
 /**
  * Get a set of types from an array of nodes
@@ -25,7 +23,7 @@ import { capitalizeFirstLetter } from '../../../utils';
  * @returns {string[]} array of type names(duplicating names removed) of given nodes
  */
 export const getAllTypes = (nodes) => {
-  const types = nodes.map((node) => node.type);
+  const types = nodes.map(node => node.type);
   const uniqueTypes = _.uniq(types);
   return uniqueTypes;
 };
@@ -43,7 +41,7 @@ export const calculateGraphLayout = (dictionary, countsSearch, linksSearch) => {
     .then((renderedJSON) => {
       // draw nodes
       const renderedNodes = renderedJSON.objects
-        .filter((n) => !n.rank)
+        .filter(n => !n.rank)
         .map((n) => {
           const boundingBox = n._draw_[1].points.reduce((acc, cur) => {
             if (acc.x1 > cur[0]) acc.x1 = cur[0];
@@ -62,17 +60,14 @@ export const calculateGraphLayout = (dictionary, countsSearch, linksSearch) => {
           const topCenterY = boundingBox.y1;
           const width = boundingBox.x2 - boundingBox.x1;
           const height = boundingBox.y2 - boundingBox.y1;
-          const originNode = nodes.find((node) => node.id === n.name);
-          let outLinks; let
-            inLinks;
-          if (edges.length > 0) {
-            outLinks = edges
-              .filter((edge) => edge.source.id === n.name)
-              .map((edge) => edge.target.id);
-            inLinks = edges
-              .filter((edge) => edge.target.id === n.name)
-              .map((edge) => edge.source.id);
-          }
+          const originNode = nodes.find(node => node.id === n.name);
+          const outLinks = edges
+            .filter(edge => edge.source.id === n.name)
+            .map(edge => edge.target.id);
+          const inLinks = edges
+            .filter(edge => edge.target.id === n.name)
+            .map(edge => edge.source.id);
+
           const nodeType = n.type.toLowerCase();
           const nodeColor = getCategoryColor(nodeType);
           const textPadding = graphStyleConfig.nodeContentPadding;
@@ -85,12 +80,8 @@ export const calculateGraphLayout = (dictionary, countsSearch, linksSearch) => {
             (textPadding * 2) + (nodeNames.length * (fontSize + textLineGap)),
           );
           const requiredPropertiesCount = originNode.required ? originNode.required.length : 0;
-          // const optionalPropertiesCount = originNode.properties
-          //   ? Object.keys(originNode.properties).length - requiredPropertiesCount : 0;
-          const optionalPropertiesCount = originNode.optional ? originNode.optional.length : 0;
-          const preferredPropertiesCount = originNode.preferred ? originNode.preferred.length : 0;
-          const nodeClass = originNode.class ? capitalizeFirstLetter(originNode.class) : '';
-          const nodeAssignment = originNode.assignment ? capitalizeFirstLetter(originNode.assignment) : '';
+          const optionalPropertiesCount = originNode.properties ?
+            Object.keys(originNode.properties).length - requiredPropertiesCount : 0;
           let nodeLevel = 0;
           if (originNode && originNode.positionIndex && originNode.positionIndex.length >= 2) {
             nodeLevel = originNode.positionIndex[1];
@@ -116,47 +107,43 @@ export const calculateGraphLayout = (dictionary, countsSearch, linksSearch) => {
             _gvid: n._gvid,
             requiredPropertiesCount,
             optionalPropertiesCount,
-            preferredPropertiesCount,
-            class: nodeClass,
-            assignment: nodeAssignment,
           };
         });
+
       // draw edges
-      let renderedEdges;
-      if (renderedJSON.edges) {
-        renderedEdges = renderedJSON.edges
-          .map((edge) => {
-            const controlPoints = edge._draw_[1].points;
-            let pathString = `M${controlPoints[0].join(',')}C${controlPoints.slice(1)
-              .map((pair) => `${pair[0]},${pair[1]}`).join(' ')}`;
-            const sourceNode = renderedNodes.find((node) => node._gvid === edge.tail);
-            const targetNode = renderedNodes.find((node) => node._gvid === edge.head);
-            if (sourceNode.level === targetNode.level + 1) {
-              const sourePosition = [
-                (sourceNode.boundingBox.x1 + sourceNode.boundingBox.x2) / 2,
-                sourceNode.boundingBox.y1,
-              ];
-              const targetPosition = [
-                (targetNode.boundingBox.x1 + targetNode.boundingBox.x2) / 2,
-                targetNode.boundingBox.y2,
-              ];
-              pathString = `M${sourePosition[0]} ${sourePosition[1]} 
+      const renderedEdges = renderedJSON.edges
+        .map((edge) => {
+          const controlPoints = edge._draw_[1].points;
+          let pathString = `M${controlPoints[0].join(',')}C${controlPoints.slice(1)
+            .map(pair => `${pair[0]},${pair[1]}`).join(' ')}`;
+          const sourceNode = renderedNodes.find(node => node._gvid === edge.tail);
+          const targetNode = renderedNodes.find(node => node._gvid === edge.head);
+          if (sourceNode.level === targetNode.level + 1) {
+            const sourePosition = [
+              (sourceNode.boundingBox.x1 + sourceNode.boundingBox.x2) / 2,
+              sourceNode.boundingBox.y1,
+            ];
+            const targetPosition = [
+              (targetNode.boundingBox.x1 + targetNode.boundingBox.x2) / 2,
+              targetNode.boundingBox.y2,
+            ];
+            pathString = `M${sourePosition[0]} ${sourePosition[1]} 
               L ${targetPosition[0]} ${targetPosition[1]}`;
-            }
-            const { required } = edges
-              .find((e) => (e.source.id === sourceNode.id && e.target.id === targetNode.id));
-            return {
-              source: sourceNode.id,
-              target: targetNode.id,
-              controlPoints,
-              pathString,
-              required,
-            };
-          });
-      }
+          }
+          const required = edges
+            .find(e => (e.source.id === sourceNode.id && e.target.id === targetNode.id))
+            .required;
+          return {
+            source: sourceNode.id,
+            target: targetNode.id,
+            controlPoints,
+            pathString,
+            required,
+          };
+        });
 
       // get bounding box for whole graph
-      const graphBoundingBox = renderedJSON._draw_.find((entry) => entry.op === 'P').points;
+      const graphBoundingBox = renderedJSON._draw_.find(entry => entry.op === 'P').points;
 
       const layoutResult = {
         nodes: renderedNodes,
@@ -352,7 +339,7 @@ export const calculateDataModelStructure = (
   // step.6
   resultStructure = resultStructure.map((entry) => {
     const { nodeID, nodeIDsBefore, linksBefore } = entry;
-    const category = wholeGraphNodes.find((n) => n.id === nodeID).type;
+    const category = wholeGraphNodes.find(n => n.id === nodeID).type;
     return {
       nodeID,
       nodeIDsBefore,

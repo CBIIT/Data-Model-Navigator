@@ -7,11 +7,9 @@ import {
 import GraphDrawer from './GraphDrawer';
 
 const ReduxGraphDrawer = (() => {
-  const mapStateToProps = (state) => ({
+  const mapStateToProps = state => ({
     nodes: state.ddgraph.nodes,
     edges: state.ddgraph.edges,
-    activeFilter: state.submission.activeFilter,
-    filtersCleared: state.submission.filtersCleared,
     graphBoundingBox: state.ddgraph.graphBoundingBox,
     layoutInitialized: state.ddgraph.layoutInitialized,
     highlightingNode: state.ddgraph.highlightingNode,
@@ -26,13 +24,12 @@ const ReduxGraphDrawer = (() => {
     isSearchMode: state.ddgraph.isSearchMode,
   });
 
-  const mapDispatchToProps = (dispatch) => ({
-    onHoverNode: (nodeID) => dispatch(hoverNode(nodeID)),
+  const mapDispatchToProps = dispatch => ({
+    onHoverNode: nodeID => dispatch(hoverNode(nodeID)),
     onCancelHoverNode: () => dispatch(hoverNode(null)),
-    onClickNode: (nodeID) => dispatch(clickNode(nodeID)),
-    onGraphNodesSVGElementsUpdated: (graphNodesSVGElements) => (
-      dispatch(setGraphNodesSVGElements(graphNodesSVGElements))
-    ),
+    onClickNode: nodeID => dispatch(clickNode(nodeID)),
+    onGraphNodesSVGElementsUpdated: graphNodesSVGElements =>
+      dispatch(setGraphNodesSVGElements(graphNodesSVGElements)),
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(GraphDrawer);
