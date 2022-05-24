@@ -102,11 +102,13 @@ class GraphCalculator extends React.Component {
       } else {
         this.props.onDataModelStructureCalculated(null);
       }
+    } else {
+      this.props.onDataModelStructureCalculated(null);
     }
 
     this.oldHighlightingNode = newHighlightingNode;
     this.oldSecondHighlightingNodeID = newSecondHighlightingNodeID;
-  }
+  } 
 
   getDataModelStructureForHighlightedNodes(newHighlightingNode) {
     const relatedHighlightedNodeIDs = calculateHighlightRelatedNodeIDs(
