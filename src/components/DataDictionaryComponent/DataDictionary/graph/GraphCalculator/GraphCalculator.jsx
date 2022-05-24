@@ -113,10 +113,20 @@ class GraphCalculator extends React.Component {
       newHighlightingNode,
       this.props.nodes,
     );
+
+    //filter circular/loop relation between nodes
+    const targets = [];
     const subgraphEdges = this.props.edges
       .filter((e) => (relatedHighlightedNodeIDs.includes(e.source)
         && relatedHighlightedNodeIDs.includes(e.target)))
-      .map((e) => ({ source: e.source, target: e.target }));
+      .map((e) => {
+        const index = targets.indexOf(e.source);
+        if (index === -1) {
+          targets.push(e.target);
+          return { source: e.source, target: e.target };
+        }
+      }).filter(e => e);
+
     const {
       dataModelStructure,
       routesBetweenStartEndNodes,
