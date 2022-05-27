@@ -27,8 +27,8 @@ storiesOf('Header', module)
 // import ReduxDataDictionary from './DataDictionary/ReduxDataDictionary';
 
 const version = { commit: '913161064b02bcef024d072873e77c8c79cc1a68', dictionary: { commit: '520a25999fd183f6c5b7ddef2980f3e839517da5', version: '0.2.1-9-g520a259' }, version: '4.0.0-44-g9131610' };
-// const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml";
-// const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
+const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml";
+const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
 
 // const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_file.yaml";
 // const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_properties_file.yaml";
@@ -39,8 +39,8 @@ const version = { commit: '913161064b02bcef024d072873e77c8c79cc1a68', dictionary
 // const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/cds-model/main/model-desc/cds-model.yml";
 // const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/cds-model/main/model-desc/cds-model-props.yml";
 
-const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/BENTO-TAILORx-model/master/model-desc/bento_tailorx_model_file.yaml";
-const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/BENTO-TAILORx-model/master/model-desc/bento_tailorx_model_properties.yaml";
+// const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/BENTO-TAILORx-model/master/model-desc/bento_tailorx_model_file.yaml";
+// const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/BENTO-TAILORx-model/master/model-desc/bento_tailorx_model_properties.yaml";
 
 
 const getData = async (url) => {
@@ -213,7 +213,7 @@ async function init() {
         store.dispatch({
           type: 'RECEIVE_DICTIONARY',
           // data: newDict
-          payload: { data: newDataList },
+          payload: { data: newDataList, facetfilterConfig: filterConfig },
         }),
         store.dispatch({
           type: 'RECEIVE_VERSION_INFO',
