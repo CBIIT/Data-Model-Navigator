@@ -2,7 +2,6 @@ import _ from 'lodash';
 import {
   facetSearchData,
   filterOptions,
-  filterSections,
 } from '../bento/dataDictionaryData'
 import { clearAllFilters } from '../store/actions/actions';
 /**
@@ -153,7 +152,7 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
   return Object.fromEntries(filteredDict);
 };
   
-export const initializeFilterHashMap = (dictionary) => {
+export const initializeFilterHashMap = (dictionary, filterSections) => {
   const map = new Map();
   filterOptions.forEach((option) => map.set(option, []));
   Object.entries(dictionary)
@@ -218,7 +217,7 @@ export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
 }
 
 //** filter subject count */
-export const generateSubjectCountsAndFilterData = (data, allActiveFilters = getAllFilters(facetSearchData)) => {
+export const generateSubjectCountsAndFilterData = (data, allActiveFilters = [], facetFilterSearchData) => {
   const processedFilters = Object.entries(allActiveFilters)
     .filter(([, value]) => value.length > 0);
   //** no active filters */

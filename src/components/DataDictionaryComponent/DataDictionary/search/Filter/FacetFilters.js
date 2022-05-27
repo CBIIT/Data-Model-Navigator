@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { connect } from 'react-redux';
 import {
   List,
   Accordion,
@@ -23,7 +22,6 @@ import {
   defaultFacetSectionVariables,
 } from '../../bento/dataDictionaryData';
 import CheckBoxView from './CheckBoxView';
-import { clearAllFilters, toggleCheckBox } from '../../store/actions/actions';
 import styles from './FacetFilters.style';
 import FacetFilterThemeProvider from './FacetFilterThemeConfig';
 
@@ -314,15 +312,4 @@ const FacetFilters = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onClearAllFilter : () => dispatch(clearAllFilters()),
-    onToggleCheckBox : (toggleCheckBoxItem) => dispatch(toggleCheckBox(toggleCheckBoxItem)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps) (withStyles(styles)(FacetFilters));
+export default withStyles(styles)(FacetFilters);

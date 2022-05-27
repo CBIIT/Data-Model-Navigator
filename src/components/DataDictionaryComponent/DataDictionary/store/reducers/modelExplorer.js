@@ -40,10 +40,11 @@ const defaultFilterConfig = {
 const moduleReducers = (state = initialState, action) => {
   const { payload } = action;
   let filtered;
-  const filterConfig = (payload && payload.facetfilterConfig)
-    ? payload.facetfilterConfig : defaultFilterConfig;
+  
   switch (action.type) {
     case actionTypes.RECEIVE_DICTIONARY:
+      const filterConfig = (payload && payload.facetfilterConfig)
+        ? payload.facetfilterConfig : defaultFilterConfig;
       const dictionary = getDictionaryWithExcludeSystemProperties(payload.data);
       filtered = generateSubjectCountsAndFilterData(dictionary);
       return ({
@@ -54,7 +55,7 @@ const moduleReducers = (state = initialState, action) => {
         allActiveFilters: getAllFilters(filterConfig.facetSearchData),
         unfilteredDictionary: dictionary,
         filteredDictionary: dictionary,
-        filterHashMap: initializeFilterHashMap(dictionary),
+        filterHashMap: initializeFilterHashMap(dictionary, filterConfig.filterSections),
         subjectCountObject: filtered,
         facetfilterConfig: filterConfig,
         checkbox: {
@@ -65,7 +66,7 @@ const moduleReducers = (state = initialState, action) => {
     case actionTypes.FILTER_DATA_EXPLORER:
       const allActiveFilters = toggleCheckBoxAction(payload, state);
       const updatedCheckboxData = setSelectedFilterValues(
-        payload.facetfilterConfig.facetSearchData,
+        state.facetfilterConfig.facetSearchData,
         allActiveFilters);
       filtered = generateSubjectCountsAndFilterData(state, allActiveFilters);
       const resultState = {
@@ -85,11 +86,11 @@ const moduleReducers = (state = initialState, action) => {
         dictionary: state.unfilteredDictionary,
         filteredDictionary: state.unfilteredDictionary,
         subjectCountObject: filtered,
-        allActiveFilters: filterConfig.baseFilters,
+        allActiveFilters: state.facetfilterConfig.baseFilters,
         activeFilter: false,
         filtersCleared: true,
         checkbox: {
-          data: setSubjectCount(filterConfig.facetSearchData,
+          data: setSubjectCount(state.facetfilterConfig.facetSearchData,
           filtered.subjectCounts),
         },
       }
