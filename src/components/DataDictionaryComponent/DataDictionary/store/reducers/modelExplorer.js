@@ -3,7 +3,6 @@ import {
   setSelectedFilterValues,
 } from 'bento-components';
 import * as actionTypes from '../actions/actionTypes';
-import { facetSearchData, baseFilters } from '../../bento/dataDictionaryData';
 import {
   getState,
   createFilterVariables,
@@ -15,8 +14,6 @@ import {
   generateSubjectCountsAndFilterData,
   excludeSystemProperties,
   getAllFilters,
-  allFilters,
-  newHandleExplorerFilter,
   toggleCheckBoxAction,
 } from '../../utils/modelExplorerUtil';
 
@@ -28,11 +25,23 @@ const initialState = {
   filtersCleared: false,
   filterGroup: '',
   filterHashMap: new Map(),
+  filterConfig: {}
 };
+
+const defaultFilterConfig = {
+  facetSearchData: [],
+  facetSectionVariables: {},
+  resetIcon: {},
+  baseFilters: {},
+  filterSections: [],
+  filterOptions: []
+}
 
 const moduleReducers = (state = initialState, action) => {
   const { payload } = action;
   let filtered;
+  const filterConfig = (payload && payload.facetfilterConfig)
+    ? payload.facetfilterConfig : defaultFilterConfig;
   switch (action.type) {
     case actionTypes.RECEIVE_DICTIONARY:
       const dictionary = getDictionaryWithExcludeSystemProperties(payload.data);
@@ -42,19 +51,22 @@ const moduleReducers = (state = initialState, action) => {
         dictionary: dictionary,
         nodeTypes: getNodeTypes(payload.data),
         file_nodes: getFileNodes(payload.data),
-        allActiveFilters: getAllFilters(facetSearchData),
+        allActiveFilters: getAllFilters(filterConfig.facetSearchData),
         unfilteredDictionary: dictionary,
         filteredDictionary: dictionary,
         filterHashMap: initializeFilterHashMap(dictionary),
         subjectCountObject: filtered,
+        facetfilterConfig: filterConfig,
         checkbox: {
-          data: setSubjectCount(facetSearchData, filtered.subjectCounts),
+          data: setSubjectCount(filterConfig.facetSearchData, filtered.subjectCounts),
         },
       });
     
     case actionTypes.FILTER_DATA_EXPLORER:
       const allActiveFilters = toggleCheckBoxAction(payload, state);
-      const updatedCheckboxData = setSelectedFilterValues(facetSearchData, allActiveFilters);
+      const updatedCheckboxData = setSelectedFilterValues(
+        payload.facetfilterConfig.facetSearchData,
+        allActiveFilters);
       filtered = generateSubjectCountsAndFilterData(state, allActiveFilters);
       const resultState = {
         ...state,
@@ -73,11 +85,12 @@ const moduleReducers = (state = initialState, action) => {
         dictionary: state.unfilteredDictionary,
         filteredDictionary: state.unfilteredDictionary,
         subjectCountObject: filtered,
-        allActiveFilters: baseFilters,
+        allActiveFilters: filterConfig.baseFilters,
         activeFilter: false,
         filtersCleared: true,
         checkbox: {
-          data: setSubjectCount(facetSearchData, filtered.subjectCounts),
+          data: setSubjectCount(filterConfig.facetSearchData,
+          filtered.subjectCounts),
         },
       }
 

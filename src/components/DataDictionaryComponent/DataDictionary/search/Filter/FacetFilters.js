@@ -20,7 +20,7 @@ import {
 } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  facetSearchData, facetSectionVariables, resetIcon, defaultFacetSectionVariables,
+  defaultFacetSectionVariables,
 } from '../../bento/dataDictionaryData';
 import CheckBoxView from './CheckBoxView';
 import { clearAllFilters, toggleCheckBox } from '../../store/actions/actions';
@@ -56,6 +56,11 @@ const FacetFilters = ({
   const activeFiltersCount = Object.entries(activeFilters).reduce(
     (acc, [key, val]) => acc + (val.length), 0, // eslint-disable-line no-unused-vars
   );
+
+  const facetSectionVariables = useSelector((state) => (
+    state.submission
+          && state.submission.facetfilterConfig
+      ? state.submission.facetfilterConfig.facetSectionVariables : {}));
 
   const sideBarContent = useSelector((state) => (
     state.submission
@@ -158,7 +163,6 @@ const FacetFilters = ({
       && item.subjects > 0)).map((item) => (
       {
         ...item,
-        title: sideBarItem.tooltip ? sideBarItem.tooltip : 'undefined!!!!!!',
       }
     ));
     const selectedCheckbox = selectedItems.slice(0, 3)

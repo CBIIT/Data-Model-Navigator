@@ -1,11 +1,8 @@
-import { filterGridItemsCounterSelector } from '@material-ui/data-grid';
 import _ from 'lodash';
 import {
   facetSearchData,
-  baseFilters,
   filterOptions,
   filterSections,
-  types,
 } from '../bento/dataDictionaryData'
 import { clearAllFilters } from '../store/actions/actions';
 /**
@@ -54,17 +51,18 @@ export const createFilterVariables = (data, currentAllActiveFilters) => {
 };
   
 export const hashMapHelper = (groupName, [key, value], hashMap) => {
+  const isArray = Array.isArray(value[groupName]);
   switch (groupName) {
-    case 'category':
+    case isArray && 'category':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
-    case 'assignment':
+    case isArray && 'assignment':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
-    case 'class':
+    case isArray && 'class':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
-    case 'inclusion': {
+    case isArray && 'inclusion': {
       const inclusionObj = value[groupName];
       if (inclusionObj) {
         Object.keys(inclusionObj)

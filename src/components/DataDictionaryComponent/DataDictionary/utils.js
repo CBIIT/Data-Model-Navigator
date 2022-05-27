@@ -158,7 +158,7 @@ export const parseDictionaryNodes = (dictionary) => Object.keys(dictionary).filt
     return originNode;
   },
 ).filter(
-  (node) => node.category && node.id,
+  (node) => node.id,
 );
 
 export const getPropertyDescription = (property) => {

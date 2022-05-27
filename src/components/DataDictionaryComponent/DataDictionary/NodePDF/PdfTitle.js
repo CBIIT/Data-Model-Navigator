@@ -135,6 +135,7 @@ const PdfTitle = (node) => {
       </View>
       <View style={createStyle(styles.tagsInfo, categoryColor)}>
         <span style={styles.tagContainer}>
+          { (node.assignment) ? (
           <Text style={styles.nodeAssignment}>
             <span style={styles.label}>
               {'Assignment: '}
@@ -142,7 +143,8 @@ const PdfTitle = (node) => {
             <span style={styles.assignment}>
               {capitalizeFirstLetter(node.assignment)}
             </span>
-          </Text>
+          </Text>) : (<Text />)}
+          { (node.nodeClass) ? (
           <Text style={styles.nodeClass}>
             <span style={styles.label}>
               {'Class: '}
@@ -151,6 +153,7 @@ const PdfTitle = (node) => {
               {capitalizeFirstLetter(node.nodeClass)}
             </span>
           </Text>
+          ) : (<Text />)}
         </span>
       </View>
     </View>

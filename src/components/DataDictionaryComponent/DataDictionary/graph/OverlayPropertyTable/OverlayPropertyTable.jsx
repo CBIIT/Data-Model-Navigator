@@ -144,20 +144,27 @@ class OverlayPropertyTable extends React.Component {
               <Grid item lg={3} md={3} sm={3} xs={12} />
               <Grid item lg={4} md={4} sm={4} xs={12}
                 className={classes.nodeAssignmentGroup}>
-                <span className={classes.nodeLabel}>
-                  <span>
-                    Assignment:
+                { (node.assignment) && (
+                <>
+                  <span className={classes.nodeLabel}>
+                    <span>
+                      Assignment:
+                    </span>
+                    <span className={classes.nodeAssignment}>
+                      {capitalizeFirstLetter(node.assignment)}
+                    </span>
                   </span>
-                  <span className={classes.nodeAssignment}>
-                    {capitalizeFirstLetter(node.assignment)}
+                  </>)}
+                  {(node.nodeClass) && (
+                  <>
+                  <span className={classes.nodeLabel}>
+                    Class:
+                    <span className={classes.nodeClass}>
+                      {capitalizeFirstLetter(node.class)}
+                    </span>
                   </span>
-                </span>
-                <span className={classes.nodeLabel}>
-                  Class:
-                  <span className={classes.nodeClass}>
-                    {capitalizeFirstLetter(node.class)}
-                  </span>
-                </span>
+                </>)
+                }
               </Grid>
 
             </Grid>
