@@ -51,18 +51,18 @@ export const createFilterVariables = (data, currentAllActiveFilters) => {
 };
   
 export const hashMapHelper = (groupName, [key, value], hashMap) => {
-  const isArray = Array.isArray(value[groupName]);
+  const isValiddArray = Array.isArray(value[groupName]);
   switch (groupName) {
-    case isArray && 'category':
+    case isValiddArray && 'category':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
-    case isArray && 'assignment':
+    case isValiddArray && 'assignment':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
-    case isArray && 'class':
+    case isValiddArray && 'class':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
-    case isArray && 'inclusion': {
+    case isValiddArray && 'inclusion': {
       const inclusionObj = value[groupName];
       if (inclusionObj) {
         Object.keys(inclusionObj)

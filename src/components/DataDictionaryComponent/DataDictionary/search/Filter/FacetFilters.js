@@ -60,7 +60,7 @@ const FacetFilters = ({
   const facetSectionVariables = useSelector((state) => (
     state.submission
           && state.submission.facetfilterConfig
-      ? state.submission.facetfilterConfig.facetSectionVariables : {}));
+      ? state.submission.facetfilterConfig.facetSectionVariables : {}));  
 
   const sideBarContent = useSelector((state) => (
     state.submission
@@ -201,6 +201,11 @@ const FacetFilters = ({
   };
 
   const sideBarSections = arrangeBySections(sideBarDisplay);
+
+  if (facetSectionVariables
+      && Object.keys(facetSectionVariables).length === 0) {
+    return (<></>)
+  }
 
   return (
     <>
