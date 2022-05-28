@@ -33,6 +33,7 @@ class GraphCalculator extends React.Component {
   componentWillUpdate(nextProps) {
     const newDictionary = nextProps.dictionary;
     if (this.oldDictionary !== newDictionary) {
+      this.oldDictionary = newDictionary;
       calculateGraphLayout(
         newDictionary,
         this.props.countsSearch,
