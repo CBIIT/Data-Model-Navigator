@@ -50,18 +50,18 @@ export const createFilterVariables = (data, currentAllActiveFilters) => {
 };
   
 export const hashMapHelper = (groupName, [key, value], hashMap) => {
-  const isValiddArray = Array.isArray(value[groupName]);
+  // const isValiddArray = Array.isArray(value[groupName]);
   switch (groupName) {
-    case isValiddArray && 'category':
+    case 'category':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
-    case isValiddArray && 'assignment':
+    case 'assignment':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
-    case isValiddArray && 'class':
+    case 'class':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
-    case isValiddArray && 'inclusion': {
+    case 'inclusion': {
       const inclusionObj = value[groupName];
       if (inclusionObj) {
         Object.keys(inclusionObj)
@@ -217,7 +217,7 @@ export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
 }
 
 //** filter subject count */
-export const generateSubjectCountsAndFilterData = (data, allActiveFilters = [], facetFilterSearchData) => {
+export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allFilters({}), facetFilterSearchData) => {
   const processedFilters = Object.entries(allActiveFilters)
     .filter(([, value]) => value.length > 0);
   //** no active filters */
