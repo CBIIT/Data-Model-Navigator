@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { connect } from 'react-redux';
 import {
   List,
   Accordion,
@@ -20,10 +19,9 @@ import {
 } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  facetSearchData, facetSectionVariables, resetIcon, defaultFacetSectionVariables,
+  defaultFacetSectionVariables,
 } from '../../bento/dataDictionaryData';
 import CheckBoxView from './CheckBoxView';
-import { clearAllFilters, toggleCheckBox } from '../../store/actions/actions';
 import styles from './FacetFilters.style';
 import FacetFilterThemeProvider from './FacetFilterThemeConfig';
 
@@ -56,6 +54,11 @@ const FacetFilters = ({
   const activeFiltersCount = Object.entries(activeFilters).reduce(
     (acc, [key, val]) => acc + (val.length), 0, // eslint-disable-line no-unused-vars
   );
+
+  const facetSectionVariables = useSelector((state) => (
+    state.submission
+          && state.submission.facetfilterConfig
+      ? state.submission.facetfilterConfig.facetSectionVariables : {}));  
 
   const sideBarContent = useSelector((state) => (
     state.submission
@@ -129,7 +132,6 @@ const FacetFilters = ({
       datafield: item.datafield,
       isChecked: !item.isChecked,
     }
-    console.log('toggle checkbox');
     onToggleCheckBox(toggleCheckBoxItem);
   };
 
@@ -159,7 +161,6 @@ const FacetFilters = ({
       && item.subjects > 0)).map((item) => (
       {
         ...item,
-        title: sideBarItem.tooltip ? sideBarItem.tooltip : 'undefined!!!!!!',
       }
     ));
     const selectedCheckbox = selectedItems.slice(0, 3)
@@ -198,6 +199,11 @@ const FacetFilters = ({
   };
 
   const sideBarSections = arrangeBySections(sideBarDisplay);
+
+  if (facetSectionVariables
+      && Object.keys(facetSectionVariables).length === 0) {
+    return (<></>)
+  }
 
   return (
     <>
@@ -306,15 +312,4 @@ const FacetFilters = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onClearAllFilter : () => dispatch(clearAllFilters()),
-    onToggleCheckBox : (toggleCheckBoxItem) => dispatch(toggleCheckBox(toggleCheckBoxItem)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps) (withStyles(styles)(FacetFilters));
+export default withStyles(styles)(FacetFilters);

@@ -2,16 +2,20 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/styles';
+import {
+  Grid,
+  withStyles,
+} from '@material-ui/core';
 import Button from '@gen3/ui-component/dist/components/Button';
 // eslint-disable-next-line no-unused-vars
 import { SearchResultItemShape } from '../../utils';
-import { createFileName } from '../../../utils';
+import { capitalizeFirstLetter, createFileName } from '../../../utils';
 import DownloadButton from '../../NodePDF/DownloadButton';
 import { getCategoryColor, getCategoryIconSVG } from '../../NodeCategories/helper';
 import DataDictionaryPropertyTable from '../../table/DataDictionaryPropertyTable';
 import styles from './OverlayPropertyTable.style';
 import IconDownloadPDF from '../../table/icons/icon_download_PDF.svg';
+import IconDownloadPTSV from '../../table/icons/icon_download_TSV.svg';
 
 const pdfDownloadConfig = {
   image: IconDownloadPDF,
@@ -19,6 +23,14 @@ const pdfDownloadConfig = {
   fileType: 'pdf',
   prefix: 'ICDC_Data_Model_',
 };
+
+const csvBtnDownloadConfig = {
+  image: IconDownloadPTSV,
+  fileType: 'txt',
+  prefix: 'ICDC-',
+};
+
+const expanded = true;
 
 class OverlayPropertyTable extends React.Component {
   /**
@@ -87,35 +99,100 @@ class OverlayPropertyTable extends React.Component {
                   <i className={`${classes.closeIcon} g3-icon g3-icon--cross g3-icon--sm`} />
                 </span>
                 <div className={classes.downloadButton}>
+                  {
+                    (node.template === 'Yes')
+                    && (
+                    <DownloadButton
+                      config={csvBtnDownloadConfig}
+                      documentData={node}
+                      template={node.template}
+                      fileName={createFileName(node.id, csvBtnDownloadConfig.prefix)}
+                    />
+                    )
+                  }
                   <DownloadButton
                     config={pdfDownloadConfig}
                     documentData={node}
                     fileName={createFileName('', pdfDownloadConfig.prefix)}
                   />
+                  
                 </div>
+                <div className={classes.buttonWrap}>
+                
+              </div>
               </div>
             </div>
-            <div className={classes.property}>
-              {/* <DataDictionaryCategory
-                nodes={[this.props.node]}
-                category={this.props.node.category}
-                expanded={expanded}
-              /> */}
-              {/* <DataDictionaryNode
-                node={this.props.node}
-                expanded={expanded}
-              /> */}
-              <DataDictionaryPropertyTable
-                properties={node.properties}
-                requiredProperties={node.required}
-                preferredProperties={node.preferred}
-                hasBorder={false}
-                onlyShowMatchedProperties={searchedNodeNotOpened}
-                needHighlightSearchResult={needHighlightSearchResult}
-                // hideIsRequired={searchedNodeNotOpened}
-                matchedResult={this.props.matchedResult}
-              />
+            <div
+              className={classes.categoryDivider}
+              style={{ borderLeftColor: getCategoryColor(node.category) }}
+            />
+            <div
+              className={classes.node}
+              style={{ borderLeftColor: getCategoryColor(node.category) }}
+            >
+              <Grid container>
+                <Grid item lg={3} md={3} sm={3} xs={12}>
+                  <span className={classes.nodeTitle}>
+                    {capitalizeFirstLetter(node.title)}
+                  </span>
+                </Grid>
+                <Grid item lg={9} md={9} sm={9} xs={9} className={classes.nodeDescription}>
+                  <span>
+                    {(node.desc) ? node.desc : this.props.description}
+                  </span>
+                </Grid>
+              <Grid item lg={3} md={3} sm={3} xs={12} />
+              <Grid item lg={4} md={4} sm={4} xs={12}
+                className={classes.nodeAssignmentGroup}>
+                { (node.assignment) && (
+                <>
+                  <span className={classes.nodeLabel}>
+                    <span>
+                      Assignment:
+                    </span>
+                    <span className={classes.nodeAssignment}>
+                      {capitalizeFirstLetter(node.assignment)}
+                    </span>
+                  </span>
+                  </>)}
+                  {(node.nodeClass) && (
+                  <>
+                  <span className={classes.nodeLabel}>
+                    Class:
+                    <span className={classes.nodeClass}>
+                      {capitalizeFirstLetter(node.class)}
+                    </span>
+                  </span>
+                </>)
+                }
+              </Grid>
+
+            </Grid>
             </div>
+
+            <div className={classes.propertyTable}>
+              <div className={classes.propertySummary}>
+                <i>
+                  <span>{node.title}</span>
+                  <span> has </span>
+                  <span>{Object.keys(node.properties).length}</span>
+                  <span> properties. </span>
+                </i>
+              </div>
+                  
+              <div className={classes.property}>
+                <DataDictionaryPropertyTable
+                  properties={node.properties}
+                  requiredProperties={node.required}
+                  preferredProperties={node.preferred}
+                  hasBorder={false}
+                  onlyShowMatchedProperties={searchedNodeNotOpened}
+                  needHighlightSearchResult={needHighlightSearchResult}
+                  // hideIsRequired={searchedNodeNotOpened}
+                  matchedResult={this.props.matchedResult}
+                />
+              </div>
+            </div>        
           </div>
         </div>
       </div>

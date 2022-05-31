@@ -1,11 +1,7 @@
-import { filterGridItemsCounterSelector } from '@material-ui/data-grid';
 import _ from 'lodash';
 import {
   facetSearchData,
-  baseFilters,
   filterOptions,
-  filterSections,
-  types,
 } from '../bento/dataDictionaryData'
 import { clearAllFilters } from '../store/actions/actions';
 /**
@@ -54,6 +50,7 @@ export const createFilterVariables = (data, currentAllActiveFilters) => {
 };
   
 export const hashMapHelper = (groupName, [key, value], hashMap) => {
+  // const isValiddArray = Array.isArray(value[groupName]);
   switch (groupName) {
     case 'category':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
@@ -155,7 +152,7 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
   return Object.fromEntries(filteredDict);
 };
   
-export const initializeFilterHashMap = (dictionary) => {
+export const initializeFilterHashMap = (dictionary, filterSections) => {
   const map = new Map();
   filterOptions.forEach((option) => map.set(option, []));
   Object.entries(dictionary)
@@ -220,7 +217,7 @@ export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
 }
 
 //** filter subject count */
-export const generateSubjectCountsAndFilterData = (data, allActiveFilters = getAllFilters(facetSearchData)) => {
+export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allFilters({}), facetFilterSearchData) => {
   const processedFilters = Object.entries(allActiveFilters)
     .filter(([, value]) => value.length > 0);
   //** no active filters */

@@ -41,18 +41,18 @@ class GraphNode extends React.Component {
         key={this.props.node.id}
         transform={`translate(${this.props.node.topCenterX}, ${this.props.node.topCenterY}) `}
         className={`graph-node 
-        ${nodeFadedClassModifier} 
-        ${nodeHalfFadedClassModifier} 
-        ${nodeDashedClassModifier} 
-        ${nodeClickableClassModifier} 
-        ${nodeIsCurrentHighlightingClassModifier}`}
+          ${nodeFadedClassModifier} 
+          ${nodeHalfFadedClassModifier} 
+          ${nodeDashedClassModifier} 
+          ${nodeClickableClassModifier} 
+          ${nodeIsCurrentHighlightingClassModifier}`}
         onMouseOver={this.props.onMouseOver}
         onMouseOut={this.props.onMouseOut}
         onClick={this.props.onClick}
         id={this.props.node.id}
       >
         <rect
-          className="graph-node__rect"
+          className='graph-node__rect'
           x={-this.props.node.width / 2}
           y={0}
           width={this.props.node.width}
@@ -62,30 +62,30 @@ class GraphNode extends React.Component {
           stroke={this.props.node.color}
         />
         {
-        getNodeTitleSVGFragment(
-          this.props.node.names,
-          this.props.matchedNodeNameIndices,
-          this.props.node.fontSize,
-          this.props.node.textPadding,
-          this.props.node.textLineGap,
-        )
-      }
+          getNodeTitleSVGFragment(
+            this.props.node.names,
+            this.props.matchedNodeNameIndices,
+            this.props.node.fontSize,
+            this.props.node.textPadding,
+            this.props.node.textLineGap,
+          )
+        }
         {
           <g
             transform={`translate(${-this.props.node.iconRadius}, ${-this.props.node.iconRadius})`}
           >
             {
-            IconSVG ? <IconSVG /> : (
-              <circle
-                cx={this.props.node.iconRadius}
-                cy={this.props.node.iconRadius}
-                r={this.props.node.iconRadius}
-                fill={this.props.node.color}
-              />
-            )
-          }
+              IconSVG ? <IconSVG /> : (
+                <circle
+                  cx={this.props.node.iconRadius}
+                  cy={this.props.node.iconRadius}
+                  r={this.props.node.iconRadius}
+                  fill={this.props.node.color}
+                />
+              )
+            }
           </g>
-      }
+        }
       </g>
     );
   }
@@ -127,3 +127,4 @@ GraphNode.defaultProps = {
 };
 
 export default GraphNode;
+

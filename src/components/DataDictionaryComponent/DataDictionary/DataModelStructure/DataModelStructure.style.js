@@ -31,7 +31,7 @@ export default () => ({
   icon: {
     position: 'absolute',
     left: '-35px',
-    top: '5px',
+    top: '0px',
   },
   summaryBetween: {
     marginBottom: '10px',

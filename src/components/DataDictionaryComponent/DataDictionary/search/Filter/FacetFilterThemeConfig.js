@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 const theme = {
   overrides: {
     Mui: {
-      expanded: {
+      '&$expanded': {
         margin: '0px 0px',
       }
     },

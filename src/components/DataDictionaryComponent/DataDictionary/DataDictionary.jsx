@@ -12,7 +12,7 @@ import ReduxDictionarySearcher from './search/DictionarySearcher';
 import ReduxDictionarySearchHistory from './search/DictionarySearchHistory';
 import backgroundImg from '../assets/Model_View.png';
 // import store from '../../../store/index';
-import FacetFilters from './search/Filter/FacetFilters';
+import ReduxFacetFilters from './search/Filter/ReduxFacetFilter';
 // import { facetSearchData } from '../../../bento/dataDictionaryData';
 import './DataDictionary.css';
 
@@ -66,7 +66,7 @@ const DataDictionary = ({
         <ReduxDictionarySearchHistory
           onClickSearchHistoryItem={handleClickSearchHistoryItem}
         />
-        <FacetFilters />
+        <ReduxFacetFilters />
       </div>
       <div className={classes.main}>
         { isGraphView

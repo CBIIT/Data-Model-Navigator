@@ -63,8 +63,8 @@ export const calculateGraphLayout = (dictionary, countsSearch, linksSearch) => {
           const width = boundingBox.x2 - boundingBox.x1;
           const height = boundingBox.y2 - boundingBox.y1;
           const originNode = nodes.find((node) => node.id === n.name);
-          let outLinks; let
-            inLinks;
+          let outLinks = [];
+          let inLinks = [];
           if (edges.length > 0) {
             outLinks = edges
               .filter((edge) => edge.source.id === n.name)

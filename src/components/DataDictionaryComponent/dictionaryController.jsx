@@ -24,36 +24,10 @@ const getData = async (url) => {
   return data;
 };
 
-// const findObjectWithRef = (obj, updateFn, root_key = '', level = 0) => {
-//   // iterate over the properties
-//   for (var propertyName in obj) {
+async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS) {
 
-//     if (level === 0) root_key = propertyName;
-
-//     if (propertyName === '$ref') {
-//       obj['$ref'] = updateFn(obj['$ref'], root_key);
-//     }
-
-//     // any object that is not a simple value
-//     if (obj[propertyName] !== null && typeof obj[propertyName] === 'object') {
-//       // recurse into the object and write back the result to the object graph
-//       obj[propertyName] = findObjectWithRef(obj[propertyName], updateFn, root_key, (level + 1));
-//     }
-//   }
-
-//   return obj;
-// };
-
-// unresolveable:
-// {$ref: "_terms.yaml#/file_format"}
-// {$ref: "#/UUID"}
-
-async function getModelExploreData() {
-  // let url = 'https://wfy1997.s3.amazonaws.com/schema.json';
-  // if (window.location.hash) url = window.location.hash.slice(1);
-
-  const icdcMData = await getData(DATA_MODEL);
-  const icdcMPData = await getData(DATA_MODEL_PROPS);
+  const icdcMData = await getData(modelUrl);
+  const icdcMPData = await getData(modelPropsUrl);
 
   // translate the json file here
   const dataList = {};
@@ -65,8 +39,11 @@ async function getModelExploreData() {
     item.$schema = 'http://json-schema.org/draft-06/schema#';
     item.id = key;
     item.title = key;
-    if ('Category' in value.Tags) {
+    if (value.Tags && 'Category' in value.Tags) {
       item.category = value.Tags.Category;
+    } else if ('Category' in value) {
+      item.category = (value.Category && value.Category.length > 0)
+        ? value.Category : 'Undefined';   
     } else {
       item.category = 'Undefined';
     }
@@ -76,10 +53,10 @@ async function getModelExploreData() {
     item.submittable = true;
     item.constraints = null;
     item.type = 'object';
-    item.assignment = value.Tags.Assignment;
-    item.class = value.Tags.Class;
-    item.desc = value.Desc;
-    item.template = value.Tags.Template;
+    item.assignment = value.Tags?.Assignment ? value.Tags?.Assignment : '';
+    item.class = value.Tags?.Class ? value.Tags?.Class : '';
+    item.desc = value?.Desc ? value?.Desc : '';
+    item.template = value.Tags?.Template ? value.Tags?.Template : '';
 
     const link = [];
     const properties = {};
@@ -203,20 +180,6 @@ async function getModelExploreData() {
     data: newDataList,
     version: version,
   }
-
-  // Promise.all(
-  //   [
-  //     store.dispatch({
-  //       type: 'RECEIVE_DICTIONARY',
-  //       // data: newDict
-  //       payload: { data: newDataList },
-  //     }),
-  //     store.dispatch({
-  //       type: 'RECEIVE_VERSION_INFO',
-  //       data: version,
-  //     }),
-  //   ],
-  // );
 }
 
 module.exports.getModelExploreData = getModelExploreData;

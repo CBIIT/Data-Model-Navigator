@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -31,10 +30,10 @@ class GraphCalculator extends React.Component {
     }
   }
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillUpdate(nextProps) {
+  componentWillUpdate(nextProps) {
     const newDictionary = nextProps.dictionary;
     if (this.oldDictionary !== newDictionary) {
+      this.oldDictionary = newDictionary;
       calculateGraphLayout(
         newDictionary,
         this.props.countsSearch,
@@ -67,8 +66,7 @@ class GraphCalculator extends React.Component {
         this.props.nodes,
       );
       this.props.onPathRelatedToSecondHighlightingNodeCalculated(
-        pathRelatedToSecondHighlightingNode,
-      );
+        pathRelatedToSecondHighlightingNode);
     }
 
     // update data model structure if update highlighting/secondHighlighting node
@@ -89,25 +87,49 @@ class GraphCalculator extends React.Component {
           dataModelStructureRelatedNodeIDs,
           routesBetweenStartEndNodes,
         );
+      } else if (newHighlightingNode) {
+        const {
+          dataModelStructure,
+          dataModelStructureRelatedNodeIDs,
+          routesBetweenStartEndNodes,
+        } = this.getDataModelStructureForHighlightedNodes(
+          newHighlightingNode,
+        );
+        this.props.onDataModelStructureCalculated(
+          dataModelStructure,
+          dataModelStructureRelatedNodeIDs,
+          routesBetweenStartEndNodes,
+        );
       } else {
         this.props.onDataModelStructureCalculated(null);
       }
+    } else {
+      this.props.onDataModelStructureCalculated(null);
     }
 
     this.oldHighlightingNode = newHighlightingNode;
     this.oldSecondHighlightingNodeID = newSecondHighlightingNodeID;
-    this.oldDictionary = newDictionary;
-  }
+  } 
 
   getDataModelStructureForHighlightedNodes(newHighlightingNode) {
     const relatedHighlightedNodeIDs = calculateHighlightRelatedNodeIDs(
       newHighlightingNode,
       this.props.nodes,
     );
+
+    //filter circular/loop relation between nodes
+    const targets = [];
     const subgraphEdges = this.props.edges
       .filter((e) => (relatedHighlightedNodeIDs.includes(e.source)
         && relatedHighlightedNodeIDs.includes(e.target)))
-      .map((e) => ({ source: e.source, target: e.target }));
+      .map((e) => {
+        const index = targets.indexOf(e.source);
+        if (index === -1) {
+          targets.push(e.target);
+          return { source: e.source, target: e.target };
+        }
+      }).filter(e => e);
+
     const {
       dataModelStructure,
       routesBetweenStartEndNodes,
@@ -134,7 +156,6 @@ class GraphCalculator extends React.Component {
       newSecondHighlightingNodeID,
       this.props.nodes,
     );
-
     pathRelatedToSecondHighlightingNode.forEach((e) => {
       if (!subgraphNodeIDs.includes(e.source)) subgraphNodeIDs.push(e.source);
       if (!subgraphNodeIDs.includes(e.target)) subgraphNodeIDs.push(e.target);
@@ -156,7 +177,7 @@ class GraphCalculator extends React.Component {
   }
 
   render() {
-    return (<></>);
+    return (<React.Fragment />);
   }
 }
 

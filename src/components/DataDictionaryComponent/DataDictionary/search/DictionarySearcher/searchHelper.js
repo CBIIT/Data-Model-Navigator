@@ -79,7 +79,7 @@ export const searchKeyword = (searchData, keyword) => {
     .map((resItem) => {
       // A bug in Fuse sometimes returns wrong indices that end < start
       const matches = resItem.matches
-        .filter((matchItem) => matchItem.indices[0][1] >= matchItem.indices[0][0]);
+        .filter(matchItem => matchItem.indices[0][1] >= matchItem.indices[0][0]);
       return {
         ...resItem,
         matches,
@@ -97,7 +97,7 @@ export const searchKeyword = (searchData, keyword) => {
         matches,
       };
     })
-    .filter((resItem) => resItem.matches.length > 0);
+    .filter(resItem => resItem.matches.length > 0);
   const errorMsg = (result && result.length > 0) ? '' : ZERO_RESULT_FOUND_MSG;
   return {
     result,
@@ -121,29 +121,29 @@ export const getSearchSummary = (result) => {
     const nodeID = resItem.item.id;
     resItem.matches.forEach((matchedItem) => {
       switch (matchedItem.key) {
-        case 'properties.type':
-        case 'properties.name':
-        case 'properties.description':
-          matchedPropertiesCount += 1;
-          if (!matchedNodeIDsInProperties.includes(nodeID)) {
-            matchedNodeIDsInProperties.push(nodeID);
-          }
-          if (!generalMatchedNodeIDs.includes(nodeID)) {
-            generalMatchedNodeIDs.push(nodeID);
-          }
-          break;
-        case 'title':
-        case 'description':
-          matchedNodeNameAndDescriptionsCount += 1;
-          if (!matchedNodeIDsInNameAndDescription.includes(nodeID)) {
-            matchedNodeIDsInNameAndDescription.push(nodeID);
-          }
-          if (!generalMatchedNodeIDs.includes(nodeID)) {
-            generalMatchedNodeIDs.push(nodeID);
-          }
-          break;
-        default:
-          break;
+      case 'properties.type':
+      case 'properties.name':
+      case 'properties.description':
+        matchedPropertiesCount += 1;
+        if (!matchedNodeIDsInProperties.includes(nodeID)) {
+          matchedNodeIDsInProperties.push(nodeID);
+        }
+        if (!generalMatchedNodeIDs.includes(nodeID)) {
+          generalMatchedNodeIDs.push(nodeID);
+        }
+        break;
+      case 'title':
+      case 'description':
+        matchedNodeNameAndDescriptionsCount += 1;
+        if (!matchedNodeIDsInNameAndDescription.includes(nodeID)) {
+          matchedNodeIDsInNameAndDescription.push(nodeID);
+        }
+        if (!generalMatchedNodeIDs.includes(nodeID)) {
+          generalMatchedNodeIDs.push(nodeID);
+        }
+        break;
+      default:
+        break;
       }
     });
   });

@@ -154,3 +154,12 @@ export const controlVocabConfig = {
   maxNoOfItems: 15,
   maxNoOfItemDlgBox: 30,
 };
+
+export const filterConfig = {
+  facetSearchData: facetSearchData,
+  facetSectionVariables: facetSectionVariables,
+  resetIcon: resetIcon,
+  baseFilters: baseFilters,
+  filterSections: filterSections,
+  filterOptions: filterOptions
+}
