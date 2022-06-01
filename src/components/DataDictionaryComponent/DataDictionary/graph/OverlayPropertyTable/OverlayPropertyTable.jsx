@@ -155,7 +155,7 @@ class OverlayPropertyTable extends React.Component {
                     </span>
                   </span>
                   </>)}
-                  {(node.nodeClass) && (
+                  {(node.class) && (
                   <>
                   <span className={classes.nodeLabel}>
                     Class:
