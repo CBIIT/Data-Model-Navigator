@@ -6,7 +6,7 @@ export default () => ({
   },
   
   categoryHead : {
-    /* background: var(--dictionary-header-color)', */
+    background: '#fff',
     paddingTop: '6px',
     paddingBottom: '6px',
     paddingLeft: '12px',

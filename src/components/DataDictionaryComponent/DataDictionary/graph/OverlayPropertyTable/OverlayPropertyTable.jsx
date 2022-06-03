@@ -16,6 +16,7 @@ import DataDictionaryPropertyTable from '../../table/DataDictionaryPropertyTable
 import styles from './OverlayPropertyTable.style';
 import IconDownloadPDF from '../../table/icons/icon_download_PDF.svg';
 import IconDownloadPTSV from '../../table/icons/icon_download_TSV.svg';
+import NodeViewComponent from '../../table/DataDictionaryNode/components/NodeViewComponent';
 
 const pdfDownloadConfig = {
   image: IconDownloadPDF,
@@ -67,6 +68,7 @@ class OverlayPropertyTable extends React.Component {
     const searchedNodeNotOpened = isSearchMode && !this.props.isSearchResultNodeOpened;
     const needHighlightSearchResult = isSearchMode;
     // const expanded = true;
+    const categoryColor = getCategoryColor(node.category);
     return (
       <div className={classes.table}>
         <div className={classes.background} />
@@ -74,9 +76,9 @@ class OverlayPropertyTable extends React.Component {
           <div className={classes.content}>
             <div className={classes.header}>
               <div className={classes.category}
-                style={{ borderLeftColor: getCategoryColor(node.category) }}>
+                style={{ borderLeftColor: categoryColor }}>
                 <IconSVG className={`${classes.categoryIcon} ${node.category}`} />
-                <h4 className={classes.categoryText}>{node.category}</h4>
+                <h4 style={{ color: categoryColor }} className={classes.categoryText}>{capitalizeFirstLetter(node.category)}</h4>
                 {
                   isSearchMode && (
                     <Button
@@ -88,35 +90,15 @@ class OverlayPropertyTable extends React.Component {
                     />
                   )
                 }
-                <span
+                {/* <span
                   className={classes.close}
                   onClick={this.handleClose}
                   onKeyPress={this.handleClose}
                   role="button"
                   tabIndex={0}
                 >
-                  Close
                   <i className={`${classes.closeIcon} g3-icon g3-icon--cross g3-icon--sm`} />
-                </span>
-                <div className={classes.downloadButton}>
-                  {
-                    (node.template === 'Yes')
-                    && (
-                    <DownloadButton
-                      config={csvBtnDownloadConfig}
-                      documentData={node}
-                      template={node.template}
-                      fileName={createFileName(node.id, csvBtnDownloadConfig.prefix)}
-                    />
-                    )
-                  }
-                  <DownloadButton
-                    config={pdfDownloadConfig}
-                    documentData={node}
-                    fileName={createFileName('', pdfDownloadConfig.prefix)}
-                  />
-                  
-                </div>
+                </span> */}
                 <div className={classes.buttonWrap}>
                 
               </div>
@@ -130,48 +112,23 @@ class OverlayPropertyTable extends React.Component {
               className={classes.node}
               style={{ borderLeftColor: getCategoryColor(node.category) }}
             >
-              <Grid container>
-                <Grid item lg={3} md={3} sm={3} xs={12}>
-                  <span className={classes.nodeTitle}>
-                    {capitalizeFirstLetter(node.title)}
-                  </span>
-                </Grid>
-                <Grid item lg={9} md={9} sm={9} xs={9} className={classes.nodeDescription}>
-                  <span>
-                    {(node.desc) ? node.desc : this.props.description}
-                  </span>
-                </Grid>
-              <Grid item lg={3} md={3} sm={3} xs={12} />
-              <Grid item lg={4} md={4} sm={4} xs={12}
-                className={classes.nodeAssignmentGroup}>
-                { (node.assignment) && (
-                <>
-                  <span className={classes.nodeLabel}>
-                    <span>
-                      Assignment:
-                    </span>
-                    <span className={classes.nodeAssignment}>
-                      {capitalizeFirstLetter(node.assignment)}
-                    </span>
-                  </span>
-                  </>)}
-                  {(node.class) && (
-                  <>
-                  <span className={classes.nodeLabel}>
-                    Class:
-                    <span className={classes.nodeClass}>
-                      {capitalizeFirstLetter(node.class)}
-                    </span>
-                  </span>
-                </>)
-                }
-              </Grid>
-
-            </Grid>
+            <NodeViewComponent
+              node={node}
+              description={this.props.description}
+            />
             </div>
 
             <div className={classes.propertyTable}>
               <div className={classes.propertySummary}>
+                <span
+                  className={classes.close}
+                  onClick={this.handleClose}
+                  onKeyPress={this.handleClose}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <i className={`${classes.closeIcon} g3-icon g3-icon--cross g3-icon--sm`} />
+                </span>
                 <i>
                   <span>{node.title}</span>
                   <span> has </span>
