@@ -138,6 +138,7 @@ const ListComponent = ({
   maxNoOfItemDlgBox,
   expand,
 }) => {
+  const meanIndex = (length) => (length % 2) ? length/2 - .5 : length/2;
   const customTheme = (expand && items.length > maxNoOfItemDlgBox + maxNoOfItems)
     ? { overrides: { ...theme.overrides, ...threeColumnsView.overrides } }
     : (items.length > maxNoOfItems)
@@ -147,9 +148,10 @@ const ListComponent = ({
       <List>
         {items.map((item, index) => (
           <>
-            {((items.length / 2 === index) && expand) ? (
+            {(item.length > 30) && (meanIndex(items.length) - 1 === index ||
+            meanIndex(items.length) === index) ? (
               <>
-                <div className={classes.longText}>
+                <div className={classes.longText} id={item.length}>
                   <span className={classes.label}>
                     {item}
                   </span>
@@ -190,12 +192,13 @@ const styles = () => ({
     fontSize: '13px',
     fontWeight: '300',
     marginBottom: '4px',
+    lineHeight: '1.3',
   },
   listIcon: {
     float: 'left',
-    paddingTop: '-10px',
+    paddingTop: '-5px',
     height: '20px',
-    marginTop: '-45px',
+    marginTop: '-35px',
   },
   label: {
     paddingLeft: '15px',
