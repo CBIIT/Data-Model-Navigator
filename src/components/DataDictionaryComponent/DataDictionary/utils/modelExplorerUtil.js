@@ -112,9 +112,12 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
           break;
         }
         value.forEach((filterValue) => {
+          const valueFilteredDict = filteredDict.filter(([, thisValue]) => thisValue[key] === filterValue.toLowerCase());
+          const updateValueFilteredDict = (valueFilteredDict.length > 0)
+            ? valueFilteredDict : [ ...filteredDict, ...filterHashMap.get(filterValue.toLowerCase())];
           alternateFilteredDict = [
             ...alternateFilteredDict,
-            ...filteredDict.filter(([, thisValue]) => thisValue[key] === filterValue.toLowerCase()),
+            ...updateValueFilteredDict,
           ];
         });
         filteredDict = alternateFilteredDict;
