@@ -79,7 +79,7 @@ class OverlayPropertyTable extends React.Component {
                 style={{ borderLeftColor: categoryColor }}>
                 <IconSVG className={`${classes.categoryIcon} ${node.category}`} />
                 <h4 style={{ color: categoryColor }} className={classes.categoryText}>{capitalizeFirstLetter(node.category)}</h4>
-                {
+                {/* {
                   isSearchMode && (
                     <Button
                       className={classes.toggleNode}
@@ -89,7 +89,7 @@ class OverlayPropertyTable extends React.Component {
                       buttonType="secondary"
                     />
                   )
-                }
+                } */}
                 {/* <span
                   className={classes.close}
                   onClick={this.handleClose}

@@ -13,24 +13,41 @@ class GraphDrawer extends React.Component {
     this.nodeSVGElementInitialized = false;
   }
 
+  updateSVGElementOnGraph = (props) => {
+    const graphNodesSVGElements = props.nodes.map(node => {
+      if (node.id && this.getNodeRef(node.id).current) {
+        return {
+          nodeID: node.id,
+          svgElement: this.getNodeRef(node.id).current.getSVGElement(),
+        }
+      }
+      })
+       .reduce((acc, cur) => {
+         acc[cur.nodeID] = cur.svgElement;
+         return acc;
+       }, {});
+     this.nodeSVGElementInitialized = true;
+     this.props.onGraphNodesSVGElementsUpdated(graphNodesSVGElements);
+  }
+
   componentDidUpdate() {
     // check if need update all node's svg elements
     // this only happens once, at the first time graph is rendered
     if (this.props.isGraphView
        && this.props.layoutInitialized
        && !this.nodeSVGElementInitialized) {
-      const graphNodesSVGElements = this.props.nodes.map(node => ({
-        nodeID: node.id,
-        svgElement: this.getNodeRef(node.id).current.getSVGElement(),
-      }))
-        .reduce((acc, cur) => {
-          acc[cur.nodeID] = cur.svgElement;
-          return acc;
-        }, {});
-      this.nodeSVGElementInitialized = true;
-      this.props.onGraphNodesSVGElementsUpdated(graphNodesSVGElements);
+        this.updateSVGElementOnGraph(this.props);
     }
   }
+
+  componentWillUpdate() {
+    if (this.props.isGraphView
+      && this.props.layoutInitialized
+      && this.nodeSVGElementInitialized) {
+        this.updateSVGElementOnGraph(this.props);
+    }
+  }
+  
 
   onMouseOverNode = (node) => {
     this.props.onHoverNode(node.id);
