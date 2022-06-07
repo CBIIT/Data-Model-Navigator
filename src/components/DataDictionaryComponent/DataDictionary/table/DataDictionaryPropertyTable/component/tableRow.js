@@ -39,7 +39,6 @@ const TableRow = ({
   );
 
   const displayKeyPropsDescription = (description) => {
-    console.log(properties);
     const lines = description.split('<br>');
     return lines.map((line) => <span>{line}</span>);
   };

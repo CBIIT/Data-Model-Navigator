@@ -46,8 +46,6 @@ const NodeViewComponent = ({
   };
 
   const getDescription = (description) => {
-    console.log(matchedResult);
-    console.log(description);
     if (isSearchMode) {
       const nodeDescriptionFragment = getNodeDescriptionFragment(
         matchedResult.matches,
