@@ -8,6 +8,11 @@ import {
 } from '@material-ui/core';
 import Button from '@gen3/ui-component/dist/components/Button';
 // eslint-disable-next-line no-unused-vars
+import {
+  getNodeDescriptionFragment,
+  getNodeTitleFragment,
+} from '../../highlightHelper';
+
 import { SearchResultItemShape } from '../../utils';
 import { capitalizeFirstLetter, createFileName } from '../../../utils';
 import DownloadButton from '../../NodePDF/DownloadButton';
@@ -34,6 +39,33 @@ const csvBtnDownloadConfig = {
 const expanded = true;
 
 class OverlayPropertyTable extends React.Component {
+
+  getTitle = () => {
+    if (this.props.isSearchMode) {
+      const nodeTitleFragment = getNodeTitleFragment(
+        this.props.matchedResult.matches,
+        this.props.node.title,
+        'overlay-property-table__span',
+      );
+      return nodeTitleFragment;
+    }
+
+    return this.props.node.title;
+  };
+
+  getDescription = () => {
+    if (this.props.isSearchMode) {
+      const nodeDescriptionFragment = getNodeDescriptionFragment(
+        this.props.matchedResult.matches,
+        this.props.node.description,
+        'overlay-property-table__span',
+      );
+      return nodeDescriptionFragment;
+    }
+
+    return this.props.node.description;
+  };
+
   /**
    * Close the whole overlay property table
    */
@@ -112,9 +144,12 @@ class OverlayPropertyTable extends React.Component {
               className={classes.node}
               style={{ borderLeftColor: getCategoryColor(node.category) }}
             >
+
             <NodeViewComponent
               node={node}
               description={this.props.description}
+              isSearchMode={isSearchMode}
+              matchedResult={this.props.matchedResult}
             />
             </div>
 
@@ -147,6 +182,7 @@ class OverlayPropertyTable extends React.Component {
                   needHighlightSearchResult={needHighlightSearchResult}
                   // hideIsRequired={searchedNodeNotOpened}
                   matchedResult={this.props.matchedResult}
+                  isSearchMode={isSearchMode}
                 />
               </div>
             </div>        

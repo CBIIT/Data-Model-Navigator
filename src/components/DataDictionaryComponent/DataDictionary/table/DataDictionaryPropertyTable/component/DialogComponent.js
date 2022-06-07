@@ -61,6 +61,8 @@ const DialogComponent = ({
   items,
   maxNoOfItems,
   maxNoOfItemDlgBox,
+  isSearchMode,
+  typeMatchList,
 }) => {
   const [open, setOpen] = useState(display);
   const [expand, setExpand] = useState(false);
@@ -117,6 +119,8 @@ const DialogComponent = ({
             maxNoOfItems={maxNoOfItems}
             maxNoOfItemDlgBox={maxNoOfItemDlgBox}
             expand={expand}
+            isSearchMode={isSearchMode}
+            typeMatchList={typeMatchList}
           />
           <br />
           {(items.length > maxNoOfItemDlgBox && !expand) && (

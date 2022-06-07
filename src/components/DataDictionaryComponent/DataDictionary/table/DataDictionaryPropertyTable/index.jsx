@@ -24,13 +24,16 @@ const DataDictionaryPropertyTable = ({
   tideIsRequired,
   requiredProperties,
   preferredProperties,
+  isSearchMode,
 }) => {
   const [display, setDisplay] = useState(false);
   const [items, setItems] = useState([]);
+  const [matchedItem, setMatchedItems] = useState([]);
 
-  const openBoxHandler = (values) => {
+  const openBoxHandler = (values, typeMatchList = []) => {
     setDisplay(true);
     setItems(values);
+    setMatchedItems(typeMatchList);
   };
 
   const closeHandler = () => {
@@ -69,6 +72,7 @@ const DataDictionaryPropertyTable = ({
             needHighlightSearchResult={needHighLgSearchResult}
             hideIsRequired={hideIsRequired}
             openBoxHandler={openBoxHandler}
+            isSearchMode={isSearchMode}
           />
         </tbody>
       </table>
@@ -80,6 +84,8 @@ const DataDictionaryPropertyTable = ({
         items={items}
         maxNoOfItems={config.maxNoOfItems}
         maxNoOfItemDlgBox={config.maxNoOfItemDlgBox}
+        isSearchMode={isSearchMode}
+        typeMatchList={matchedItem}
       />
       )}
     </div>

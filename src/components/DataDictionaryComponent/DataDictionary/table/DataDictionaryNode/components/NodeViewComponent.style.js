@@ -59,5 +59,9 @@ export default () => ({
       borderRight: 'none',
     }
   },
+  spanHighlight: {
+    color: 'var(--g3-color__highlight-orange)',
+    fontWeight: '600',
+  },
 });
   

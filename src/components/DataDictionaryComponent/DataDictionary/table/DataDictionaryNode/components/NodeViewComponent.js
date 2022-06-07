@@ -8,11 +8,17 @@ import { capitalizeFirstLetter, createFileName } from '../../../../utils';
 import IconDownloadPDF from '../../icons/icon_download_PDF.svg';
 import IconDownloadPTSV from '../../icons/icon_download_TSV.svg';
 import DownloadButton from '../../../NodePDF/DownloadButton';
+import {
+  getNodeDescriptionFragment,
+  getNodeTitleFragment,
+} from '../../../highlightHelper';
 
 const NodeViewComponent = ({
   classes,
   node,
   description,
+  isSearchMode,
+  matchedResult,
 }) => {
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
@@ -27,19 +33,46 @@ const NodeViewComponent = ({
     prefix: 'ICDC_Data_Model_',
   };
 
+  const getTitle = () => {
+    if (isSearchMode) {
+      const nodeTitleFragment = getNodeTitleFragment(
+        matchedResult.matches,
+        capitalizeFirstLetter(node.title),
+        'data-dictionary-property-table__span',
+      );
+      return nodeTitleFragment;
+    }
+    return node.title;
+  };
+
+  const getDescription = (description) => {
+    console.log(matchedResult);
+    console.log(description);
+    if (isSearchMode) {
+      const nodeDescriptionFragment = getNodeDescriptionFragment(
+        matchedResult.matches,
+        description,
+        'data-dictionary-property-table__span',
+      );
+      return nodeDescriptionFragment;
+    }
+    return description;
+  };
+
   return (
     <>
       <Grid container>
         <Grid item lg={3} md={3} sm={3} xs={12}>
           <span className={classes.nodeTitle}>
-            {capitalizeFirstLetter(node.title)}
+            {getTitle()}
+            {/* {capitalizeFirstLetter(node.title)} */}
             {/* <i className={`g3-icon g3-icon--chevron-${this.props.expanded
               ? 'down' : 'right'} ${styles.nodeToggleIcon}`} /> */}
           </span>
         </Grid>
         <Grid item lg={9} md={9} sm={9} xs={9} className={classes.nodeDescription}>
           <span>
-            {(node.desc) ? node.desc : description}
+            {(node.desc) ? getDescription(node.desc) : description}
           </span>
         </Grid>
         <Grid item lg={3} md={3} sm={3} xs={12} />

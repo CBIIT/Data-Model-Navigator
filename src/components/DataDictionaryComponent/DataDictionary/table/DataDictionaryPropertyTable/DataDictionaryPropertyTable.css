@@ -106,3 +106,7 @@ td.data-dictionary-property-table__data:nth-child(2) > p {
   display: block;
   margin-top: 13px;
 }
+
+ul.data-dictionary-property-table__span{
+  list-style-type: none;
+}

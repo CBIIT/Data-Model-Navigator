@@ -1,6 +1,45 @@
 /* eslint-disable no-plusplus */
-import React from 'react';
+import React from 'react';import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  withStyles,
+  Typography,
+  createTheme,
+  MuiThemeProvider,
+} from '@material-ui/core';
 import { getPropertyDescription, getType } from './utils';
+
+const theme = {
+  overrides: {
+    MuiList: {
+      padding: {
+        paddingTop: '2px',
+      },
+    },
+    MuiListItem: {
+      root: {
+        paddingLeft: '0px',
+        paddingTop: '2px',
+        marginTop: '-10px',
+        paddingBottom: '0',
+        alignItems: 'inherit',
+        fontWeight: '300',
+      },
+      gutters: {
+        paddingLeft: '0px',
+      },
+    },
+    MuiListItemText: {
+      root: {
+        padding: '4px',
+        marginTop: '0px',
+        marginBottom: '0px',
+      },
+    },
+  },
+};
 
 const escapeReturnChar = (str, newlineClassName) => {
   if (!str) return str;
@@ -16,7 +55,15 @@ const escapeReturnChar = (str, newlineClassName) => {
   ));
 };
 
-const addHighlightingSpans = (str, indices, spanClassName) => {
+const displayKeyPropsDescription = (description) => {
+  const lines = description.split('<br>');
+  if (lines.length > 1){
+    return lines.map((line) => <span>{line}</span>);
+  }
+  return description;
+};
+
+export const addHighlightingSpans = (str, indices, spanClassName) => {
   let cursor = 0;
   let currentIndices = 0;
   const resultFragments = [];
@@ -63,7 +110,7 @@ const addHighlightingSpans = (str, indices, spanClassName) => {
           key={cursor}
           className={spanClassName}
         >
-          {escapeReturnChar(str.substring(cursor), newlineClassName)}
+          {displayKeyPropsDescription(escapeReturnChar(str.substring(cursor), newlineClassName))}
         </div>
       ),
     );
@@ -83,10 +130,9 @@ export const getPropertyNameFragment = (propertyName, matchedItem, spanClassName
 export const getPropertyTypeFragment = (property, typeMatchList, spanClassName) => {
   const type = getType(property);
   let propertyTypeFragment;
-  // console.log(type);
   if (typeof type === 'string') {
     propertyTypeFragment = (
-      <li>
+      <>
         {
           addHighlightingSpans(
             type,
@@ -94,36 +140,45 @@ export const getPropertyTypeFragment = (property, typeMatchList, spanClassName) 
             spanClassName,
           )
         }
-      </li>
+      </>
     );
-  } else {
+  }
+  if (Array.isArray(type)) {
     propertyTypeFragment = type.map((t, i) => {
       const matchedTypeItem = typeMatchList && typeMatchList.find(
         (matchItem) => matchItem.value === t,
       );
       if (matchedTypeItem) {
         return (
-          <li key={i}>
-            {
-              addHighlightingSpans(
-                t,
-                matchedTypeItem.indices,
-                spanClassName,
-              )
-            }
-          </li>
+          <MuiThemeProvider theme={createTheme(theme)}>
+            <List class={'property_type'}>
+              <ListItem key={i}>
+                {
+                  addHighlightingSpans(
+                    t,
+                    matchedTypeItem.indices,
+                    spanClassName,
+                  )
+                }
+              </ListItem>
+            </List>
+          </MuiThemeProvider>
         );
       }
       return (
-        <li key={i}>
-          {
-            addHighlightingSpans(
-              t,
-              [],
-              spanClassName,
-            )
-          }
-        </li>
+        <MuiThemeProvider theme={createTheme(theme)}>
+          <List class={'property_type'}>
+            <ListItem key={i}>
+              {
+                addHighlightingSpans(
+                  t,
+                  [],
+                  spanClassName,
+                )
+              }
+            </ListItem>
+          </List>
+        </MuiThemeProvider>
       );
     });
   }
@@ -171,19 +226,16 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
         nameMatch = item;
       } else if (item.key === 'properties.description') {
         const descriptionStr = getPropertyDescription(property);
-        // console.log(descriptionStr);
         if (item.value === descriptionStr) {
           descriptionMatch = item;
         }
       } else if (item.key === 'properties.type') {
         const type = getType(property);
-        // console.log(type);
         if (typeof type === 'string') {
           if (type === item.value) {
             typeMatchList.push(item);
           }
         } else if (Array.isArray(type)) {
-          // console.log("yes");
           for (let a = 0; a < type.length; a++) {
             if (type[a] === item.value) { // TODO: WAS ++
               typeMatchList.push(item);
@@ -201,8 +253,6 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
 };
 
 export const getMatchesSummaryForProperties = (allProperties, allMatches) => {
-  // console.log(allProperties);
-  // console.log(allMatches);
   const matchedPropertiesSummary = [];
   Object.keys(allProperties).forEach((propertyKey, propertyIndex) => {
     const property = allProperties[propertyKey];
@@ -211,7 +261,6 @@ export const getMatchesSummaryForProperties = (allProperties, allMatches) => {
       descriptionMatch,
       typeMatchList,
     } = getMatchInsideProperty(propertyIndex, propertyKey, property, allMatches);
-    // console.log(descriptionMatch);
     const summaryItem = {
       propertyKey,
       property,
@@ -223,7 +272,6 @@ export const getMatchesSummaryForProperties = (allProperties, allMatches) => {
       matchedPropertiesSummary.push(summaryItem);
     }
   });
-  // console.log(matchedPropertiesSummary);
   return matchedPropertiesSummary;
 };
 
