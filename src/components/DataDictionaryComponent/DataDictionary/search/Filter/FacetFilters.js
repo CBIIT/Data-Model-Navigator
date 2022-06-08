@@ -46,6 +46,9 @@ const FacetFilters = ({
   classes,
   onClearAllFilter,
   onToggleCheckBox,
+  hidePropertyTable,
+  onClickBlankSpace,
+  onResetGraphCanvas,
 }) => {
   const activeFilters = useSelector((state) => (
     state.submission
@@ -132,6 +135,8 @@ const FacetFilters = ({
       datafield: item.datafield,
       isChecked: !item.isChecked,
     }
+    onClickBlankSpace();
+    hidePropertyTable();
     onToggleCheckBox(toggleCheckBoxItem);
   };
 
@@ -205,6 +210,12 @@ const FacetFilters = ({
     return (<></>)
   }
 
+  const clearFilterHandler = () => {
+    onClearAllFilter();
+    onClickBlankSpace();
+    hidePropertyTable();
+  }
+
   return (
     <>
       <Button
@@ -213,7 +224,7 @@ const FacetFilters = ({
         disabled={activeFiltersCount === 0}
         className={classes.customButton}
         classes={{ root: classes.clearAllButtonRoot }}
-        onClick={onClearAllFilter}
+        onClick={clearFilterHandler}
         disableRipple
       >
         CLEAR ALL

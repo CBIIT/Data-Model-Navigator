@@ -83,6 +83,7 @@ async function init() {
       item.assignment = value.Tags?.Assignment ? value.Tags?.Assignment : '';
       item.class = value.Tags?.Class ? value.Tags?.Class : '';
       item.desc = value?.Desc ? value?.Desc : '';
+      item.description = item.desc;
       item.template = value.Tags?.Template ? value.Tags?.Template : '';
   
       const link = [];

@@ -20,14 +20,14 @@ export default () => ({
     fixedContainer: {
     height: '100%',
     overflowY: 'scroll',
-    padding: '15px',
+    padding: '15px 40px',
   },
   content: {
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
   header: {
-    position: '-webkit-sticky',
-    position: 'sticky',
+    // position: '-webkit-sticky',
+    // position: 'sticky',
     top: '0',
     zIndex: '3',
   },
@@ -38,21 +38,25 @@ export default () => ({
     marginLeft: '15px',
   },
   closeIcon: {
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
     marginLeft: '8px',
     position: 'relative',
     top: '1px',
+    marginRight: '20px',
+    backgroundColor: 'var(--g3-color__gray)',
   },
   category: {
-    backgroundColor: 'var(--dictionary-header-color)',
+    // backgroundColor: 'var(--dictionary-header-color)',
     padding: '10px 15px',
     lineHeight: '40px',
     verticalAlign: 'middle',
     borderLeft: '5px solid',
+    backgroundColor: '#fff',
   },
   categoryText: {
     display: 'inline',
     color: 'var(--g3-color__white);',
+    fontSize: '18px',
   },
   node: {
     backgroundColor: 'var(--g3-color__white)',
@@ -81,6 +85,7 @@ export default () => ({
   },
   propertyTable: {
     padding: '10px 18px 18px 23px',
+    backgroundColor: '#fff',
   },
   downloadButton: {
     minWidth: 'unset', /* override .g3-button's 152px min-width */
@@ -189,7 +194,7 @@ export default () => ({
     /* margin: 5px 0', */
     color: '#7a7a7a',
     paddingLeft: '17px',
-    marginBottom: '8px',
+    marginBottom: '14px',
   },
 });
   

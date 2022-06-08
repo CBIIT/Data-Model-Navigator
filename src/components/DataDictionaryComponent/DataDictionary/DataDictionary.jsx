@@ -62,26 +62,21 @@ const DataDictionary = ({
           </span>
         </div>
         <ReduxDictionarySearcher ref={dictionarySearcherRef} />
-        <ReduxDataModelStructure />
+        {/* <ReduxDataModelStructure /> */}
         <ReduxDictionarySearchHistory
           onClickSearchHistoryItem={handleClickSearchHistoryItem}
         />
         <ReduxFacetFilters />
       </div>
       <div className={classes.main}>
-        { isGraphView
-          ? (
-            <div className={`${classes.graph} ${!isGraphView ? classes.hidden: null}`}>
-              <DataDictionaryGraph
-                onClearSearchResult={handleClearSearchResult}
-              />
-            </div>
-          )
-          : (
-            <div className={`${classes.table} ${isGraphView ? classes.hidden: null}`}>
-              <ReduxDataDictionaryTable />
-            </div>
-          )}
+        <div className={`${classes.graph} ${!isGraphView ? classes.hidden: null}`}>
+          <DataDictionaryGraph
+            onClearSearchResult={handleClearSearchResult}
+          />
+        </div>
+        <div className={`${classes.table} ${isGraphView ? classes.hidden: null}`}>
+          <ReduxDataDictionaryTable />
+        </div>
       </div>
     </div>
   );

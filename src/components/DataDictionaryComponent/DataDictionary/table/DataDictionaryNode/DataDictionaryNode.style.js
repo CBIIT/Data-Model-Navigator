@@ -70,11 +70,6 @@ export default () => ({
     color: '#2982af',
     fontWeight: '500',
   },
-  nodeAssignment: {
-    marginLeft: '5px',
-    color: '#2982af',
-    fontWeight: '500',
-  },
   nodeClassGroup: {
     paddingLeft: '18px',
   },

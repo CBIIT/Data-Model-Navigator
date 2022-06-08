@@ -1,6 +1,6 @@
 {
   "name": "model-explorer",
-  "version": "0.0.13",
+  "version": "0.0.17",
   "private": false,
   "main": "lib/index.js",
   "module": "es/index.js",

@@ -3,11 +3,13 @@ import { withStyles } from '@material-ui/core';
 import {
   getPropertyNameFragment,
   getPropertyDescriptionFragment,
+  getPropertyTypeFragment,
 } from '../../../highlightHelper';
 import ListComponent from './ListComponent';
 import ButtonComponent from './ButtonComponent';
 import KeyIconSvg from '../../../../assets/key_icon.svg';
 import { controlVocabConfig as config } from '../../../bento/dataDictionaryData';
+import '../DataDictionaryPropertyTable.css';
 
 const TableRow = ({
     classes,
@@ -20,7 +22,9 @@ const TableRow = ({
     needHighlightSearchResult,
     hideIsRequired,
     openBoxHandler,
+    isSearchMode
 }) => {
+
   const required = (requiredFlag, preferredFlag) => (
     <span className={requiredFlag ? classes.required : ''}>
       { requiredFlag ? 'Required' : preferredFlag ? 'Preferred' : 'Optional' }
@@ -91,14 +95,19 @@ const TableRow = ({
             descriptionMatch,
             'data-dictionary-property-table__span',
           );
+          
+          const propertyTypeFragment = getPropertyTypeFragment(
+            property,
+            typeMatchList,
+            'data-dictionary-property-table__span',
+          );
+
           const isRequired = requiredProperties.includes(propertyKey);
           const isPreferred = preferredProperties.includes(propertyKey);
           return (
             <tr key={propertyKey} className={classes.row}>
               <td className={classes.rowItem}>
-                { (key)
-                  ? displayKeyProperty(propertyKey)
-                  : propertyNameFragment }
+                {propertyNameFragment}
               </td>
               <td className={classes.rowItem}>
                 { (enums) ? (
@@ -107,19 +116,36 @@ const TableRow = ({
                       <p className={classes.acceptValue}>Acceptable Values:</p>
                       {' '}
                       {enums.length > config.maxNoOfItems
-                        ? (<ListComponent items={enums.slice(0, config.maxNoOfItems)} />)
-                        : (<ListComponent items={enums} />)}
+                        ? (<ListComponent 
+                          items={enums.slice(0, config.maxNoOfItems)}
+                          isSearchMode={isSearchMode}
+                          typeMatchList={typeMatchList}
+                          property={property}
+                          />)
+                        : (<ListComponent
+                            items={enums}
+                            isSearchMode={isSearchMode}
+                            typeMatchList={typeMatchList}
+                            property={property}
+                          />)}
                     </span>
                     {enums.length > config.maxNoOfItems
                       && (
                         <ButtonComponent
                           label="...show more"
-                          openHandler={() => openBoxHandler(enums)}
+                          openHandler={() => openBoxHandler(enums, typeMatchList)}
                         />
                       )}
                   </>
                 ) : (
-                  <p>{JSON.stringify(type)}</p>
+                  <>{ (isSearchMode)
+                    ? (<>{propertyTypeFragment}</>)
+                    : (
+                      <>
+                        {JSON.stringify(type)}
+                      </>
+                    )}
+                  </>
                 )}
               </td>
               {
@@ -130,13 +156,14 @@ const TableRow = ({
                 )
               }
               <td className={classes.rowItem}>
-                { (key)
+                { (key && !isSearchMode)
                   ? (
                     <div className={classes.description}>
                       {displayKeyPropsDescription(property.description)}
                     </div>
                   )
-                  : propertyDescriptionFragment }
+                  : (<>{propertyDescriptionFragment}</>
+                  )}
               </td>
               <td className={classes.rowItem}>
                 <p>{JSON.stringify(termID)}</p>
@@ -159,6 +186,12 @@ const styles = () => ({
       maxWidth: '300px',
       minWidth: '100px',
       wordWrap: 'break-word',
+    },
+    '& span': {
+      '&:last-child:not(:first-child)': {
+        display: 'block',
+        marginTop: '13px',
+      },
     },
   },
   row: {
