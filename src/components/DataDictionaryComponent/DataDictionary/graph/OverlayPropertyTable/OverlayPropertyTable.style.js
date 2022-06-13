@@ -149,7 +149,6 @@ export default () => ({
     borderLeftWidth: '5px',
     borderLeftStyle: 'solid',
     borderLeftColor: 'var(--dictionary-border-color)',
-    cursor: 'pointer',
     marginBottom: '5px',
     '&:last-child': {
       marginBottom: '0',

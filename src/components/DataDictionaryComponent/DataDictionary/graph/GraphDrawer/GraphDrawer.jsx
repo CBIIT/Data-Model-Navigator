@@ -85,7 +85,7 @@ class GraphDrawer extends React.Component {
     return (
       <g
         className='graph-drawer'
-        transform={`scale(${fittingScale}) translate(${fittingTransX}, ${fittingTransY}) `}
+        transform={`scale(${fittingScale - 0.13}) translate(${fittingTransX}, ${fittingTransY})`}
         ref={this.graphDomRef}
       >
         {

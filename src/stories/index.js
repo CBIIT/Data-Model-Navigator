@@ -109,11 +109,11 @@ async function init() {
               propertiesItem.key = icdcMPData.PropDefinitions[propertyName].Key;
               if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes') {
                 pRequired.push(nodeP);
-              } else if (icdcMPData.PropDefinitions[propertyName].Req === 'No') {
-                pOptional.push(nodeP);
               } else if (icdcMPData.PropDefinitions[propertyName].Req === 'Preferred') {
                 pPreffered.push(nodeP);
-              }
+              } else {
+                pOptional.push(nodeP);
+              } 
             }
           }
           properties[nodeP] = propertiesItem;

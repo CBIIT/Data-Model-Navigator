@@ -9,7 +9,7 @@ class NodePopup extends React.Component {
   handleClickPropertyButton = () => {
     this.props.onOpenOverlayPropertyTable();
   }
-
+  
   render() {
     const {
       classes,
@@ -26,6 +26,7 @@ class NodePopup extends React.Component {
     }
     const highlightingNodeSVGElement = graphNodesSVGElements &&
         graphNodesSVGElements[highlightingNode.id];
+
     const svgBoundingBox = highlightingNodeSVGElement
       && highlightingNodeSVGElement.getBoundingClientRect
       ? highlightingNodeSVGElement.getBoundingClientRect()
@@ -34,7 +35,13 @@ class NodePopup extends React.Component {
       };
     const popupLeft = (svgBoundingBox.left - canvasBoundingRect.left)
       + (svgBoundingBox.width / 2);
-    const popupTop = svgBoundingBox.bottom - canvasBoundingRect.top;
+
+    const bodyRect = document && document.body 
+      ? document.body.getBoundingClientRect() : {
+        top: 0, left: 0, width: 0, bottom: 0,
+      };
+    const popupTop = svgBoundingBox.bottom - bodyRect.top;
+
     return (
       <div
         className={classes.popup}

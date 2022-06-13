@@ -31,9 +31,9 @@ const TableRow = ({
     </span>
   );
 
-  const displayKeyProperty = (property) => (
+  const displayKeyProperty = (propertyFragment) => (
     <div className={classes.keyProperty}>
-      <p>{property}</p>
+      {propertyFragment}
       <img src={KeyIconSvg} className={classes.keyPropertyIcon} alt="key-icon" />
     </div>
   );
@@ -107,7 +107,9 @@ const TableRow = ({
           return (
             <tr key={propertyKey} className={classes.row}>
               <td className={classes.rowItem}>
-                {propertyNameFragment}
+                { (key)
+                  ? displayKeyProperty(propertyNameFragment)
+                  : propertyNameFragment }
               </td>
               <td className={classes.rowItem}>
                 { (enums) ? (
