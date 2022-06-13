@@ -15,28 +15,10 @@ import {
 
 import { SearchResultItemShape } from '../../utils';
 import { capitalizeFirstLetter, createFileName } from '../../../utils';
-import DownloadButton from '../../NodePDF/DownloadButton';
 import { getCategoryColor, getCategoryIconSVG } from '../../NodeCategories/helper';
 import DataDictionaryPropertyTable from '../../table/DataDictionaryPropertyTable';
 import styles from './OverlayPropertyTable.style';
-import IconDownloadPDF from '../../table/icons/icon_download_PDF.svg';
-import IconDownloadPTSV from '../../table/icons/icon_download_TSV.svg';
 import NodeViewComponent from '../../table/DataDictionaryNode/components/NodeViewComponent';
-
-const pdfDownloadConfig = {
-  image: IconDownloadPDF,
-  type: 'single',
-  fileType: 'pdf',
-  prefix: 'ICDC_Data_Model_',
-};
-
-const csvBtnDownloadConfig = {
-  image: IconDownloadPTSV,
-  fileType: 'txt',
-  prefix: 'ICDC-',
-};
-
-const expanded = true;
 
 class OverlayPropertyTable extends React.Component {
 
