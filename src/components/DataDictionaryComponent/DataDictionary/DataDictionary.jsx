@@ -68,7 +68,7 @@ const DataDictionary = ({
         />
         <ReduxFacetFilters />
       </div>
-      <div className={classes.main}>
+      <div className={isGraphView ? classes.mainGraphView : classes.mainTableView}>
         <div className={`${classes.graph} ${!isGraphView ? classes.hidden: null}`}>
           <DataDictionaryGraph
             onClearSearchResult={handleClearSearchResult}
@@ -103,6 +103,7 @@ const styles = () => ({
     width: '320px',
     minWidth: '320px',
     height: '100%',
+    overflowY: 'auto',
     backgroundColor: `var(--g3-color__white)`,
     borderRight: `1px solid var(--g3-color__smoke)`,
   },
@@ -128,7 +129,11 @@ const styles = () => ({
     backgroundColor: 'var(--g3-color__base-blue)',
     color: 'var(--g3-color__white)',
   },
-  main: {
+  mainGraphView: {
+    width: `calc(100vw - 320px)`,
+    minWidth: '900px',
+  },
+  mainTableView: {
     width: `calc(100vw - 320px)`,
     minWidth: '900px',
     overflowY: 'scroll',

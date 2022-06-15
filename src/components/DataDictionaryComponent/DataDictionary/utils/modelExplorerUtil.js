@@ -84,6 +84,20 @@ export const hashMapHelper = (groupName, [key, value], hashMap) => {
   }
 };
 
+const includeMultiFilterValue = (filteredDict, filters) => {
+  const filterValue = filteredDict.filter(([, thisValue]) => {
+    let returnItem = false;
+    filters.forEach((filterValue) => {
+      if (thisValue[filterValue.toLowerCase()]
+        && thisValue[filterValue.toLowerCase()].length > 0) {
+        returnItem = true;
+      };
+    });
+    return returnItem;
+  });
+  return filterValue;
+}
+
 export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
   let filteredDict = [];
   let alternateFilteredDict = [];
@@ -100,15 +114,19 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
       }
       case 1: {
         if (key === 'inclusion') {
-          value.forEach((filterValue) => {
-            alternateFilteredDict = [
-              ...filteredDict.filter(([, thisValue]) => (thisValue[key]
-                && thisValue[key][filterValue.toLowerCase()]
-                ? thisValue[key][filterValue.toLowerCase()].length > 0
-                : false)),
-            ];
-          });
-          filteredDict = alternateFilteredDict;
+          if (value.length > 1) {
+            filteredDict = includeMultiFilterValue(filteredDict, value);
+          } else {
+            value.forEach((filterValue) => {
+              alternateFilteredDict = [
+                ...filteredDict.filter(([, thisValue]) => (thisValue[key]
+                  && thisValue[key][filterValue.toLowerCase()]
+                  ? thisValue[key][filterValue.toLowerCase()].length > 0
+                  : false)),
+              ];
+            });
+            filteredDict = alternateFilteredDict;
+          }
           break;
         }
         value.forEach((filterValue) => {
@@ -126,25 +144,29 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
 
       default: {
         if (key === 'inclusion') {
-          value.forEach((filterValue) => {
-            alternateFilteredDict = [
-              ...filteredDict.filter(([, thisValue]) => (thisValue[key]
-                && thisValue[key][filterValue.toLowerCase()]
-                ? thisValue[key][filterValue.toLowerCase()].length > 0 : false)),
-            ];
-          });
-          filteredDict = alternateFilteredDict;
+          if (value.length > 1) {
+            filteredDict = includeMultiFilterValue(filteredDict, value);
+          } else {
+            value.forEach((filterValue) => {
+              alternateFilteredDict = [
+                ...filteredDict.filter(([, thisValue]) => (thisValue[key]
+                  && thisValue[key][filterValue.toLowerCase()]
+                  ? thisValue[key][filterValue.toLowerCase()].length > 0
+                  : false)),
+              ];
+            });
+            filteredDict = alternateFilteredDict;
+          }
           break;
         }
-        value.forEach((filterValue, filterIndex) => {
+        value.forEach((filterValue) => {
+          const valueFilteredDict = filteredDict.filter(([, thisValue]) => thisValue[key] === filterValue.toLowerCase());
+          const updateValueFilteredDict = (valueFilteredDict.length > 0)
+            ? valueFilteredDict : [ ...filteredDict, ...filterHashMap.get(filterValue.toLowerCase())];
           alternateFilteredDict = [
-            ...filteredDict.filter(([, thisValue]) => thisValue[key] === filterValue.toLowerCase()),
+            ...alternateFilteredDict,
+            ...updateValueFilteredDict,
           ];
-          if (filterIndex > 0) {
-            alternateFilteredDict = [
-              ...filteredDict,
-            ];
-          }
         });
         filteredDict = alternateFilteredDict;
         break;

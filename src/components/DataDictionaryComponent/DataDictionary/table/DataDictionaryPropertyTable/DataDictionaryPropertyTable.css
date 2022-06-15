@@ -71,7 +71,6 @@ td.data-dictionary-property-table__data:nth-child(2) > p {
 .data-dictionary-property-table__span {
   display: inline;
   font-family: raleway;
-  font-weight: 300;
 }
 
 .data-dictionary-property-table__span--highlight {
