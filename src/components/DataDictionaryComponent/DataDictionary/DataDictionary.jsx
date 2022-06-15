@@ -103,6 +103,7 @@ const styles = () => ({
     width: '320px',
     minWidth: '320px',
     height: '100%',
+    overflowY: 'auto',
     backgroundColor: `var(--g3-color__white)`,
     borderRight: `1px solid var(--g3-color__smoke)`,
   },

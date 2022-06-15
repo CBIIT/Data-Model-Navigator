@@ -225,7 +225,7 @@ const styles = () => ({
   keyProperty: {
     display: 'inline-block',
     minWidth: '220px',
-    fontWeight: 'bold',
+    fontWeight: '700',
     color: '#0d71a3',
     '& p': {
       float: 'left',
