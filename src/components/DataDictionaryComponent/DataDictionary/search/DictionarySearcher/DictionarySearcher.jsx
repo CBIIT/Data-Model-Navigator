@@ -1,13 +1,21 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
+import {
+  withStyles,
+  createTheme,
+  MuiThemeProvider,
+} from '@material-ui/core';
 import AutoComplete from '@gen3/ui-component/dist/components/AutoComplete';
 import { compareTwoStrings } from 'string-similarity';
 import {
-  prepareSearchData, searchKeyword, getSearchSummary, ZERO_RESULT_FOUND_MSG,
+  prepareSearchData, searchKeyword, getSearchSummary, ZERO_RESULT_FOUND_MSG, formatText,
 } from './searchHelper';
 import styles from './DictionarySearcher.style';
+
+const theme = {
+
+}
 
 class DictionarySearcher extends React.Component {
   constructor(props) {
@@ -50,7 +58,7 @@ class DictionarySearcher extends React.Component {
 
   search = (str) => {
     this.props.setIsSearching(true);
-    const { result, errorMsg } = searchKeyword(this.searchData, str);
+    const { result, errorMsg } = searchKeyword(this.searchData, formatText(str));
     if (!result || result.length === 0) {
       this.props.setIsSearching(false);
       this.props.onSearchResultUpdated([], []);
@@ -92,9 +100,10 @@ class DictionarySearcher extends React.Component {
     this.props.onSearchResultCleared();
   };
 
-  inputChangeFunc = (inputText) => {
+  inputChangeFunc = (query) => {
     this.props.onStartSearching();
     this.resetSearchResult();
+    const inputText = formatText(query);
     const { result } = searchKeyword(this.searchData, inputText);
     const matchedStrings = {};
     result.forEach((resItem) => {
@@ -123,21 +132,24 @@ class DictionarySearcher extends React.Component {
   };
 
   submitInputFunc = (inputText) => {
-    this.search(inputText);
+    this.search(formatText(inputText));
   };
 
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.searcher}>
-        <AutoComplete
-          ref={this.autoCompleteRef}
-          suggestionList={this.state.suggestionList}
-          inputPlaceHolderText="Search in Dictionary"
-          onSuggestionItemClick={this.suggestionItemClickFunc}
-          onInputChange={this.inputChangeFunc}
-          onSubmitInput={this.submitInputFunc}
-        />
+        <MuiThemeProvider theme={createTheme(theme)}>
+          <AutoComplete
+            className="hermo"
+            ref={this.autoCompleteRef}
+            suggestionList={this.state.suggestionList}
+            inputPlaceHolderText="Search in Dictionary"
+            onSuggestionItemClick={this.suggestionItemClickFunc}
+            onInputChange={this.inputChangeFunc}
+            onSubmitInput={this.submitInputFunc}
+          />
+        </MuiThemeProvider>
         {
           this.state.isSearchFinished && (
             <>

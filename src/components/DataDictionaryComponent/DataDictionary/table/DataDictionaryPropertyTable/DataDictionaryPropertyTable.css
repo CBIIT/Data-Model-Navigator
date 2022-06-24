@@ -74,8 +74,11 @@ td.data-dictionary-property-table__data:nth-child(2) > p {
 }
 
 .data-dictionary-property-table__span--highlight {
-  color: var(--g3-color__highlight-orange);
-  font-weight: 600;
+  /* color: var(--g3-color__highlight-orange); */
+  color: var(--g3-color__black);
+  font-size: 14px;
+  font-family: 'Nunito Sans';
+  font-weight: 900;
 }
 
 .data-dictionary-property-table__span--new-line {

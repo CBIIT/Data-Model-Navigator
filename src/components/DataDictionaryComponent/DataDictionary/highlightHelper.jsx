@@ -220,12 +220,15 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
   let nameMatch = null;
   let descriptionMatch = null;
   const typeMatchList = [];
+  console.log(allMatches);
   if (allMatches) {
     allMatches.forEach((item) => {
       if (item.key === 'properties.name' && item.value === propertyKey) {
         nameMatch = item;
       } else if (item.key === 'properties.description') {
-        const descriptionStr = getPropertyDescription(property);
+        const descriptionStr = `${getPropertyDescription(property)}`.toLowerCase();
+        console.log(item.value);
+        console.log(descriptionStr);
         if (item.value === descriptionStr) {
           descriptionMatch = item;
         }

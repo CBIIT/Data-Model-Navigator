@@ -46,7 +46,11 @@
 
 .graph-node__text--highlight,
 .graph-node__tspan--highlight {
-  fill: var(--g3-color__highlight-orange);
+  /* fill: var(--g3-color__highlight-orange); */
+  color: var(--g3-color__black);
+  font-size: 14px;
+  font-family: 'Nunito Sans';
+  font-weight: 900;
 }
 
 .graph-node:hover .graph-node__text,

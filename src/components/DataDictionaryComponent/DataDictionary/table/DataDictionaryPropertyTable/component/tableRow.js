@@ -52,6 +52,8 @@ const TableRow = ({
           let descriptionMatch = null;
           let typeMatchList = null;
           if (needHighlightSearchResult && matchedPropertiesSummary.length > 0) {
+            console.log("match summary");
+            console.log(matchedPropertiesSummary);
             const matchedSummaryItem = matchedPropertiesSummary
               .find((item) => item.propertyKey === propertyKey);
             if (matchedSummaryItem) {
@@ -184,7 +186,7 @@ const styles = () => ({
     '& p': {
       margin: 'auto',
     },
-    '&:nth-child(2) > p': {
+    '&:nth-child(2)': {
       maxWidth: '300px',
       minWidth: '100px',
       wordWrap: 'break-word',

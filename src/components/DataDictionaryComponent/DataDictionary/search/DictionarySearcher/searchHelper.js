@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Fuse from 'fuse.js';
 import {
   parseDictionaryNodes,
@@ -12,6 +13,8 @@ export const ZERO_RESULT_FOUND_MSG = '0 results found. Please try another keywor
  * @params [Object] dictionary
  * @returns [Object] search data
  */
+export const formatText = (text) => `${text}`.toLowerCase();
+
 export const prepareSearchData = (dictionary) => {
   const searchData = parseDictionaryNodes(dictionary)
     .map((node) => {
@@ -19,16 +22,17 @@ export const prepareSearchData = (dictionary) => {
         let type = getType(node.properties[propertyKey]);
         if (type === 'UNDEFINED') type = undefined;
         const propertyDescription = getPropertyDescription(node.properties[propertyKey]);
+        // const splitText = propertyDescription ? propertyDescription.split('<br>')[0] : propertyDescription;
         return {
-          name: propertyKey,
-          description: propertyDescription,
+          name: formatText(propertyKey),
+          description: formatText(propertyDescription),
           type,
         };
       });
       return {
         id: node.id,
-        title: node.title,
-        description: node.description,
+        title: formatText(node.title),
+        description: formatText(node.description),
         properties,
       };
     });
@@ -37,6 +41,54 @@ export const prepareSearchData = (dictionary) => {
 
 export const ERR_KEYWORD_TOO_SHORT = 'Keyword too short, try longer keyword.';
 export const ERR_KEYWORD_TOO_LONG = 'Keyword too long (more than 32).';
+
+export const filterMatches = (results, keyword) => {
+  if (results && results.length > 0) {
+    results.forEach(item => {
+      const { matches } = item;
+      if (matches.length > 0) {
+        matches.forEach(match => {
+          const highlightIndices = [];
+          const { indices, value } = match;
+          if (match.indices.length > 0) {
+            indices.forEach((indice, index) => {
+              console.log(indice[0] + " " + indice[1]);
+              if (match.key === 'title') {
+                // const svgNode = document.querySelector(`g#${value}`);
+                // console.log(match);
+                // if (svgNode) {
+                //   const texts = (svgNode.getElementsByTagName("text"));
+                //   if (texts && texts.length > 1) {
+                //     indices[0][1] += texts.length;
+                //     highlightIndices.push(indices[0]);
+                //   }
+                //   console.log(highlightIndices);
+                // }
+              } else {
+                const text = value.slice(indice[0], indice[1] + 1);
+                if (`${text}`.toLowerCase().includes(keyword.toLowerCase())){
+                  const initIndex = `${text}`.indexOf(keyword, 0);
+                  const diff = indice[1] - indice[0];
+                  console.log(diff + " diff - length " + keyword.length + " "+ value.slice(indice[0], indice[1]));
+                  if (diff > keyword.length) {
+                    indice[0] += initIndex;
+                    indice[1] = indice[0] + keyword.length - 1;
+                    console.log(value.slice(indice[0], indice[1]));
+                  }
+                  console.log(indice);
+                  highlightIndices.push(indice);
+                }
+              }
+            });
+            if (highlightIndices.length > 0) {
+              match.indices = _.cloneDeep(highlightIndices);
+            }
+          }
+        });
+      }
+    });
+  }
+}
 
 /**
  * Call Fuse search and returns search result
@@ -69,15 +121,20 @@ export const searchKeyword = (searchData, keyword) => {
       'properties.type',
     ],
     includeMatches: true,
-    threshold: 0.3,
+    threshold: 0,
     shouldSort: true,
     includeScore: true,
     minMatchCharLength,
+    ignoreLocation: true,
   };
+  console.log(searchData);
+  console.log(keyword);
+  console.log(options);
   const handler = new Fuse(searchData, options);
   const result = handler.search(keyword)
     .map((resItem) => {
       // A bug in Fuse sometimes returns wrong indices that end < start
+      console.log(resItem);
       const matches = resItem.matches
         .filter(matchItem => matchItem.indices[0][1] >= matchItem.indices[0][0]);
       return {
@@ -87,6 +144,7 @@ export const searchKeyword = (searchData, keyword) => {
     })
     .map((resItem) => {
       // filter out matches that is too shorter than keyword
+      console.log(resItem);
       const matches = resItem.matches
         .filter((matchItem) => {
           const matchLen = (matchItem.indices[0][1] - matchItem.indices[0][0]) + 1;
@@ -99,6 +157,9 @@ export const searchKeyword = (searchData, keyword) => {
     })
     .filter(resItem => resItem.matches.length > 0);
   const errorMsg = (result && result.length > 0) ? '' : ZERO_RESULT_FOUND_MSG;
+  console.log(result);
+  filterMatches(result, keyword);
+  console.log(result);
   return {
     result,
     errorMsg,

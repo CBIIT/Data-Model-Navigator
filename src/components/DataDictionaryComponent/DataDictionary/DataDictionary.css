@@ -79,3 +79,10 @@
   background-color: var(--g3-color__base-blue);
   color: var(--g3-color__white);
 }
+
+.auto-complete-input__input-box {
+  color: var(--g3-color__black);
+  font-size: 14px;
+  font-family: 'Nunito Sans';
+  font-weight: 900;
+}

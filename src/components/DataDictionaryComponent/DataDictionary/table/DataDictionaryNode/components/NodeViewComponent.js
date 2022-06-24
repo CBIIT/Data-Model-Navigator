@@ -37,12 +37,12 @@ const NodeViewComponent = ({
     if (isSearchMode) {
       const nodeTitleFragment = getNodeTitleFragment(
         matchedResult.matches,
-        capitalizeFirstLetter(node.title),
+        node.title,
         'data-dictionary-property-table__span',
       );
       return nodeTitleFragment;
     }
-    return node.title;
+    return capitalizeFirstLetter(node.title);
   };
 
   const getDescription = (description) => {
