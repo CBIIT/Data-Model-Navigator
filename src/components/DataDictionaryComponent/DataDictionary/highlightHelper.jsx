@@ -220,16 +220,14 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
   let nameMatch = null;
   let descriptionMatch = null;
   const typeMatchList = [];
-  console.log(allMatches);
   if (allMatches) {
     allMatches.forEach((item) => {
       if (item.key === 'properties.name' && item.value === propertyKey) {
         nameMatch = item;
       } else if (item.key === 'properties.description') {
         const descriptionStr = `${getPropertyDescription(property)}`.toLowerCase();
-        console.log(item.value);
-        console.log(descriptionStr);
-        if (item.value === descriptionStr) {
+        const splitText = descriptionStr ? descriptionStr.split('<br>')[0] : descriptionStr;
+        if (item.value === splitText) {
           descriptionMatch = item;
         }
       } else if (item.key === 'properties.type') {
@@ -325,6 +323,7 @@ export const getNodeTitleSVGFragment = (
     const currentRowFragment = [];
 
     // Go over all highlighted text in current row
+    let index = 0;
     while (currentHighlightIndex < matchedNodeNameIndices.length) {
       const highlightStartIndex = matchedNodeNameIndices[currentHighlightIndex][0];
       const highlightEndIndex = matchedNodeNameIndices[currentHighlightIndex][1] + 1;
@@ -338,7 +337,8 @@ export const getNodeTitleSVGFragment = (
         break;
       }
       const highlightStartIndexInRow = highlightStartIndex - rowStartIndex;
-      const highlightEndIndexInRow = highlightEndIndex - rowStartIndex;
+      const highlightEndIndexInRow = highlightEndIndex;
+
       if (cursorInRow < highlightStartIndexInRow) {
         currentRowFragment.push((
           <tspan key={cursorInRow} {...tspanAttr}>

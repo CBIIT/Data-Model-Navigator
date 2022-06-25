@@ -49,7 +49,7 @@
   /* fill: var(--g3-color__highlight-orange); */
   color: var(--g3-color__black);
   font-size: 14px;
-  font-family: 'Nunito Sans';
+  font-family: 'Nunito Sans', sans-serif;
   font-weight: 900;
 }
 

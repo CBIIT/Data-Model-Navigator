@@ -52,8 +52,6 @@ const TableRow = ({
           let descriptionMatch = null;
           let typeMatchList = null;
           if (needHighlightSearchResult && matchedPropertiesSummary.length > 0) {
-            console.log("match summary");
-            console.log(matchedPropertiesSummary);
             const matchedSummaryItem = matchedPropertiesSummary
               .find((item) => item.propertyKey === propertyKey);
             if (matchedSummaryItem) {
