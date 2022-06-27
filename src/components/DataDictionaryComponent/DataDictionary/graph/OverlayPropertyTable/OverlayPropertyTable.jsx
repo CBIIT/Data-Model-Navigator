@@ -160,7 +160,7 @@ class OverlayPropertyTable extends React.Component {
                   requiredProperties={node.required}
                   preferredProperties={node.preferred}
                   hasBorder={false}
-                  onlyShowMatchedProperties={searchedNodeNotOpened}
+                  onlyShowMatchedProperties={false}
                   needHighlightSearchResult={needHighlightSearchResult}
                   // hideIsRequired={searchedNodeNotOpened}
                   matchedResult={this.props.matchedResult}

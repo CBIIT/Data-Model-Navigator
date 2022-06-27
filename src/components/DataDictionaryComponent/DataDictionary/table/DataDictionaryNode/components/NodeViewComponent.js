@@ -42,7 +42,7 @@ const NodeViewComponent = ({
       );
       return nodeTitleFragment;
     }
-    return node.title;
+    return capitalizeFirstLetter(node.title);
   };
 
   const getDescription = (description) => {

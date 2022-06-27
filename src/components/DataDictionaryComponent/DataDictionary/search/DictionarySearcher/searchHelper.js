@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import Fuse from 'fuse.js';
 import {
   parseDictionaryNodes,
@@ -12,6 +13,8 @@ export const ZERO_RESULT_FOUND_MSG = '0 results found. Please try another keywor
  * @params [Object] dictionary
  * @returns [Object] search data
  */
+export const formatText = (text) => `${text}`.toLowerCase();
+
 export const prepareSearchData = (dictionary) => {
   const searchData = parseDictionaryNodes(dictionary)
     .map((node) => {
@@ -19,16 +22,17 @@ export const prepareSearchData = (dictionary) => {
         let type = getType(node.properties[propertyKey]);
         if (type === 'UNDEFINED') type = undefined;
         const propertyDescription = getPropertyDescription(node.properties[propertyKey]);
+        const splitText = propertyDescription ? propertyDescription.split('<br>')[0] : propertyDescription;
         return {
-          name: propertyKey,
-          description: propertyDescription,
+          name: formatText(propertyKey),
+          description: formatText(splitText),
           type,
         };
       });
       return {
         id: node.id,
-        title: node.title,
-        description: node.description,
+        title: formatText(node.title),
+        description: formatText(node.description),
         properties,
       };
     });
@@ -37,6 +41,39 @@ export const prepareSearchData = (dictionary) => {
 
 export const ERR_KEYWORD_TOO_SHORT = 'Keyword too short, try longer keyword.';
 export const ERR_KEYWORD_TOO_LONG = 'Keyword too long (more than 32).';
+
+export const filterMatches = (results, keyword) => {
+  if (results && results.length > 0) {
+    results.forEach(item => {
+      const { matches } = item;
+      if (matches.length > 0) {
+        matches.forEach(match => {
+          const highlightIndices = [];
+          const { indices, value } = match;
+          if (match.indices.length > 0) {
+            indices.forEach((indice, index) => {
+              if (match.key !== 'title') {
+                const text = value.slice(indice[0], indice[1] + 1);
+                if (`${text}`.toLowerCase().includes(keyword.toLowerCase())){
+                  const initIndex = `${text}`.indexOf(keyword, 0);
+                  const diff = indice[1] - indice[0];
+                  if (diff >= keyword.length) {
+                    indice[0] += initIndex;
+                    indice[1] = indice[0] + keyword.length - 1;
+                  }
+                  highlightIndices.push(indice);
+                }
+              }
+            });
+            if (highlightIndices.length > 0) {
+              match.indices = _.cloneDeep(highlightIndices);
+            }
+          }
+        });
+      }
+    });
+  }
+}
 
 /**
  * Call Fuse search and returns search result
@@ -69,10 +106,11 @@ export const searchKeyword = (searchData, keyword) => {
       'properties.type',
     ],
     includeMatches: true,
-    threshold: 0.3,
+    threshold: 0,
     shouldSort: true,
     includeScore: true,
     minMatchCharLength,
+    ignoreLocation: true,
   };
   const handler = new Fuse(searchData, options);
   const result = handler.search(keyword)
@@ -99,6 +137,7 @@ export const searchKeyword = (searchData, keyword) => {
     })
     .filter(resItem => resItem.matches.length > 0);
   const errorMsg = (result && result.length > 0) ? '' : ZERO_RESULT_FOUND_MSG;
+  filterMatches(result, keyword);
   return {
     result,
     errorMsg,

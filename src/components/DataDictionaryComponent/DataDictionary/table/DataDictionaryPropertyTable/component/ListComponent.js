@@ -150,7 +150,7 @@ const ListComponent = ({
       ? { overrides: { ...theme.overrides, ...twoColumnsView.overrides } } : theme;
 
   const highlightMatchingProperties = (item) => {
-    if (isSearchMode && typeMatchList.length > 0) {
+    if (isSearchMode && typeMatchList && typeMatchList.length > 0) {
       const matchItem = typeMatchList.map(prop => {
         if (prop.value === item) {
           return prop;
@@ -189,6 +189,7 @@ const ListComponent = ({
       <List>
         {items.map((item, index) => (
           <>
+            {/* apply different style when text is greater than 30 character on particular index*/}
             {(item.length > 30) && (meanIndex(items.length) - 1 === index ||
             meanIndex(items.length) === index) ? (
               <>
@@ -198,7 +199,7 @@ const ListComponent = ({
                   </span>
                   <div className={classes.listIcon}>
                     <ListItemIcon>
-                      <FiberManualRecord style={{ fontSize: 8, marginTop: '3px' }} />
+                      <FiberManualRecord style={{ fontSize: 8, marginTop: '-4px', marginLeft: '2px' }} />
                     </ListItemIcon>
                   </div>
                 </div>
@@ -236,6 +237,9 @@ const styles = () => ({
     fontWeight: '300',
     marginBottom: '4px',
     lineHeight: '1.3',
+    '@media not all and (min-resolution:.001dpcm)' : {
+      lineHeight: '1',
+    },
   },
   listIcon: {
     float: 'left',
@@ -248,7 +252,9 @@ const styles = () => ({
     display: 'block',
     fontSize: '14px',
     fontWeight: 300,
-    marginBottom: '-4px',
+    '@media not all and (min-resolution:.001dpcm)' : {
+      marginBottom: '0px',
+    },
   },
   highLightText: {
     color: 'var(--g3-color__highlight-orange)',

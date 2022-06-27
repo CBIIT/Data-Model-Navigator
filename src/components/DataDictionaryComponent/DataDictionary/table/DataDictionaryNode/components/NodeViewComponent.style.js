@@ -20,6 +20,7 @@ export default () => ({
     textOverflow: 'ellipsis',
     paddingTop: '10px',
     paddingLeft: '0',
+    color: '#4A4A4A',
   },
   nodeAssignmentGroup : {
     textAlign: 'right',

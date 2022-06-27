@@ -26,9 +26,13 @@ const theme = {
         paddingBottom: '0',
         alignItems: 'inherit',
         fontWeight: '300',
+        wordBreak: 'break-all',
+
       },
       gutters: {
-        paddingLeft: '0px',
+        paddingLeft: '0px !important',
+        paddingRight: '0px',
+        wordBreak: 'break-all',
       },
     },
     MuiListItemText: {
@@ -151,7 +155,7 @@ export const getPropertyTypeFragment = (property, typeMatchList, spanClassName) 
       if (matchedTypeItem) {
         return (
           <MuiThemeProvider theme={createTheme(theme)}>
-            <List class={'property_type'}>
+            <List>
               <ListItem key={i}>
                 {
                   addHighlightingSpans(
@@ -167,7 +171,7 @@ export const getPropertyTypeFragment = (property, typeMatchList, spanClassName) 
       }
       return (
         <MuiThemeProvider theme={createTheme(theme)}>
-          <List class={'property_type'}>
+          <List>
             <ListItem key={i}>
               {
                 addHighlightingSpans(
@@ -225,8 +229,9 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
       if (item.key === 'properties.name' && item.value === propertyKey) {
         nameMatch = item;
       } else if (item.key === 'properties.description') {
-        const descriptionStr = getPropertyDescription(property);
-        if (item.value === descriptionStr) {
+        const descriptionStr = `${getPropertyDescription(property)}`.toLowerCase();
+        const splitText = descriptionStr ? descriptionStr.split('<br>')[0] : descriptionStr;
+        if (item.value === splitText) {
           descriptionMatch = item;
         }
       } else if (item.key === 'properties.type') {
@@ -291,13 +296,13 @@ export const getNodeTitleSVGFragment = (
   const textAttrBase = {
     x: 0,
     textAnchor: 'middle',
-    alignmentBaseline: 'hanging',
+    alignmentBaseline: 'baseline',
     fontSize,
     className: 'graph-node__text',
   };
   const tspanAttrBase = {
     textAnchor: 'middle',
-    alignmentBaseline: 'hanging',
+    alignmentBaseline: 'baseline',
     fontSize,
   };
   const tspanAttr = {
@@ -316,12 +321,13 @@ export const getNodeTitleSVGFragment = (
     const textAttr = {
       ...textAttrBase,
       key: currentRowIndex,
-      y: textY,
+      y: textY + 10,
     };
     let cursorInRow = 0;
     const currentRowFragment = [];
 
     // Go over all highlighted text in current row
+    let index = 0;
     while (currentHighlightIndex < matchedNodeNameIndices.length) {
       const highlightStartIndex = matchedNodeNameIndices[currentHighlightIndex][0];
       const highlightEndIndex = matchedNodeNameIndices[currentHighlightIndex][1] + 1;
@@ -335,7 +341,8 @@ export const getNodeTitleSVGFragment = (
         break;
       }
       const highlightStartIndexInRow = highlightStartIndex - rowStartIndex;
-      const highlightEndIndexInRow = highlightEndIndex - rowStartIndex;
+      const highlightEndIndexInRow = highlightEndIndex;
+
       if (cursorInRow < highlightStartIndexInRow) {
         currentRowFragment.push((
           <tspan key={cursorInRow} {...tspanAttr}>

@@ -184,7 +184,7 @@ const styles = () => ({
     '& p': {
       margin: 'auto',
     },
-    '&:nth-child(2) > p': {
+    '&:nth-child(2)': {
       maxWidth: '300px',
       minWidth: '100px',
       wordWrap: 'break-word',

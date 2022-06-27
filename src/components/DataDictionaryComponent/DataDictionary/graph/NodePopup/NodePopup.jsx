@@ -35,7 +35,8 @@ class NodePopup extends React.Component {
       };
     const popupLeft = (svgBoundingBox.left - canvasBoundingRect.left)
       + (svgBoundingBox.width / 2);
-
+    
+    /* set y position to account for global position */
     const bodyRect = document && document.body 
       ? document.body.getBoundingClientRect() : {
         top: 0, left: 0, width: 0, bottom: 0,
