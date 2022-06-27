@@ -26,9 +26,13 @@ const theme = {
         paddingBottom: '0',
         alignItems: 'inherit',
         fontWeight: '300',
+        wordBreak: 'break-all',
+
       },
       gutters: {
-        paddingLeft: '0px',
+        paddingLeft: '0px !important',
+        paddingRight: '0px',
+        wordBreak: 'break-all',
       },
     },
     MuiListItemText: {
@@ -151,7 +155,7 @@ export const getPropertyTypeFragment = (property, typeMatchList, spanClassName) 
       if (matchedTypeItem) {
         return (
           <MuiThemeProvider theme={createTheme(theme)}>
-            <List class={'property_type'}>
+            <List>
               <ListItem key={i}>
                 {
                   addHighlightingSpans(
@@ -167,7 +171,7 @@ export const getPropertyTypeFragment = (property, typeMatchList, spanClassName) 
       }
       return (
         <MuiThemeProvider theme={createTheme(theme)}>
-          <List class={'property_type'}>
+          <List>
             <ListItem key={i}>
               {
                 addHighlightingSpans(
