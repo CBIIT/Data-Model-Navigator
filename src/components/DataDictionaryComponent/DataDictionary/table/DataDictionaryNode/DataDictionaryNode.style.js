@@ -13,7 +13,7 @@ export default () => ({
     '&:last-child': {
       marginBottom: '0',
     },
-    '&:hover $nodeTitle': {
+    '&:hover': {
       color: 'var(--g3-color__base-blue)',
     },
   },
