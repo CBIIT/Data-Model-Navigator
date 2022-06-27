@@ -37,7 +37,7 @@ const NodeViewComponent = ({
     if (isSearchMode) {
       const nodeTitleFragment = getNodeTitleFragment(
         matchedResult.matches,
-        node.title,
+        capitalizeFirstLetter(node.title),
         'data-dictionary-property-table__span',
       );
       return nodeTitleFragment;
