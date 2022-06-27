@@ -57,7 +57,7 @@ export const filterMatches = (results, keyword) => {
                 if (`${text}`.toLowerCase().includes(keyword.toLowerCase())){
                   const initIndex = `${text}`.indexOf(keyword, 0);
                   const diff = indice[1] - indice[0];
-                  if (diff > keyword.length) {
+                  if (diff >= keyword.length) {
                     indice[0] += initIndex;
                     indice[1] = indice[0] + keyword.length - 1;
                   }

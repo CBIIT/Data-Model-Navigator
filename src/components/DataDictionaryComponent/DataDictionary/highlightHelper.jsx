@@ -292,13 +292,13 @@ export const getNodeTitleSVGFragment = (
   const textAttrBase = {
     x: 0,
     textAnchor: 'middle',
-    alignmentBaseline: 'hanging',
+    alignmentBaseline: 'baseline',
     fontSize,
     className: 'graph-node__text',
   };
   const tspanAttrBase = {
     textAnchor: 'middle',
-    alignmentBaseline: 'hanging',
+    alignmentBaseline: 'baseline',
     fontSize,
   };
   const tspanAttr = {
@@ -317,7 +317,7 @@ export const getNodeTitleSVGFragment = (
     const textAttr = {
       ...textAttrBase,
       key: currentRowIndex,
-      y: textY,
+      y: textY + 10,
     };
     let cursorInRow = 0;
     const currentRowFragment = [];
