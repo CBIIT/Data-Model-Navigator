@@ -161,11 +161,8 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
         }
         value.forEach((filterValue) => {
           const valueFilteredDict = filteredDict.filter(([, thisValue]) => thisValue[key] === filterValue.toLowerCase());
-          const updateValueFilteredDict = (valueFilteredDict.length > 0)
-            ? valueFilteredDict : [ ...filteredDict, ...filterHashMap.get(filterValue.toLowerCase())];
           alternateFilteredDict = [
-            ...alternateFilteredDict,
-            ...updateValueFilteredDict,
+            ...valueFilteredDict,
           ];
         });
         filteredDict = alternateFilteredDict;
@@ -255,10 +252,24 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
   const filterSections = processedFilters.map((item) => item[0]);
   const selectedSections = facetSearchData.filter(section => filterSections
       .indexOf(section.datafield) !== -1);
-  
+
   const filteredDictionary = newHandleExplorerFilter(processedFilters, data.filterHashMap);
   const filteredDictCounts = getSubjectItemCount(filteredDictionary);
   
+  //** inclusion is higher level for filtering nodes */
+  const { inclusion } = allActiveFilters;
+  if (inclusion.length > 0) {
+    const filterByInclusion = processedFilters.filter(item => item[0] === 'inclusion');
+    const inclusionDictionary = newHandleExplorerFilter(filterByInclusion, data.filterHashMap);
+    const selectDictionary = (processedFilters.length < 3) ? inclusionDictionary : filteredDictionary;
+    const selectedSectionCounts = getSubjectItemCount(selectDictionary, selectedSections);
+    const inclusionFilterItems = facetSearchData.filter(item => item.datafield === 'inclusion')[0];
+    inclusionFilterItems.checkboxItems.forEach(item => {
+      selectedSectionCounts[item.group] = filteredDictCounts[item.group];
+    });
+    const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+    return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+  }
   //** filter by only one subject or one section */
   if (processedFilters.length == 1) {
     const selectedSectionCounts = getSubjectItemCount(unfilteredDictionary, selectedSections);
