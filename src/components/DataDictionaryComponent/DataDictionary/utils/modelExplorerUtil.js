@@ -276,6 +276,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
     const inclusionDictionary = newHandleExplorerFilter(filterByInclusion, filterHashMap);
     //** select exclusion filter dictionary filteredDictionary if filter item is more than 2 */
     const selectDictionary = (processedFilters.length < 3) ? inclusionDictionary : filteredDictionary;
+    
     const selectedSectionCounts = getSubjectItemCount(selectDictionary, selectedSections);
     const inclusionFilterItems = facetSearchData.filter(item => item.datafield === 'inclusion')[0];
 
@@ -293,15 +294,16 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
     const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
     return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
   } else {
-
     //** multiple filter - apply case based inclusion and exclusion filter mehtod for subject count */
     const inclusionDictionary = inclusionFilterHandler(processedFilters, filterHashMap);
     const inclusionSectionCounts = getSubjectItemCount(inclusionDictionary, selectedSections);
     const selectedSectionCounts = getSubjectItemCount(filteredDictionary, selectedSections);
 
+    // display all filter items for category inclusive of the class or assignment.
     if (category.length > 0 && processedFilters.length == 2) {
       for (const [key, value] of Object.entries(selectedSectionCounts)) {
-        if (value === 0) {
+        const categoryItem = category.filter(item => item.toLowerCase() === key);
+        if (value === 0 && categoryItem.length === 0) {
           selectedSectionCounts[key] = inclusionSectionCounts[key];
         }
       }
