@@ -299,7 +299,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
     const inclusionSectionCounts = getSubjectItemCount(inclusionDictionary, selectedSections);
     const selectedSectionCounts = getSubjectItemCount(filteredDictionary, selectedSections);
 
-    // display all filter items for category inclusive of the class or assignment.
+    // display all unselected filter items for category inclusive of the class or assignment filter.
     if (category.length > 0 && processedFilters.length == 2) {
       for (const [key, value] of Object.entries(selectedSectionCounts)) {
         const categoryItem = category.filter(item => item.toLowerCase() === key);
