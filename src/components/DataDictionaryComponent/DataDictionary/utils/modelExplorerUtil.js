@@ -98,6 +98,16 @@ const includeMultiFilterValue = (filteredDict, filters) => {
   return filterValue;
 }
 
+export const inclusionFilterHandler = (selectedFilters, filterHashMap) => {
+  let filteredDict = [];
+  selectedFilters.forEach(([key, value], index) => {
+    value.forEach((filterValue) => {
+      filteredDict.push(...filterHashMap.get(filterValue.toLowerCase()));
+    });
+  });
+  return Object.fromEntries(filteredDict);
+}
+
 export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
   let filteredDict = [];
   let alternateFilteredDict = [];
@@ -161,11 +171,8 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
         }
         value.forEach((filterValue) => {
           const valueFilteredDict = filteredDict.filter(([, thisValue]) => thisValue[key] === filterValue.toLowerCase());
-          const updateValueFilteredDict = (valueFilteredDict.length > 0)
-            ? valueFilteredDict : [ ...filteredDict, ...filterHashMap.get(filterValue.toLowerCase())];
           alternateFilteredDict = [
-            ...alternateFilteredDict,
-            ...updateValueFilteredDict,
+            ...valueFilteredDict,
           ];
         });
         filteredDict = alternateFilteredDict;
@@ -245,28 +252,70 @@ export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
 export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allFilters({}), facetFilterSearchData) => {
   const processedFilters = Object.entries(allActiveFilters)
     .filter(([, value]) => value.length > 0);
-  //** no active filters */
-  const { unfilteredDictionary } = data;
+
+  //** initial state when there is no active filters */
+  const { unfilteredDictionary, filterHashMap } = data;
   if (processedFilters.length == 0) {
     const dictionary = (!unfilteredDictionary) ? data : unfilteredDictionary;
     return { subjectCounts: getSubjectItemCount(dictionary), dictionary: dictionary}
   }
+
   //** check active filters */
   const filterSections = processedFilters.map((item) => item[0]);
   const selectedSections = facetSearchData.filter(section => filterSections
       .indexOf(section.datafield) !== -1);
-  
-  const filteredDictionary = newHandleExplorerFilter(processedFilters, data.filterHashMap);
+
+  const filteredDictionary = newHandleExplorerFilter(processedFilters, filterHashMap);
   const filteredDictCounts = getSubjectItemCount(filteredDictionary);
   
+  //** if inclusion filter is active - inclusion is higher level for filtering nodes */
+  const { inclusion, category } = allActiveFilters;
+  if (inclusion.length > 0) {
+    const filterByInclusion = processedFilters.filter(item => item[0] === 'inclusion');
+    //** generate inclusion filtered dictionary */
+    const inclusionDictionary = newHandleExplorerFilter(filterByInclusion, filterHashMap);
+    //** select exclusion filter dictionary filteredDictionary if filter item is more than 2 */
+    const selectDictionary = (processedFilters.length < 3) ? inclusionDictionary : filteredDictionary;
+    
+    const selectedSectionCounts = getSubjectItemCount(selectDictionary, selectedSections);
+    const inclusionFilterItems = facetSearchData.filter(item => item.datafield === 'inclusion')[0];
+
+    //** set the subject count of inclusion filter based on the selected dictionary */
+    inclusionFilterItems.checkboxItems.forEach(item => {
+      selectedSectionCounts[item.group] = filteredDictCounts[item.group];
+    });
+    const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+    return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+  }
+
   //** filter by only one subject or one section */
   if (processedFilters.length == 1) {
     const selectedSectionCounts = getSubjectItemCount(unfilteredDictionary, selectedSections);
     const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
     return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+  } else {
+    //** multiple filter - apply case based inclusion and exclusion filter mehtod for subject count */
+    const inclusionDictionary = inclusionFilterHandler(processedFilters, filterHashMap);
+    const inclusionSectionCounts = getSubjectItemCount(inclusionDictionary, selectedSections);
+    const selectedSectionCounts = getSubjectItemCount(filteredDictionary, selectedSections);
+
+    // display all unselected filter items for category inclusive of the class or assignment filter.
+    if (category.length > 0 && processedFilters.length == 2) {
+      for (const [key, value] of Object.entries(selectedSectionCounts)) {
+        const categoryItem = category.filter(item => item.toLowerCase() === key);
+        if (value === 0 && categoryItem.length === 0) {
+          selectedSectionCounts[key] = inclusionSectionCounts[key];
+        }
+      }
+      const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+      return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+    }
   }
+
+  const selectedSectionCounts = getSubjectItemCount(filteredDictionary, selectedSections);
+  const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
   //** filter by multiple sections */
-  return { subjectCounts: filteredDictCounts, dictionary: filteredDictionary};
+  return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
 }
 
 export const excludeSystemProperties = (node) => {
