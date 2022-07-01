@@ -163,7 +163,7 @@ export const getSearchSummary = (result) => {
       case 'properties.type':
       case 'properties.name':
       case 'properties.description':
-        matchedPropertiesCount += 1;
+        matchedPropertiesCount += matchedItem.indices && matchedItem.indices.length;
         if (!matchedNodeIDsInProperties.includes(nodeID)) {
           matchedNodeIDsInProperties.push(nodeID);
         }
@@ -173,7 +173,7 @@ export const getSearchSummary = (result) => {
         break;
       case 'title':
       case 'description':
-        matchedNodeNameAndDescriptionsCount += 1;
+        matchedNodeNameAndDescriptionsCount += matchedItem.indices && matchedItem.indices.length;
         if (!matchedNodeIDsInNameAndDescription.includes(nodeID)) {
           matchedNodeIDsInNameAndDescription.push(nodeID);
         }
