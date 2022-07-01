@@ -68,7 +68,7 @@ const moduleReducers = (state = initialState, action) => {
       const updatedCheckboxData = setSelectedFilterValues(
         state.facetfilterConfig.facetSearchData,
         allActiveFilters);
-      filtered = generateSubjectCountsAndFilterData(state, allActiveFilters);
+      filtered = generateSubjectCountsAndFilterData(state, allActiveFilters, payload);
       const resultState = {
         ...state,
         dictionary: filtered.dictionary,
