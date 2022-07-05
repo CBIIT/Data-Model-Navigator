@@ -81,6 +81,17 @@ export const facetSearchData = [
       { name: 'Optional', isChecked: false, group: 'optional' },
     ],
   },
+  {
+    groupName: 'UI Display',
+    datafield: 'includesProperty',
+    section: 'Filter By Property',
+    tooltip: 'inclusion',
+    show: true,
+    checkboxItems: [
+      { name: 'yes', isChecked: false, group: 'includesProperty' },
+      { name: 'no', isChecked: false, group: 'includesProperty' },
+    ],
+  },
 ];
 
 export const facetSectionVariables = {
@@ -126,6 +137,7 @@ export const filterSections = [
   'assignment',
   'class',
   'inclusion',
+  'includesProperty',
 ];
 
 export const filterOptions = [
@@ -148,6 +160,8 @@ export const filterOptions = [
   'required',
   'preferred',
   'optional',
+  'includesProperty',
+  'excludesProperty',
 ];
 
 export const controlVocabConfig = {

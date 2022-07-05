@@ -51,7 +51,9 @@ export const createFilterVariables = (data, currentAllActiveFilters) => {
   
 export const hashMapHelper = (groupName, [key, value], hashMap) => {
   // const isValiddArray = Array.isArray(value[groupName]);
+  console.log(hashMap);
   switch (groupName) {
+    
     case 'category':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
@@ -59,6 +61,7 @@ export const hashMapHelper = (groupName, [key, value], hashMap) => {
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
     case 'class':
+      console.log(key + " - calss props - " + value[groupName]);
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
     case 'inclusion': {
@@ -79,6 +82,15 @@ export const hashMapHelper = (groupName, [key, value], hashMap) => {
       }
       break;
     }
+    case 'includesProperty':
+      console.log(value);
+      // hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
+      console.log(groupName);
+      console.log(hashMap.get(value[groupName]));
+      if (value[groupName] == 'yes') {
+         hashMap.set(groupName, [...hashMap.get(groupName), ...[[key, value]]]);
+      }
+      break;
     default:
       break;
   }
@@ -186,6 +198,8 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
 export const initializeFilterHashMap = (dictionary, filterSections) => {
   const map = new Map();
   filterOptions.forEach((option) => map.set(option, []));
+  console.log('test se');
+  console.log(map);
   Object.entries(dictionary)
     .forEach(([key, value]) => {
       let index = 0;
@@ -251,7 +265,6 @@ export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
 export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allFilters({}), currentFilter) => {
   const processedFilters = Object.entries(allActiveFilters)
     .filter(([, value]) => value.length > 0);
-
   //** initial state when there is no active filters */
   const { unfilteredDictionary, filterHashMap } = data;
   if (processedFilters.length == 0) {
