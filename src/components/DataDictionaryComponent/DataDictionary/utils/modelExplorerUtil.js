@@ -284,18 +284,68 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
   const { inclusion } = allActiveFilters;
   if (inclusion.length > 0) {
     const filterByInclusion = processedFilters.filter(item => item[0] === 'inclusion');
+    const filterWithoutInclusion = processedFilters.filter(item => item[0] !== 'inclusion');
     //** generate inclusion filtered dictionary */
     const inclusionDictionary = newHandleExplorerFilter(filterByInclusion, filterHashMap);
+    const noneInclusionDictionary = newHandleExplorerFilter(filterWithoutInclusion, filterHashMap);
     //** select exclusion filter dictionary filteredDictionary if filter item is more than 2 */
     const selectDictionary = (processedFilters.length < 3) ? inclusionDictionary : filteredDictionary;
     
     const selectedSectionCounts = getSubjectItemCount(selectDictionary, selectedSections);
     const inclusionFilterItems = facetSearchData.filter(item => item.datafield === 'inclusion')[0];
 
+    let selectCounts = filteredDictCounts;
+    if (currentFilter.datafield === 'inclusion' 
+      && currentFilter.isChecked 
+      && filterWithoutInclusion.length === 0) { 
+      const unfilteredDictionaryCount = getSubjectItemCount(unfilteredDictionary, selectedSections);
+      selectCounts = unfilteredDictionaryCount;
+    }
+    if (filterWithoutInclusion.length > 0) {
+      const nonInclusionSectionCounts = getSubjectItemCount(noneInclusionDictionary, selectedSections);
+      selectCounts = nonInclusionSectionCounts;
+    }
     //** set the subject count of inclusion filter based on the selected dictionary */
     inclusionFilterItems.checkboxItems.forEach(item => {
-      selectedSectionCounts[item.group] = filteredDictCounts[item.group];
+      selectedSectionCounts[item.group] = selectCounts[item.group];
     });
+
+    if (currentFilter.datafield !== 'inclusion' && filterWithoutInclusion.length === 2) {
+      const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
+      const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
+      const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
+      const otherSelectionCounts = getSubjectItemCount(otherInclusionDictionary, selectedSections);
+      if (currentSelection) {
+        currentSelection.checkboxItems.forEach(item => {
+          const key = item.name.toLowerCase();
+          if (selectedSectionCounts[key] == 0) {
+            selectedSectionCounts[key] = otherSelectionCounts[key];
+          }
+        })
+      const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+      return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+      }
+    }
+
+    if (currentFilter.datafield !== 'inclusion'
+    && filterWithoutInclusion.length === 3) {
+      const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
+      const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
+      const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
+      const otherSelectionCounts = getSubjectItemCount(otherInclusionDictionary, selectedSections);
+      if (currentSelection) {
+        currentSelection.checkboxItems.forEach(item => {
+          const key = item.name.toLowerCase();
+          if (selectedSectionCounts[key] == 0) {
+            selectedSectionCounts[key] = otherSelectionCounts[key];
+          }
+        })
+      }
+    
+      const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+      return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+    }
+    
     const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
     return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
   }
