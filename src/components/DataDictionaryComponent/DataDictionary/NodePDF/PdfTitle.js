@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     lineHeight: 1.2,
     width: '350px',
     fontFamily: FontRegistry('NunitoNormal'),
+    textAlign: 'justify',
   },
   categoryHeader: {
     marginLeft: '10px',
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   tagContainer: {
     position: 'relative',
-    left: '139em',
+    left: '141.5em',
     display: 'flex',
     flexDirection: 'row',
   },
@@ -113,46 +114,49 @@ const styles = StyleSheet.create({
 
 const createStyle = (classes, categoryColor) => ({ ...classes, ...{ borderLeft: `5px solid ${categoryColor}` } });
 
-const PdfTitle = (node) => {
-  const svgNode = document.querySelector(`svg.${node.category}`);
+const PdfTitle = ({
+  category, assignment, title, desc, nodeClass,
+}) => {
+  const svgNode = document.querySelector(`svg.${category}`);
   const SvgIcon = renderSvgElement(svgNode);
-  const categoryColor = getCategoryColor(node.category);
+  const categoryColor = getCategoryColor(category);
   return (
     <View>
       <View style={createStyle(styles.categoryStyle, categoryColor)}>
         {SvgIcon}
         <Text style={{ color: categoryColor, ...styles.categoryHeader }}>
-          {capitalizeFirstLetter(node.category)}
+          {capitalizeFirstLetter(category)}
         </Text>
       </View>
       <View style={createStyle(styles.hr, categoryColor)} />
       <View style={createStyle(styles.nodeInfo, categoryColor)}>
         {/* <View style={styles.nodeTitle}> */}
         <Text style={styles.nodeTitle}>
-          {capitalizeFirstLetter(node.title)}
+          {capitalizeFirstLetter(title)}
         </Text>
-        <Text style={styles.nodeDesc}>{node.desc}</Text>
+        <Text style={styles.nodeDesc}>{desc}</Text>
       </View>
       <View style={createStyle(styles.tagsInfo, categoryColor)}>
         <span style={styles.tagContainer}>
-          { (node.assignment) ? (
-          <Text style={styles.nodeAssignment}>
-            <span style={styles.label}>
-              {'Assignment: '}
-            </span>
-            <span style={styles.assignment}>
-              {capitalizeFirstLetter(node.assignment)}
-            </span>
-          </Text>) : (<Text />)}
-          { (node.nodeClass) ? (
-          <Text style={styles.nodeClass}>
-            <span style={styles.label}>
-              {'Class: '}
-            </span>
-            <span style={styles.class}>
-              {capitalizeFirstLetter(node.nodeClass)}
-            </span>
-          </Text>
+          { (assignment) ? (
+            <Text style={styles.nodeAssignment}>
+              <span style={styles.label}>
+                {'Assignment: '}
+              </span>
+              <span style={styles.assignment}>
+                {capitalizeFirstLetter(assignment)}
+              </span>
+            </Text>
+          ) : (<Text />)}
+          { (nodeClass) ? (
+            <Text style={styles.nodeClass}>
+              <span style={styles.label}>
+                {'Class: '}
+              </span>
+              <span style={styles.class}>
+                {capitalizeFirstLetter(nodeClass)}
+              </span>
+            </Text>
           ) : (<Text />)}
         </span>
       </View>
