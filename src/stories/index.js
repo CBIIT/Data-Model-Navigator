@@ -142,10 +142,10 @@ async function init() {
         item.required = pRequired;
         item.preferred = pPreffered;
         item.optional = pOptional;
-        item.includesProperty = 'yes';
+        item.uiDisplay = 'yes';
       } else {
         item.properties = {};
-        item.includesProperty = 'no';
+        item.uiDisplay = 'no';
       }
   
       for (const property in icdcMData.Relationships) {

@@ -19,6 +19,8 @@ import {
 } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  sortLabels,
+  resetIcon,
   defaultFacetSectionVariables,
 } from '../../bento/dataDictionaryData';
 import CheckBoxView from './CheckBoxView';
@@ -49,6 +51,8 @@ const FacetFilters = ({
   hidePropertyTable,
   onClickBlankSpace,
   onResetGraphCanvas,
+  onSortSection,
+  onClearGroupFilter,
 }) => {
   const activeFilters = useSelector((state) => (
     state.submission
@@ -57,6 +61,11 @@ const FacetFilters = ({
   const activeFiltersCount = Object.entries(activeFilters).reduce(
     (acc, [key, val]) => acc + (val.length), 0, // eslint-disable-line no-unused-vars
   );
+
+  const sortByForGroups = useSelector((state) => (
+    state.submission
+      && state.submission.sortByList
+      ? state.submission.sortByList : {}));
 
   const facetSectionVariables = useSelector((state) => (
     state.submission
@@ -81,6 +90,11 @@ const FacetFilters = ({
       return acc;
     }, []),
   );
+
+  function getSortButtonColor(sideBarItem, sortType) {
+    return (sortByForGroups[sideBarItem.datafield] === sortType
+      ? '#B2C6D6' : '#4A4A4A');
+  }
 
   const handleGroupsChange = (panel) => (event, isExpanded) => {
     const groups = _.cloneDeep(groupsExpanded);
@@ -301,6 +315,45 @@ const FacetFilters = ({
                           classes={{ root: classes.expansionPanelDetailsRoot }}
                         >
                           <List component="div" disablePadding dense>
+                          <div
+                            className={classes.sortGroup}
+                          >
+                            <span
+                              className={classes.sortGroupIcon}
+                            >
+                              <Icon
+                                style={{ fontSize: 10 }}
+                                onClick={() => { 
+                                  onClearGroupFilter(sideBarItem)
+                                }}
+                              >
+                                <img
+                                  src={resetIcon.src}
+                                  height={resetIcon.size}
+                                  width={resetIcon.size}
+                                  alt={resetIcon.alt}
+                                />
+                              </Icon>
+                            </span>
+                            <span
+                              className={classes.sortGroupItem}
+                              style={{ color: getSortButtonColor(sideBarItem, 'alphabet') }}
+                              onClick={() => {
+                                onSortSection(sideBarItem.datafield, 'alphabet');
+                              }}
+                            >
+                              {sortLabels.sortAlphabetically}
+                            </span>
+                            <span
+                              className={classes.sortGroupItemCounts}
+                              style={{ color: getSortButtonColor(sideBarItem, 'count') }}
+                              onClick={() => {
+                                onSortSection(sideBarItem.datafield, 'count');
+                              }}
+                            >
+                              {sortLabels.sortByCount}
+                            </span>
+                          </div>
                             {getCheckBoxView(sideBarItem, currentSection)}
                           </List>
                         </AccordionDetails>

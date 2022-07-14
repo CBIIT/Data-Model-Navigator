@@ -115,8 +115,10 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
       item.required = pRequired;
       item.preferred = pPreffered;
       item.optional = pOptional;
+      item.uiDisplay = 'yes';
     } else {
       item.properties = {};
+      item.uiDisplay = 'no';
     }
 
     for (const property in icdcMData.Relationships) {
