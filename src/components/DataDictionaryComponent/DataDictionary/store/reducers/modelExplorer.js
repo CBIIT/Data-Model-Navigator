@@ -74,7 +74,7 @@ const sortTypes = {
  * @returns 
  */
 
-const sortBasedOnSortByList = (checkboxData, sortByList) => {
+const sortFacetSections = (checkboxData, sortByList) => {
   const sortCheckBoxItem = _.cloneDeep(checkboxData);
   sortCheckBoxItem.forEach((item) => {
     const sortType = (sortByList && sortByList[item.datafield] === sortTypes.COUNT)
@@ -97,7 +97,7 @@ const toggleCheckBox = (payload, state) => {
     allActiveFilters);
   const filtered = generateSubjectCountsAndFilterData(state, allActiveFilters, payload);
   const sortCheckboxData = setSubjectCount(updatedCheckboxData, filtered.subjectCounts);
-  updatedCheckboxData = sortBasedOnSortByList(sortCheckboxData, state.sortByList);
+  updatedCheckboxData = sortFacetSections(sortCheckboxData, state.sortByList);
   const updateState = {
     ...state,
     dictionary: filtered.dictionary,
@@ -140,7 +140,7 @@ const moduleReducers = (state = initialState, action) => {
 
     case actionTypes.CLEAR_ALL_FILTERS:
       filtered = generateSubjectCountsAndFilterData(state.unfilteredDictionary);
-      const checkboxItems = sortBasedOnSortByList(setSubjectCount(state.facetfilterConfig.facetSearchData,
+      const checkboxItems = sortFacetSections(setSubjectCount(state.facetfilterConfig.facetSearchData,
         filtered.subjectCounts), state.sortByList);
       return {
         ...state,
