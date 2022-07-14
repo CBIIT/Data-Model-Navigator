@@ -1,24 +1,18 @@
-import { combineReducers } from 'redux';
 import _ from 'lodash';
 import {
   setSelectedFilterValues,
-  transformAPIDataIntoCheckBoxData, 
 } from 'bento-components';
 import * as actionTypes from '../actions/actionTypes';
 import {
-  getState,
-  createFilterVariables,
   initializeFilterHashMap,
   setSubjectCount,
   getFileNodes,
   getNodeTypes,
   getDictionaryWithExcludeSystemProperties,
   generateSubjectCountsAndFilterData,
-  excludeSystemProperties,
   getAllFilters,
   toggleCheckBoxAction,
 } from '../../utils/modelExplorerUtil';
-import { from } from 'zen-observable';
 
 const initialState = {
   allActiveFilters: {},
@@ -40,14 +34,21 @@ const defaultFilterConfig = {
   filterOptions: []
 }
 
+// sorting variables
+const sortTypes = {
+  SUBJECTS: 'subjects',
+  NAME: 'name',
+  COUNT: 'count',
+}
+
 /**
- * Sort checkboxes by Checked
+ * Sort checkboxes by single section
  *
- * @param {object} checkboxData
- * @return {json}
+ * @param {array} checkboxData
+ * @return {array}
  */
  const sortBySection = (checkboxData, sortType) => {
-  if (sortType === "subjects") {
+  if (sortType === sortTypes.SUBJECTS) {
     checkboxData.sort((a, b) => b.subjects - a.subjects);
   } else {
     checkboxData.sort(((a, b) => (a.name > b.name || -(a.name < b.name))));
@@ -58,8 +59,8 @@ const defaultFilterConfig = {
 /**
  * Sort checkboxes by Checked
  *
- * @param {object} checkboxData
- * @return {json}
+ * @param {array} checkboxData
+ * @return {array} 
  */
 
  const sortByCheckedItem = (checkboxData) => {
@@ -67,32 +68,27 @@ const defaultFilterConfig = {
  };
 
 /**
- * 
- * @param {*} state 
- * @param {*} action 
+ * sort all the checkbox in facet search 
+ * @param {array} checkboxData 
+ * @param {object} sortByList 
  * @returns 
  */
 
 const sortBasedOnSortByList = (checkboxData, sortByList) => {
   const sortCheckBoxItem = _.cloneDeep(checkboxData);
   sortCheckBoxItem.forEach((item) => {
-    const sortType = (sortByList && sortByList[item.datafield] === 'count')
-      ? 'subjects' : 'name';
+    const sortType = (sortByList && sortByList[item.datafield] === sortTypes.COUNT)
+      ? sortTypes.SUBJECTS : sortTypes.NAME;
     item.checkboxItems = sortBySection(item.checkboxItems, sortType);
   });
-  // for (const [key, value] of Object.entries(sortByList)) {
-  //   const groupData = sortCheckBoxItem.filter((group) => key === group.datafield)[0];
-  //   const sortType = value === 'count' ? 'subjects' : 'name';
-  //   groupData.checkboxItems = sortBySection(groupData.checkboxItems, sortType);
-  // }
   return sortCheckBoxItem;
 }
 
 /**
- * 
- * @param {*} state 
+ * toggle check box action
+ * @param {object} state 
  * @param {*} action 
- * @returns 
+ * @returns
  */
 const toggleCheckBox = (payload, state) => {
   const allActiveFilters = toggleCheckBoxAction(payload, state);
@@ -112,7 +108,6 @@ const toggleCheckBox = (payload, state) => {
   }
   return updateState;
 }
-
 
 const moduleReducers = (state = initialState, action) => {
   const { payload } = action;
@@ -145,6 +140,8 @@ const moduleReducers = (state = initialState, action) => {
 
     case actionTypes.CLEAR_ALL_FILTERS:
       filtered = generateSubjectCountsAndFilterData(state.unfilteredDictionary);
+      const checkboxItems = sortBasedOnSortByList(setSubjectCount(state.facetfilterConfig.facetSearchData,
+        filtered.subjectCounts), state.sortByList);
       return {
         ...state,
         dictionary: state.unfilteredDictionary,
@@ -154,8 +151,7 @@ const moduleReducers = (state = initialState, action) => {
         activeFilter: false,
         filtersCleared: true,
         checkbox: {
-          data: setSubjectCount(state.facetfilterConfig.facetSearchData,
-          filtered.subjectCounts),
+          data: checkboxItems,
         },
         ortByList: {
           ...state.sortByList,
@@ -165,7 +161,7 @@ const moduleReducers = (state = initialState, action) => {
       const groupData = state.checkbox.data.filter((group) => payload.groupName === group.datafield)[0];
       let { sortByList } = state;
       sortByList = sortByList || {};
-      const sortType = payload.sortBy === 'count' ? 'subjects' : 'name';
+      const sortType = payload.sortBy === sortTypes.COUNT ? sortTypes.SUBJECTS : sortTypes.NAME;
       const sortedCheckboxItems = sortBySection(groupData.checkboxItems, sortType);
       sortByList[groupData.datafield] = payload.sortBy;
       const data = state.checkbox.data.map((group) => {
