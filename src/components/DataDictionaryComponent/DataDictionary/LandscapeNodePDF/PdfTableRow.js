@@ -56,11 +56,12 @@ const styles = StyleSheet.create({
     fontFamily: FontRegistry('NunitoSans'),
     textAlign: 'justify',
     width: '10%',
+    // backgroundColor: 'red',
   },
   tableCell: {
     fontSize: 8,
     overflowWrap: 'break-word',
-    paddingLeft: '2px',
+    // paddingLeft: '2px',
     paddingTop: '5px',
     paddingBottom: '5px',
     lineHeight: 1.2,
@@ -68,10 +69,14 @@ const styles = StyleSheet.create({
     width: '350px',
     textAlign: 'justify',
   },
+  descriptionCell: {
+    width: '100%',
+    paddingLeft: '6px',
+  },
   horizontalTableCell: {
     fontSize: 8,
     overflowWrap: 'break-word',
-    paddingLeft: '2px',
+    // paddingLeft: '2px',
     paddingTop: '5px',
     paddingBottom: '5px',
     lineHeight: 1.2,
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
   },
   rowCell: {
-    paddingLeft: '2px',
+    // paddingLeft: '2px',
   },
   key: {
     fontSize: 8,
@@ -227,13 +232,13 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
     <View>
       <View style={styles.test}>
         <Text style={styles.cellHeader}>DESCRIPTION</Text>
-        <Text style={styles.tableCell}>
+        <Text style={{ ...styles.tableCell, ...styles.descriptionCell }}>
           {propInfo.key ? (
             <>
               {displayKeyPropsDiscription(propInfo.description)}
             </>
           ) : (
-            <Text style={styles.tableCell}>
+            <Text style={{ ...styles.tableCell, ...styles.descriptionCell }}>
               {propInfo.description}
             </Text>
           )}
@@ -241,7 +246,7 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
       </View>
       <View style={styles.test}>
         <Text style={styles.cellHeader}>TYPE</Text>
-        <Text style={styles.tableCell}>
+        <>
           {propInfo.enum ? (
             <Text style={styles.tableCell}>
               {'Acceptable Values: '}
@@ -252,11 +257,16 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
               {validateType(propInfo.type)}
             </Text>
           ) }
-        </Text>
+        </>
       </View>
       <View style={styles.horizontalCells}>
         <Text style={styles.cellHeader}>REQUIRED</Text>
-        <Text style={{ ...styles.horizontalTableCell, ...styles.rowCell }}>{required(thisProperty)}</Text>
+        <Text
+          style={{ ...styles.horizontalTableCell, ...styles.rowCell }}
+        >
+          {required(thisProperty)}
+
+        </Text>
 
         <Text style={styles.cellHeader}>SOURCE</Text>
         <Text style={styles.horizontalTableCell}>{textContent(propInfo.src, '/')}</Text>
