@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     fontFamily: FontRegistry('NunitoBold'),
   },
   tableColHeader: {
-    width: '10%',
+    width: '9.25%',
     paddingLeft: 2,
   },
   tableColKey: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   key: {
     fontSize: 8,
     color: '#0d71a3',
-    paddingLeft: '2px',
+    // paddingLeft: '2px',
     paddingTop: '5px',
     paddingBottom: '5px',
     lineHeight: 1.2,
