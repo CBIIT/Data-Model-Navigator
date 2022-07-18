@@ -112,13 +112,13 @@ async function init() {
               propertiesItem.key = icdcMPData.PropDefinitions[propertyName].Key;
               if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes') {
                 pRequired.push(nodeP);
-                propertiesItem['label'] = 'Required';
+                propertiesItem['propertyType'] = 'Required';
               } else if (icdcMPData.PropDefinitions[propertyName].Req === 'Preferred') {
                 pPreffered.push(nodeP);
-                propertiesItem['label'] = 'Preferred';
+                propertiesItem['propertyType'] = 'Preferred';
               } else {
                 pOptional.push(nodeP);
-                propertiesItem['label'] = 'optional';
+                propertiesItem['propertyType'] = 'optional';
               }
 
               if (icdcMPData.PropDefinitions[propertyName].Tags &&
