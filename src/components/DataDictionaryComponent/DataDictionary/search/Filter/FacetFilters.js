@@ -70,7 +70,7 @@ const FacetFilters = ({
   const facetSectionVariables = useSelector((state) => (
     state.submission
           && state.submission.facetfilterConfig
-      ? state.submission.facetfilterConfig.facetSectionVariables : {}));  
+      ? state.submission.facetfilterConfig.facetSectionVariables : {}));
 
   const sideBarContent = useSelector((state) => (
     state.submission
@@ -79,6 +79,11 @@ const FacetFilters = ({
     data: [],
     defaultPanel: false,
   }));
+
+  const showCheckboxCount = useSelector((state) => (
+    state.submission
+          && state.submission.facetfilterConfig
+      ? state.submission.facetfilterConfig.showCheckboxCount : 3));
 
   const [groupsExpanded, setGroupsExpanded] = React.useState([]);
   const [sectionExpanded, setSectionExpanded] = React.useState(
@@ -182,7 +187,7 @@ const FacetFilters = ({
         ...item,
       }
     ));
-    const selectedCheckbox = selectedItems.slice(0, 3)
+    const selectedCheckbox = selectedItems.slice(0, showCheckboxCount)
       .map((item, index) => (
         <CheckBoxView
           checkboxItem={item}

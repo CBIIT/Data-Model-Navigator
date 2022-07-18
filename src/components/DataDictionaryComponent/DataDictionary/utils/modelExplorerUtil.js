@@ -50,18 +50,13 @@ export const createFilterVariables = (data, currentAllActiveFilters) => {
 };
   
 export const hashMapHelper = (groupName, [key, value], hashMap) => {
-  // const isValiddArray = Array.isArray(value[groupName]);
   switch (groupName) {
-    
     case 'category':
-      hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
-      break;
     case 'assignment':
-      hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
-      break;
     case 'class':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
+    case 'uiDisplay':
     case 'inclusion': {
       const inclusionObj = value[groupName];
       if (inclusionObj) {
@@ -80,9 +75,6 @@ export const hashMapHelper = (groupName, [key, value], hashMap) => {
       }
       break;
     }
-    case 'uiDisplay':
-      hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
-      break;
     default:
       break;
   }
@@ -112,6 +104,13 @@ export const inclusionFilterHandler = (selectedFilters, filterHashMap) => {
   return Object.fromEntries(filteredDict);
 }
 
+const inclusionSubjectCount = (dictionary, filter, currentFilter) => {
+  console.log("includion filter count");
+  console.log(currentFilter);
+  console.log(dictionary);
+  console.log(filter);
+}
+
 export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
   let filteredDict = [];
   let alternateFilteredDict = [];
@@ -119,6 +118,8 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
     switch (index) {
       case 0: {
         value.forEach((filterValue) => {
+          console.log(filterValue.toLowerCase());
+          console.log(filterHashMap.get(filterValue.toLowerCase()));
           filteredDict = [
             ...filteredDict,
             ...filterHashMap.get(filterValue.toLowerCase()),
@@ -127,7 +128,7 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
         break;
       }
       case 1: {
-        if (key === 'inclusion') {
+        if (key === 'inclusion' || key === 'uiDisplay') {
           if (value.length > 1) {
             filteredDict = includeMultiFilterValue(filteredDict, value);
           } else {
@@ -157,7 +158,7 @@ export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
       }
 
       default: {
-        if (key === 'inclusion') {
+        if (key === 'inclusion' || key === 'uiDisplay') {
           if (value.length > 1) {
             filteredDict = includeMultiFilterValue(filteredDict, value);
           } else {
@@ -198,6 +199,7 @@ export const initializeFilterHashMap = (dictionary, filterSections) => {
         index += 1;
       }
     });
+    console.log(map);
   return map;
 };
   
@@ -231,7 +233,12 @@ export const getDictionaryWithExcludeSystemProperties = (dictionary) => {
   return ret;
 };
 
-export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
+export const getSubjectItemCount = (dictionary, filterBy = facetSearchData, activeFilters) => {
+  console.log(activeFilters);
+  //check if the inclusion and uiDisplay
+
+  console.log(filterBy);
+
   const subjectCountItems = {};
   filterBy.forEach((section) => {
     section.checkboxItems.forEach((item) => {
@@ -248,6 +255,7 @@ export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
       });
     });
   });
+  console.log(subjectCountItems);
   return subjectCountItems;
 }
 
@@ -271,9 +279,10 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
   const filteredDictCounts = getSubjectItemCount(filteredDictionary);
   
   //** if inclusion filter is active - inclusion is higher level for filtering nodes */
-  const { inclusion } = allActiveFilters;
+  const { inclusion, uiDisplay } = allActiveFilters;
   if (inclusion.length > 0) {
-    // const inclusionItem = inclusion.length > 0 ? 'inclusion' : 'uiDisplay';
+    // create new dictionary to track properties count only
+    
     const inclusionItem = 'inclusion';
     const filterByInclusion = processedFilters.filter(item => item[0] === inclusionItem);
     const filterWithoutInclusion = processedFilters.filter(item => item[0] !== inclusionItem);
@@ -284,17 +293,18 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
     //** select exclusion filter dictionary filteredDictionary if filter item is more than 2 */
     const selectDictionary = (processedFilters.length < 3) ? inclusionDictionary : filteredDictionary;
     
-    const selectedSectionCounts = getSubjectItemCount(selectDictionary, selectedSections);
-    const inclusionFilterItems = facetSearchData.filter(item => item.datafield === inclusionItem)[0];
+    const selectedSectionCounts = getSubjectItemCount(selectDictionary, selectedSections, currentFilter);
+    const inclusionFilterItems = facetfilterConfig.facetSearchData.filter(item => item.datafield === inclusionItem)[0];
 
     let selectCounts = filteredDictCounts;
     if (currentFilter.datafield === inclusionItem && currentFilter.isChecked 
-      && filterWithoutInclusion.length === 0) { 
-      const unfilteredDictionaryCount = getSubjectItemCount(unfilteredDictionary, selectedSections);
+      && filterWithoutInclusion.length === 0) {
+      const inclusionSubjectCount1 = inclusionSubjectCount(unfilteredDictionary, filterByInclusion, currentFilter);
+      const unfilteredDictionaryCount = getSubjectItemCount(unfilteredDictionary, selectedSections, currentFilter);
       selectCounts = unfilteredDictionaryCount;
     }
     if (filterWithoutInclusion.length > 0) {
-      const nonInclusionSectionCounts = getSubjectItemCount(noneInclusionDictionary, selectedSections);
+      const nonInclusionSectionCounts = getSubjectItemCount(noneInclusionDictionary, selectedSections, currentFilter);
       selectCounts = nonInclusionSectionCounts;
     }
     //** set the subject count of inclusion filter based on the selected dictionary */
@@ -306,7 +316,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
       const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
       const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
       const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
-      const otherSelectionCounts = getSubjectItemCount(otherInclusionDictionary, selectedSections);
+      const otherSelectionCounts = getSubjectItemCount(otherInclusionDictionary, selectedSections, currentFilter);
       if (currentSelection) {
         currentSelection.checkboxItems.forEach(item => {
           const key = item.name.toLowerCase();
@@ -345,6 +355,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
   //** filter by nodes - any search filter item that filters the node (this excludes inclusion) */
   //** filter by only one subject or one section */
   if (processedFilters.length == 1) {
+    console.log("where filter is one");
     const selectedSectionCounts = getSubjectItemCount(unfilteredDictionary, selectedSections);
     const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
     return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};

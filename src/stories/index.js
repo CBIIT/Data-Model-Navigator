@@ -91,6 +91,9 @@ async function init() {
       const pRequired = [];
       const pPreffered = [];
       const pOptional = [];
+
+      const Yes = [];
+      const No  = [];
       if (icdcMData.Nodes[key].Props != null) {
         for (let i = 0; i < icdcMData.Nodes[key].Props.length; i++) {
           const nodeP = icdcMData.Nodes[key].Props[i];
@@ -109,11 +112,23 @@ async function init() {
               propertiesItem.key = icdcMPData.PropDefinitions[propertyName].Key;
               if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes') {
                 pRequired.push(nodeP);
+                propertiesItem['label'] = 'Required';
               } else if (icdcMPData.PropDefinitions[propertyName].Req === 'Preferred') {
                 pPreffered.push(nodeP);
+                propertiesItem['label'] = 'Preferred';
               } else {
                 pOptional.push(nodeP);
-              } 
+                propertiesItem['label'] = 'optional';
+              }
+
+              if (icdcMPData.PropDefinitions[propertyName].Tags &&
+                icdcMPData.PropDefinitions[propertyName].Tags.Labeled) {
+                  Yes.push(nodeP);
+                  propertiesItem['display'] = 'Yes';
+              } else {
+                  No.push(nodeP);
+                  propertiesItem['display'] = 'No';
+              }
             }
           }
           properties[nodeP] = propertiesItem;
@@ -139,13 +154,25 @@ async function init() {
             preferred: pPreffered,
           };
         }
+        if (Yes.length > 0) {
+          item.uiDisplay = {
+            ...item.uiDisplay,
+            yes: Yes,
+          };
+        }
+        if (No.length > 0) {
+          item.uiDisplay = {
+            ...item.uiDisplay,
+            no: No,
+          };
+        }
         item.required = pRequired;
         item.preferred = pPreffered;
         item.optional = pOptional;
-        item.uiDisplay = 'yes';
+        item.yes = Yes;
+        item.no = No;
       } else {
         item.properties = {};
-        item.uiDisplay = 'no';
       }
   
       for (const property in icdcMData.Relationships) {
@@ -205,7 +232,7 @@ async function init() {
       }
     }
     const newDataList = dataList;
-  
+    console.log(newDataList);
     // return {
     //   data: newDataList,
     //   version: version,
