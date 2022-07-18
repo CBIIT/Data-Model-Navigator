@@ -1,5 +1,5 @@
 export default () => ({
-  nodeTitle : {
+  nodeTitle: {
     width: '260px',
     flexGrow: '0',
     flexShrink: '0',
@@ -21,8 +21,9 @@ export default () => ({
     paddingTop: '10px',
     paddingLeft: '0',
     color: '#4A4A4A',
+    textAlign: 'justify',
   },
-  nodeAssignmentGroup : {
+  nodeAssignmentGroup: {
     textAlign: 'right',
   },
   nodeLabel: {
@@ -48,21 +49,20 @@ export default () => ({
     color: '#2982af',
     fontWeight: '500',
   },
-  nodeDownloadButtonGroup : {
+  nodeDownloadButtonGroup: {
     textAlign: 'right',
-    marginTop: '15px',
-    paddingRight: '15px',
+    marginTop: '2em',
+    paddingRight: '1.5em',
   },
-  buttonWrap : {
+  buttonWrap: {
     float: 'right',
     marginTop: '-8px',
     '&:last-child': {
       borderRight: 'none',
-    }
+    },
   },
   spanHighlight: {
     color: 'var(--g3-color__highlight-orange)',
     fontWeight: '600',
   },
 });
-  

@@ -16,6 +16,12 @@ export const defaultFacetSectionVariables = {
   isExpanded: false,
 };
 
+export const sortLabels = {
+  sortAlphabetically: 'Sort alphabetically',
+  sortByCount: 'Sort by counts',
+  showMore: '...expand to see all selections',
+};
+
 export const facetSearchData = [
   {
     groupName: 'Category',
@@ -25,13 +31,13 @@ export const facetSearchData = [
     show: true,
     checkboxItems: [
       { name: 'Administrative', isChecked: false, group:'category' },
+      { name: 'Analysis', isChecked: false, group:'category' },
+      { name: 'Biospecimen', isChecked: false, group:'category' },
       { name: 'Case', isChecked: false, group:'category' },
-      { name: 'Study', isChecked: false, group:'category' },
       { name: 'Clinical', isChecked: false, group:'category' },
       { name: 'Clinical_Trial', isChecked: false, group:'category' },
-      { name: 'Biospecimen', isChecked: false, group:'category' },
-      { name: 'Analysis', isChecked: false, group:'category' },
       { name: 'Data_File', isChecked: false, group:'category' },
+      { name: 'Study', isChecked: false, group:'category' },
     ],
   },
   {
@@ -76,9 +82,20 @@ export const facetSearchData = [
     tooltip: 'inclusion',
     show: true,
     checkboxItems: [
-      { name: 'Required', isChecked: false, group: 'required' },
-      { name: 'Preferred', isChecked: false, group: 'preferred' },
       { name: 'Optional', isChecked: false, group: 'optional' },
+      { name: 'Preferred', isChecked: false, group: 'preferred' },
+      { name: 'Required', isChecked: false, group: 'required' },
+    ],
+  },
+  {
+    groupName: 'UI Display',
+    datafield: 'uiDisplay',
+    section: 'Filter By Property',
+    tooltip: 'inclusion',
+    show: true,
+    checkboxItems: [
+      { name: 'no', isChecked: false, group: 'uiDisplay' },
+      { name: 'yes', isChecked: false, group: 'uiDisplay' },
     ],
   },
 ];
@@ -119,6 +136,7 @@ export const baseFilters = {
   class: [],
   multiplicity: [],
   inclusion: [],
+  uiDisplay: [],
 };
 
 export const filterSections = [
@@ -126,6 +144,7 @@ export const filterSections = [
   'assignment',
   'class',
   'inclusion',
+  'uiDisplay',
 ];
 
 export const filterOptions = [
@@ -148,6 +167,8 @@ export const filterOptions = [
   'required',
   'preferred',
   'optional',
+  'yes',
+  'no',
 ];
 
 export const controlVocabConfig = {

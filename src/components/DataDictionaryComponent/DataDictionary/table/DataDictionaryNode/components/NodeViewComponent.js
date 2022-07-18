@@ -39,7 +39,7 @@ const NodeViewComponent = ({
     return capitalizeFirstLetter(node.title);
   };
 
-  const getDescription = (description) => {
+  const getDescription = (thisDescription) => {
     if (isSearchMode) {
       const nodeDescriptionFragment = getNodeDescriptionFragment(
         matchedResult.matches,
@@ -48,7 +48,7 @@ const NodeViewComponent = ({
       );
       return nodeDescriptionFragment;
     }
-    return description;
+    return thisDescription;
   };
 
   return (

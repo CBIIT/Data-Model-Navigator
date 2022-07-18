@@ -52,6 +52,7 @@ export const createFilterVariables = (data, currentAllActiveFilters) => {
 export const hashMapHelper = (groupName, [key, value], hashMap) => {
   // const isValiddArray = Array.isArray(value[groupName]);
   switch (groupName) {
+    
     case 'category':
       hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
       break;
@@ -79,6 +80,9 @@ export const hashMapHelper = (groupName, [key, value], hashMap) => {
       }
       break;
     }
+    case 'uiDisplay':
+      hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
+      break;
     default:
       break;
   }
@@ -251,9 +255,8 @@ export const getSubjectItemCount = (dictionary, filterBy = facetSearchData) => {
 export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allFilters({}), currentFilter) => {
   const processedFilters = Object.entries(allActiveFilters)
     .filter(([, value]) => value.length > 0);
-
   //** initial state when there is no active filters */
-  const { unfilteredDictionary, filterHashMap } = data;
+  const { unfilteredDictionary, filterHashMap, facetfilterConfig } = data;
   if (processedFilters.length == 0) {
     const dictionary = (!unfilteredDictionary) ? data : unfilteredDictionary;
     return { subjectCounts: getSubjectItemCount(dictionary), dictionary: dictionary}
@@ -261,7 +264,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
 
   //** check active filters */
   const filterSections = processedFilters.map((item) => item[0]);
-  const selectedSections = facetSearchData.filter(section => filterSections
+  const selectedSections = facetfilterConfig.facetSearchData.filter(section => filterSections
       .indexOf(section.datafield) !== -1);
 
   const filteredDictionary = newHandleExplorerFilter(processedFilters, filterHashMap);
@@ -270,8 +273,11 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
   //** if inclusion filter is active - inclusion is higher level for filtering nodes */
   const { inclusion } = allActiveFilters;
   if (inclusion.length > 0) {
-    const filterByInclusion = processedFilters.filter(item => item[0] === 'inclusion');
-    const filterWithoutInclusion = processedFilters.filter(item => item[0] !== 'inclusion');
+    // const inclusionItem = inclusion.length > 0 ? 'inclusion' : 'uiDisplay';
+    const inclusionItem = 'inclusion';
+    const filterByInclusion = processedFilters.filter(item => item[0] === inclusionItem);
+    const filterWithoutInclusion = processedFilters.filter(item => item[0] !== inclusionItem);
+
     //** generate inclusion filtered dictionary */
     const inclusionDictionary = newHandleExplorerFilter(filterByInclusion, filterHashMap);
     const noneInclusionDictionary = newHandleExplorerFilter(filterWithoutInclusion, filterHashMap);
@@ -279,11 +285,10 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
     const selectDictionary = (processedFilters.length < 3) ? inclusionDictionary : filteredDictionary;
     
     const selectedSectionCounts = getSubjectItemCount(selectDictionary, selectedSections);
-    const inclusionFilterItems = facetSearchData.filter(item => item.datafield === 'inclusion')[0];
+    const inclusionFilterItems = facetSearchData.filter(item => item.datafield === inclusionItem)[0];
 
     let selectCounts = filteredDictCounts;
-    if (currentFilter.datafield === 'inclusion' 
-      && currentFilter.isChecked 
+    if (currentFilter.datafield === inclusionItem && currentFilter.isChecked 
       && filterWithoutInclusion.length === 0) { 
       const unfilteredDictionaryCount = getSubjectItemCount(unfilteredDictionary, selectedSections);
       selectCounts = unfilteredDictionaryCount;
@@ -297,7 +302,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
       selectedSectionCounts[item.group] = selectCounts[item.group];
     });
 
-    if (currentFilter.datafield !== 'inclusion' && filterWithoutInclusion.length === 2) {
+    if (currentFilter.datafield !== inclusionItem && filterWithoutInclusion.length === 2) {
       const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
       const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
       const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
@@ -314,8 +319,8 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
       }
     }
 
-    if (currentFilter.datafield !== 'inclusion'
-    && filterWithoutInclusion.length === 3) {
+    if (currentFilter.datafield !== inclusionItem
+    && filterWithoutInclusion.length > 2) {
       const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
       const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
       const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
@@ -337,6 +342,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
     return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
   }
 
+  //** filter by nodes - any search filter item that filters the node (this excludes inclusion) */
   //** filter by only one subject or one section */
   if (processedFilters.length == 1) {
     const selectedSectionCounts = getSubjectItemCount(unfilteredDictionary, selectedSections);
@@ -380,7 +386,7 @@ const subjectCountBaseOnExclusionAndIncusionFilter = (
     return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
   }
 
-  if (processedFilters.length === 3) {
+  if (processedFilters.length > 2) {
     const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
     const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
     const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
