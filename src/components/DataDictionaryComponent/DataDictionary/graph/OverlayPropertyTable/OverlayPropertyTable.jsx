@@ -21,7 +21,6 @@ import styles from './OverlayPropertyTable.style';
 import NodeViewComponent from '../../table/DataDictionaryNode/components/NodeViewComponent';
 
 class OverlayPropertyTable extends React.Component {
-
   getTitle = () => {
     if (this.props.isSearchMode) {
       const nodeTitleFragment = getNodeTitleFragment(
@@ -89,8 +88,10 @@ class OverlayPropertyTable extends React.Component {
         <div className={classes.fixedContainer}>
           <div className={classes.content}>
             <div className={classes.header}>
-              <div className={classes.category}
-                style={{ borderLeftColor: categoryColor }}>
+              <div
+                className={classes.category}
+                style={{ borderLeftColor: categoryColor }}
+              >
                 <IconSVG className={`${classes.categoryIcon} ${node.category}`} />
                 <h4 style={{ color: categoryColor }} className={classes.categoryText}>{capitalizeFirstLetter(node.category)}</h4>
                 {/* {
@@ -113,9 +114,7 @@ class OverlayPropertyTable extends React.Component {
                 >
                   <i className={`${classes.closeIcon} g3-icon g3-icon--cross g3-icon--sm`} />
                 </span> */}
-                <div className={classes.buttonWrap}>
-                
-              </div>
+                <div className={classes.buttonWrap} />
               </div>
             </div>
             <div
@@ -127,12 +126,13 @@ class OverlayPropertyTable extends React.Component {
               style={{ borderLeftColor: getCategoryColor(node.category) }}
             >
 
-            <NodeViewComponent
-              node={node}
-              description={this.props.description}
-              isSearchMode={isSearchMode}
-              matchedResult={this.props.matchedResult}
-            />
+              <NodeViewComponent
+                node={node}
+                description={this.props.description}
+                isSearchMode={isSearchMode}
+                matchedResult={this.props.matchedResult}
+                pdfDownloadConfig={this.props.pdfDownloadConfig}
+              />
             </div>
 
             <div className={classes.propertyTable}>
@@ -153,7 +153,7 @@ class OverlayPropertyTable extends React.Component {
                   <span> properties. </span>
                 </i>
               </div>
-                  
+
               <div className={classes.property}>
                 <DataDictionaryPropertyTable
                   properties={node.properties}
@@ -167,7 +167,7 @@ class OverlayPropertyTable extends React.Component {
                   isSearchMode={isSearchMode}
                 />
               </div>
-            </div>        
+            </div>
           </div>
         </div>
       </div>

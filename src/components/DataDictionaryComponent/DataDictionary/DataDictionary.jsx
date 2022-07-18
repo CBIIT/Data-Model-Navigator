@@ -3,8 +3,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/core';
+import { Button, withStyles } from '@material-ui/core';
 import ReduxDataDictionaryTable from './table/DataDictionaryTable';
 import ReduxDataModelStructure from './DataModelStructure';
 import DataDictionaryGraph from './graph/DataDictionaryGraph';
@@ -20,6 +19,7 @@ const DataDictionary = ({
   classes,
   onSetGraphView,
   isGraphView,
+  pdfDownloadConfig,
 }) => {
   const dictionarySearcherRef = React.useRef();
   const setGraphView = (isGraphView) => {
@@ -69,13 +69,14 @@ const DataDictionary = ({
         <ReduxFacetFilters />
       </div>
       <div className={isGraphView ? classes.mainGraphView : classes.mainTableView}>
-        <div className={`${classes.graph} ${!isGraphView ? classes.hidden: null}`}>
+        <div className={`${classes.graph} ${!isGraphView ? classes.hidden : null}`}>
           <DataDictionaryGraph
             onClearSearchResult={handleClearSearchResult}
+            pdfDownloadConfig={pdfDownloadConfig}
           />
         </div>
-        <div className={`${classes.table} ${isGraphView ? classes.hidden: null}`}>
-          <ReduxDataDictionaryTable />
+        <div className={`${classes.table} ${isGraphView ? classes.hidden : null}`}>
+          <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
         </div>
       </div>
     </div>
@@ -95,7 +96,7 @@ DataDictionary.defaultProps = {
 const styles = () => ({
   dataDictionary: {
     display: 'flex',
-    height: `calc(100vh)`,
+    height: 'calc(100vh)',
     overflowY: 'auto',
     backgroundImage: `url(${backgroundImg})`,
   },
@@ -104,8 +105,8 @@ const styles = () => ({
     minWidth: '320px',
     height: '100%',
     overflowY: 'auto',
-    backgroundColor: `var(--g3-color__white)`,
-    borderRight: `1px solid var(--g3-color__smoke)`,
+    backgroundColor: 'var(--g3-color__white)',
+    borderRight: '1px solid var(--g3-color__smoke)',
   },
   switch: {
     display: 'flex',
@@ -130,11 +131,11 @@ const styles = () => ({
     color: 'var(--g3-color__white)',
   },
   mainGraphView: {
-    width: `calc(100vw - 320px)`,
+    width: 'calc(100vw - 320px)',
     minWidth: '900px',
   },
   mainTableView: {
-    width: `calc(100vw - 320px)`,
+    width: 'calc(100vw - 320px)',
     minWidth: '900px',
     overflowY: 'scroll',
   },
@@ -148,7 +149,7 @@ const styles = () => ({
   },
   hidden: {
     display: 'none',
-  }
+  },
 });
 
 export default withStyles(styles)(DataDictionary);

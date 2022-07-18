@@ -20,10 +20,9 @@ const styles = StyleSheet.create({
   },
   nodeInfo: {
     flexDirection: 'row',
-    padding: '6px 0px 2px 15px',
+    padding: '6px 15px 2px 15px',
     backgroundColor: '#f4f5f5',
     display: 'flex',
-    justifyContent: 'space-between',
   },
   tagsInfo: {
     flexDirection: 'row',
@@ -36,15 +35,17 @@ const styles = StyleSheet.create({
     fontSize: '10px',
     fontWeight: 'heavy',
     fontFamily: FontRegistry('NunitoBold'),
+    width: '158.5px',
     // marginRight: '75px',
   },
   nodeDesc: {
     color: '#000000',
     fontSize: '9px',
-    paddingRight: '15px',
     paddingTop: '-2px',
     lineHeight: 1.2,
-    width: '350px',
+    overflowWrap: 'break-word',
+    width: '650px',
+    textAlign: 'justify',
     fontFamily: FontRegistry('NunitoNormal'),
   },
   categoryHeader: {
