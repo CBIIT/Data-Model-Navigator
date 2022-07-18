@@ -104,11 +104,23 @@ export const inclusionFilterHandler = (selectedFilters, filterHashMap) => {
   return Object.fromEntries(filteredDict);
 }
 
-const inclusionSubjectCount = (dictionary, filter, currentFilter) => {
+const inclusionSubjectCount = (properties, filter, currentFilter) => {
   console.log("includion filter count");
   console.log(currentFilter);
-  console.log(dictionary);
+  console.log(properties);
   console.log(filter);
+
+  const filterProperies = [];
+  filter.forEach(([, items]) => {
+    console.log(items);
+    const item = properties.filter(prop => items.includes(prop.display)
+      || items.includes(prop.propertyType))
+    if (item.length > 0){
+      filterProperies.push(item);
+    }
+  });
+  console.log(filterProperies);
+
 }
 
 export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
@@ -264,7 +276,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
   const processedFilters = Object.entries(allActiveFilters)
     .filter(([, value]) => value.length > 0);
   //** initial state when there is no active filters */
-  const { unfilteredDictionary, filterHashMap, facetfilterConfig } = data;
+  const { unfilteredDictionary, filterHashMap, facetfilterConfig, properties } = data;
   if (processedFilters.length == 0) {
     const dictionary = (!unfilteredDictionary) ? data : unfilteredDictionary;
     return { subjectCounts: getSubjectItemCount(dictionary), dictionary: dictionary}
@@ -299,7 +311,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
     let selectCounts = filteredDictCounts;
     if (currentFilter.datafield === inclusionItem && currentFilter.isChecked 
       && filterWithoutInclusion.length === 0) {
-      const inclusionSubjectCount1 = inclusionSubjectCount(unfilteredDictionary, filterByInclusion, currentFilter);
+      const inclusionSubjectCount1 = inclusionSubjectCount(properties, filterByInclusion, currentFilter);
       const unfilteredDictionaryCount = getSubjectItemCount(unfilteredDictionary, selectedSections, currentFilter);
       selectCounts = unfilteredDictionaryCount;
     }

@@ -58,8 +58,9 @@ async function init() {
   
     // translate the json file here
     const dataList = {};
+    const propertyList = [];
     const keyMaps = new Set();
-  
+
     // using the following code the convert MDF to Gen3 format
     for (const [key, value] of Object.entries(icdcMData.Nodes)) {
       const item = {};
@@ -129,11 +130,11 @@ async function init() {
                   No.push(nodeP);
                   propertiesItem['display'] = 'No';
               }
+              propertyList.push({ name: propertyName, ...propertiesItem })
             }
           }
           properties[nodeP] = propertiesItem;
         }
-  
         item.properties = properties;
         item.inclusion = {};
         if (pRequired.length > 0) {
@@ -232,7 +233,7 @@ async function init() {
       }
     }
     const newDataList = dataList;
-    console.log(newDataList);
+    // const properties = Array.from(propertyList);
     // return {
     //   data: newDataList,
     //   version: version,
@@ -243,7 +244,7 @@ async function init() {
         store.dispatch({
           type: 'RECEIVE_DICTIONARY',
           // data: newDict
-          payload: { data: newDataList, facetfilterConfig: filterConfig },
+          payload: { data: newDataList, properties: propertyList, facetfilterConfig: filterConfig },
         }),
         store.dispatch({
           type: 'RECEIVE_VERSION_INFO',
