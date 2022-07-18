@@ -33,6 +33,7 @@ class DataDictionaryCategory extends React.Component {
               node={node}
               key={node.id}
               description={node.description}
+              pdfDownloadConfig={this.props.pdfDownloadConfig}
               expanded={highlightingNodeID
                 && highlightingNodeID === node.id}
               onExpandNode={this.props.onExpandNode}

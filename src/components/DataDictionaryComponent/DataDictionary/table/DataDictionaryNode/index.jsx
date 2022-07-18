@@ -37,7 +37,7 @@ class DataDictionaryNode extends React.Component {
   }
 
   render() {
-    const { classes, node } = this.props;
+    const { classes, node, pdfDownloadConfig } = this.props;
     return (
       <>
         <div
@@ -51,6 +51,7 @@ class DataDictionaryNode extends React.Component {
           <NodeViewComponent
             node={node}
             description={this.props.description}
+            pdfDownloadConfig={pdfDownloadConfig}
           />
         </div>
         {

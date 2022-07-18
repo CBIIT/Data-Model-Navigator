@@ -19,18 +19,12 @@ const NodeViewComponent = ({
   description,
   isSearchMode,
   matchedResult,
+  pdfDownloadConfig,
 }) => {
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
     fileType: 'txt',
     prefix: 'ICDC-',
-  };
-
-  const pdfDownloadConfig = {
-    image: IconDownloadPDF,
-    type: 'single',
-    fileType: 'pdf',
-    prefix: 'ICDC_Data_Model_',
   };
 
   const getTitle = () => {
@@ -115,7 +109,7 @@ const NodeViewComponent = ({
         >
           <div className={classes.buttonWrap}>
             <DownloadButton
-              config={pdfDownloadConfig}
+              config={{ ...pdfDownloadConfig, type: 'single', image: IconDownloadPDF }}
               documentData={node}
               fileName={createFileName(node.id, pdfDownloadConfig.prefix)}
             />
