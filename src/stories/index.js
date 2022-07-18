@@ -113,10 +113,10 @@ async function init() {
               propertiesItem.key = icdcMPData.PropDefinitions[propertyName].Key;
               if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes') {
                 pRequired.push(nodeP);
-                propertiesItem['propertyType'] = 'Required';
+                propertiesItem['propertyType'] = 'required';
               } else if (icdcMPData.PropDefinitions[propertyName].Req === 'Preferred') {
                 pPreffered.push(nodeP);
-                propertiesItem['propertyType'] = 'Preferred';
+                propertiesItem['propertyType'] = 'preferred';
               } else {
                 pOptional.push(nodeP);
                 propertiesItem['propertyType'] = 'optional';
@@ -125,10 +125,10 @@ async function init() {
               if (icdcMPData.PropDefinitions[propertyName].Tags &&
                 icdcMPData.PropDefinitions[propertyName].Tags.Labeled) {
                   Yes.push(nodeP);
-                  propertiesItem['display'] = 'Yes';
+                  propertiesItem['display'] = 'yes';
               } else {
                   No.push(nodeP);
-                  propertiesItem['display'] = 'No';
+                  propertiesItem['display'] = 'no';
               }
               propertyList.push({ name: propertyName, ...propertiesItem })
             }
