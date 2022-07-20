@@ -274,7 +274,7 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
         {
           propInfo.labeled && (
           <>
-            <Text style={styles.cellHeader}>
+            <Text style={{ ...styles.cellHeader }}>
               DISPLAYED AS:
             </Text>
             <Text style={styles.horizontalTableCell}>{propInfo.labeled}</Text>
