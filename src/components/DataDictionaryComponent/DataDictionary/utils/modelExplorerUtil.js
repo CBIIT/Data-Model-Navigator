@@ -506,11 +506,26 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
             overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
           });
           if (currentSelection && filterByInclusion.length == 1) {
+            if (inclusion.length > 0) {
+              inclusionFilterItems.checkboxItems.forEach(item => {
+                overirdeSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
+              });
+            } else {
+              uiDisplayFilterItems.checkboxItems.forEach(item => {
+                overirdeSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
+              });
+          }
           currentSelection.checkboxItems.forEach(item => {
             const key = item.name.toLowerCase();
             overirdeSubjectCount[key] = otherSelectionCounts[key];
             });
           }
+        if (currentFilter.datafield === 'category') {
+          currentSelection.checkboxItems.forEach(item => {
+            const key = item.name.toLowerCase();
+            overirdeSubjectCount[key] = otherSelectionCounts[key];
+          });
+        }
         const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overirdeSubjectCount);
         return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
         } else {
@@ -524,27 +539,80 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
               overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
             });
           }
+          if (currentFilter.datafield === 'category') {
+            const categorySection = facetfilterConfig.facetSearchData.filter(item => item.datafield === "category")[0];
+            categorySection.checkboxItems.forEach(item => {
+              const key = item.name.toLowerCase();
+              overirdeSubjectCount[key] = filteredDictCounts[key];
+            });
+          }
           const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overirdeSubjectCount);
           return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
         }
       }
     }
 
-    if ((currentFilter.datafield !== inclusionItem || currentFilter.datafield !== uiDisplayItem)
-    && filterWithoutInclusion.length > 2) {
+    if (filterWithoutInclusion.length > 2) {
+      const nonInclusionSectionCounts = getSubjectItemCount(noneInclusionDictionary, selectedSections, currentFilter);
+      propsFilter = getPropertySubjectCountAndFilterDictionary(filteredDictionary, filterByInclusion);
+      inclusionSubjectCount = propsFilter.count;
+      console.log("greater than inclusion");
       const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
       const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
       const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
-      const otherSelectionCounts = getSubjectItemCount(otherInclusionDictionary, selectedSections);
+      const otherSelectionCounts = getSubjectItemCount(otherInclusionDictionary, selectedSections, currentFilter);
       if (currentSelection) {
-        currentSelection.checkboxItems.forEach(item => {
-          const key = item.name.toLowerCase();
-          selectedSectionCounts[key] = otherSelectionCounts[key];
-        })
+        const overirdeSubjectCount = {};
+        uiDisplayFilterItems.checkboxItems.forEach(item => {
+          overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+        });
+        inclusionFilterItems.checkboxItems.forEach(item => {
+          overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+        });
+        if (filterByInclusion.length == 1) {
+          if (inclusion.length > 0) {
+            inclusionFilterItems.checkboxItems.forEach(item => {
+              overirdeSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
+            });
+          } else {
+            uiDisplayFilterItems.checkboxItems.forEach(item => {
+              overirdeSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
+            });
+          }
+          currentSelection.checkboxItems.forEach(item => {
+            const key = item.name.toLowerCase();
+            overirdeSubjectCount[key] = otherSelectionCounts[key];
+          })
+        }
+        if (currentFilter.datafield === 'category') {
+          currentSelection.checkboxItems.forEach(item => {
+            const key = item.name.toLowerCase();
+            overirdeSubjectCount[key] = otherSelectionCounts[key];
+          });
+        }
+        const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overirdeSubjectCount);
+        return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+      } else {
+        const overirdeSubjectCount = {};
+        if (currentFilter.datafield === inclusionItem) {
+          inclusionFilterItems.checkboxItems.forEach(item => {
+            overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+          });
+        } else {
+          uiDisplayFilterItems.checkboxItems.forEach(item => {
+            overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+          });
+        }
+        if (currentFilter.datafield === 'category') {
+          const categorySection = facetfilterConfig.facetSearchData.filter(item => item.datafield === "category")[0];
+          categorySection.checkboxItems.forEach(item => {
+            const key = item.name.toLowerCase();
+            overirdeSubjectCount[key] = filteredDictCounts[key];
+          });
+        }
+        const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overirdeSubjectCount);
+        return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
       }
-    
-      const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
-      return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
     }
     
     const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
