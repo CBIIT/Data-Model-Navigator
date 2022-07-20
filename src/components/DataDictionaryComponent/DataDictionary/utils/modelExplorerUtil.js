@@ -360,7 +360,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
     const inclusionDictionary = newHandleExplorerFilter(filterByInclusion, filterHashMap);
     const noneInclusionDictionary = newHandleExplorerFilter(filterWithoutInclusion, filterHashMap);
     //** select exclusion filter dictionary filteredDictionary if filter item is more than 2 */
-    const selectDictionary = (processedFilters.length < 3) ? inclusionDictionary : filteredDictionary;
+    const selectDictionary = (processedFilters.length < 4) ? inclusionDictionary : filteredDictionary;
     
     const selectedSectionCounts = getSubjectItemCount(selectDictionary, selectedSections, currentFilter);
     const inclusionFilterItems = facetfilterConfig.facetSearchData.filter(item => item.datafield === inclusionItem)[0];
@@ -406,6 +406,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
 
     if (filterWithoutInclusion.length === 1) {
       console.log("only one other filter is active");
+      console.log(noneInclusionDictionary.length);
       const nonInclusionSectionCounts = getSubjectItemCount(noneInclusionDictionary, selectedSections, currentFilter);
       propsFilter = getPropertySubjectCountAndFilterDictionary(filteredDictionary, filterByInclusion);
       inclusionSubjectCount = propsFilter.count;
