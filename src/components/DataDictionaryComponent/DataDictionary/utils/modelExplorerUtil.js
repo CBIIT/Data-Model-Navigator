@@ -466,7 +466,8 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
         if (filterByInclusion.length === 2 && !activeInclusionFilter) {
         const filter = getPropertySubjectCountAndFilterDictionary(unfilteredDictionary, filterByInclusion);
         selectCounts = getSubjectItemCount(filter.dictionary);
-        inclusionSubjectCount = filter.count;
+        propsFilter = getPropertySubjectCountAndFilterDictionary(filteredDictionary, filterByInclusion);
+        inclusionSubjectCount = propsFilter.count;
         const filterByNodeInclusion = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, filterByInclusion);
         filteredDictionary = filterByNodeInclusion.dictionary;
         inclusionFilterItems.checkboxItems.forEach(item => {
@@ -539,13 +540,11 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
               overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
             });
           }
-          if (currentFilter.datafield === 'category') {
             const categorySection = facetfilterConfig.facetSearchData.filter(item => item.datafield === "category")[0];
             categorySection.checkboxItems.forEach(item => {
               const key = item.name.toLowerCase();
               overirdeSubjectCount[key] = filteredDictCounts[key];
             });
-          }
           const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overirdeSubjectCount);
           return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
         }
@@ -609,6 +608,9 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
             const key = item.name.toLowerCase();
             overirdeSubjectCount[key] = filteredDictCounts[key];
           });
+        }
+        if (filterByInclusion.length === 2) {
+          console.log("filter by inclusion");
         }
         const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overirdeSubjectCount);
         return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
