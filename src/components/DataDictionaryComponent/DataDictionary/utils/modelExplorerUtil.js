@@ -544,7 +544,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
             categorySection.checkboxItems.forEach(item => {
               const key = item.name.toLowerCase();
               overirdeSubjectCount[key] = filteredDictCounts[key];
-            });
+            });   
           const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overirdeSubjectCount);
           return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
         }
@@ -608,9 +608,6 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
             const key = item.name.toLowerCase();
             overirdeSubjectCount[key] = filteredDictCounts[key];
           });
-        }
-        if (filterByInclusion.length === 2) {
-          console.log("filter by inclusion");
         }
         const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overirdeSubjectCount);
         return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
