@@ -180,10 +180,10 @@ const TableRow = ({
                       {propertyDescriptionFragment}
                       {
                         property.labeled && (
-                        <div className={classes.labeled}>
+                        <div className={classes.labeledSpan}>
                           Displayed as:
                           {' '}
-                          <span className={classes.labeledSpan}>{property.labeled}</span>
+                          <span className={classes.labeled}>{property.labeled}</span>
                         </div>
                         )
                       }
