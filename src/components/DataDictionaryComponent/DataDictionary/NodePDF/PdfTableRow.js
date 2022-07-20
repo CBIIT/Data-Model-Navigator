@@ -81,6 +81,16 @@ const styles = StyleSheet.create({
     color: '#ff5a20',
     fontFamily: FontRegistry('NunitoExtraBold'),
   },
+  boldLabeled: {
+    fontSize: 8,
+    fontFamily: FontRegistry('NunitoExtraBold')
+  },
+  labeled: {
+    fontSize: 8,
+  },
+  labeledContainer: {
+    marginTop: '16px',
+  },
 });
 
 const PdfTableRow = ({ node }) => {
@@ -175,12 +185,36 @@ const PdfTableRow = ({ node }) => {
       <View style={styles.tableColDesc}>
         {node.properties[key].key ? (
           <>
-            {displayKeyPropsDiscription(node.properties[key].description)}
+            <Text>
+              {displayKeyPropsDiscription(node.properties[key].description)}
+            </Text>
+            {
+            node.properties[key].labeled && (
+              <Text style={styles.labeledContainer}>
+                <Text style={styles.boldLabeled}>
+                  Displayed as:
+                </Text>
+                <Text style={styles.labeled}>{` ${node.properties[key].labeled}`}</Text>
+              </Text>
+            )
+          }
           </>
         ) : (
-          <Text style={styles.tableCell}>
-            {node.properties[key].description}
-          </Text>
+          <>
+            <Text style={styles.tableCell}>
+              {node.properties[key].description}
+            </Text>
+            {
+              node.properties[key].labeled && (
+                <Text style={styles.labeledContainer}>
+                  <Text style={styles.boldLabeled}>
+                    Displayed as:
+                  </Text>
+                  <Text style={styles.labeled}>{` ${node.properties[key].labeled}`}</Text>
+                </Text>
+              )
+            }
+          </>
         )}
       </View>
       <View style={styles.tableColSource}>

@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     paddingLeft: '6px',
     paddingTop: '5px',
-    paddingBottom: '5px',
+    // paddingBottom: '5px',
     lineHeight: 1.2,
     fontFamily: FontRegistry('NunitoSans'),
     textAlign: 'justify',
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
     fontSize: 8,
     overflowWrap: 'break-word',
     // paddingLeft: '2px',
-    paddingTop: '5px',
-    paddingBottom: '5px',
+    paddingTop: '4px',
+    // paddingBottom: '5px',
     lineHeight: 1.2,
     fontFamily: FontRegistry('NunitoNormal'),
     width: '350px',
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     fontSize: 8,
     overflowWrap: 'break-word',
     // paddingLeft: '2px',
-    paddingTop: '5px',
-    paddingBottom: '5px',
+    paddingTop: '4px',
+    // paddingBottom: '5px',
     lineHeight: 1.2,
     fontFamily: FontRegistry('NunitoNormal'),
     width: '126px',
@@ -270,6 +270,17 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
 
         <Text style={styles.cellHeader}>SOURCE</Text>
         <Text style={styles.horizontalTableCell}>{textContent(propInfo.src, '/')}</Text>
+
+        {
+          propInfo.labeled && (
+          <>
+            <Text style={styles.cellHeader}>
+              DISPLAYED AS:
+            </Text>
+            <Text style={styles.horizontalTableCell}>{propInfo.labeled}</Text>
+          </>
+          )
+        }
       </View>
     </View>
   );

@@ -12,23 +12,20 @@ import { controlVocabConfig as config } from '../../../bento/dataDictionaryData'
 import '../DataDictionaryPropertyTable.css';
 
 const TableRow = ({
-    classes,
-    propertyKeysList,
-    requiredProperties,
-    onlyShowMatchedProperties,
-    matchedPropertiesSummary,
-    preferredProperties,
-    properties,
-    needHighlightSearchResult,
-    hideIsRequired,
-    openBoxHandler,
-    isSearchMode
+  classes,
+  propertyKeysList,
+  requiredProperties,
+  onlyShowMatchedProperties,
+  matchedPropertiesSummary,
+  preferredProperties,
+  properties,
+  needHighlightSearchResult,
+  hideIsRequired,
+  openBoxHandler,
+  isSearchMode,
 }) => {
-
-  const required = (requiredFlag, preferredFlag) => (
-    <span className={requiredFlag ? classes.required : ''}>
-      { requiredFlag ? 'Required' : preferredFlag ? 'Preferred' : 'Optional' }
-    </span>
+  const required = (requiredFlag) => (
+    <span className={requiredFlag ? classes.required : ''} />
   );
 
   const displayKeyProperty = (propertyFragment) => (
@@ -42,7 +39,7 @@ const TableRow = ({
     const lines = description.split('<br>');
     return lines.map((line) => <span>{line}</span>);
   };
-    
+
   return (
     <>
       {
@@ -89,13 +86,13 @@ const TableRow = ({
           if ('key' in property) {
             key = property.key;
           }
-    
+
           const propertyDescriptionFragment = getPropertyDescriptionFragment(
             property,
             descriptionMatch,
             'data-dictionary-property-table__span',
           );
-          
+
           const propertyTypeFragment = getPropertyTypeFragment(
             property,
             typeMatchList,
@@ -118,18 +115,22 @@ const TableRow = ({
                       <p className={classes.acceptValue}>Acceptable Values:</p>
                       {' '}
                       {enums.length > config.maxNoOfItems
-                        ? (<ListComponent 
-                          items={enums.slice(0, config.maxNoOfItems)}
-                          isSearchMode={isSearchMode}
-                          typeMatchList={typeMatchList}
-                          property={property}
-                          />)
-                        : (<ListComponent
+                        ? (
+                          <ListComponent
+                            items={enums.slice(0, config.maxNoOfItems)}
+                            isSearchMode={isSearchMode}
+                            typeMatchList={typeMatchList}
+                            property={property}
+                          />
+                        )
+                        : (
+                          <ListComponent
                             items={enums}
                             isSearchMode={isSearchMode}
                             typeMatchList={typeMatchList}
                             property={property}
-                          />)}
+                          />
+                        )}
                     </span>
                     {enums.length > config.maxNoOfItems
                       && (
@@ -140,13 +141,14 @@ const TableRow = ({
                       )}
                   </>
                 ) : (
-                  <>{ (isSearchMode)
-                    ? (<>{propertyTypeFragment}</>)
-                    : (
-                      <>
-                        {JSON.stringify(type)}
-                      </>
-                    )}
+                  <>
+                    { (isSearchMode)
+                      ? (<>{propertyTypeFragment}</>)
+                      : (
+                        <>
+                          {JSON.stringify(type)}
+                        </>
+                      )}
                   </>
                 )}
               </td>
@@ -162,9 +164,30 @@ const TableRow = ({
                   ? (
                     <div className={classes.description}>
                       {displayKeyPropsDescription(property.description)}
+                      {
+                        property.labeled && (
+                        <div className={classes.labeled}>
+                          <span className={classes.labeledSpan}>Displayed as:</span>
+                          {' '}
+                          {property.labeled}
+                        </div>
+                        )
+                      }
                     </div>
                   )
-                  : (<>{propertyDescriptionFragment}</>
+                  : (
+                    <div>
+                      {propertyDescriptionFragment}
+                      {
+                        property.labeled && (
+                        <div className={classes.labeled}>
+                          Displayed as:
+                          {' '}
+                          <span className={classes.labeledSpan}>{property.labeled}</span>
+                        </div>
+                        )
+                      }
+                    </div>
                   )}
               </td>
               <td className={classes.rowItem}>
@@ -172,7 +195,7 @@ const TableRow = ({
               </td>
             </tr>
           );
-        })   
+        })
       }
     </>
   );
@@ -195,6 +218,12 @@ const styles = () => ({
         marginTop: '13px',
       },
     },
+  },
+  labeledSpan: {
+    fontWeight: '600',
+  },
+  labeled: {
+    marginTop: '2em',
   },
   row: {
     padding: '10px 10px 10px 19px',
@@ -230,7 +259,7 @@ const styles = () => ({
     '& p': {
       float: 'left',
       margin: 'auto',
-    }
+    },
   },
   acceptValue: {
     margin: '0',
@@ -239,7 +268,7 @@ const styles = () => ({
   keyPropertyIcon: {
     width: '25px',
     marginLeft: '8px',
-    paddingTop: '5px', 
+    paddingTop: '5px',
   },
   description: {
     '& span': {

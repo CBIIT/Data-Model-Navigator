@@ -34,20 +34,20 @@ const PdfDocument = ({
       <PdfHeader />
       <View style={styles.body}>
         {
-          nodes.map((node) => (
-            <View style={styles.tableContainer}>
-              <PdfTitle
-                title={node.id}
-                nodeClass={node.class}
-                assignment={node.assignment}
-                desc={node.desc}
-                category={node.category}
-              />
-              <div style={styles.spacer} />
-              <PdfTable node={node} />
-            </View>
-          ))
-        }
+            nodes.map((node) => (
+              <View style={styles.tableContainer}>
+                <PdfTitle
+                  title={node.id}
+                  nodeClass={node.class}
+                  assignment={node.assignment}
+                  desc={node.desc}
+                  category={node.category}
+                />
+                <div style={styles.spacer} />
+                <PdfTable node={node} />
+              </View>
+            ))
+          }
       </View>
       <PdfFooter />
     </Page>

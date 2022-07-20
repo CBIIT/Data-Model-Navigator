@@ -234,7 +234,7 @@ async function init() {
 const pdfDownloadConfig = {
   fileType: 'pdf',
   prefix: 'ICDC_Data_Model_',
-  landscape: 'true',
+  // landscape: 'true',
 };
 
 const ModelExplorer = () => {
