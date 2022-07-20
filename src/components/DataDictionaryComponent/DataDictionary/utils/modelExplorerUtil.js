@@ -506,7 +506,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
           inclusionFilterItems.checkboxItems.forEach(item => {
             overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
           });
-          if (filterByInclusion.length == 1) {
+          if (currentSelection && filterByInclusion.length == 1) {
           currentSelection.checkboxItems.forEach(item => {
             const key = item.name.toLowerCase();
             overirdeSubjectCount[key] = otherSelectionCounts[key];
