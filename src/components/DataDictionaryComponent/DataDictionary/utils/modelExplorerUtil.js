@@ -104,17 +104,26 @@ export const inclusionFilterHandler = (selectedFilters, filterHashMap) => {
   return Object.fromEntries(filteredDict);
 }
 
-const filterNodesByProperty = (property, inclusionFilter, dictionary) => {
+const filterNodesByProperty = (property = [], inclusionFilter, dictionary) => {
   let filterProps = [];
+  if (property.length == 0) {
+    Object.keys(dictionary).forEach((elem) => { 
+      const items = dictionary[elem].properties;
+      Object.keys(items).forEach((key) => {
+        property.push(items[key]);
+      });
+    });
+  }
+  
   inclusionFilter.forEach(([key, items]) => {
     const toLowerCase = items.map(e => e.toLowerCase());
     if (key === 'inclusion') {
       filterProps = filterProps.filter((item) => toLowerCase.indexOf(item.propertyType) !== -1);
     } else {
       filterProps = filterProps.filter((item) => toLowerCase.indexOf(item.display) !== -1);
+      
     }
   });
-
   const filterDictionary = {};
   property.forEach(item => {
     if (!filterDictionary[item.category]){
@@ -181,7 +190,8 @@ const getPropertySubjectCountAndFilterDictionary = (dictionary, inclusionFilter)
       })
     })
   });
-  return {count: subjectCount, dictionary: dictionary};
+  const filterDictionary = filterNodesByProperty(filterProps, inclusionFilter, dictionary);
+  return {count: subjectCount, dictionary: filterDictionary};
 }
 
 export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
@@ -377,13 +387,14 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
       const filter = getPropertySubjectCountAndFilterDictionary(unfilteredDictionary, filterByInclusion);
       inclusionSubjectCount = filter.count;
       filteredDictionary = filter.dictionary;
+      console.log(inclusionSubjectCount);
       const otherFilterItem = (currentFilter.datafield !== inclusionItem)
       ? inclusionFilterItems : uiDisplayFilterItems;
       otherFilterItem.checkboxItems.forEach(item => {
         filteredDictCounts[item.group] = inclusionSubjectCount[item.group]
           ? inclusionSubjectCount[item.group] : 0;
       });
-      const currentrFilter =  filterByInclusion.filter(item => (item[0] !== currentFilter.datafield));
+      const currentrFilter = filterByInclusion.filter(item => (item[0] !== currentFilter.datafield));
       const currentPropsFilter = getPropertySubjectCountAndFilterDictionary(unfilteredDictionary, currentrFilter);
       const currentPropsFilterCount = currentPropsFilter.count;
       selectCounts = getSubjectItemCount(filter.dictionary);
@@ -441,10 +452,8 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
       } else {
         if (filterByInclusion.length == 1) {
           //filter dictionary by inclusion
-          console.log("test")
-          const filter = getPropertySubjectCountAndFilterDictionary(filterDictionary, filterByInclusion);
+          const filter = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, filterByInclusion);
           inclusionSubjectCount = filter.count;
-          filteredDictionary = filter.dictionary;
           if ((inclusion.length > 0 && uiDisplay.length === 0)) {
             uiDisplayFilterItems.checkboxItems.forEach(item => {
               filteredDictCounts[item.group] = inclusionSubjectCount[item.group]
@@ -460,6 +469,20 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
           }
           selectCounts = Object.assign({}, filteredDictCounts, nonInclusionSectionCounts);
         } 
+        if (filterByInclusion.length === 2 && !activeInclusionFilter) {
+        const filter = getPropertySubjectCountAndFilterDictionary(unfilteredDictionary, filterByInclusion);
+        selectCounts = getSubjectItemCount(filter.dictionary);
+        inclusionSubjectCount = filter.count;
+        const filterByNodeInclusion = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, filterByInclusion);
+        filteredDictionary = filterByNodeInclusion.dictionary;
+        inclusionFilterItems.checkboxItems.forEach(item => {
+          selectCounts[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+        });
+        uiDisplayFilterItems.checkboxItems.forEach(item => {
+          selectCounts[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+        });
+        return { subjectCounts: selectCounts, dictionary: filteredDictionary};
+        }
       }
     }
     //** set the subject count of inclusion filter based on the selected dictionary */
@@ -472,6 +495,10 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
     });
 
     if (filterWithoutInclusion.length === 2) {
+      const nonInclusionSectionCounts = getSubjectItemCount(noneInclusionDictionary, selectedSections, currentFilter);
+      propsFilter = getPropertySubjectCountAndFilterDictionary(filteredDictionary, filterByInclusion);
+      inclusionSubjectCount = propsFilter.count;
+
       const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
       const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
       const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
@@ -495,7 +522,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
         }
         
       }
-      
+
     }
 
     if ((currentFilter.datafield !== inclusionItem || currentFilter.datafield !== uiDisplayItem)
