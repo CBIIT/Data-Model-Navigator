@@ -492,7 +492,6 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
       const nonInclusionSectionCounts = getSubjectItemCount(noneInclusionDictionary, selectedSections, currentFilter);
       propsFilter = getPropertySubjectCountAndFilterDictionary(filteredDictionary, filterByInclusion);
       inclusionSubjectCount = propsFilter.count;
-      console.log(nonInclusionSectionCounts);
       const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
       const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
       const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
@@ -514,17 +513,21 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
           }
         const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overirdeSubjectCount);
         return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+        } else {
+          const overirdeSubjectCount = {};
+          if (currentFilter.datafield === inclusionItem) {
+            inclusionFilterItems.checkboxItems.forEach(item => {
+              overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+            });
+          } else {
+            uiDisplayFilterItems.checkboxItems.forEach(item => {
+              overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+            });
+          }
+          const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overirdeSubjectCount);
+          return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
         }
-      } else {
-        console.log("two node category");
-        if (filterByInclusion.length == 1) {
-          const inclusionFilter = getPropertySubjectCountAndFilterDictionary(unfilteredDictionary, filterByInclusion);
-          const nodeFilter = newHandleExplorerFilter(inclusionFilter.dictionary, filterWithoutInclusion);
-          console.log(nodeFilter);
-        }
-        
       }
-
     }
 
     if ((currentFilter.datafield !== inclusionItem || currentFilter.datafield !== uiDisplayItem)
