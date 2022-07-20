@@ -181,9 +181,9 @@ const TableRow = ({
                       {
                         property.labeled && (
                         <div className={classes.labeled}>
-                          Displayed as:
+                          <span className={classes.labeledSpan}>Displayed as:</span>
                           {' '}
-                          <span className={classes.labeledSpan}>{property.labeled}</span>
+                          {property.labeled}
                         </div>
                         )
                       }

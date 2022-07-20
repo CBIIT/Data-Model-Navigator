@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   horizontalCells: {
     flexDirection: 'row',
+    paddingBottom: '5px',
   },
   evenRow: {
     backgroundColor: '#f4f5f5',
