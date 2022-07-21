@@ -42,7 +42,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
       item.category = value.Tags.Category;
     } else if ('Category' in value) {
       item.category = (value.Category && value.Category.length > 0)
-        ? value.Category : 'Undefined';
+        ? value.Category : 'Undefined';   
     } else {
       item.category = 'Undefined';
     }
@@ -63,6 +63,9 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     const pRequired = [];
     const pPreffered = [];
     const pOptional = [];
+
+    const Yes = [];
+    const No  = [];
     if (icdcMData.Nodes[key].Props != null) {
       for (let i = 0; i < icdcMData.Nodes[key].Props.length; i++) {
         const nodeP = icdcMData.Nodes[key].Props[i];
@@ -72,9 +75,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
             if (icdcMPData.PropDefinitions[propertyName].Key) {
               keyMaps.add({ props: propertyName, node: key });
             }
-            propertiesItem.labeled = icdcMPData.PropDefinitions[propertyName].Tags
-              ? icdcMPData.PropDefinitions[propertyName].Tags.Labeled
-                ? icdcMPData.PropDefinitions[propertyName].Tags.Labeled : undefined : undefined;
+            propertiesItem.category = key;
             propertiesItem.description = icdcMPData.PropDefinitions[propertyName].Desc;
             propertiesItem.type = icdcMPData.PropDefinitions[propertyName].Type
               || icdcMPData.PropDefinitions[propertyName].Enum;
@@ -84,16 +85,28 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
             propertiesItem.key = icdcMPData.PropDefinitions[propertyName].Key;
             if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes') {
               pRequired.push(nodeP);
+              propertiesItem['propertyType'] = 'required';
             } else if (icdcMPData.PropDefinitions[propertyName].Req === 'Preferred') {
               pPreffered.push(nodeP);
+              propertiesItem['propertyType'] = 'preferred';
             } else {
               pOptional.push(nodeP);
+              propertiesItem['propertyType'] = 'optional';
             }
+
+            if (icdcMPData.PropDefinitions[propertyName].Tags &&
+              icdcMPData.PropDefinitions[propertyName].Tags.Labeled) {
+                Yes.push(nodeP);
+                propertiesItem['display'] = 'yes';
+            } else {
+                No.push(nodeP);
+                propertiesItem['display'] = 'no';
+            }
+            propertyList.push({ name: propertyName, ...propertiesItem })
           }
         }
         properties[nodeP] = propertiesItem;
       }
-
       item.properties = properties;
       item.inclusion = {};
       if (pRequired.length > 0) {
@@ -114,13 +127,25 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
           preferred: pPreffered,
         };
       }
+      if (Yes.length > 0) {
+        item.uiDisplay = {
+          ...item.uiDisplay,
+          yes: Yes,
+        };
+      }
+      if (No.length > 0) {
+        item.uiDisplay = {
+          ...item.uiDisplay,
+          no: No,
+        };
+      }
       item.required = pRequired;
       item.preferred = pPreffered;
       item.optional = pOptional;
-      item.uiDisplay = 'yes';
+      item.yes = Yes;
+      item.no = No;
     } else {
       item.properties = {};
-      item.uiDisplay = 'no';
     }
 
     for (const property in icdcMData.Relationships) {
