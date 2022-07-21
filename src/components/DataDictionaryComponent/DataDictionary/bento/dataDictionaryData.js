@@ -1,6 +1,6 @@
 export const categories = ['Admistrative', 'Study', 'Clinical Trial', 'Case', 'Biospecimen', 'Clinical', 'Analysis', 'Data File'];
 
-export const showCheckboxCount = 6;
+export const showCheckboxCount = 5;
 
 export const types = {
   CATEGORY: 'category',

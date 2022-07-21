@@ -470,15 +470,31 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
         inclusionSubjectCount = propsFilter.count;
         const filterByNodeInclusion = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, filterByInclusion);
         filteredDictionary = filterByNodeInclusion.dictionary;
+        const overideSubjectCount = {};
         inclusionFilterItems.checkboxItems.forEach(item => {
-          selectCounts[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+          overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : selectCounts[item.group];
         });
         uiDisplayFilterItems.checkboxItems.forEach(item => {
-          selectCounts[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+          overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : selectCounts[item.group];
         });
-        return { subjectCounts: selectCounts, dictionary: filteredDictionary};
+        const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
+        if (currentSelection) {
+            currentSelection.checkboxItems.forEach(item => {
+            const key = item.name.toLowerCase();
+            overideSubjectCount[key] = selectCounts[key];
+          });
+        }
+        const nodeFilterCount = getSubjectItemCount(filteredDictionary);
+        const categorySection = facetfilterConfig.facetSearchData.filter(item => item.datafield === "category")[0];
+        categorySection.checkboxItems.forEach(item => {
+          const key = item.name.toLowerCase();
+          overideSubjectCount[key] = filteredDictCounts[key];
+        });
+        const combinedSubjectCounts = Object.assign({}, nodeFilterCount, overideSubjectCount);
+        return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
         }
       }
+
     }
     //** set the subject count of inclusion filter based on the selected dictionary */
     inclusionFilterItems.checkboxItems.forEach(item => {
@@ -499,53 +515,89 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
       const otherSelectionCounts = getSubjectItemCount(otherInclusionDictionary, selectedSections, currentFilter);
       if (filterByInclusion.length > 0) {
         if (currentSelection) {
-          const overirdeSubjectCount = {};
+          const overideSubjectCount = {};
           uiDisplayFilterItems.checkboxItems.forEach(item => {
-            overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+            overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
           });
           inclusionFilterItems.checkboxItems.forEach(item => {
-            overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+            overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
           });
-          if (currentSelection && filterByInclusion.length == 1) {
-            if (inclusion.length > 0) {
+          currentSelection.checkboxItems.forEach(item => {
+            const key = item.name.toLowerCase();
+            overideSubjectCount[key] = otherSelectionCounts[key];
+            });
+          if (currentSelection && filterByInclusion.length === 2) {
+            if (currentFilter.datafield === inclusionItem) {
+              const filterByDisplay = processedFilters.filter(item => (item[0] === uiDisplayItem));
+              const filter = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, filterByDisplay);
+              const filterCount = filter.count;
               inclusionFilterItems.checkboxItems.forEach(item => {
-                overirdeSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
+                overideSubjectCount[item.group] = filterCount[item.group] ? filterCount[item.group] : 0
+              });
+            } else {
+              const filterByPropType = processedFilters.filter(item => (item[0] === inclusionItem));
+              const filter = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, filterByPropType);
+              const filterCount = filter.count;
+              uiDisplayFilterItems.checkboxItems.forEach(item => {
+                overideSubjectCount[item.group] = filterCount[item.group] ? filterCount[item.group] : 0;
+              });
+            }
+          }
+          if (currentSelection && filterByInclusion.length === 1) { 
+            if (currentFilter.datafield === inclusionItem) {
+              inclusionFilterItems.checkboxItems.forEach(item => {
+                overideSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
               });
             } else {
               uiDisplayFilterItems.checkboxItems.forEach(item => {
-                overirdeSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
+                overideSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
               });
-          }
-          currentSelection.checkboxItems.forEach(item => {
-            const key = item.name.toLowerCase();
-            overirdeSubjectCount[key] = otherSelectionCounts[key];
-            });
-          }
+            }
+          } 
         if (currentFilter.datafield === 'category') {
           currentSelection.checkboxItems.forEach(item => {
             const key = item.name.toLowerCase();
-            overirdeSubjectCount[key] = otherSelectionCounts[key];
+            overideSubjectCount[key] = otherSelectionCounts[key];
           });
         }
-        const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overirdeSubjectCount);
+        const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overideSubjectCount);
         return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
         } else {
-          const overirdeSubjectCount = {};
-          if (currentFilter.datafield === inclusionItem) {
-            inclusionFilterItems.checkboxItems.forEach(item => {
-              overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
-            });
-          } else {
+          const overideSubjectCount = {};
+          const uncheckedSection = facetfilterConfig.facetSearchData.filter(item => item.datafield === currentFilter.datafield)[0];
+          inclusionFilterItems.checkboxItems.forEach(item => {
+            overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+          });
+          uiDisplayFilterItems.checkboxItems.forEach(item => {
+            overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+          });
+          if(activeInclusionFilter && filterByInclusion.length === 1 && currentFilter.datafield === inclusionItem) {
+            const inclusionCount = getSubjectItemCount(noneInclusionDictionary);
             uiDisplayFilterItems.checkboxItems.forEach(item => {
-              overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+              overideSubjectCount[item.group] = inclusionCount[item.group] ? inclusionCount[item.group] : 0;
             });
           }
+          if(activeInclusionFilter && filterByInclusion.length === 1 && currentFilter.datafield === uiDisplayItem) {
+            const inclusionCount = getSubjectItemCount(noneInclusionDictionary);
+            inclusionFilterItems.checkboxItems.forEach(item => {
+              overideSubjectCount[item.group] = inclusionCount[item.group] ? inclusionCount[item.group] : 0
+            });
+          }
+
+          const inclusionFilterCounts = getSubjectItemCount(inclusionDictionary);
             const categorySection = facetfilterConfig.facetSearchData.filter(item => item.datafield === "category")[0];
             categorySection.checkboxItems.forEach(item => {
               const key = item.name.toLowerCase();
-              overirdeSubjectCount[key] = filteredDictCounts[key];
-            });   
-          const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overirdeSubjectCount);
+              overideSubjectCount[key] = inclusionFilterCounts[key];
+            });
+            if (!activeInclusionFilter) {
+              uncheckedSection.checkboxItems.forEach(item => {
+                const key = item.name.toLowerCase();
+                overideSubjectCount[key] = filteredDictCounts[key];
+              });
+            }
+            
+          const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overideSubjectCount);
           return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
         }
       }
@@ -555,61 +607,63 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
       const nonInclusionSectionCounts = getSubjectItemCount(noneInclusionDictionary, selectedSections, currentFilter);
       propsFilter = getPropertySubjectCountAndFilterDictionary(filteredDictionary, filterByInclusion);
       inclusionSubjectCount = propsFilter.count;
-      console.log("greater than inclusion");
       const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
       const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
       const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
       const otherSelectionCounts = getSubjectItemCount(otherInclusionDictionary, selectedSections, currentFilter);
       if (currentSelection) {
-        const overirdeSubjectCount = {};
+        const overideSubjectCount = {};
         uiDisplayFilterItems.checkboxItems.forEach(item => {
-          overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+          overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
         });
         inclusionFilterItems.checkboxItems.forEach(item => {
-          overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+          overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
         });
+        currentSelection.checkboxItems.forEach(item => {
+          const key = item.name.toLowerCase();
+          overideSubjectCount[key] = otherSelectionCounts[key];
+        })
         if (filterByInclusion.length == 1) {
           if (inclusion.length > 0) {
             inclusionFilterItems.checkboxItems.forEach(item => {
-              overirdeSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
+              overideSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
             });
           } else {
             uiDisplayFilterItems.checkboxItems.forEach(item => {
-              overirdeSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
+              overideSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
             });
           }
-          currentSelection.checkboxItems.forEach(item => {
-            const key = item.name.toLowerCase();
-            overirdeSubjectCount[key] = otherSelectionCounts[key];
-          })
+          
         }
         if (currentFilter.datafield === 'category') {
           currentSelection.checkboxItems.forEach(item => {
             const key = item.name.toLowerCase();
-            overirdeSubjectCount[key] = otherSelectionCounts[key];
+            overideSubjectCount[key] = otherSelectionCounts[key];
           });
         }
-        const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overirdeSubjectCount);
+        const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overideSubjectCount);
         return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
       } else {
-        const overirdeSubjectCount = {};
-        if (currentFilter.datafield === inclusionItem) {
-          inclusionFilterItems.checkboxItems.forEach(item => {
-            overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
-          });
-        } else {
-          uiDisplayFilterItems.checkboxItems.forEach(item => {
-            overirdeSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
-          });
+        const overideSubjectCount = {};
+        if(activeInclusionFilter) {
+          if (currentFilter.datafield === inclusionItem) {
+            inclusionFilterItems.checkboxItems.forEach(item => {
+              overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+            });
+          } else {
+            uiDisplayFilterItems.checkboxItems.forEach(item => {
+              overideSubjectCount[item.group] = inclusionSubjectCount[item.group] ? inclusionSubjectCount[item.group] : 0;
+            });
+          }
         }
         if (currentFilter.datafield === 'category') {
           const categorySection = facetfilterConfig.facetSearchData.filter(item => item.datafield === "category")[0];
           categorySection.checkboxItems.forEach(item => {
             const key = item.name.toLowerCase();
-            overirdeSubjectCount[key] = filteredDictCounts[key];
+            overideSubjectCount[key] = filteredDictCounts[key];
           });
         }
-        const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overirdeSubjectCount);
+        const combinedSubjectCounts = Object.assign({}, nonInclusionSectionCounts, overideSubjectCount);
         return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
       }
     }
