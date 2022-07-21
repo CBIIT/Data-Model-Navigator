@@ -70,7 +70,7 @@ export default () => ({
     // marginLeft: '-5px',
   },
   selectedCheckboxDisplay: {
-    maxHeight: '300px',
+    maxHeight: '600px',
     overflow: 'auto',
   },
   sortGroup: {
