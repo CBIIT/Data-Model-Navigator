@@ -167,7 +167,7 @@ const TableRow = ({
                       {
                         property.labeled && (
                         <div className={classes.labeled}>
-                          <span className={classes.labeledSpan}>Displayed as:</span>
+                          <span className={classes.labeledSpan}>DISPLAYED AS:</span>
                           {' '}
                           {property.labeled}
                         </div>
@@ -181,7 +181,7 @@ const TableRow = ({
                       {
                         property.labeled && (
                         <div className={classes.labeled}>
-                          <span className={classes.labeledSpan}>Displayed as:</span>
+                          <span className={classes.labeledSpan}>DISPLAYED AS:</span>
                           {' '}
                           {property.labeled}
                         </div>

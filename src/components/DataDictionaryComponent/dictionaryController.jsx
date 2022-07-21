@@ -75,6 +75,9 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
             if (icdcMPData.PropDefinitions[propertyName].Key) {
               keyMaps.add({ props: propertyName, node: key });
             }
+            propertiesItem.labeled = icdcMPData.PropDefinitions[propertyName].Tags
+              ? icdcMPData.PropDefinitions[propertyName].Tags.Labeled
+                ? icdcMPData.PropDefinitions[propertyName].Tags.Labeled : undefined : undefined;
             propertiesItem.category = key;
             propertiesItem.description = icdcMPData.PropDefinitions[propertyName].Desc;
             propertiesItem.type = icdcMPData.PropDefinitions[propertyName].Type
