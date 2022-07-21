@@ -102,7 +102,6 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
                 No.push(nodeP);
                 propertiesItem['display'] = 'no';
             }
-            propertyList.push({ name: propertyName, ...propertiesItem })
           }
         }
         properties[nodeP] = propertiesItem;
