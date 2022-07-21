@@ -271,7 +271,6 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
 
         <Text style={styles.cellHeader}>SOURCE</Text>
         <Text style={styles.horizontalTableCell}>{textContent(propInfo.src, '/')}</Text>
-
         {
           propInfo.labeled && (
           <>
