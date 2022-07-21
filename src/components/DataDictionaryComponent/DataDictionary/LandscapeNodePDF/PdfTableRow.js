@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: '5px',
   },
+  test: {
+    flexDirection: 'row',
+  },
+  horizontalCells: {
+    flexDirection: 'row',
+    paddingBottom: '5px',
+  },
   evenRow: {
     backgroundColor: '#f4f5f5',
   },
@@ -39,14 +46,47 @@ const styles = StyleSheet.create({
   tableColRequired: {
     width: '12%',
   },
+  cellHeader: {
+    fontSize: '6px',
+    overflowWrap: 'break-word',
+    fontWeight: '600',
+    paddingLeft: '6px',
+    paddingTop: '5px',
+    // paddingBottom: '5px',
+    lineHeight: 1.2,
+    fontFamily: FontRegistry('NunitoSans'),
+    textAlign: 'justify',
+    width: '10%',
+    // backgroundColor: 'red',
+  },
   tableCell: {
     fontSize: 8,
     overflowWrap: 'break-word',
-    paddingLeft: '2px',
-    paddingTop: '5px',
-    paddingBottom: '5px',
+    // paddingLeft: '2px',
+    paddingTop: '3px',
+    // paddingBottom: '5px',
     lineHeight: 1.2,
     fontFamily: FontRegistry('NunitoNormal'),
+    width: '350px',
+    textAlign: 'justify',
+  },
+  descriptionCell: {
+    width: '100%',
+    paddingLeft: '6px',
+  },
+  horizontalTableCell: {
+    fontSize: 8,
+    overflowWrap: 'break-word',
+    // paddingLeft: '2px',
+    paddingTop: '3px',
+    // paddingBottom: '5px',
+    lineHeight: 1.2,
+    fontFamily: FontRegistry('NunitoNormal'),
+    width: '126px',
+    textAlign: 'justify',
+  },
+  rowCell: {
+    // paddingLeft: '2px',
   },
   key: {
     fontSize: 8,
@@ -81,19 +121,9 @@ const styles = StyleSheet.create({
     color: '#ff5a20',
     fontFamily: FontRegistry('NunitoExtraBold'),
   },
-  boldLabeled: {
-    fontSize: 8,
-    fontFamily: FontRegistry('NunitoExtraBold')
-  },
-  labeled: {
-    fontSize: 8,
-  },
-  labeledContainer: {
-    marginTop: '16px',
-  },
 });
 
-const PdfTableRow = ({ node }) => {
+const PdfTableRow = ({ propInfo, node, thisProperty }) => {
   const keys = Object.keys(node.properties);
   const textContent = (text, symbol) => {
     if (String(text).length > 20) {
@@ -185,36 +215,12 @@ const PdfTableRow = ({ node }) => {
       <View style={styles.tableColDesc}>
         {node.properties[key].key ? (
           <>
-            <Text>
-              {displayKeyPropsDiscription(node.properties[key].description)}
-            </Text>
-            {
-            node.properties[key].labeled && (
-              <Text style={styles.labeledContainer}>
-                <Text style={styles.boldLabeled}>
-                  Displayed as:
-                </Text>
-                <Text style={styles.labeled}>{` ${node.properties[key].labeled}`}</Text>
-              </Text>
-            )
-          }
+            {displayKeyPropsDiscription(node.properties[key].description)}
           </>
         ) : (
-          <>
-            <Text style={styles.tableCell}>
-              {node.properties[key].description}
-            </Text>
-            {
-              node.properties[key].labeled && (
-                <Text style={styles.labeledContainer}>
-                  <Text style={styles.boldLabeled}>
-                    Displayed as:
-                  </Text>
-                  <Text style={styles.labeled}>{` ${node.properties[key].labeled}`}</Text>
-                </Text>
-              )
-            }
-          </>
+          <Text style={styles.tableCell}>
+            {node.properties[key].description}
+          </Text>
         )}
       </View>
       <View style={styles.tableColSource}>
@@ -223,7 +229,62 @@ const PdfTableRow = ({ node }) => {
     </View>
   ));
 
-  return (<>{rows}</>);
+  return (
+    <View>
+      <View style={styles.test}>
+        <Text style={styles.cellHeader}>DESCRIPTION</Text>
+        <Text style={{ ...styles.tableCell, ...styles.descriptionCell }}>
+          {propInfo.key ? (
+            <>
+              {displayKeyPropsDiscription(propInfo.description)}
+            </>
+          ) : (
+            <Text style={{ ...styles.tableCell, ...styles.descriptionCell }}>
+              {propInfo.description}
+            </Text>
+          )}
+        </Text>
+      </View>
+      <View style={styles.test}>
+        <Text style={styles.cellHeader}>TYPE</Text>
+        <>
+          {propInfo.enum ? (
+            <Text style={styles.tableCell}>
+              {'Acceptable Values: '}
+              {validateEnums(propInfo.enum)}
+            </Text>
+          ) : (
+            <Text style={styles.tableCell}>
+              {validateType(propInfo.type)}
+            </Text>
+          ) }
+        </>
+      </View>
+      <View style={styles.horizontalCells}>
+        <Text style={styles.cellHeader}>REQUIRED</Text>
+        <Text
+          style={{ ...styles.horizontalTableCell, ...styles.rowCell }}
+        >
+          {required(thisProperty)}
+
+        </Text>
+
+        <Text style={styles.cellHeader}>SOURCE</Text>
+        <Text style={styles.horizontalTableCell}>{textContent(propInfo.src, '/')}</Text>
+
+        {
+          propInfo.labeled && (
+          <>
+            <Text style={{ ...styles.cellHeader }}>
+              DISPLAYED AS:
+            </Text>
+            <Text style={styles.horizontalTableCell}>{propInfo.labeled}</Text>
+          </>
+          )
+        }
+      </View>
+    </View>
+  );
 };
 
 export default PdfTableRow;

@@ -104,6 +104,7 @@ async function init() {
               if (icdcMPData.PropDefinitions[propertyName].Key) {
                 keyMaps.add({ props: propertyName, node: key });
               }
+              propertiesItem.category = key;
               propertiesItem.description = icdcMPData.PropDefinitions[propertyName].Desc;
               propertiesItem.type = icdcMPData.PropDefinitions[propertyName].Type
                 || icdcMPData.PropDefinitions[propertyName].Enum;

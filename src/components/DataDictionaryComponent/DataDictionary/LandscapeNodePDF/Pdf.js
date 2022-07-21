@@ -9,6 +9,7 @@ import PdfTitle from './PdfTitle';
 import PdfTable from './PdfTable';
 import PdfHeader from './PdfHeader';
 import PdfFooter from './PdfFooter';
+import { getCategoryColor } from '../NodeCategories/helper';
 
 const styles = StyleSheet.create({
   page: {
@@ -29,25 +30,22 @@ const styles = StyleSheet.create({
 const PdfDocument = ({
   nodes,
 }) => (
-  <Document>
-    <Page style={styles.page} size="A4">
+  <Document style={styles.doc}>
+    <Page style={styles.page} size="A4" orientation="landscape">
       <PdfHeader />
       <View style={styles.body}>
-        {
-            nodes.map((node) => (
-              <View style={styles.tableContainer}>
-                <PdfTitle
-                  title={node.id}
-                  nodeClass={node.class}
-                  assignment={node.assignment}
-                  desc={node.desc}
-                  category={node.category}
-                />
-                <div style={styles.spacer} />
-                <PdfTable node={node} />
-              </View>
-            ))
-          }
+        {nodes.map((node) => (
+          <View style={styles.tableContainer}>
+            <PdfTitle
+              title={node.id}
+              nodeClass={node.class}
+              assignment={node.assignment}
+              desc={node.desc}
+              category={node.category} />
+            <div style={styles.spacer} />
+            <PdfTable node={node} categoryColor={getCategoryColor(node.category)} />
+          </View>
+        ))}
       </View>
       <PdfFooter />
     </Page>
