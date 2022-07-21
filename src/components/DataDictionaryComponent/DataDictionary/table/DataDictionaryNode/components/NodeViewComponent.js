@@ -19,18 +19,12 @@ const NodeViewComponent = ({
   description,
   isSearchMode,
   matchedResult,
+  pdfDownloadConfig,
 }) => {
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
     fileType: 'txt',
     prefix: 'ICDC-',
-  };
-
-  const pdfDownloadConfig = {
-    image: IconDownloadPDF,
-    type: 'single',
-    fileType: 'pdf',
-    prefix: 'ICDC_Data_Model_',
   };
 
   const getTitle = () => {
@@ -45,7 +39,7 @@ const NodeViewComponent = ({
     return capitalizeFirstLetter(node.title);
   };
 
-  const getDescription = (description) => {
+  const getDescription = (thisDescription) => {
     if (isSearchMode) {
       const nodeDescriptionFragment = getNodeDescriptionFragment(
         matchedResult.matches,
@@ -54,7 +48,7 @@ const NodeViewComponent = ({
       );
       return nodeDescriptionFragment;
     }
-    return description;
+    return thisDescription;
   };
 
   return (
@@ -74,35 +68,48 @@ const NodeViewComponent = ({
           </span>
         </Grid>
         <Grid item lg={3} md={3} sm={3} xs={12} />
-        <Grid item lg={4} md={4} sm={4} xs={12}
-          className={classes.nodeAssignmentGroup}>
+        <Grid
+          item
+          lg={4}
+          md={4}
+          sm={4}
+          xs={12}
+          className={classes.nodeAssignmentGroup}
+        >
           { (node.assignment) && (
           <>
-          <span className={classes.nodeLabel}>
-            <span>
-              Assignment:
+            <span className={classes.nodeLabel}>
+              <span>
+                Assignment:
+              </span>
+              <span className={classes.nodeAssignment}>
+                {capitalizeFirstLetter(node.assignment)}
+              </span>
             </span>
-            <span className={classes.nodeAssignment}>
-              {capitalizeFirstLetter(node.assignment)}
-            </span>
-          </span>
-          </>)}
+          </>
+          )}
           {(node.class) && (
           <>
-          <span className={classes.nodeLabel}>
-            Class:
-            <span className={classes.nodeClass}>
-              {capitalizeFirstLetter(node.class)}
+            <span className={classes.nodeLabel}>
+              Class:
+              <span className={classes.nodeClass}>
+                {capitalizeFirstLetter(node.class)}
+              </span>
             </span>
-          </span>
-          </>)
-          }
+          </>
+          )}
         </Grid>
-        <Grid item lg={5} md={5} sm={5} xs={12}
-          className={classes.nodeDownloadButtonGroup}>
+        <Grid
+          item
+          lg={5}
+          md={5}
+          sm={5}
+          xs={12}
+          className={classes.nodeDownloadButtonGroup}
+        >
           <div className={classes.buttonWrap}>
             <DownloadButton
-              config={pdfDownloadConfig}
+              config={{ ...pdfDownloadConfig, type: 'single', image: IconDownloadPDF }}
               documentData={node}
               fileName={createFileName(node.id, pdfDownloadConfig.prefix)}
             />
@@ -124,6 +131,6 @@ const NodeViewComponent = ({
       </Grid>
     </>
   );
-}
+};
 
-export default withStyles(styles) (NodeViewComponent);
+export default withStyles(styles)(NodeViewComponent);

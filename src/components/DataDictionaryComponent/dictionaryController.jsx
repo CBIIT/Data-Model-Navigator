@@ -15,8 +15,8 @@ import _ from 'lodash';
 // import ReduxDataDictionary from './DataDictionary/ReduxDataDictionary';
 
 const version = { commit: '913161064b02bcef024d072873e77c8c79cc1a68', dictionary: { commit: '520a25999fd183f6c5b7ddef2980f3e839517da5', version: '0.2.1-9-g520a259' }, version: '4.0.0-44-g9131610' };
-const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml";
-const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
+const DATA_MODEL = 'https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml';
+const DATA_MODEL_PROPS = 'https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml';
 
 const getData = async (url) => {
   const response = await axios.get(url);
@@ -25,7 +25,6 @@ const getData = async (url) => {
 };
 
 async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS) {
-
   const icdcMData = await getData(modelUrl);
   const icdcMPData = await getData(modelPropsUrl);
 
@@ -43,7 +42,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
       item.category = value.Tags.Category;
     } else if ('Category' in value) {
       item.category = (value.Category && value.Category.length > 0)
-        ? value.Category : 'Undefined';   
+        ? value.Category : 'Undefined';
     } else {
       item.category = 'Undefined';
     }
@@ -73,6 +72,9 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
             if (icdcMPData.PropDefinitions[propertyName].Key) {
               keyMaps.add({ props: propertyName, node: key });
             }
+            propertiesItem.labeled = icdcMPData.PropDefinitions[propertyName].Tags
+              ? icdcMPData.PropDefinitions[propertyName].Tags.Labeled
+                ? icdcMPData.PropDefinitions[propertyName].Tags.Labeled : undefined : undefined;
             propertiesItem.description = icdcMPData.PropDefinitions[propertyName].Desc;
             propertiesItem.type = icdcMPData.PropDefinitions[propertyName].Type
               || icdcMPData.PropDefinitions[propertyName].Enum;
@@ -86,7 +88,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
               pPreffered.push(nodeP);
             } else {
               pOptional.push(nodeP);
-            } 
+            }
           }
         }
         properties[nodeP] = propertiesItem;
@@ -178,11 +180,10 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     }
   }
   const newDataList = dataList;
-
   return {
     data: newDataList,
-    version: version,
-  }
+    version,
+  };
 }
 
 module.exports.getModelExploreData = getModelExploreData;

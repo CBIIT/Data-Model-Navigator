@@ -9,6 +9,7 @@ import {
 import { pdf } from '@react-pdf/renderer';
 import { cn } from 'bento-components';
 import PdfDocument from './Pdf';
+import LandscapePDFDoc from '../LandscapeNodePDF/Pdf';
 
 const DownloadButton = ({
   classes,
@@ -51,7 +52,7 @@ const DownloadButton = ({
   const generatePdfDocument = async (object) => {
     const document = (config.type === 'document') ? object : [object];
     const blob = await pdf((
-      <PdfDocument nodes={document} />
+      config.landscape ? <LandscapePDFDoc nodes={document} /> : <PdfDocument nodes={document} />
     )).toBlob();
     setLoading(false);
     saveAs(blob, `${fileName}.pdf`);

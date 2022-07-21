@@ -9,10 +9,11 @@ import { createFileName } from '../../../utils';
 import DataDictionaryCategory from '../DataDictionaryCategory';
 import DownloadButton from '../../NodePDF/DownloadButton';
 
-const pdfDownloadConfig = {
-  type: 'document',
-  prefix: 'ICDC_Data_Model ',
-};
+// const pdfDownloadConfig = {
+//   type: 'document',
+//   prefix: 'ICDC_Data_Model ',
+//   landscape: true,
+// };
 
 const DownloadLinkWrapper = styled.div`
   display: flex;
@@ -78,7 +79,7 @@ const getNodePropertyCount = (dictionary) => {
  * @param {dictionary} params
  */
 const DataDictionaryTable = ({
-  classes, dictionary, highlightingNodeID, onExpandNode, dictionaryName,
+  classes, dictionary, highlightingNodeID, onExpandNode, dictionaryName, pdfDownloadConfig,
 }) => {
   const c2nl = category2NodeList(dictionary);
   const { nodesCount, propertiesCount } = getNodePropertyCount(dictionary);
@@ -94,7 +95,7 @@ const DataDictionaryTable = ({
           <span> properties </span>
         </p>
         <DownloadButton
-          config={pdfDownloadConfig}
+          config={{ ...pdfDownloadConfig, type: 'document' }}
           documentData={sortByCategory(c2nl, dictionary)}
           fileName={createFileName('', pdfDownloadConfig.prefix)}
         />
@@ -107,6 +108,7 @@ const DataDictionaryTable = ({
             category={category}
             highlightingNodeID={highlightingNodeID}
             onExpandNode={onExpandNode}
+            pdfDownloadConfig={pdfDownloadConfig}
           />
         ))}
       </div>

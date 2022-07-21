@@ -20,10 +20,9 @@ const styles = StyleSheet.create({
   },
   nodeInfo: {
     flexDirection: 'row',
-    padding: '6px 0px 2px 15px',
+    padding: '6px 15px 2px 15px',
     backgroundColor: '#f4f5f5',
     display: 'flex',
-    justifyContent: 'space-between',
   },
   tagsInfo: {
     flexDirection: 'row',
@@ -36,17 +35,18 @@ const styles = StyleSheet.create({
     fontSize: '10px',
     fontWeight: 'heavy',
     fontFamily: FontRegistry('NunitoBold'),
+    width: '158.5px',
     // marginRight: '75px',
   },
   nodeDesc: {
     color: '#000000',
     fontSize: '9px',
-    paddingRight: '15px',
     paddingTop: '-2px',
     lineHeight: 1.2,
-    width: '350px',
-    fontFamily: FontRegistry('NunitoNormal'),
+    overflowWrap: 'break-word',
+    width: '650px',
     textAlign: 'justify',
+    fontFamily: FontRegistry('NunitoNormal'),
   },
   categoryHeader: {
     marginLeft: '10px',
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   tagContainer: {
     position: 'relative',
-    left: '141.5em',
+    left: '139em',
     display: 'flex',
     flexDirection: 'row',
   },
@@ -114,47 +114,45 @@ const styles = StyleSheet.create({
 
 const createStyle = (classes, categoryColor) => ({ ...classes, ...{ borderLeft: `5px solid ${categoryColor}` } });
 
-const PdfTitle = ({
-  category, assignment, title, desc, nodeClass,
-}) => {
-  const svgNode = document.querySelector(`svg.${category}`);
+const PdfTitle = (node) => {
+  const svgNode = document.querySelector(`svg.${node.category}`);
   const SvgIcon = renderSvgElement(svgNode);
-  const categoryColor = getCategoryColor(category);
+  const categoryColor = getCategoryColor(node.category);
   return (
     <View>
       <View style={createStyle(styles.categoryStyle, categoryColor)}>
         {SvgIcon}
         <Text style={{ color: categoryColor, ...styles.categoryHeader }}>
-          {capitalizeFirstLetter(category)}
+          {capitalizeFirstLetter(node.category)}
         </Text>
       </View>
       <View style={createStyle(styles.hr, categoryColor)} />
       <View style={createStyle(styles.nodeInfo, categoryColor)}>
         {/* <View style={styles.nodeTitle}> */}
         <Text style={styles.nodeTitle}>
-          {capitalizeFirstLetter(title)}
+          {capitalizeFirstLetter(node.title)}
         </Text>
-        <Text style={styles.nodeDesc}>{desc}</Text>
+        <Text style={styles.nodeDesc}>{node.desc}</Text>
       </View>
       <View style={createStyle(styles.tagsInfo, categoryColor)}>
         <span style={styles.tagContainer}>
-          { (assignment) ? (
+          { (node.assignment) ? (
             <Text style={styles.nodeAssignment}>
               <span style={styles.label}>
                 {'Assignment: '}
               </span>
               <span style={styles.assignment}>
-                {capitalizeFirstLetter(assignment)}
+                {capitalizeFirstLetter(node.assignment)}
               </span>
             </Text>
           ) : (<Text />)}
-          { (nodeClass) ? (
+          { (node.nodeClass) ? (
             <Text style={styles.nodeClass}>
               <span style={styles.label}>
                 {'Class: '}
               </span>
               <span style={styles.class}>
-                {capitalizeFirstLetter(nodeClass)}
+                {capitalizeFirstLetter(node.nodeClass)}
               </span>
             </Text>
           ) : (<Text />)}
