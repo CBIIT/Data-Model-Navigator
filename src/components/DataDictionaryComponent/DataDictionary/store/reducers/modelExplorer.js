@@ -122,6 +122,7 @@ const moduleReducers = (state = initialState, action) => {
       return ({
         ...state,
         dictionary: dictionary,
+        properties: payload.properties,
         nodeTypes: getNodeTypes(payload.data),
         file_nodes: getFileNodes(payload.data),
         allActiveFilters: getAllFilters(filterConfig.facetSearchData),

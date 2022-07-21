@@ -1,5 +1,7 @@
 export const categories = ['Admistrative', 'Study', 'Clinical Trial', 'Case', 'Biospecimen', 'Clinical', 'Analysis', 'Data File'];
 
+export const showCheckboxCount = 6;
+
 export const types = {
   CATEGORY: 'category',
   ASSIGNMENT: 'assignment',
@@ -94,8 +96,8 @@ export const facetSearchData = [
     tooltip: 'inclusion',
     show: true,
     checkboxItems: [
-      { name: 'no', isChecked: false, group: 'uiDisplay' },
-      { name: 'yes', isChecked: false, group: 'uiDisplay' },
+      { name: 'no', isChecked: false, group: 'no' },
+      { name: 'yes', isChecked: false, group: 'yes' },
     ],
   },
 ];
@@ -144,6 +146,7 @@ export const filterSections = [
   'assignment',
   'class',
   'inclusion',
+  'display',
   'uiDisplay',
 ];
 
@@ -167,6 +170,7 @@ export const filterOptions = [
   'required',
   'preferred',
   'optional',
+  'uiDisplay',
   'yes',
   'no',
 ];
