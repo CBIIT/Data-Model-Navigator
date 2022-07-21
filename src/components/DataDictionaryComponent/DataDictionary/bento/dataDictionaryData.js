@@ -186,5 +186,7 @@ export const filterConfig = {
   resetIcon: resetIcon,
   baseFilters: baseFilters,
   filterSections: filterSections,
-  filterOptions: filterOptions
+  filterOptions: filterOptions,
+  showCheckboxCount:  showCheckboxCount,
+
 }

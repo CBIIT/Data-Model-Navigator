@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   List,
   Accordion,
@@ -84,6 +84,13 @@ const FacetFilters = ({
     state.submission
           && state.submission.facetfilterConfig
       ? state.submission.facetfilterConfig.showCheckboxCount : 3));
+  
+  
+  const [checkBoxCount, setCheckBoxCount] = useState(3);
+  
+  useEffect(() => {
+    setCheckBoxCount(showCheckboxCount);
+  }, []);
 
   const [groupsExpanded, setGroupsExpanded] = React.useState([]);
   const [sectionExpanded, setSectionExpanded] = React.useState(
@@ -114,6 +121,18 @@ const FacetFilters = ({
     setGroupsExpanded(groups);
     // set height of filters.
   };
+
+  const displayAllSelection = (checkboxItems) => {
+    console.log(checkboxItems)
+    let count = 0;
+    checkboxItems.forEach(item => {
+      if(item.isChecked) {
+        count += 1;
+      }
+    });
+    console.log(count);
+    setCheckBoxCount(count);
+  }
 
   const getGroupNameColor = (sideBarItem, currentSection) => {
     let groupNameColor = 'black';
@@ -187,7 +206,7 @@ const FacetFilters = ({
         ...item,
       }
     ));
-    const selectedCheckbox = selectedItems.slice(0, showCheckboxCount)
+    const selectedCheckbox = selectedItems.slice(0, checkBoxCount)
       .map((item, index) => (
         <CheckBoxView
           checkboxItem={item}
@@ -205,6 +224,16 @@ const FacetFilters = ({
     return (
       <div>
         {selectedCheckbox}
+        {selectedItems.length > checkBoxCount && (
+          <div className={classes.clearfix}>
+            <div
+              className={classes.showMore}
+              onClick={(e) => (displayAllSelection(sideBarItem.checkboxItems))}
+            >
+              {sortLabels.showMore}
+            </div>
+          </div>
+        )}
       </div>
     );
   };
