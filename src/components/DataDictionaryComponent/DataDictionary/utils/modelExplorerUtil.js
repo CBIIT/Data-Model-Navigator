@@ -387,7 +387,6 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
       const filter = getPropertySubjectCountAndFilterDictionary(unfilteredDictionary, filterByInclusion);
       inclusionSubjectCount = filter.count;
       filteredDictionary = filter.dictionary;
-      console.log(inclusionSubjectCount);
       const otherFilterItem = (currentFilter.datafield !== inclusionItem)
       ? inclusionFilterItems : uiDisplayFilterItems;
       otherFilterItem.checkboxItems.forEach(item => {
@@ -485,10 +484,11 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
           });
         }
         const nodeFilterCount = getSubjectItemCount(filteredDictionary);
+        const categorySubjectCount = getSubjectItemCount(inclusionDictionary);
         const categorySection = facetfilterConfig.facetSearchData.filter(item => item.datafield === "category")[0];
         categorySection.checkboxItems.forEach(item => {
           const key = item.name.toLowerCase();
-          overideSubjectCount[key] = filteredDictCounts[key];
+          overideSubjectCount[key] = categorySubjectCount[key];
         });
         const combinedSubjectCounts = Object.assign({}, nodeFilterCount, overideSubjectCount);
         return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
@@ -548,7 +548,8 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
               inclusionFilterItems.checkboxItems.forEach(item => {
                 overideSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
               });
-            } else {
+            } 
+            if (currentFilter.datafield === uiDisplayItem) { {
               uiDisplayFilterItems.checkboxItems.forEach(item => {
                 overideSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
               });
@@ -559,6 +560,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
             const key = item.name.toLowerCase();
             overideSubjectCount[key] = otherSelectionCounts[key];
           });
+          } 
         }
         const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overideSubjectCount);
         return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
@@ -591,10 +593,12 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
               overideSubjectCount[key] = inclusionFilterCounts[key];
             });
             if (!activeInclusionFilter) {
-              uncheckedSection.checkboxItems.forEach(item => {
-                const key = item.name.toLowerCase();
-                overideSubjectCount[key] = filteredDictCounts[key];
-              });
+              if (uncheckedSection) {
+                uncheckedSection.checkboxItems.forEach(item => {
+                  const key = item.name.toLowerCase();
+                  overideSubjectCount[key] = filteredDictCounts[key];
+                });
+              }
             }
             
           const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overideSubjectCount);
@@ -622,9 +626,26 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
         currentSelection.checkboxItems.forEach(item => {
           const key = item.name.toLowerCase();
           overideSubjectCount[key] = otherSelectionCounts[key];
-        })
-        if (filterByInclusion.length == 1) {
-          if (inclusion.length > 0) {
+          });
+        if (currentSelection && filterByInclusion.length === 2) {
+          if (currentFilter.datafield === inclusionItem) {
+            const filterByDisplay = processedFilters.filter(item => (item[0] === uiDisplayItem));
+            const filter = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, filterByDisplay);
+            const filterCount = filter.count;
+            inclusionFilterItems.checkboxItems.forEach(item => {
+              overideSubjectCount[item.group] = filterCount[item.group] ? filterCount[item.group] : 0
+            });
+          } else {
+            const filterByPropType = processedFilters.filter(item => (item[0] === inclusionItem));
+            const filter = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, filterByPropType);
+            const filterCount = filter.count;
+            uiDisplayFilterItems.checkboxItems.forEach(item => {
+              overideSubjectCount[item.group] = filterCount[item.group] ? filterCount[item.group] : 0;
+            });
+          }
+        }
+        if (currentSelection && filterByInclusion.length === 1) { 
+          if (currentFilter.datafield === inclusionItem) {
             inclusionFilterItems.checkboxItems.forEach(item => {
               overideSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
             });
@@ -633,16 +654,15 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
               overideSubjectCount[item.group] = nonInclusionSectionCounts[item.group] ? nonInclusionSectionCounts[item.group] : 0;
             });
           }
-          
-        }
-        if (currentFilter.datafield === 'category') {
-          currentSelection.checkboxItems.forEach(item => {
-            const key = item.name.toLowerCase();
-            overideSubjectCount[key] = otherSelectionCounts[key];
-          });
-        }
-        const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overideSubjectCount);
-        return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
+        } 
+      if (currentFilter.datafield === 'category') {
+        currentSelection.checkboxItems.forEach(item => {
+          const key = item.name.toLowerCase();
+          overideSubjectCount[key] = otherSelectionCounts[key];
+        });
+      }
+      const combinedSubjectCounts = Object.assign({}, filteredDictCounts, overideSubjectCount);
+      return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary};
       } else {
         const overideSubjectCount = {};
         if(activeInclusionFilter) {
