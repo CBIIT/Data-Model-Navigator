@@ -24,8 +24,10 @@ const TableRow = ({
   openBoxHandler,
   isSearchMode,
 }) => {
-  const required = (requiredFlag) => (
-    <span className={requiredFlag ? classes.required : ''} />
+  const required = (requiredFlag, preferredFlag) => (
+    <span className={requiredFlag ? classes.required : ''}>
+      { requiredFlag ? 'Required' : preferredFlag ? 'Preferred' : 'Optional' }
+    </span>
   );
 
   const displayKeyProperty = (propertyFragment) => (
