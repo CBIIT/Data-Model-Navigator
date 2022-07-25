@@ -302,15 +302,29 @@ export const inclusionFilterHelper = (data, allActiveFilters, currentFilter) => 
         ["uiDisplay", ["Yes", "No"]]];
         const allInclusionFilter = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, allInclusionFilterItem);
         const currentPropsFilterCount = allInclusionFilter.count;
+
+        const selectedInclusionFilter = getPropertySubjectCountAndFilterDictionary(noneInclusionDictionary, filterByInclusion);
+        const selectedInclusionFilterCount = selectedInclusionFilter.count;
         const overideSubjectCount = {};
-        uiDisplayFilterItems.checkboxItems.forEach(item => {
-            overideSubjectCount[item.group] = currentPropsFilterCount[item.group]
-                ? currentPropsFilterCount[item.group] : 0;
-        });
-        inclusionFilterItems.checkboxItems.forEach(item => {
-            overideSubjectCount[item.group] = currentPropsFilterCount[item.group]
-                ? currentPropsFilterCount[item.group] : 0;
-        });
+        if (uiDisplay.length > 0){
+            inclusionFilterItems.checkboxItems.forEach(item => {
+                overideSubjectCount[item.group] = selectedInclusionFilterCount[item.group]
+                    ? selectedInclusionFilterCount[item.group] : 0;
+            });
+            uiDisplayFilterItems.checkboxItems.forEach(item => {
+                overideSubjectCount[item.group] = currentPropsFilterCount[item.group]
+                    ? currentPropsFilterCount[item.group] : 0;
+            });
+        } else {
+            uiDisplayFilterItems.checkboxItems.forEach(item => {
+                overideSubjectCount[item.group] = selectedInclusionFilterCount[item.group]
+                    ? selectedInclusionFilterCount[item.group] : 0;
+            });
+            inclusionFilterItems.checkboxItems.forEach(item => {
+                overideSubjectCount[item.group] = currentPropsFilterCount[item.group]
+                    ? currentPropsFilterCount[item.group] : 0;
+            });
+        }
         //** set current section with filter by inclusion */
         const nonInclusionSectionCounts = getSubjectItemCount(inclusionDictionary, selectedSections);
         const combinedSubjectCounts = Object.assign({}, filteredDictCounts, nonInclusionSectionCounts, overideSubjectCount);
