@@ -25,6 +25,9 @@ export default () => ({
   },
   nodeAssignmentGroup: {
     textAlign: 'right',
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '-12.5px',
   },
   nodeLabel: {
     marginTop: '10px',

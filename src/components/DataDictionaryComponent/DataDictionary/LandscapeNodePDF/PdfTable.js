@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     color: '#7a7a7a',
     fontSize: '8px',
     marginLeft: '10px',
+    marginTop: '5px',
     fontFamily: FontRegistry('NunitoExtraLightItalic'),
   },
 });
