@@ -143,7 +143,7 @@ const ListComponent = ({
   typeMatchList,
   isSearchMode,
 }) => {
-  const meanIndex = (length) => (length % 2) ? length/2 - .5 : length/2;
+  const meanIndex = (length) => ((length % 2) ? length / 2 - 0.5 : length / 2);
   const customTheme = (expand && items.length > maxNoOfItemDlgBox + maxNoOfItems)
     ? { overrides: { ...theme.overrides, ...threeColumnsView.overrides } }
     : (items.length > maxNoOfItems)
@@ -151,25 +151,25 @@ const ListComponent = ({
 
   const highlightMatchingProperties = (item) => {
     if (isSearchMode && typeMatchList && typeMatchList.length > 0) {
-      const matchItem = typeMatchList.map(prop => {
+      const matchItem = typeMatchList.map((prop) => {
         if (prop.value === item) {
           return prop;
         }
-      }).filter(c => c);
+      }).filter((c) => c);
       if (matchItem.length == 1) {
         return (
-        <ListItemText>
-          <span className={classes.listItemText}>
-            {item.substring}
-            {
+          <ListItemText>
+            <span className={classes.listItemText}>
+              {item.substring}
+              {
               addHighlightingSpans(
                 item,
                 matchItem[0].indices,
                 'data-dictionary-property-table__span',
               )
             }
-          </span>
-        </ListItemText>
+            </span>
+          </ListItemText>
         );
       }
     }
@@ -181,17 +181,17 @@ const ListComponent = ({
           </Typography>
         )}
       />
-    )
-  }
+    );
+  };
 
   return (
     <MuiThemeProvider theme={createTheme(customTheme)}>
       <List>
         {items.map((item, index) => (
           <>
-            {/* apply different style when text is greater than 30 character on particular index*/}
-            {(item.length > 30) && (meanIndex(items.length) - 1 === index ||
-            meanIndex(items.length) === index) ? (
+            {/* apply different style when text is greater than 30 character on particular index */}
+            {(item.length > 30) && (meanIndex(items.length) - 1 === index
+            || meanIndex(items.length) === index) ? (
               <>
                 <div className={classes.longText} id={item.length}>
                   <span className={classes.label}>
@@ -204,12 +204,12 @@ const ListComponent = ({
                   </div>
                 </div>
               </>
-            ) : (
-              <ListItem key={`${index}`}>
-                <ListItemIcon>
-                  <FiberManualRecord style={{ fontSize: 8 }} />
-                </ListItemIcon>
-                {/*
+              ) : (
+                <ListItem key={`${index}`}>
+                  <ListItemIcon>
+                    <FiberManualRecord style={{ fontSize: 8 }} />
+                  </ListItemIcon>
+                  {/*
                 <ListItemText
                   primary={(
                     <Typography className={classes.listItemText}>
@@ -217,9 +217,9 @@ const ListComponent = ({
                     </Typography>
                   )}
                 /> */}
-                {highlightMatchingProperties(item)}
-              </ListItem>
-            )}
+                  {highlightMatchingProperties(item)}
+                </ListItem>
+              )}
           </>
         ))}
       </List>
@@ -237,7 +237,7 @@ const styles = () => ({
     fontWeight: '300',
     marginBottom: '4px',
     lineHeight: '1.3',
-    '@media not all and (min-resolution:.001dpcm)' : {
+    '@media not all and (min-resolution:.001dpcm)': {
       lineHeight: '1',
     },
   },
@@ -252,14 +252,14 @@ const styles = () => ({
     display: 'block',
     fontSize: '14px',
     fontWeight: 300,
-    '@media not all and (min-resolution:.001dpcm)' : {
+    '@media not all and (min-resolution:.001dpcm)': {
       marginBottom: '0px',
     },
   },
   highLightText: {
     color: 'var(--g3-color__highlight-orange)',
     fontWeight: '600',
-  }
+  },
 });
 
 export default withStyles(styles)(ListComponent);

@@ -26,9 +26,14 @@ const styles = StyleSheet.create({
   },
   tagsInfo: {
     flexDirection: 'row',
-    padding: '6px 0px 2px 15px',
+    alignItems: 'center',
+    paddingLeft: '15px',
+    paddingBottom: '5px',
+    height: '30px',
+    // padding: '6px 0px 2px 15px',
     backgroundColor: '#f4f5f5',
     display: 'flex',
+    marginBottom: '-12px',
   },
   nodeTitle: {
     color: '#000000',
