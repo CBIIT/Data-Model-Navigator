@@ -117,6 +117,7 @@ const FacetFilters = ({
       if (index > -1) {
         groups.splice(index, 1);
       }
+      setCheckBoxCount(showCheckboxCount);
     }
     setGroupsExpanded(groups);
     // set height of filters.
@@ -130,7 +131,6 @@ const FacetFilters = ({
         count += 1;
       }
     });
-    console.log(count);
     setCheckBoxCount(count);
   }
 

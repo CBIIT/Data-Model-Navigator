@@ -255,16 +255,22 @@ async function init() {
     );
   }
 
+export const pdfDownloadConfig = {
+  fileType: 'pdf',
+  prefix: 'ICDC_Data_Model_',
+  landscape: 'true',
+};
+
 const ModelExplorer = () => {
   init ();
-  return <ReduxDataDictionary />;
+  return <ReduxDataDictionary pdfDownloadConfig={pdfDownloadConfig} />;
 }
 
 storiesOf('Data Explorer', module)
   .add('Explorer', () =>
   (
     <Provider store={store}>
-      <ModelExplorer />
+      <ModelExplorer  />
     </Provider>
   )
 );
