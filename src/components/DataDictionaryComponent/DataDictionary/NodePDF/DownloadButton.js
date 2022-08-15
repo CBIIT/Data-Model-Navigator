@@ -68,11 +68,11 @@ const DownloadButton = ({
   const downloadTsv = () => {
     const tsv = convertToTSV(documentData);
     const exportData = new Blob([tsv], { type: 'data:text/tab-separated-values' });
-    saveAs(exportData, `${fileName}.txt`);
+    saveAs(exportData, `${fileName}.tsv`);
   };
 
   const download = () => {
-    if (config.fileType === 'txt') {
+    if (config.fileType === 'tsv') {
       downloadTsv();
     } else {
       downloadPdf();
