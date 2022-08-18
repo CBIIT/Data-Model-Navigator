@@ -66,6 +66,9 @@ const theme = {
       label: {
         justifyContent: 'left',
       },
+      outlined: {
+        border: 'none',
+      }
     },
   },
 };
@@ -100,11 +103,11 @@ const DownloadButton = ({
 
   return (
     <MuiThemeProvider theme={createTheme(theme)}>
-      <Box width="155px">
-          <Button
-            className={classes.downloadBtn}
-            startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}  
-          />
+      <Box className={classes.menu}>
+        <Button
+          className={classes.downloadBtn}
+          startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}  
+        />
         <Button
           aria-controls="mui-menu"
           variant="outlined"
@@ -130,11 +133,18 @@ const DownloadButton = ({
 };
 
 const styles = () => ({
+  menu: {
+    width: "160px",
+    height: '40px',
+    border: '2.5px solid #C2C2C2',
+    boxSizing: 'border-box',
+    backgroundColor: '#C1C1C1'
+  },
   displayBtn: {
     width: '125px',
-    height: '40px',
+    height: '36px',
     boxSizing: 'border-box',
-    border: '2.5px solid #C2C2C2',
+    // border: '2.5px solid #C2C2C2',
     backgroundColor: '#F2F3F3',
     textTransform: 'none',
     padding: '7px',
@@ -166,8 +176,8 @@ const styles = () => ({
     float: 'right',
     marginBottom: '-20px',
     height: '38px',
-    border: '1px solid',
     width: '30px',
+    backgroundColor: '#3283c8',
   },
   downloadIcon: {
   },
