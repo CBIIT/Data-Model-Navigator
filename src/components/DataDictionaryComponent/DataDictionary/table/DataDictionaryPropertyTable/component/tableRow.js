@@ -10,6 +10,7 @@ import ButtonComponent from './ButtonComponent';
 import KeyIconSvg from '../../../../assets/key_icon.svg';
 import { controlVocabConfig as config } from '../../../bento/dataDictionaryData';
 import '../DataDictionaryPropertyTable.css';
+import DownloadBtn from './DownloadBtn';
 
 const TableRow = ({
   classes,
@@ -147,6 +148,8 @@ const TableRow = ({
                           openHandler={() => openBoxHandler(enums, typeMatchList)}
                         />
                       )}
+                    <br />
+                    <DownloadBtn />
                   </>
                 ) : (
                   <>
