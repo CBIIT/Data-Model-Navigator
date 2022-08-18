@@ -16,7 +16,7 @@ const MuiMenu = withStyles({
   paper: {
     border: '2px solid #d3d4d5',
     borderTop: '0',
-    width: '151px',
+    width: '121px',
     borderRadius: '0px',
     '& .MuiList': {
       marginTop: '0px',
@@ -57,8 +57,14 @@ const MuiMenuItem = withStyles(() => ({
 const theme = {
   overrides: {
     MuiButton: {
-      '& .startIcon': {
-        margin: 'auto',
+      root: {
+        minWidth: '10px',
+      },
+      startIcon: {
+        marginRight: '0px',
+      },
+      label: {
+        justifyContent: 'left',
       },
     },
   },
@@ -94,7 +100,7 @@ const DownloadButton = ({
 
   return (
     <MuiThemeProvider theme={createTheme(theme)}>
-      <Box width="210px">
+      <Box width="155px">
           <Button
             className={classes.downloadBtn}
             startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}  
@@ -104,7 +110,7 @@ const DownloadButton = ({
           variant="outlined"
           onClick={clickHandler}
           className={classes.displayBtn}
-          startIcon={<ExpandMoreIcon />}
+          startIcon={<ExpandMoreIcon className={classes.expandIcon} />}
         >
           <div className={classes.dropDownText}>
             {label}
@@ -125,13 +131,13 @@ const DownloadButton = ({
 
 const styles = () => ({
   displayBtn: {
-    width: '155px',
+    width: '125px',
     height: '40px',
     boxSizing: 'border-box',
     border: '2.5px solid #C2C2C2',
     backgroundColor: '#F2F3F3',
     textTransform: 'none',
-    padding: '0',
+    padding: '7px',
     marginRight: '0',
     float: 'left',
     '&:hover': {
@@ -152,20 +158,21 @@ const styles = () => ({
     color: '#DC762F',
   },
   menuItem: {
-    color: '#DC762F',
     fontSize: '12px',
     fontWeight: '700',
-    paddingLeft: '55px',
+    paddingLeft: '25px',
   },
   downloadBtn: {
     float: 'right',
     marginBottom: '-20px',
-    height: '40px',
+    height: '38px',
     border: '1px solid',
-    width: '10px',
+    width: '30px',
   },
   downloadIcon: {
-    marginLeft: '10px',
+  },
+  expandIcon: {
+
   },
 });
 
