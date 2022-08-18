@@ -3,13 +3,16 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import {ArrowDownward, ExpandMore as ExpandMoreIcon} from '@material-ui/icons';
+import { Box } from '@material-ui/core';
+
+const fileTypes = ['JSON', 'TSV'];
 
 const MuiMenu = withStyles({
   paper: {
     border: '2px solid #d3d4d5',
     borderTop: '0',
-    width: '195px',
+    width: '151px',
     borderRadius: '0px',
     '& .MuiList': {
       marginTop: '0px',
@@ -18,6 +21,7 @@ const MuiMenu = withStyles({
   list: {
     paddingBottom: '0px',
     paddingTop: '0px',
+    marginTop: '5px',
   },
 })((props) => (
   <Menu
@@ -52,7 +56,6 @@ const DownloadButton = ({
   const [anchorElement, setAnchorElement] = React.useState(null);
 
   const clickHandler = (event) => {
-    console.log(event);
     setAnchorElement(event.currentTarget);
   };
 
@@ -62,51 +65,59 @@ const DownloadButton = ({
 
   const [label, setLabel] = useState('DOWNLOADS');
 
-  const setFileType = (event) => {
-    console.log(event);
+  const setFileType = (value) => {
+    console.log(value);
+    setLabel(value);
   }
 
+  const MenuItem = (type) => (
+    <MuiMenuItem className={classes.menuItem} onClick={() => setFileType(type)}>
+      {type}
+    </MuiMenuItem>
+  );
+  
+  const options = fileTypes.map((item) => MenuItem(item));
+
   return (
-    <div>
+    <Box width="215px">
+      <Button
+        className={classes.downloadBtn}
+        startIcon={<ArrowDownward />}  
+      /> 
       <Button
         aria-controls="mui-menu"
         variant="outlined"
         onClick={clickHandler}
-        className={classes.studyDisplayBtn}
+        className={classes.displayBtn}
+        startIcon={<ExpandMoreIcon />}
       >
-        <div className={classes.icon}>
-        </div>
         <div className={classes.dropDownText}>
           {label}
         </div>
-        <ArrowDropDownIcon className={classes.arrowDropDown} />
       </Button>
       <MuiMenu
         anchorEl={anchorElement}
         keepMounted
         open={Boolean(anchorElement)}
-        onClick={setFileType}
+        onClose={closeHandler}
       >
-        <MuiMenuItem className={classes.menuItem} value="JSON">
-          JSON
-        </MuiMenuItem>
-        <MuiMenuItem className={classes.menuItem} value="TSV">
-          TSV
-        </MuiMenuItem>
+        {options}
       </MuiMenu>
-    </div>
+    </Box>
   );
 };
 
 const styles = () => ({
-  studyDisplayBtn: {
-    width: '195px',
+  displayBtn: {
+    width: '155px',
     height: '40px',
-    padding: '4px 14px 2px 12px',
     boxSizing: 'border-box',
     border: '2.5px solid #C2C2C2',
     backgroundColor: '#F2F3F3',
     textTransform: 'none',
+    padding: '0',
+    marginRight: '0',
+    float: 'left',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -120,38 +131,9 @@ const styles = () => ({
     textAlign: 'left',
     position: 'relative',
   },
-  arrowDropDown: {
+  arrowDownward: {
     fontSize: '30px',
     color: '#DC762F',
-  },
-  cartIcon: {
-    height: '28px',
-    width: '28px',
-    margin: '0px 3px 0px 2px',
-  },
-  cartCounter: {
-    position: 'relative',
-    top: '-3px',
-    right: '7px',
-  },
-  badge: {
-    display: 'inline-flex',
-    position: 'relative',
-    verticalAlign: 'middle',
-    bottom: '3px',
-  },
-  noOfStudies: {
-    position: 'absolute',
-    top: '2px',
-    left: '28px',
-    border: '1px solid #708090',
-    borderRadius: '18px',
-    backgroundColor: '#ffffff',
-    width: '18px',
-    height: '18px',
-    fontSize: '12px',
-    fontWeight: '700',
-    color: '#000001',
   },
   menuItem: {
     color: '#DC762F',
@@ -159,24 +141,10 @@ const styles = () => ({
     fontWeight: '700',
     paddingLeft: '55px',
   },
-  link: {
-    marginLeft: '5px',
-    color: '#DC762F',
-    fontSize: '12px',
-    fontWeight: '700',
-    verticalAlign: 'bottom',
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-  },
-  dashboarLink: {
-    paddingLeft: '50px',
-    height: '30px',
-    '&:hover': {
-      backgroundColor: '#f3f3f3',
-    },
-  },
+  downloadBtn: {
+    float: 'right',
+    marginBottom: '-10px'
+  }
 });
 
 export default withStyles(styles, { withTheme: true })(DownloadButton);
