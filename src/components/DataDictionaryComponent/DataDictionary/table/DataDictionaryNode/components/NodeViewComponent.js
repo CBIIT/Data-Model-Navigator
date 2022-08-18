@@ -23,8 +23,8 @@ const NodeViewComponent = ({
 }) => {
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
-    fileType: 'txt',
-    prefix: 'ICDC-',
+    fileType: 'tsv',
+    prefix: 'ICDC_Data_Loading_Template-',
   };
 
   const getTitle = () => {
