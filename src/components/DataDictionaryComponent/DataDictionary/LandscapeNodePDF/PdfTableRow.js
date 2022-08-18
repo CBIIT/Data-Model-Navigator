@@ -3,10 +3,8 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
 } from '@react-pdf/renderer';
 import { FontRegistry } from './util';
-import keyIcon from './assets/key_icon.png';
 
 const styles = StyleSheet.create({
   row: {
@@ -19,6 +17,14 @@ const styles = StyleSheet.create({
   horizontalCells: {
     flexDirection: 'row',
     paddingBottom: '5px',
+  },
+  boldLabeled: {
+    fontSize: 8,
+    fontFamily: FontRegistry('NunitoExtraBold'),
+  },
+  labeledContainer: {
+    marginTop: '8px',
+    marginBottom: '8px',
   },
   evenRow: {
     backgroundColor: '#f4f5f5',
@@ -41,10 +47,13 @@ const styles = StyleSheet.create({
   },
   tableColDesc: {
     textAlign: 'left',
-    width: '30%',
+    width: '100%',
   },
   tableColRequired: {
     width: '12%',
+  },
+  labeled: {
+    fontSize: 8,
   },
   cellHeader: {
     fontSize: '6px',
@@ -56,18 +65,29 @@ const styles = StyleSheet.create({
     lineHeight: 1.2,
     fontFamily: FontRegistry('NunitoSans'),
     textAlign: 'justify',
-    width: '10%',
-    // backgroundColor: 'red',
+    width: '78px',
+  },
+  cellHorizontalHeader: {
+    fontSize: '6px',
+    overflowWrap: 'break-word',
+    fontWeight: '600',
+    paddingLeft: '6px',
+    paddingTop: '5px',
+    // paddingBottom: '5px',
+    lineHeight: 1.2,
+    fontFamily: FontRegistry('NunitoSans'),
+    textAlign: 'justify',
+    width: '70.5px',
   },
   tableCell: {
     fontSize: 8,
     overflowWrap: 'break-word',
     // paddingLeft: '2px',
     paddingTop: '3px',
-    // paddingBottom: '5px',
+    paddingBottom: '5px',
     lineHeight: 1.2,
     fontFamily: FontRegistry('NunitoNormal'),
-    width: '350px',
+    width: '100%',
     textAlign: 'justify',
   },
   descriptionCell: {
@@ -85,9 +105,6 @@ const styles = StyleSheet.create({
     width: '126px',
     textAlign: 'justify',
   },
-  rowCell: {
-    // paddingLeft: '2px',
-  },
   key: {
     fontSize: 8,
     color: '#0d71a3',
@@ -102,6 +119,13 @@ const styles = StyleSheet.create({
   tableColKey1: {
     width: '90%',
     justifyContent: 'center',
+  },
+  brText: {
+    marginTop: '8px',
+    marginBottom: '2px',
+    fontFamily: FontRegistry('NunitoNormal'),
+    fontSize: 8,
+    width: '100%',
   },
   tableColKey2: {
     width: '114%',
@@ -124,7 +148,6 @@ const styles = StyleSheet.create({
 });
 
 const PdfTableRow = ({ propInfo, node, thisProperty }) => {
-  const keys = Object.keys(node.properties);
   const textContent = (text, symbol) => {
     if (String(text).length > 20) {
       return String(text).replace(symbol, `${symbol}\n`);
@@ -173,77 +196,57 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
 
   const displayKeyPropsDiscription = (description) => {
     const lines = description.split('<br>');
-    return lines.map((line, index) => <Text key={index} style={styles.tableCell}>{line}</Text>);
+    return lines[0];
   };
 
-  const getStyles = (classes, index) => ((index % 2 === 0)
-    ? { ...classes, ...styles.evenRow } : { ...classes });
-  const rows = keys.map((key, index) => (
-    <View style={getStyles(styles.row, index)} key={key}>
-      <View style={styles.tableCol}>
-        {node.properties[key].key ? (
-          <>
-            <View style={(String(key).length > 20) ? styles.tableColKey2 : styles.tableColKey1}>
-              <Text style={styles.key}>
-                {key}
-                {' '}
-                <Image style={styles.keyIcon} src={keyIcon} alt="key icon" />
-              </Text>
-            </View>
-          </>
-        ) : (
-          <Text style={styles.tableCell}>
-            {textContent(key, '_')}
-          </Text>
-        )}
-      </View>
-      <View style={styles.tableColType}>
-        {node.properties[key].enum ? (
-          <Text style={styles.tableCell}>
-            {'Acceptable Values: '}
-            {validateEnums(node.properties[key].enum)}
-          </Text>
-        ) : (
-          <Text style={styles.tableCell}>
-            {validateType(node.properties[key].type)}
-          </Text>
-        ) }
-      </View>
-      <View style={styles.tableColRequired}>
-        {required(key)}
-      </View>
-      <View style={styles.tableColDesc}>
-        {node.properties[key].key ? (
-          <>
-            {displayKeyPropsDiscription(node.properties[key].description)}
-          </>
-        ) : (
-          <Text style={styles.tableCell}>
-            {node.properties[key].description}
-          </Text>
-        )}
-      </View>
-      <View style={styles.tableColSource}>
-        <Text style={styles.tableCell}>{textContent(node.properties[key].src, '/')}</Text>
-      </View>
-    </View>
-  ));
+  const displayKeyPropsDescriptionBlurb = (description) => {
+    const lines = description.split('<br>');
+    return lines[1];
+  };
 
   return (
     <View>
       <View style={styles.test}>
         <Text style={styles.cellHeader}>DESCRIPTION</Text>
-        <Text style={{ ...styles.tableCell, ...styles.descriptionCell }}>
+        <View style={styles.tableColDesc}>
           {propInfo.key ? (
             <>
-              {displayKeyPropsDiscription(propInfo.description)}
+              <Text style={styles.tableCell}>
+                {displayKeyPropsDiscription(propInfo.description)}
+              </Text>
+
+              <Text style={styles.brText}>
+                {displayKeyPropsDescriptionBlurb(propInfo.description)}
+              </Text>
+              {
+            propInfo.labeled && (
+              <Text style={styles.labeledContainer}>
+                <Text style={styles.boldLabeled}>
+                  Displayed as:
+                </Text>
+                <Text style={styles.labeled}>{` ${propInfo.labeled}`}</Text>
+              </Text>
+            )
+          }
             </>
           ) : (
-            <Text style={{ ...styles.tableCell, ...styles.descriptionCell }}>
-              {propInfo.description}
-            </Text>
+            <>
+              <Text style={styles.tableCell}>
+                {propInfo.description}
+              </Text>
+              {
+              propInfo.labeled && (
+                <Text style={styles.labeledContainer}>
+                  <Text style={styles.boldLabeled}>
+                    Displayed as:
+                  </Text>
+                  <Text style={styles.labeled}>{` ${propInfo.labeled}`}</Text>
+                </Text>
+              )
+            }
+            </>
           )}
-        </Text>
+        </View>
       </View>
       <View style={styles.test}>
         <Text style={styles.cellHeader}>TYPE</Text>
@@ -261,9 +264,9 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
         </>
       </View>
       <View style={styles.horizontalCells}>
-        <Text style={styles.cellHeader}>REQUIRED</Text>
+        <Text style={styles.cellHorizontalHeader}>REQUIRED</Text>
         <Text
-          style={{ ...styles.horizontalTableCell, ...styles.rowCell }}
+          style={styles.horizontalTableCell}
         >
           {required(thisProperty)}
 

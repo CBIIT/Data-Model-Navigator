@@ -75,19 +75,18 @@ const FacetFilters = ({
   const sideBarContent = useSelector((state) => (
     state.submission
     && state.submission.checkbox
-  ? state.submission.checkbox : {
-    data: [],
-    defaultPanel: false,
-  }));
+      ? state.submission.checkbox : {
+        data: [],
+        defaultPanel: false,
+      }));
 
   const showCheckboxCount = useSelector((state) => (
     state.submission
           && state.submission.facetfilterConfig
       ? state.submission.facetfilterConfig.showCheckboxCount : 3));
-  
-  
+
   const [checkBoxCount, setCheckBoxCount] = useState(3);
-  
+
   useEffect(() => {
     setCheckBoxCount(showCheckboxCount);
   }, []);
@@ -124,15 +123,14 @@ const FacetFilters = ({
   };
 
   const displayAllSelection = (checkboxItems) => {
-    console.log(checkboxItems)
     let count = 0;
-    checkboxItems.forEach(item => {
-      if(item.isChecked) {
+    checkboxItems.forEach((item) => {
+      if (item.isChecked) {
         count += 1;
       }
     });
     setCheckBoxCount(count);
-  }
+  };
 
   const getGroupNameColor = (sideBarItem, currentSection) => {
     let groupNameColor = 'black';
@@ -146,7 +144,7 @@ const FacetFilters = ({
     );
     return groupNameColor;
   };
-  
+
   function getCheckBoxColor(index, currentSection) {
     return index % 2 ? facetSectionVariables[currentSection.sectionName] ? facetSectionVariables[currentSection.sectionName].checkBoxColorsTwo ? facetSectionVariables[currentSection.sectionName].checkBoxColorsTwo : '' : defaultFacetSectionVariables.checkBoxColorsTwo
       : facetSectionVariables[currentSection.sectionName] ? facetSectionVariables[currentSection.sectionName].checkBoxColorsOne ? facetSectionVariables[currentSection.sectionName].checkBoxColorsOne : '' : defaultFacetSectionVariables.checkBoxColorsOne;
@@ -172,7 +170,7 @@ const FacetFilters = ({
       name: item.name,
       datafield: item.datafield,
       isChecked: !item.isChecked,
-    }
+    };
     onClickBlankSpace();
     hidePropertyTable();
     onToggleCheckBox(toggleCheckBoxItem);
@@ -255,14 +253,14 @@ const FacetFilters = ({
 
   if (facetSectionVariables
       && Object.keys(facetSectionVariables).length === 0) {
-    return (<></>)
+    return (<></>);
   }
 
   const clearFilterHandler = () => {
     onClearAllFilter();
     onClickBlankSpace();
     hidePropertyTable();
-  }
+  };
 
   return (
     <>
@@ -349,45 +347,45 @@ const FacetFilters = ({
                           classes={{ root: classes.expansionPanelDetailsRoot }}
                         >
                           <List component="div" disablePadding dense>
-                          <div
-                            className={classes.sortGroup}
-                          >
-                            <span
-                              className={classes.sortGroupIcon}
+                            <div
+                              className={classes.sortGroup}
                             >
-                              <Icon
-                                style={{ fontSize: 10 }}
-                                onClick={() => { 
-                                  onClearGroupFilter(sideBarItem)
+                              <span
+                                className={classes.sortGroupIcon}
+                              >
+                                <Icon
+                                  style={{ fontSize: 10 }}
+                                  onClick={() => {
+                                    onClearGroupFilter(sideBarItem);
+                                  }}
+                                >
+                                  <img
+                                    src={resetIcon.src}
+                                    height={resetIcon.size}
+                                    width={resetIcon.size}
+                                    alt={resetIcon.alt}
+                                  />
+                                </Icon>
+                              </span>
+                              <span
+                                className={classes.sortGroupItem}
+                                style={{ color: getSortButtonColor(sideBarItem, 'alphabet') }}
+                                onClick={() => {
+                                  onSortSection(sideBarItem.datafield, 'alphabet');
                                 }}
                               >
-                                <img
-                                  src={resetIcon.src}
-                                  height={resetIcon.size}
-                                  width={resetIcon.size}
-                                  alt={resetIcon.alt}
-                                />
-                              </Icon>
-                            </span>
-                            <span
-                              className={classes.sortGroupItem}
-                              style={{ color: getSortButtonColor(sideBarItem, 'alphabet') }}
-                              onClick={() => {
-                                onSortSection(sideBarItem.datafield, 'alphabet');
-                              }}
-                            >
-                              {sortLabels.sortAlphabetically}
-                            </span>
-                            <span
-                              className={classes.sortGroupItemCounts}
-                              style={{ color: getSortButtonColor(sideBarItem, 'count') }}
-                              onClick={() => {
-                                onSortSection(sideBarItem.datafield, 'count');
-                              }}
-                            >
-                              {sortLabels.sortByCount}
-                            </span>
-                          </div>
+                                {sortLabels.sortAlphabetically}
+                              </span>
+                              <span
+                                className={classes.sortGroupItemCounts}
+                                style={{ color: getSortButtonColor(sideBarItem, 'count') }}
+                                onClick={() => {
+                                  onSortSection(sideBarItem.datafield, 'count');
+                                }}
+                              >
+                                {sortLabels.sortByCount}
+                              </span>
+                            </div>
                             {getCheckBoxView(sideBarItem, currentSection)}
                           </List>
                         </AccordionDetails>
