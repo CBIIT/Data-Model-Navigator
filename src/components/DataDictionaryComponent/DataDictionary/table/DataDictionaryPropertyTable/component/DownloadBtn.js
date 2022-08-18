@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import {
+  withStyles,
+  createTheme,
+  MuiThemeProvider,
+} from '@material-ui/core'
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -50,6 +54,16 @@ const MuiMenuItem = withStyles(() => ({
   },
 }))(MenuItem);
 
+const theme = {
+  overrides: {
+    MuiButton: {
+      '& .startIcon': {
+        margin: 'auto',
+      },
+    },
+  },
+};
+
 const DownloadButton = ({
   classes,
 }) => {
@@ -79,31 +93,33 @@ const DownloadButton = ({
   const options = fileTypes.map((item) => MenuItem(item));
 
   return (
-    <Box width="215px">
-      <Button
-        className={classes.downloadBtn}
-        startIcon={<ArrowDownward />}  
-      /> 
-      <Button
-        aria-controls="mui-menu"
-        variant="outlined"
-        onClick={clickHandler}
-        className={classes.displayBtn}
-        startIcon={<ExpandMoreIcon />}
-      >
-        <div className={classes.dropDownText}>
-          {label}
-        </div>
-      </Button>
-      <MuiMenu
-        anchorEl={anchorElement}
-        keepMounted
-        open={Boolean(anchorElement)}
-        onClose={closeHandler}
-      >
-        {options}
-      </MuiMenu>
-    </Box>
+    <MuiThemeProvider theme={createTheme(theme)}>
+      <Box width="210px">
+          <Button
+            className={classes.downloadBtn}
+            startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}  
+          />
+        <Button
+          aria-controls="mui-menu"
+          variant="outlined"
+          onClick={clickHandler}
+          className={classes.displayBtn}
+          startIcon={<ExpandMoreIcon />}
+        >
+          <div className={classes.dropDownText}>
+            {label}
+          </div>
+        </Button>
+        <MuiMenu
+          anchorEl={anchorElement}
+          keepMounted
+          open={Boolean(anchorElement)}
+          onClose={closeHandler}
+        >
+          {options}
+        </MuiMenu>
+      </Box>
+    </MuiThemeProvider>
   );
 };
 
@@ -143,8 +159,14 @@ const styles = () => ({
   },
   downloadBtn: {
     float: 'right',
-    marginBottom: '-10px'
-  }
+    marginBottom: '-20px',
+    height: '40px',
+    border: '1px solid',
+    width: '10px',
+  },
+  downloadIcon: {
+    marginLeft: '10px',
+  },
 });
 
 export default withStyles(styles, { withTheme: true })(DownloadButton);
