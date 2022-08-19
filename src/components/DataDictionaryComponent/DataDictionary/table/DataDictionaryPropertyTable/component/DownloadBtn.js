@@ -14,9 +14,8 @@ const fileTypes = ['JSON', 'TSV'];
 
 const MuiMenu = withStyles({
   paper: {
-    border: '2px solid #d3d4d5',
-    borderTop: '0',
-    width: '121px',
+    border: '2px solid #3283c8',
+    width: '125px',
     borderRadius: '0px',
     '& .MuiList': {
       marginTop: '0px',
@@ -25,7 +24,7 @@ const MuiMenu = withStyles({
   list: {
     paddingBottom: '0px',
     paddingTop: '0px',
-    marginTop: '5px',
+    marginTop: '0px',
   },
 })((props) => (
   <Menu
@@ -75,10 +74,13 @@ const theme = {
 
 const DownloadButton = ({
   classes,
+  data,
 }) => {
   const [anchorElement, setAnchorElement] = React.useState(null);
+  const [label, setLabel] = useState('DOWNLOADS');
 
   const clickHandler = (event) => {
+    setLabel('DOWNLOADS');
     setAnchorElement(event.currentTarget);
   };
 
@@ -86,11 +88,13 @@ const DownloadButton = ({
     setAnchorElement(null);
   };
 
-  const [label, setLabel] = useState('DOWNLOADS');
-
-  const setFileType = (value) => {
-    console.log(value);
+  const setFileType = (value) => {  
     setLabel(value);
+    setAnchorElement(null);
+  }
+
+  const downladFileHandler = () => {
+    console.log('download file ' + label);
   }
 
   const MenuItem = (type) => (
@@ -106,7 +110,8 @@ const DownloadButton = ({
       <Box className={classes.menu}>
         <Button
           className={classes.downloadBtn}
-          startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}  
+          startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}
+          onClick={downladFileHandler}
         />
         <Button
           aria-controls="mui-menu"
@@ -136,13 +141,14 @@ const styles = () => ({
   menu: {
     width: "160px",
     height: '40px',
-    border: '2.5px solid #C2C2C2',
+    border: '2.5px solid #3283c8',
     boxSizing: 'border-box',
-    backgroundColor: '#C1C1C1'
+    backgroundColor: '#C1C1C1',
+    borderRadius: '5px',
   },
   displayBtn: {
     width: '125px',
-    height: '36px',
+    height: '35px',
     boxSizing: 'border-box',
     // border: '2.5px solid #C2C2C2',
     backgroundColor: '#F2F3F3',
@@ -175,11 +181,13 @@ const styles = () => ({
   downloadBtn: {
     float: 'right',
     marginBottom: '-20px',
-    height: '38px',
+    height: '36px',
     width: '30px',
     backgroundColor: '#3283c8',
+    borderRadius: '0px',
   },
   downloadIcon: {
+    color: '#fff',
   },
   expandIcon: {
 
