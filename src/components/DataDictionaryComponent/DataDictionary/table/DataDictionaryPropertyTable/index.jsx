@@ -25,15 +25,18 @@ const DataDictionaryPropertyTable = ({
   requiredProperties,
   preferredProperties,
   isSearchMode,
+  title,
 }) => {
   const [display, setDisplay] = useState(false);
   const [items, setItems] = useState([]);
   const [matchedItem, setMatchedItems] = useState([]);
+  const [property, setProperty] = useState('');
 
-  const openBoxHandler = (values, typeMatchList = []) => {
+  const openBoxHandler = (values, typeMatchList = [], propertyKey) => {
     setDisplay(true);
     setItems(values);
     setMatchedItems(typeMatchList);
+    setProperty(propertyKey);
   };
 
   const closeHandler = () => {
@@ -73,6 +76,7 @@ const DataDictionaryPropertyTable = ({
             hideIsRequired={hideIsRequired}
             openBoxHandler={openBoxHandler}
             isSearchMode={isSearchMode}
+            title={title}
           />
         </tbody>
       </table>
@@ -86,6 +90,8 @@ const DataDictionaryPropertyTable = ({
         maxNoOfItemDlgBox={config.maxNoOfItemDlgBox}
         isSearchMode={isSearchMode}
         typeMatchList={matchedItem}
+        node={title}
+        property={property}
       />
       )}
     </div>

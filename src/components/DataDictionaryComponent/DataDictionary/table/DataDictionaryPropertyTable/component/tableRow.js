@@ -10,7 +10,7 @@ import ButtonComponent from './ButtonComponent';
 import KeyIconSvg from '../../../../assets/key_icon.svg';
 import { controlVocabConfig as config } from '../../../bento/dataDictionaryData';
 import '../DataDictionaryPropertyTable.css';
-import DownloadBtn from './DownloadBtn';
+import DownloadFileTypeBtn from './DownloadFileTypeBtn';
 
 const TableRow = ({
   classes,
@@ -24,6 +24,7 @@ const TableRow = ({
   hideIsRequired,
   openBoxHandler,
   isSearchMode,
+  title,
 }) => {
   const required = (requiredFlag, preferredFlag) => (
     <span className={requiredFlag ? classes.required : ''}>
@@ -145,11 +146,16 @@ const TableRow = ({
                       && (
                         <ButtonComponent
                           label="...show more"
-                          openHandler={() => openBoxHandler(enums, typeMatchList)}
+                          openHandler={() => openBoxHandler(enums, typeMatchList, propertyKey)}
                         />
                       )}
                     <br />
-                    <DownloadBtn />
+                    <DownloadFileTypeBtn
+                      data={enums}
+                      node={title}
+                      propertyKey={propertyKey}
+                    />
+                    <br />
                   </>
                 ) : (
                   <>

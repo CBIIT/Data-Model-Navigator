@@ -9,13 +9,19 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {ArrowDownward, ExpandMore as ExpandMoreIcon} from '@material-ui/icons';
 import { Box } from '@material-ui/core';
+import { saveAs } from 'file-saver';
+import { capitalizeFirstLetter, createFileName } from '../../../../utils';
 
-const fileTypes = ['JSON', 'TSV'];
+const DOWNLOADS = 'DOWNLOADS';
+const filePerfix = 'ICDC_Controlled_Vocabulary-';
+const FILE_TYPE_JSON = 'JSON';
+const FILE_TYPE_TSV = 'TSV';
+const fileTypes = [FILE_TYPE_JSON, FILE_TYPE_TSV];
 
 const MuiMenu = withStyles({
   paper: {
     border: '2px solid #3283c8',
-    width: '125px',
+    width: '106px',
     borderRadius: '0px',
     '& .MuiList': {
       marginTop: '0px',
@@ -72,9 +78,11 @@ const theme = {
   },
 };
 
-const DownloadButton = ({
+const DownloadFileTypeBtn = ({
   classes,
   data,
+  node,
+  propertyKey,
 }) => {
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [label, setLabel] = useState('DOWNLOADS');
@@ -93,8 +101,39 @@ const DownloadButton = ({
     setAnchorElement(null);
   }
 
+  const downloadJSONFile = () => {
+    const jsonData = JSON.stringify(data);
+    const exportData = new Blob([jsonData], {type: "application/json"});
+    const nodeTitle = capitalizeFirstLetter(node);
+    const fileName = createFileName(`${nodeTitle}-${propertyKey}`, filePerfix);
+    saveAs(exportData, `${fileName}.json`);
+  }
+
+  const downloadTSVFile = () => {
+    let content = '';
+    if (data && data.length) {
+      data.forEach((item) => {
+        content += `${'\t'}${item}`;
+      });
+    }
+    const nodeTitle = capitalizeFirstLetter(node);
+    const fileName = createFileName(`${nodeTitle}-${propertyKey}`, filePerfix);
+    const exportData = new Blob([content], { type: 'data:text/tab-separated-values' });
+    saveAs(exportData, `${fileName}.tsv`);
+
+  }
+
+  const downloadFile = () => {
+    if (label === FILE_TYPE_JSON) {
+      downloadJSONFile();
+    }
+    if (label === FILE_TYPE_TSV) {
+      downloadTSVFile();
+    }
+  };
+
   const downladFileHandler = () => {
-    console.log('download file ' + label);
+    downloadFile();
   }
 
   const MenuItem = (type) => (
@@ -109,11 +148,14 @@ const DownloadButton = ({
     <MuiThemeProvider theme={createTheme(theme)}>
       <Box className={classes.menu}>
         <Button
+          disableRipple
+          disabled={DOWNLOADS === label}
           className={classes.downloadBtn}
           startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}
           onClick={downladFileHandler}
         />
         <Button
+          disableRipple
           aria-controls="mui-menu"
           variant="outlined"
           onClick={clickHandler}
@@ -139,18 +181,18 @@ const DownloadButton = ({
 
 const styles = () => ({
   menu: {
-    width: "160px",
-    height: '40px',
+    width: "138px",
+    height: '33px',
     border: '2.5px solid #3283c8',
     boxSizing: 'border-box',
     backgroundColor: '#C1C1C1',
     borderRadius: '5px',
+    float: 'left',
   },
   displayBtn: {
-    width: '125px',
-    height: '35px',
+    width: '106px',
+    height: '28px',
     boxSizing: 'border-box',
-    // border: '2.5px solid #C2C2C2',
     backgroundColor: '#F2F3F3',
     textTransform: 'none',
     padding: '7px',
@@ -158,11 +200,12 @@ const styles = () => ({
     float: 'left',
     '&:hover': {
       cursor: 'pointer',
+      backgroundColor: '#F2F3F3',
     },
   },
   dropDownText: {
     lineHeight: '1.05',
-    fontSize: '12px',
+    fontSize: '11px',
     fontFamily: 'Open Sans',
     fontWeight: '600',
     color: '#525252',
@@ -174,17 +217,21 @@ const styles = () => ({
     color: '#DC762F',
   },
   menuItem: {
-    fontSize: '12px',
+    fontSize: '11px',
     fontWeight: '700',
-    paddingLeft: '25px',
+    paddingLeft: '22px',
   },
   downloadBtn: {
     float: 'right',
     marginBottom: '-20px',
-    height: '36px',
-    width: '30px',
+    height: '29px',
+    width: '27px',
     backgroundColor: '#3283c8',
     borderRadius: '0px',
+    paddingLeft: '8px',
+    '&:hover': {
+      backgroundColor: '#3283c8',
+    },
   },
   downloadIcon: {
     color: '#fff',
@@ -194,4 +241,4 @@ const styles = () => ({
   },
 });
 
-export default withStyles(styles, { withTheme: true })(DownloadButton);
+export default withStyles(styles, { withTheme: true })(DownloadFileTypeBtn);
