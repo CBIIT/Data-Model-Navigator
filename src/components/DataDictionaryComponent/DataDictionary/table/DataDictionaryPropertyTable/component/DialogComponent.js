@@ -156,7 +156,7 @@ const styles = () => ({
     color: '#0d71a3',
   },
   closeBtn: {
-    width: '200px',
+    width: '225px',
     padding: '20px',
     textAlign: 'right',
     float: 'right',

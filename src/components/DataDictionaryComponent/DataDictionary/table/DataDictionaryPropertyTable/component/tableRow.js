@@ -155,7 +155,7 @@ const TableRow = ({
                       node={title}
                       propertyKey={propertyKey}
                     />
-                    <br />
+                    <br/><br/>
                   </>
                 ) : (
                   <>

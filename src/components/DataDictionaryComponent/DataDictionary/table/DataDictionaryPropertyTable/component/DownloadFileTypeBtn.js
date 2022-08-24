@@ -20,8 +20,8 @@ const fileTypes = [FILE_TYPE_JSON, FILE_TYPE_TSV];
 
 const MuiMenu = withStyles({
   paper: {
-    border: '2px solid #3283c8',
-    width: '106px',
+    border: '1px solid #0D71A3',
+    width: '104px',
     borderRadius: '0px',
     '& .MuiList': {
       marginTop: '0px',
@@ -181,34 +181,35 @@ const DownloadFileTypeBtn = ({
 
 const styles = () => ({
   menu: {
-    width: "138px",
-    height: '33px',
-    border: '2.5px solid #3283c8',
+    width: "133px",
+    height: '30px',
+    border: '1px solid #0D71A3',
     boxSizing: 'border-box',
-    backgroundColor: '#C1C1C1',
+    backgroundColor: '#0D71A3',
     borderRadius: '5px',
     float: 'left',
   },
   displayBtn: {
-    width: '106px',
+    width: '103px',
     height: '28px',
     boxSizing: 'border-box',
-    backgroundColor: '#F2F3F3',
+    color: '#0d71a3',
+    backgroundColor: '#F2F1F1',
     textTransform: 'none',
     padding: '7px',
     marginRight: '0',
     float: 'left',
     '&:hover': {
       cursor: 'pointer',
-      backgroundColor: '#F2F3F3',
+      backgroundColor: '#F2F1F1',
     },
   },
   dropDownText: {
     lineHeight: '1.05',
-    fontSize: '11px',
+    fontSize: '10px',
     fontFamily: 'Open Sans',
     fontWeight: '600',
-    color: '#525252',
+    color: '#0d71a3',
     textAlign: 'left',
     position: 'relative',
   },
@@ -217,24 +218,26 @@ const styles = () => ({
     color: '#DC762F',
   },
   menuItem: {
-    fontSize: '11px',
+    fontSize: '10px',
     fontWeight: '700',
     paddingLeft: '22px',
+    color: '#0d71a3',
   },
   downloadBtn: {
     float: 'right',
     marginBottom: '-20px',
-    height: '29px',
-    width: '27px',
-    backgroundColor: '#3283c8',
+    height: '27px',
+    width: '28px',
+    backgroundColor: '#0D71A3',
     borderRadius: '0px',
     paddingLeft: '8px',
     '&:hover': {
-      backgroundColor: '#3283c8',
+      backgroundColor: '#0D71A3',
     },
   },
   downloadIcon: {
     color: '#fff',
+    fontSize: '18px',
   },
   expandIcon: {
 
