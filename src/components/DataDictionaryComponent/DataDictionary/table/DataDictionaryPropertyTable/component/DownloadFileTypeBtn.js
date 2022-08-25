@@ -15,6 +15,8 @@ import { capitalizeFirstLetter, createFileName } from '../../../../utils';
 const DOWNLOADS = 'DOWNLOADS';
 const filePerfix = 'ICDC_Controlled_Vocabulary-';
 const FILE_TYPE_JSON = 'JSON';
+const CONTENT_TYPE_JSON = 'application/json';
+const CONTENT_TYPE_TSV = 'data:text/tab-separated-values';
 const FILE_TYPE_TSV = 'TSV';
 const fileTypes = [FILE_TYPE_JSON, FILE_TYPE_TSV];
 
@@ -101,44 +103,32 @@ const DownloadFileTypeBtn = ({
     setAnchorElement(null);
   }
 
-  const downloadJSONFile = () => {
-    const jsonData = JSON.stringify(data);
-    const exportData = new Blob([jsonData], {type: "application/json"});
+  const download = (data, fileType, contentType) => {
+    const exportData = new Blob([data], {type: contentType});
     const nodeTitle = capitalizeFirstLetter(node);
     const fileName = createFileName(`${nodeTitle}-${propertyKey}`, filePerfix);
-    saveAs(exportData, `${fileName}.json`);
+    saveAs(exportData, `${fileName}.${fileType.toLowerCase()}`);
   }
 
-  const downloadTSVFile = () => {
-    let content = '';
-    if (data && data.length) {
-      data.forEach((item) => {
-        content += `${'\t'}${item}`;
-      });
-    }
-    const nodeTitle = capitalizeFirstLetter(node);
-    const fileName = createFileName(`${nodeTitle}-${propertyKey}`, filePerfix);
-    const exportData = new Blob([content], { type: 'data:text/tab-separated-values' });
-    saveAs(exportData, `${fileName}.tsv`);
-
-  }
-
-  const downloadFile = () => {
+  const downladFile = () => {
     if (label === FILE_TYPE_JSON) {
-      downloadJSONFile();
+      const jsonData = JSON.stringify(data);
+      download(jsonData, FILE_TYPE_JSON, CONTENT_TYPE_JSON);
     }
     if (label === FILE_TYPE_TSV) {
-      downloadTSVFile();
+      let content = '';
+      if (data && data.length) {
+        data.forEach((item, index) => {
+          content += (index == 0) ? item : `${'\t'}${item}`;
+        });
+      }
+      download(content, FILE_TYPE_TSV, CONTENT_TYPE_TSV);
     }
-  };
-
-  const downladFileHandler = () => {
-    downloadFile();
   }
 
   const MenuItem = (type) => (
-    <MuiMenuItem className={classes.menuItem} onClick={() => setFileType(type)}>
-      {type}
+    <MuiMenuItem className={classes.menuItem} onClick={() => setFileType(type.toUpperCase())}>
+      {type.toUpperCase()}
     </MuiMenuItem>
   );
   
@@ -152,7 +142,7 @@ const DownloadFileTypeBtn = ({
           disabled={DOWNLOADS === label}
           className={classes.downloadBtn}
           startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}
-          onClick={downladFileHandler}
+          onClick={downladFile}
         />
         <Button
           disableRipple
@@ -238,9 +228,6 @@ const styles = () => ({
   downloadIcon: {
     color: '#fff',
     fontSize: '18px',
-  },
-  expandIcon: {
-
   },
 });
 
