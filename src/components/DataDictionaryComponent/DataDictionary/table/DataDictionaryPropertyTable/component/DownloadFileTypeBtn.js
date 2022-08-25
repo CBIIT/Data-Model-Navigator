@@ -23,7 +23,7 @@ const fileTypes = [FILE_TYPE_JSON, FILE_TYPE_TSV];
 const MuiMenu = withStyles({
   paper: {
     border: '1px solid #0D71A3',
-    width: '104px',
+    width: '105px',
     borderRadius: '0px',
     '& .MuiList': {
       marginTop: '0px',
@@ -212,6 +212,12 @@ const styles = () => ({
     fontWeight: '700',
     paddingLeft: '22px',
     color: '#0d71a3',
+    '&:last-child': {
+      backgroundColor: '#CBE2EE',
+      '&:hover': {
+        backgroundColor: '#CBE2EE',
+      },
+    },
   },
   downloadBtn: {
     float: 'right',
