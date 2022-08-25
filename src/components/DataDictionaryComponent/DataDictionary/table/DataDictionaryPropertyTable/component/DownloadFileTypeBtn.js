@@ -127,8 +127,8 @@ const DownloadFileTypeBtn = ({
   }
 
   const MenuItem = (type) => (
-    <MuiMenuItem className={classes.menuItem} onClick={() => setFileType(type.toUpperCase())}>
-      {type.toUpperCase()}
+    <MuiMenuItem className={classes.menuItem} onClick={() => setFileType(type)}>
+      {type}
     </MuiMenuItem>
   );
   
