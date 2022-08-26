@@ -13,6 +13,8 @@ import ReduxDataDictionary from '../components/DataDictionaryComponent/DataDicti
 // import { ModelExplorer } from '../index';
 import { filterConfig } from '../components/DataDictionaryComponent/DataDictionary/bento/dataDictionaryData';
 
+import { CustomThemeProvider } from './ThemeContext';
+
 const nihLogoImg = {
   height: '54px',
   width: '463px',
@@ -272,8 +274,10 @@ const ModelExplorer = () => {
 storiesOf('Data Explorer', module)
   .add('Explorer', () =>
   (
-    <Provider store={store}>
-      <ModelExplorer  />
-    </Provider>
+    <CustomThemeProvider>
+      <Provider store={store}>
+        <ModelExplorer  />
+      </Provider>
+    </CustomThemeProvider>
   )
 );

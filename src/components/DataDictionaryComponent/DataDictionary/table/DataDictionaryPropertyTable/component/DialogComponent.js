@@ -11,6 +11,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import ListComponent from './ListComponent';
 import ButtonComponent from './ButtonComponent';
+import DownloadFileTypeBtn from './DownloadFileTypeBtn';
 
 const theme = {
   overrides: {
@@ -63,6 +64,8 @@ const DialogComponent = ({
   maxNoOfItemDlgBox,
   isSearchMode,
   typeMatchList,
+  node,
+  property,
 }) => {
   const [open, setOpen] = useState(display);
   const [expand, setExpand] = useState(false);
@@ -99,11 +102,16 @@ const DialogComponent = ({
       >
         <div className={classes.titleContent}>
           <div item xs={1} className={classes.closeBtn}>
+            <DownloadFileTypeBtn
+              data={items}
+              node={node}
+              propertyKey={property}
+            />
             <IconButton
               onClick={closeHandler}
             >
               <CloseIcon
-                fontSize="small"
+                fontSize="small" 
               />
             </IconButton>
           </div>
@@ -148,6 +156,7 @@ const styles = () => ({
     color: '#0d71a3',
   },
   closeBtn: {
+    width: '225px',
     padding: '20px',
     textAlign: 'right',
     float: 'right',
@@ -159,3 +168,5 @@ DialogComponent.defaultProps = {
 };
 
 export default withStyles(styles)(DialogComponent);
+
+
