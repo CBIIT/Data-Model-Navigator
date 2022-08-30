@@ -117,7 +117,7 @@ const DialogComponent = ({
           </div>
           <div>
             <span className={classes.title}>
-              Acceptable Value
+              Acceptable Values
             </span>
           </div>
         </div>
