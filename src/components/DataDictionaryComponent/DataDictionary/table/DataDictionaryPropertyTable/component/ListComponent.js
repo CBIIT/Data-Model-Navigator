@@ -190,7 +190,7 @@ const ListComponent = ({
         {items.map((item, index) => (
           <>
             {/* apply different style when text is greater than 30 character on particular index */}
-            {(item.length > 30) && (meanIndex(items.length) - 1 === index
+            {(item.length > 30 && !expand) && (meanIndex(items.length) - 1 === index
             || meanIndex(items.length) === index) ? (
               <>
                 <div className={classes.longText} id={item.length}>

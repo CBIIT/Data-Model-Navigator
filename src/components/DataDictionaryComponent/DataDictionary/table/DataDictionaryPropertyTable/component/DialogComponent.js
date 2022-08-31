@@ -24,7 +24,7 @@ const theme = {
         overflowY: 'hidden',
       },
       paperScrollPaper: {
-        maxHeight: '510px',
+        maxHeight: '575px',
       },
     },
     MuiDialogContent: {
@@ -117,7 +117,7 @@ const DialogComponent = ({
           </div>
           <div>
             <span className={classes.title}>
-              Acceptable Value
+              Acceptable Values
             </span>
           </div>
         </div>

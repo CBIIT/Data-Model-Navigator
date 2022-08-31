@@ -119,7 +119,7 @@ const DownloadFileTypeBtn = ({
       let content = '';
       if (data && data.length) {
         data.forEach((item, index) => {
-          content += (index == 0) ? item : `${'\t'}${item}`;
+          content += (index == 0) ? item : `${'\n'}${item}`;
         });
       }
       download(content, FILE_TYPE_TSV, CONTENT_TYPE_TSV);
