@@ -24,7 +24,7 @@ const theme = {
         overflowY: 'hidden',
       },
       paperScrollPaper: {
-        maxHeight: '510px',
+        maxHeight: '575px',
       },
     },
     MuiDialogContent: {
