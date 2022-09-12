@@ -8,6 +8,7 @@ import { capitalizeFirstLetter, createFileName } from '../../../../utils';
 import IconDownloadPDF from '../../icons/icon_download_PDF.svg';
 import IconDownloadPTSV from '../../icons/icon_download_TSV.svg';
 import DownloadButton from '../../../NodePDF/DownloadButton';
+import { fileManifestDownloadSettings as defaultConfig } from '../../../../../../config/file-manifest-config';
 import {
   getNodeDescriptionFragment,
   getNodeTitleFragment,
@@ -20,12 +21,17 @@ const NodeViewComponent = ({
   isSearchMode,
   matchedResult,
   pdfDownloadConfig,
+  fileManifestConfig,
 }) => {
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
     fileType: 'tsv',
     prefix: 'ICDC_Data_Loading_Template-',
   };
+
+  const isFileManifest = node.id === 'file';
+  const isTemplate = node.template === 'Yes';
+  const fileManifestDownloadSettings = fileManifestConfig || defaultConfig;
 
   const getTitle = () => {
     if (isSearchMode) {
@@ -116,13 +122,16 @@ const NodeViewComponent = ({
           </div>
           <div className={classes.buttonWrap}>
             {
-              (node.template === 'Yes')
+              (isTemplate || isFileManifest)
               && (
               <DownloadButton
                 config={csvBtnDownloadConfig}
                 documentData={node}
                 template={node.template}
-                fileName={createFileName(node.id, csvBtnDownloadConfig.prefix)}
+                isFileManifest={isFileManifest}
+                fileName={isFileManifest
+                  ? createFileName('', fileManifestDownloadSettings.filename_prefix)
+                  : createFileName(node.id, csvBtnDownloadConfig.prefix)}
               />
               )
             }

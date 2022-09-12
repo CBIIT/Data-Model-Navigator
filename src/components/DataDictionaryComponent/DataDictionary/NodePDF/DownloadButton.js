@@ -10,12 +10,14 @@ import { pdf } from '@react-pdf/renderer';
 import { cn } from 'bento-components';
 import PdfDocument from './Pdf';
 import LandscapePDFDoc from '../LandscapeNodePDF/Pdf';
+import { fileManifestDownload } from '../../../../config/file-manifest-config';
 
 const DownloadButton = ({
   classes,
   config,
   documentData,
   fileName,
+  isFileManifest,
 }) => {
   const [isLoading, setLoading] = React.useState(false);
   const theme = createTheme({
@@ -32,16 +34,40 @@ const DownloadButton = ({
     },
   });
 
-  const convertToTSV = (node) => {
+  const tsvMiddleware = (node) => {
     let line = 'type';
     const { links } = node;
+
+    console.log('log links', links);
     if (links && links.length) {
       links.forEach((c) => {
+        console.log('log c-genType', c.generatedType);
         if (c.targetId && String(c.generatedType).toLowerCase() !== 'loader-generated') {
           line += `${'\t'} ${c.target_type}.${c.targetId}`;
         }
       });
     }
+
+    return line;
+  };
+
+  const generateFileManifest = (node) => {
+    let line = tsvMiddleware(node);
+
+    const arr = Object.entries(node.properties);
+    const mergedArr = arr.concat(fileManifestDownload);
+    mergedArr.forEach(([key, value]) => {
+      if (value.src !== 'Loader-derived') {
+        line += ('\t').concat(`${key}`);
+      }
+    });
+
+    const text = `${line}\r\n${node.title}`;
+    return text;
+  };
+
+  const convertToTSV = (node) => {
+    let line = tsvMiddleware(node);
     Object.keys(node.properties).forEach((key) => {
       line += ('\t').concat(`${key}`);
     });
@@ -66,7 +92,7 @@ const DownloadButton = ({
   };
 
   const downloadTsv = () => {
-    const tsv = convertToTSV(documentData);
+    const tsv = isFileManifest ? generateFileManifest(documentData) : convertToTSV(documentData);
     const exportData = new Blob([tsv], { type: 'data:text/tab-separated-values' });
     saveAs(exportData, `${fileName}.tsv`);
   };
