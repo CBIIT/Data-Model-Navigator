@@ -38,10 +38,8 @@ const DownloadButton = ({
     let line = 'type';
     const { links } = node;
 
-    console.log('log links', links);
     if (links && links.length) {
       links.forEach((c) => {
-        console.log('log c-genType', c.generatedType);
         if (c.targetId && String(c.generatedType).toLowerCase() !== 'loader-generated') {
           line += `${'\t'} ${c.target_type}.${c.targetId}`;
         }
