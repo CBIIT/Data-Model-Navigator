@@ -1,11 +1,11 @@
 export default () => ({
-  category : {
+  category: {
     marginTop: '20px',
     borderTop: '1px solid var(--dictionary-border-color)',
     border: '1px solid var(--dictionary-border-color)',
   },
-  
-  categoryHead : {
+
+  categoryHead: {
     background: '#fff',
     paddingTop: '6px',
     paddingBottom: '6px',
@@ -16,21 +16,21 @@ export default () => ({
     borderLeft: '5px solid var(--dictionary-border-color)',
     /* box-shadow: inset -2px -4px 0 -2px var(--dictionary-border-color)', */
   },
-  
+
   categoryDivider: {
     height: '4px',
     display: 'block',
     backgroundColor: '#e7e5e5',
     borderLeft: '5px solid var(--dictionary-border-color)',
   },
-  
-  downloadTemplate : {
+
+  downloadTemplate: {
     float: 'right',
     marginRight: '4px',
   },
-  
-  categoryIcon : {
+
+  categoryIcon: {
     verticalAlign: 'middle',
     marginRight: '10px',
-  }
+  },
 });
