@@ -43,6 +43,12 @@ class NodePopup extends React.Component {
       };
     const popupTop = svgBoundingBox.bottom - bodyRect.top;
 
+    const getNodeTitle = (names) => {
+      if (names && names.length > 0) {
+        return names.join('').replace('-', '').concat(':');
+      }
+    };
+
     return (
       <div
         className={classes.popup}
@@ -56,6 +62,11 @@ class NodePopup extends React.Component {
             <div className={classes.wrapper}>
               <div className={classes.content}>
                 <ul className={classes.list}>
+                  <li className={classes.nodeTitle}>
+                    <span>
+                      {getNodeTitle(highlightingNode.names)}
+                    </span>
+                  </li>
                   <li className={classes.listItem}>
                     <span className={classes.listItemLabel}>
                       {'Assignment: '}
