@@ -49,6 +49,15 @@ export default () => ({
     color: '#0077c1',
     fontWeight: '900',
   },
+  nodeTitle: {
+    textAlign: 'left',
+    marginLeft: '15px',
+    fontSize: '15px',
+    lineHeight: '18px',
+    fontWeight: '900',
+    marginBottom: '5px',
+    color: 'var(--g3-color__black)',
+  },
   listItemLabel: {
     fontWeight: '900',
     color: '#6c6c6c',
