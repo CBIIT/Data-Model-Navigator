@@ -51,7 +51,7 @@ export default () => ({
   nodeTitle: {
     textAlign: 'left',
     marginLeft: '15px',
-    fontSize: '12px',
+    fontSize: '14px',
     lineHeight: '18px',
     fontWeight: '600',
     marginBottom: '5px',
