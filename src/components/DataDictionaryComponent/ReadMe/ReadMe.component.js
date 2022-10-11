@@ -9,39 +9,39 @@ import {
 } from '@material-ui/core';
 import { ArrowDownward } from '@material-ui/icons';
 import CloseIcon from '@material-ui/icons/Close';
+import ReactMarkdown from 'react-markdown'
 import styles from './ReadMe.style';
 import CustomTheme from './ReadMe.theme.config';
 
 const ReadMeDialogComponent = ({
   classes,
   display,
+  displayReadMeDialog,
+  content,
 }) => {
-  const [open, setOpen] = useState(display);
-  useEffect(() => {
-    console.log('display true')
-    setOpen(display);
-  }, [display]);
-
-  const closeHandler = () => {
-    console.log('close');
-    setOpen(false);
-  }
 
   const downladFile = () => {
     console.log('download files');
   }
-
+  console.log(content);
   return (
     <CustomTheme>
       <Dialog
-      open={open}
-      onClose={closeHandler}
+      open={display}
+      onClose={displayReadMeDialog}
+      maxWidth="md"
+      className={classes.dialogBox}
       BackdropProps={{
         timeout: 500,
       }}
       BackdropComponent={Backdrop}
       >
        <div className={classes.titleContent}>
+          <div className={classes.title}>
+            <span>
+              Understanding the ICDC Data Model
+            </span>
+          </div>
           <div item xs={1} className={classes.closeBtn}>
             <Button
               className={classes.downloadBtn}
@@ -49,18 +49,19 @@ const ReadMeDialogComponent = ({
               onClick={downladFile}
             />
             <IconButton
-              onClick={closeHandler}
+              onClick={displayReadMeDialog}
             >
               <CloseIcon
-                fontSize="small" 
+                fontSize="small"
+                className={classes.closeBtn}
               />
             </IconButton>
           </div>
-          <div>
-            <span className={classes.title}>
-              Acceptable Values
-            </span>
-          </div>
+        </div>
+        <div className={classes.content}>
+          <ReactMarkdown>
+            {content}
+          </ReactMarkdown>
         </div>
       </Dialog>
     </CustomTheme>

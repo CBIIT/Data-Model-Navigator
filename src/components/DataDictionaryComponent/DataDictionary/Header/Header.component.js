@@ -5,29 +5,29 @@ import {
 } from '@material-ui/core';
 import styles from './Header.style';
 import CustomTheme from './Header.theme.config';
-import ReadMeComponent from '../../ReadMe/ReadMe.component';
+import ReadMeComponent from '../../ReadMe/ReadMe.controller';
 
 const HeaderComponent = ({
   classes,
 }) => {
   
   const [displayReadMe, setDisplayReadMe] = useState(false);
-  const openReadMeHandler = () => {
-    console.log('openReadMeHandler');
-    setDisplayReadMe(true);
-  };    
+  const displayReadMeHandler = () => {
+    setDisplayReadMe(!displayReadMe);
+  }
 
   return (
     <div>
       <CustomTheme>
         <div>
-            <Button color="primary" onClick={openReadMeHandler}>
+            <Button color="primary" onClick={displayReadMeHandler}>
                 ReadMe
             </Button>
         </div>
       </CustomTheme>
       <ReadMeComponent
         display={displayReadMe}
+        displayReadMeDialog={displayReadMeHandler}
       />
     </div>
   );

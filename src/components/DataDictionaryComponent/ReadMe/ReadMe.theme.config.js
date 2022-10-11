@@ -17,6 +17,9 @@ export default ({
         paperScrollPaper: {
           maxHeight: '575px',
         },
+        paperWidthMd: {
+          minWidth: '750px',
+        }
       },
       MuiDialogContent: {
         root: {
@@ -27,6 +30,15 @@ export default ({
         root: {
           backgroundColor: '#4a4a4a52',
         },
+      },
+      MuiButton: {
+        root: {
+          minWidth: '24px',
+        },
+        startIcon: {
+          marginRight: '0',
+          marginLeft: '0',
+        }
       },
       MuiIconButton: {
         root: {

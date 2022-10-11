@@ -1,29 +1,28 @@
 export default () => ({
+  dialogBox: {
+    minWidth: '750px',
+  },
   titleContent: {
     width: '100%',
   },
   title: {
-    paddingLeft: '20px',
     fontSize: '18px',
     marginTop: '20px',
     display: 'inherit',
-    fontWeight: '600',
+    fontWeight: '500',
     color: '#0d71a3',
+    float: 'left',
   },
   closeBtn: {
-    width: '225px',
-    padding: '20px',
+    padding: '5px',
     textAlign: 'right',
-    float: 'right',
   },
   downloadBtn: {
-    float: 'right',
-    marginBottom: '-20px',
     height: '27px',
-    width: '27px',
     backgroundColor: '#0D71A3',
-    borderRadius: '0px',
-    paddingLeft: '8px',
+    borderRadius: '5px',
+    marginBottom: '-10px',
+    marginRight: '7px',
     '&:hover': {
       backgroundColor: '#0D71A3',
     },
@@ -32,4 +31,14 @@ export default () => ({
     color: '#fff',
     fontSize: '18px',
   },
+  content: {
+    '& h1, h2, h3, h4, h5': {
+      color: '#000000',
+      marginBottom: '0px',
+    },
+    '& p': {
+      marginTop: '5px',
+      marginBottom: '20px',
+    }
+  }
 });
