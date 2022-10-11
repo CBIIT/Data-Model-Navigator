@@ -15,7 +15,7 @@ export default ({
           overflowY: 'hidden',
         },
         paperScrollPaper: {
-          maxHeight: '575px',
+          maxHeight: '650px',
         },
         paperWidthMd: {
           minWidth: '750px',

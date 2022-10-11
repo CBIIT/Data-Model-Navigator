@@ -1,9 +1,11 @@
 export default () => ({
   dialogBox: {
     minWidth: '750px',
+    overflowY: 'scroll',
   },
   titleContent: {
     width: '100%',
+    marginBottom: '15px',
   },
   title: {
     fontSize: '18px',
@@ -32,13 +34,21 @@ export default () => ({
     fontSize: '18px',
   },
   content: {
+    height: '700px',
+    overflowY: 'scroll',
+    paddingRight: '20px',
+    paddingLeft: '25px',
     '& h1, h2, h3, h4, h5': {
       color: '#000000',
       marginBottom: '0px',
+      fontWeight: '700',
+      lineHeight: '40px',
     },
     '& p': {
       marginTop: '5px',
       marginBottom: '20px',
-    }
-  }
+      fontSize: '14px',
+      fontWeight: '300',
+    },
+  },
 });
