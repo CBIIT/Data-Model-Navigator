@@ -18,6 +18,7 @@ const ReadMeDialogComponent = ({
   display,
   displayReadMeDialog,
   content,
+  title,
 }) => {
 
   const downladFile = () => {
@@ -39,7 +40,7 @@ const ReadMeDialogComponent = ({
        <div className={classes.titleContent}>
           <div className={classes.title}>
             <span>
-              Understanding the ICDC Data Model
+              {title}
             </span>
           </div>
           <div item xs={1} className={classes.closeBtn}>

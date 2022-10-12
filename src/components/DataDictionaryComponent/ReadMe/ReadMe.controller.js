@@ -34,6 +34,7 @@ const ReadMeController = ({
         display={display}
         displayReadMeDialog={displayReadMeDialog}
         content={content}
+        title={config.readMeTitle}
       />
     </>
   );

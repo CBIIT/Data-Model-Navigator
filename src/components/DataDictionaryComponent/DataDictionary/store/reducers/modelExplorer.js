@@ -132,6 +132,7 @@ const moduleReducers = (state = initialState, action) => {
         subjectCountObject: filtered,
         facetfilterConfig: filterConfig,
         readMeConfig: payload.readMeConfig,
+        ctrlVocabConfig: payload.ctrlVocabConfig,
         checkbox: {
           data: setSubjectCount(filterConfig.facetSearchData, filtered.subjectCounts),
         },

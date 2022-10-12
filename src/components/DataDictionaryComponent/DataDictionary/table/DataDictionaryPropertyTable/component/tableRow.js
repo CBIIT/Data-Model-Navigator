@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getPropertyNameFragment,
   getPropertyDescriptionFragment,
@@ -8,7 +9,7 @@ import {
 import ListComponent from './ListComponent';
 import ButtonComponent from './ButtonComponent';
 import KeyIconSvg from '../../../../assets/key_icon.svg';
-import { controlVocabConfig as config } from '../../../bento/dataDictionaryData';
+import { controlVocabConfig as ctrlConfig } from '../../../bento/dataDictionaryData';
 import '../DataDictionaryPropertyTable.css';
 import DownloadFileTypeBtn from './DownloadFileTypeBtn';
 
@@ -26,6 +27,9 @@ const TableRow = ({
   isSearchMode,
   title,
 }) => {
+
+  const config = useSelector((state) => (state.submission && state.submission.ctrlVocabConfig
+    ? state.submission.ctrlVocabConfig : ctrlConfig));
   const required = (requiredFlag, preferredFlag) => (
     <span className={requiredFlag ? classes.required : ''}>
       { requiredFlag ? 'Required' : preferredFlag ? 'Preferred' : 'Optional' }
