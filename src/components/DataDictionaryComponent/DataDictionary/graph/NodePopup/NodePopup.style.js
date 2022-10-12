@@ -10,8 +10,8 @@ export default () => ({
     padding: '10px 0',
     left: '-112px', /* tooltipWidth / 2 */
     width: '220px', /* tooltipWidth = 240 */
-    top: '5px',
-    border: '2px solid #c9c9c9',
+    top: '12px',
+    border: '2px solid #6060608f',
     borderRadius: '8px',
   },
   arrow: {
@@ -22,7 +22,7 @@ export default () => ({
     left: 'calc(50% - 10px)',
     borderLeft: '10px solid transparent',
     borderRight: '10px solid transparent',
-    borderBottom: '9px solid #c9c9c9', /* gap = 10px */
+    borderBottom: '9px solid #6060608f', /* gap = 10px */
   },
   arrowInner: {
     top: '-9px',
@@ -47,31 +47,31 @@ export default () => ({
     fontSize: '12px',
     lineHeight: '18px',
     color: '#0077c1',
-    fontWeight: '900',
   },
   nodeTitle: {
     textAlign: 'left',
     marginLeft: '15px',
-    fontSize: '15px',
+    fontSize: '12px',
     lineHeight: '18px',
-    fontWeight: '900',
+    fontWeight: '600',
     marginBottom: '5px',
     color: 'var(--g3-color__black)',
   },
   listItemLabel: {
-    fontWeight: '900',
+    fontWeight: '600',
     color: '#6c6c6c',
   },
   button: {
     width: '165px',
-    fontSize: '12px',
-    height: '33px',
+    fontSize: '11px',
+    height: '35px',
     backgroundColor: '#2f9acf',
     color: 'var(--g3-color__white)',
     margin: '10px auto auto auto',
     padding: '12px 23px 12px 15px',
     border: '2px solid #2982af',
-    borderRadius: '7px',
+    borderRadius: '10px',
+    fontWeight: '100',
   },
   close: {
     position: 'absolute',
