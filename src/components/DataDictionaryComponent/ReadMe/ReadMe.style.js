@@ -5,7 +5,6 @@ export default () => ({
   },
   titleContent: {
     width: '100%',
-    marginBottom: '15px',
   },
   title: {
     fontSize: '18px',
@@ -18,6 +17,7 @@ export default () => ({
   closeBtn: {
     padding: '5px',
     textAlign: 'right',
+    fontSize: '30px',
   },
   downloadBtn: {
     height: '27px',
@@ -44,6 +44,7 @@ export default () => ({
       marginBottom: '0px',
       fontWeight: '700',
       lineHeight: '40px',
+      lineHeight: '1.2',
     },
     '& p': {
       marginTop: '5px',

@@ -42,6 +42,7 @@ export default ({
       },
       MuiIconButton: {
         root: {
+          marginRight: '10px',
           textTransform: 'none',
           padding: 'none',
           '&:hover': {

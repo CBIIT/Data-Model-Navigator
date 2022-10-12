@@ -21,9 +21,9 @@ const ReadMeDialogComponent = ({
 }) => {
 
   const downladFile = () => {
-    console.log('download files');
+    console.log('download pdf');
   }
-  console.log(content);
+
   return (
     <CustomTheme>
       <Dialog
