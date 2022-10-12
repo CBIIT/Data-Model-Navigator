@@ -32,6 +32,11 @@ const version = { commit: '913161064b02bcef024d072873e77c8c79cc1a68', dictionary
 const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml";
 const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
 
+const readMeConfig=  {
+  readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
+  readMeTitle: 'readMeConfig.title',
+};
+
 // const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_file.yaml";
 // const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_properties_file.yaml";
 
@@ -250,7 +255,12 @@ async function init() {
         store.dispatch({
           type: 'RECEIVE_DICTIONARY',
           // data: newDict
-          payload: { data: newDataList, properties: propertyList, facetfilterConfig: filterConfig },
+          payload: {
+            data: newDataList,
+            properties: propertyList,
+            facetfilterConfig: filterConfig,
+            readMeConfig: readMeConfig,
+          },
         }),
         store.dispatch({
           type: 'RECEIVE_VERSION_INFO',

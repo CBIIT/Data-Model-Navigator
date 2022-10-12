@@ -14,6 +14,7 @@ import backgroundImg from '../assets/Model_View.png';
 import ReduxFacetFilters from './search/Filter/ReduxFacetFilter';
 // import { facetSearchData } from '../../../bento/dataDictionaryData';
 import './DataDictionary.css';
+import HeaderComponent from './Header/Header.component';
 
 const DataDictionary = ({
   classes,
@@ -39,44 +40,47 @@ const DataDictionary = ({
   };
 
   return (
-    <div className={classes.dataDictionary}>
-      <div className={classes.sidebar}>
-        <div className={classes.switch}>
-          <span
-            className={`${!isGraphView ? classes.switchButton : classes.activeButton}`}
-            onClick={() => { setGraphView(true); }}
-            onKeyPress={() => { setGraphView(true); }}
-            role="button"
-            tabIndex={0}
-          >
-            Graph View
-          </span>
-          <span
-            className={`${isGraphView ? classes.switchButton : classes.activeButton}`}
-            onClick={() => { setGraphView(false); }}
-            onKeyPress={() => { setGraphView(true); }}
-            role="button"
-            tabIndex={0}
-          >
-            Table View
-          </span>
-        </div>
-        <ReduxDictionarySearcher ref={dictionarySearcherRef} />
-        {/* <ReduxDataModelStructure /> */}
-        <ReduxDictionarySearchHistory
-          onClickSearchHistoryItem={handleClickSearchHistoryItem}
-        />
-        <ReduxFacetFilters />
-      </div>
-      <div className={isGraphView ? classes.mainGraphView : classes.mainTableView}>
-        <div className={`${classes.graph} ${!isGraphView ? classes.hidden : null}`}>
-          <DataDictionaryGraph
-            onClearSearchResult={handleClearSearchResult}
-            pdfDownloadConfig={pdfDownloadConfig}
+    <div>
+      <HeaderComponent/>
+      <div className={classes.dataDictionary}>
+        <div className={classes.sidebar}>
+          <div className={classes.switch}>
+            <span
+              className={`${!isGraphView ? classes.switchButton : classes.activeButton}`}
+              onClick={() => { setGraphView(true); }}
+              onKeyPress={() => { setGraphView(true); }}
+              role="button"
+              tabIndex={0}
+            >
+              Graph View
+            </span>
+            <span
+              className={`${isGraphView ? classes.switchButton : classes.activeButton}`}
+              onClick={() => { setGraphView(false); }}
+              onKeyPress={() => { setGraphView(true); }}
+              role="button"
+              tabIndex={0}
+            >
+              Table View
+            </span>
+          </div>
+          <ReduxDictionarySearcher ref={dictionarySearcherRef} />
+          {/* <ReduxDataModelStructure /> */}
+          <ReduxDictionarySearchHistory
+            onClickSearchHistoryItem={handleClickSearchHistoryItem}
           />
+          <ReduxFacetFilters />
         </div>
-        <div className={`${classes.table} ${isGraphView ? classes.hidden : null}`}>
-          <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
+        <div className={isGraphView ? classes.mainGraphView : classes.mainTableView}>
+          <div className={`${classes.graph} ${!isGraphView ? classes.hidden : null}`}>
+            <DataDictionaryGraph
+              onClearSearchResult={handleClearSearchResult}
+              pdfDownloadConfig={pdfDownloadConfig}
+            />
+          </div>
+          <div className={`${classes.table} ${isGraphView ? classes.hidden : null}`}>
+            <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
+          </div>
         </div>
       </div>
     </div>

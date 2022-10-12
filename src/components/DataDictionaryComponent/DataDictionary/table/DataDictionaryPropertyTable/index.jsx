@@ -4,12 +4,13 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { SearchResultItemShape } from '../../utils';
 import {
   getMatchesSummaryForProperties,
 } from '../../highlightHelper';
 import DialogBox from './component/DialogComponent';
-import { controlVocabConfig as config } from '../../bento/dataDictionaryData';
+import { controlVocabConfig as ctrlConfig } from '../../bento/dataDictionaryData';
 import TableHead from './component/tableHead';
 import TableRow from './component/tableRow';
 
@@ -31,6 +32,9 @@ const DataDictionaryPropertyTable = ({
   const [items, setItems] = useState([]);
   const [matchedItem, setMatchedItems] = useState([]);
   const [property, setProperty] = useState('');
+
+  const config = useSelector((state) => (state.submission && state.submission.ctrlVocabConfig
+    ? state.submission.ctrlVocabConfig : ctrlConfig));
 
   const openBoxHandler = (values, typeMatchList = [], propertyKey) => {
     setDisplay(true);

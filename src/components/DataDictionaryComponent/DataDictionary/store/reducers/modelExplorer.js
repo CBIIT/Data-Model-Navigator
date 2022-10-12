@@ -131,6 +131,8 @@ const moduleReducers = (state = initialState, action) => {
         filterHashMap: initializeFilterHashMap(dictionary, filterConfig.filterSections),
         subjectCountObject: filtered,
         facetfilterConfig: filterConfig,
+        readMeConfig: payload.readMeConfig,
+        ctrlVocabConfig: payload.ctrlVocabConfig,
         checkbox: {
           data: setSubjectCount(filterConfig.facetSearchData, filtered.subjectCounts),
         },

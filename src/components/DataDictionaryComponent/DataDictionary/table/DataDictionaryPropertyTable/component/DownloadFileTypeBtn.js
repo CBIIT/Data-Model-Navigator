@@ -171,8 +171,6 @@ const DownloadFileTypeBtn = ({
 
 const styles = () => ({
   menu: {
-    width: "133px",
-    height: '30px',
     border: '1px solid #0D71A3',
     boxSizing: 'border-box',
     backgroundColor: '#0D71A3',
@@ -181,7 +179,7 @@ const styles = () => ({
   },
   displayBtn: {
     width: '102px',
-    height: '28px',
+    height: '2em',
     boxSizing: 'border-box',
     color: '#0d71a3',
     backgroundColor: '#F2F1F1',
