@@ -12,11 +12,9 @@ const ReadMeController = ({
   const config = useSelector((state) => (state.submission && state.submission.readMeConfig
       ? state.submission.readMeConfig : undefined));
 
-  const readMeUrl = 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md';
-
   useEffect(() => {
     if (config) {
-      axios.get(readMeUrl).then((response) => {
+      axios.get(config.readMeUrl).then((response) => {
         return response;
       }).then((resp) => {
         if (resp.data) {
