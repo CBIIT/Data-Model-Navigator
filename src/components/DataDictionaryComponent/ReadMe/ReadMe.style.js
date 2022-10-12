@@ -38,6 +38,7 @@ export default () => ({
     overflowY: 'scroll',
     paddingRight: '20px',
     paddingLeft: '25px',
+    lineHeight: '1.5',
     '& h1, h2, h3, h4, h5': {
       color: '#000000',
       marginBottom: '0px',
@@ -46,9 +47,9 @@ export default () => ({
     },
     '& p': {
       marginTop: '5px',
-      marginBottom: '20px',
       fontSize: '14px',
       fontWeight: '300',
+      marginBottom: '0px',
     },
   },
 });
