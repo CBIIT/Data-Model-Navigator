@@ -34,7 +34,7 @@ const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-too
 
 const readMeConfig=  {
   readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
-  readMeTitle: 'readMeConfig.title',
+  readMeTitle: 'Understanding the ICDC Data Model',
 };
 
 // const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_file.yaml";

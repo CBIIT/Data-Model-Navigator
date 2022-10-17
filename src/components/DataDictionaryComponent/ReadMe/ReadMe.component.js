@@ -15,6 +15,7 @@ import ReactMarkdown from 'react-markdown'
 import PdfTemplate from './ReadMePdf';
 import styles from './ReadMe.style';
 import CustomTheme from './ReadMe.theme.config';
+import { createFileName } from '../utils';
 
 const ReadMeDialogComponent = ({
   classes,
@@ -31,7 +32,8 @@ const ReadMeDialogComponent = ({
         content={content}
       />
     )).toBlob();
-    saveAs(blob, `readMe.pdf`);
+    const fileName = createFileName('read_me', 'ICDC_Data_Model-');
+    saveAs(blob, `${fileName}.pdf`);
   }
 
   return (

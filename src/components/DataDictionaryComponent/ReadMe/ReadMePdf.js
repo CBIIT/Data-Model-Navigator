@@ -27,31 +27,53 @@ const styles = StyleSheet.create({
   title: {
     marginTop: '20px',
     marginBottm: '25px',
-    color: '#000000',
-    fontSize: '10px',
+    color: '#0d71a3',
+    fontSize: '12px',
     fontWeight: 'heavy',
     fontFamily: FontRegistry('NunitoBold'),
   },
   space: {
     marginTop: '20px',
   },
+  h1: {
+    color: '#000000',
+    fontSize: '10px',
+    fontWeight: 'heavy',
+    marginLeft: '12px',
+    fontFamily: FontRegistry('NunitoBold'),
+  },
+  h2: {
+    color: '#000000',
+    fontSize: '10px',
+    fontWeight: 'heavy',
+    marginLeft: '12px',
+    fontFamily: FontRegistry('NunitoBold'),
+  },
+  h3: {
+    color: '#000000',
+    fontSize: '10px',
+    fontWeight: 'heavy',
+    marginLeft: '12px',
+    fontFamily: FontRegistry('NunitoBold'),
+  },
   h4: {
     color: '#000000',
     fontSize: '10px',
     fontWeight: 'heavy',
-    marginLeft: '10px',
+    marginLeft: '12px',
     fontFamily: FontRegistry('NunitoBold'),
   },
   content: {
     color: '#000000',
     fontSize: '9px',
     paddingTop: '-2px',
-    lineHeight: 1.2,
-    marginLeft: '10px',
+    lineHeight: 1.4,
+    marginLeft: '12px',
+    marginRight: '5px',
     overflowWrap: 'break-word',
     width: '500px',
     textAlign: 'justify',
-    fontFamily: FontRegistry('NunitoNormal'),
+    fontFamily: FontRegistry('NunitoLight'),
   },
 });
 
@@ -60,26 +82,16 @@ const PdfTemplate = ({
   content,
 }) => {
   const renderSubHeader = (text, count) => {
-    switch(count) {
-      case 1:
-        return <Text style={styles.h1}>{text}</Text>;
-      case 2:
-        return <Text style={styles.h2}>{text}</Text>;
-      case 3:
-        return <Text style={styles.h3}>{text}</Text>;
-      case 4:
-        return <Text style={styles.h4}>{text}</Text>;
-      default:
-        return <Text>{text}</Text>;
-    }
+    const titleStyle = styles[`h${count}`];
+    return <Text style={titleStyle}>{text}</Text>;
   }
+
   const renderContent = (text) => {
     // split text with newline and generate pdf elements
     const lines = text.split(/\r?\n/);
     const pdfContent = lines.map((item) => {
       const count = (item.match(/#/g) || []).length;
       if (count > 0) {
-        // console.log(`${item}`.replaceAll('#', ''));
         return renderSubHeader(item.replaceAll('#', ''), count);
       }
       return <Text style={styles.content}> {item} </Text>
