@@ -143,7 +143,7 @@ const ListComponent = ({
   typeMatchList,
   isSearchMode,
 }) => {
-  const meanIndex = (length) => ((length % 2) ? length / 2 - 0.5 : length / 2);
+  // const meanIndex = (length) => ((length % 2) ? length / 2 - 0.5 : length / 2);
   const customTheme = (expand && items.length > maxNoOfItemDlgBox + maxNoOfItems)
     ? { overrides: { ...theme.overrides, ...threeColumnsView.overrides } }
     : (items.length > maxNoOfItems)
@@ -189,37 +189,12 @@ const ListComponent = ({
       <List>
         {items.map((item, index) => (
           <>
-            {/* apply different style when text is greater than 30 character on particular index */}
-            {(item.length > 30 && !expand) && (meanIndex(items.length) - 1 === index
-            || meanIndex(items.length) === index) ? (
-              <>
-                <div className={classes.longText} id={item.length}>
-                  <span className={classes.label}>
-                    {item}
-                  </span>
-                  <div className={classes.listIcon}>
-                    <ListItemIcon>
-                      <FiberManualRecord style={{ fontSize: 8, marginTop: '-4px', marginLeft: '2px' }} />
-                    </ListItemIcon>
-                  </div>
-                </div>
-              </>
-              ) : (
-                <ListItem key={`${index}`}>
-                  <ListItemIcon>
-                    <FiberManualRecord style={{ fontSize: 8 }} />
-                  </ListItemIcon>
-                  {/*
-                <ListItemText
-                  primary={(
-                    <Typography className={classes.listItemText}>
-                      {item}
-                    </Typography>
-                  )}
-                /> */}
-                  {highlightMatchingProperties(item)}
-                </ListItem>
-              )}
+            <ListItem key={`${index}`}>
+              <ListItemIcon>
+                <FiberManualRecord style={{ fontSize: 8 }} />
+              </ListItemIcon>
+              {highlightMatchingProperties(item)}
+            </ListItem>
           </>
         ))}
       </List>

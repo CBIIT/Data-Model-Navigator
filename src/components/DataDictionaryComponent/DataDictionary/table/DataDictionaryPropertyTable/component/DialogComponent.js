@@ -68,7 +68,7 @@ const DialogComponent = ({
   property,
 }) => {
   const [open, setOpen] = useState(display);
-  const [expand, setExpand] = useState(false);
+  const [expand, setExpand] = useState(true);
   const [values, setValues] = useState([]);
   const [boxSize, setBoxSize] = useState('sm');
   useEffect(() => {
@@ -76,8 +76,8 @@ const DialogComponent = ({
     setValues(items);
 
     if (items && items.length > maxNoOfItemDlgBox) {
-      setValues(items.slice(0, maxNoOfItemDlgBox));
-      setExpand(false);
+      // setValues(items.slice(0, maxNoOfItemDlgBox));
+      setExpand(true);
     }
   }, [display, open]);
 
