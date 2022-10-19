@@ -14,7 +14,7 @@ import backgroundImg from '../assets/Model_View.png';
 import ReduxFacetFilters from './search/Filter/ReduxFacetFilter';
 // import { facetSearchData } from '../../../bento/dataDictionaryData';
 import './DataDictionary.css';
-import HeaderComponent from './Header/Header.component';
+import HeaderComponent from './Header';
 
 const DataDictionary = ({
   classes,
@@ -41,7 +41,7 @@ const DataDictionary = ({
 
   return (
     <div>
-      <HeaderComponent/>
+      <HeaderComponent pdfDownloadConfig={pdfDownloadConfig} />
       <div className={classes.dataDictionary}>
         <div className={classes.sidebar}>
           <div className={classes.switch}>

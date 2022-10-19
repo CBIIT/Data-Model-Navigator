@@ -11,7 +11,7 @@ import { saveAs } from 'file-saver';
 import { ArrowDownward } from '@material-ui/icons';
 import CloseIcon from '@material-ui/icons/Close';
 import { pdf } from '@react-pdf/renderer';
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
 import PdfTemplate from './ReadMePdf';
 import styles from './ReadMe.style';
 import CustomTheme from './ReadMe.theme.config';
@@ -24,7 +24,6 @@ const ReadMeDialogComponent = ({
   content,
   title,
 }) => {
-
   const downladFile = async () => {
     const blob = await pdf((
       <PdfTemplate
@@ -34,21 +33,21 @@ const ReadMeDialogComponent = ({
     )).toBlob();
     const fileName = createFileName('read_me', 'ICDC_Data_Model-');
     saveAs(blob, `${fileName}.pdf`);
-  }
+  };
 
   return (
     <CustomTheme>
       <Dialog
-      open={display}
-      onClose={displayReadMeDialog}
-      maxWidth="md"
-      className={classes.dialogBox}
-      BackdropProps={{
-        timeout: 500,
-      }}
-      BackdropComponent={Backdrop}
+        open={display}
+        onClose={displayReadMeDialog}
+        maxWidth="md"
+        className={classes.dialogBox}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        BackdropComponent={Backdrop}
       >
-       <div className={classes.titleContent}>
+        <div className={classes.titleContent}>
           <div className={classes.title}>
             <span>
               {title}
@@ -78,6 +77,6 @@ const ReadMeDialogComponent = ({
       </Dialog>
     </CustomTheme>
   );
-}
+};
 
 export default withStyles(styles)(ReadMeDialogComponent);

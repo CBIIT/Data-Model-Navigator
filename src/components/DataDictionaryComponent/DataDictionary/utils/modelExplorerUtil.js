@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {
   facetSearchData,
   filterOptions,
-} from '../bento/dataDictionaryData'
+} from '../bento/dataDictionaryData';
 import { clearAllFilters } from '../store/actions/actions';
 import { inclusionFilterHelper } from './inclusionFilterHelper';
 /**
@@ -88,22 +88,22 @@ const includeMultiFilterValue = (filteredDict, filters) => {
       if (thisValue[filterValue.toLowerCase()]
         && thisValue[filterValue.toLowerCase()].length > 0) {
         returnItem = true;
-      };
+      }
     });
     return returnItem;
   });
   return filterValue;
-}
+};
 
 export const inclusionFilterHandler = (selectedFilters, filterHashMap) => {
-  let filteredDict = [];
+  const filteredDict = [];
   selectedFilters.forEach(([key, value], index) => {
     value.forEach((filterValue) => {
       filteredDict.push(...filterHashMap.get(filterValue.toLowerCase()));
     });
   });
   return Object.fromEntries(filteredDict);
-}
+};
 
 const filterNodesByProperty = (property = [], inclusionFilter, dictionary) => {
   let filterProps = [];
@@ -117,22 +117,21 @@ const filterNodesByProperty = (property = [], inclusionFilter, dictionary) => {
   }
 
   inclusionFilter.forEach(([key, items]) => {
-    const toLowerCase = items.map(e => e.toLowerCase());
+    const toLowerCase = items.map((e) => e.toLowerCase());
     if (key === 'inclusion') {
       filterProps = filterProps.filter((item) => toLowerCase.indexOf(item.propertyType) !== -1);
     } else {
       filterProps = filterProps.filter((item) => toLowerCase.indexOf(item.display) !== -1);
-
     }
   });
   const filterDictionary = {};
-  property.forEach(item => {
+  property.forEach((item) => {
     if (!filterDictionary[item.category]) {
       filterDictionary[item.category] = dictionary[item.category];
     }
   });
   return filterDictionary;
-}
+};
 
 const getPropertySubjectCountAndFilterDictionary = (dictionary, inclusionFilter) => {
   const nodeProperies = [];
@@ -150,7 +149,7 @@ const getPropertySubjectCountAndFilterDictionary = (dictionary, inclusionFilter)
   let filterProps = nodeProperies;
   if (inclusionFilter.length > 1) {
     inclusionFilter.forEach(([key, items]) => {
-      const toLowerCase = items.map(e => e.toLowerCase());
+      const toLowerCase = items.map((e) => e.toLowerCase());
       if (key === 'inclusion') {
         filterProps = filterProps.filter((item) => toLowerCase.indexOf(item.propertyType) !== -1);
       } else {
@@ -160,11 +159,11 @@ const getPropertySubjectCountAndFilterDictionary = (dictionary, inclusionFilter)
     filterProps.forEach((item) => {
       if (!subjectCount[item.display]) {
         subjectCount[item.display] = 0;
-      };
+      }
       subjectCount[item.display] += 1;
       if (!subjectCount[item.propertyType]) {
         subjectCount[item.propertyType] = 0;
-      };
+      }
       subjectCount[item.propertyType] += 1;
     });
     const filterDictionary = filterNodesByProperty(filterProps, inclusionFilter, dictionary);
@@ -173,9 +172,9 @@ const getPropertySubjectCountAndFilterDictionary = (dictionary, inclusionFilter)
   }
 
   inclusionFilter.forEach(([, items]) => {
-    const toLowerCase = items.map(e => e.toLowerCase());
-    filterProps.forEach(prop => {
-      toLowerCase.forEach(item => {
+    const toLowerCase = items.map((e) => e.toLowerCase());
+    filterProps.forEach((prop) => {
+      toLowerCase.forEach((item) => {
         if (`${prop.display}`.toLowerCase() == item
           || `${prop.propertyType}`.toLowerCase() == item) {
           if (!subjectCount[prop.display]) {
@@ -187,12 +186,12 @@ const getPropertySubjectCountAndFilterDictionary = (dictionary, inclusionFilter)
           }
           subjectCount[prop.propertyType] += 1;
         }
-      })
-    })
+      });
+    });
   });
   const filterDictionary = filterNodesByProperty(filterProps, inclusionFilter, dictionary);
   return { count: subjectCount, dictionary: filterDictionary };
-}
+};
 
 export const newHandleExplorerFilter = (selectedFilters, filterHashMap) => {
   let filteredDict = [];
@@ -323,60 +322,59 @@ export const getSubjectItemCount = (dictionary, filterBy = facetSearchData, acti
         const property = dictionary[elem][item.group];
         if (Array.isArray(property)) {
           subjectCountItems[key] += property.length;
-        } else {
-          if (property === key) {
-            subjectCountItems[key] += 1;
-          }
+        } else if (property === key) {
+          subjectCountItems[key] += 1;
         }
       });
     });
   });
   return subjectCountItems;
-}
+};
 
-//** filter subject count and filter dictionary*/
-//** uses case base appraoch for subject count and dictionary filter */
+//* * filter subject count and filter dictionary*/
+//* * uses case base appraoch for subject count and dictionary filter */
 export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allFilters({}), currentFilter) => {
   const processedFilters = Object.entries(allActiveFilters)
     .filter(([, value]) => value.length > 0);
-  //** initial state when there is no active filters */
-  const { unfilteredDictionary, filterHashMap, facetfilterConfig, properties } = data;
+  //* * initial state when there is no active filters */
+  const {
+    unfilteredDictionary, filterHashMap, facetfilterConfig, properties,
+  } = data;
   if (processedFilters.length == 0) {
     const dictionary = (!unfilteredDictionary) ? data : unfilteredDictionary;
-    return { subjectCounts: getSubjectItemCount(dictionary), dictionary: dictionary }
+    return { subjectCounts: getSubjectItemCount(dictionary), dictionary };
   }
 
-  //** check active filters */
+  //* * check active filters */
   const filterSections = processedFilters.map((item) => item[0]);
-  const selectedSections = facetfilterConfig.facetSearchData.filter(section => filterSections
+  const selectedSections = facetfilterConfig.facetSearchData.filter((section) => filterSections
     .indexOf(section.datafield) !== -1);
 
-  let filteredDictionary = newHandleExplorerFilter(processedFilters, filterHashMap);
+  const filteredDictionary = newHandleExplorerFilter(processedFilters, filterHashMap);
   const filteredDictCounts = getSubjectItemCount(filteredDictionary);
-  
+
   const { inclusion, uiDisplay } = allActiveFilters;
-  //** if any inclusion filter is active - inclusion behavior for both filter by inclusion and nodes */
+  //* * if any inclusion filter is active - inclusion behavior for both filter by inclusion and nodes */
   if (inclusion.length > 0 || uiDisplay.length > 0) {
     return inclusionFilterHelper(data, allActiveFilters, currentFilter);
   }
-  //** filter by only nodes - any search filter item that filters the node (this excludes inclusion) */
-  //** filter by only one subject or one section */
+  //* * filter by only nodes - any search filter item that filters the node (this excludes inclusion) */
+  //* * filter by only one subject or one section */
   if (processedFilters.length == 1) {
     const selectedSectionCounts = getSubjectItemCount(unfilteredDictionary, selectedSections);
-    const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+    const combinedSubjectCounts = { ...filteredDictCounts, ...selectedSectionCounts };
     return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary };
-  } else {
-    //** multiple filter - apply case based inclusion and exclusion filter mehtod for subject count */
-    const subjectCount = subjectCountBaseOnExclusionAndIncusionFilter(processedFilters,
-      filterHashMap, selectedSections, filteredDictionary, allActiveFilters, currentFilter);
-    if (subjectCount) return subjectCount;
   }
+  //* * multiple filter - apply case based inclusion and exclusion filter mehtod for subject count */
+  const subjectCount = subjectCountBaseOnExclusionAndIncusionFilter(processedFilters,
+    filterHashMap, selectedSections, filteredDictionary, allActiveFilters, currentFilter);
+  if (subjectCount) return subjectCount;
 
   const selectedSectionCounts = getSubjectItemCount(filteredDictionary, selectedSections);
-  const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
-  //** filter by multiple sections */
+  const combinedSubjectCounts = { ...filteredDictCounts, ...selectedSectionCounts };
+  //* * filter by multiple sections */
   return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary };
-}
+};
 
 const subjectCountBaseOnExclusionAndIncusionFilter = (
   processedFilters,
@@ -394,34 +392,34 @@ const subjectCountBaseOnExclusionAndIncusionFilter = (
   // display all unselected filter items for category inclusive of the class or assignment filter.
   if (processedFilters.length === 2) {
     for (const [key, value] of Object.entries(selectedSectionCounts)) {
-      const categoryItem = allActiveFilters.category.filter(item => item.toLowerCase() === key);
+      const categoryItem = allActiveFilters.category.filter((item) => item.toLowerCase() === key);
       if (value === 0 && categoryItem.length === 0) {
         selectedSectionCounts[key] = inclusionSectionCounts[key];
       }
     }
-    const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+    const combinedSubjectCounts = { ...filteredDictCounts, ...selectedSectionCounts };
     return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary };
   }
 
   if (processedFilters.length > 2) {
-    const currentSelection = selectedSections.filter(item => item.datafield === currentFilter.datafield)[0];
-    const otherFilters = processedFilters.filter(item => item[0] !== currentFilter.datafield);
+    const currentSelection = selectedSections.filter((item) => item.datafield === currentFilter.datafield)[0];
+    const otherFilters = processedFilters.filter((item) => item[0] !== currentFilter.datafield);
     const otherInclusionDictionary = newHandleExplorerFilter(otherFilters, filterHashMap);
     const otherSelectionCounts = getSubjectItemCount(otherInclusionDictionary, selectedSections);
     if (currentSelection) {
-      currentSelection.checkboxItems.forEach(item => {
+      currentSelection.checkboxItems.forEach((item) => {
         const key = item.name.toLowerCase();
         if (selectedSectionCounts[key] == 0) {
           selectedSectionCounts[key] = otherSelectionCounts[key];
         }
-      })
+      });
     }
 
-    const combinedSubjectCounts = Object.assign({}, filteredDictCounts, selectedSectionCounts);
+    const combinedSubjectCounts = { ...filteredDictCounts, ...selectedSectionCounts };
     return { subjectCounts: combinedSubjectCounts, dictionary: filteredDictionary };
   }
   return null;
-}
+};
 
 export const excludeSystemProperties = (node) => {
   const properties = node.properties && Object.keys(node.properties)
@@ -433,7 +431,7 @@ export const excludeSystemProperties = (node) => {
   return properties;
 };
 
-/*** toggle check box action */
+/** * toggle check box action */
 export const toggleCheckBoxAction = (payload, state) => {
   const currentAllFilterVariables = payload === {} ? allFilters()
     : createFilterVariables(payload, state.allActiveFilters);
@@ -441,4 +439,4 @@ export const toggleCheckBoxAction = (payload, state) => {
     clearAllFilters();
   }
   return currentAllFilterVariables;
-}
+};
