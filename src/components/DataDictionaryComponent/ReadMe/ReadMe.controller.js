@@ -6,24 +6,9 @@ import ReadMeComponent from './ReadMe.component';
 const ReadMeController = ({
   display,
   displayReadMeDialog,
+  config,
+  content,
 }) => {
-  const [content, setContent] = useState(undefined);
-
-  const config = useSelector((state) => (state.submission && state.submission.readMeConfig
-      ? state.submission.readMeConfig : undefined));
-
-  useEffect(() => {
-    if (config) {
-      axios.get(config.readMeUrl).then((response) => {
-        return response;
-      }).then((resp) => {
-        if (resp.data) {
-          setContent(resp.data);
-        }
-      });
-    }
-  }, []);
-
   if (!content) {
     return <></>;
   }
@@ -38,6 +23,6 @@ const ReadMeController = ({
       />
     </>
   );
-}
+};
 
 export default ReadMeController;
