@@ -40,14 +40,10 @@ const HeaderComponent = ({
           <Button color="primary" onClick={displayReadMeHandler}>
             ReadMe
           </Button>
-          {/* <DownloadButton
-            config={{ ...pdfDownloadConfig, type: 'document' }}
-            documentData={sortByCategory(categoryToNodeList, dictionary)}
-            fileName={createFileName('', pdfDownloadConfig.prefix)}
-          /> */}
+
           <DownloadDropdownMenu
             config={{ ...pdfDownloadConfig, type: 'document' }}
-            documentData={dictionary}
+            documentsData={dictionary}
             fileName="test"
             readMeContent={content}
             readMeConfig={config}

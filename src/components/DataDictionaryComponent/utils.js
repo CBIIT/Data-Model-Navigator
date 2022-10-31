@@ -283,3 +283,27 @@ export function createFileName(fileName, filePreFix) {
 
   return `${filePreFix}${fileName} ${todaysDate} ${hours}-${minutes}-${seconds}`;
 }
+
+export const tsvMiddleware = (node) => {
+  let line = 'type';
+  const { links } = node;
+
+  if (links && links.length) {
+    links.forEach((c) => {
+      if (c.targetId && String(c.generatedType).toLowerCase() !== 'loader-generated') {
+        line += `${'\t'} ${c.target_type}.${c.targetId}`;
+      }
+    });
+  }
+
+  return line;
+};
+
+export const convertToTSV = (node) => {
+  let line = tsvMiddleware(node);
+  Object.keys(node.properties).forEach((key) => {
+    line += ('\t').concat(`${key}`);
+  });
+  const text = `${line}\r\n${node.title}`;
+  return text;
+};
