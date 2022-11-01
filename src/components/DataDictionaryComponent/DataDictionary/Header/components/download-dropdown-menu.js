@@ -10,29 +10,30 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { ArrowDownward, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 import { pdf } from '@react-pdf/renderer';
 import LandscapePDFDoc from '../../LandscapeNodePDF/Pdf';
 import PdfDocument from '../../NodePDF/Pdf';
 import { category2NodeList, sortByCategory } from '../../utils/download-helper-functions';
 import { downloadFile } from '../../../ReadMe/ReadMe.component';
+import { convertToTSV, createFileName } from '../../../utils';
 
 const DOWNLOADS = 'DOWNLOADS';
-// const filePerfix = 'ICDC_Controlled_Vocabulary-';
-// const FILE_TYPE_JSON = 'JSON';
-// const CONTENT_TYPE_JSON = 'application/json';
-// const CONTENT_TYPE_TSV = 'data:text/tab-separated-values';
-// const FILE_TYPE_TSV = 'TSV';
-const FILE_TYPE_PDF = 'Full dictionary';
+const FILE_TYPE_FULL_DICTIONARY = 'Full dictionary';
 const FILE_TYPE_README = 'ReadMe';
-const fileTypes = [FILE_TYPE_PDF, FILE_TYPE_README];
+const FILE_TYPE_TEMPLATES = 'All Data Loading Templates';
+const fileTypes = [FILE_TYPE_FULL_DICTIONARY, FILE_TYPE_README, FILE_TYPE_TEMPLATES];
 
 const MuiMenu = withStyles({
   paper: {
     border: '1px solid #0D71A3',
-    width: '103px',
+    width: '150px',
     borderRadius: '0px',
     '& .MuiList': {
       marginTop: '0px',
+    },
+    '& .MuiPaper': {
+      left: '30px',
     },
   },
   list: {
@@ -100,7 +101,7 @@ const DownloadFileTypeBtn = ({
   classes,
   fileName,
   config,
-  documentData,
+  documentsData,
   readMeContent,
   readMeConfig,
 }) => {
@@ -108,8 +109,8 @@ const DownloadFileTypeBtn = ({
   const [label, setLabel] = useState('DOWNLOADS');
   const [isLoading, setLoading] = React.useState(false);
 
-  const c2nl = category2NodeList(documentData);
-  const proccessedDocumentData = sortByCategory(c2nl, documentData);
+  const c2nl = category2NodeList(documentsData);
+  const processedDocumentsData = sortByCategory(c2nl, documentsData);
 
   const clickHandler = (event) => {
     setLabel('DOWNLOADS');
@@ -128,16 +129,33 @@ const DownloadFileTypeBtn = ({
   const downloadPdf = () => {
     setLoading(true);
     setTimeout(() => {
-      generatePdfDocument(proccessedDocumentData, config, setLoading, fileName);
+      generatePdfDocument(processedDocumentsData, config, setLoading, fileName);
     }, 50);
+  };
+
+  const downloadTemplates = () => {
+    // eslint-disable-next-line no-unused-vars
+    const filteredDocumentsData = Object.fromEntries(Object.entries(documentsData).filter(([_key, value]) => value.template === 'Yes'));
+    const nodesValueArray = Object.values(filteredDocumentsData);
+    const nodesKeyArray = Object.keys(filteredDocumentsData);
+    const nodesTSV = nodesValueArray.map((node) => node.template === 'Yes' && convertToTSV(node));
+
+    const zip = new JSZip();
+    nodesTSV.forEach((nodeTSV, index) => zip.file(createFileName(nodesKeyArray[index], 'ICDC_Data_Loading_Template-'), nodeTSV));
+
+    zip.generateAsync({ type: 'blob' }).then((thisContent) => {
+      saveAs(thisContent, createFileName('', 'ICDC_Data_Loading_Templates'));
+    });
   };
 
   const downladFile = () => {
     switch (label) {
-      case 'Full dictionary':
+      case FILE_TYPE_FULL_DICTIONARY:
         return downloadPdf();
-      case 'ReadMe':
+      case FILE_TYPE_README:
         return downloadFile(readMeConfig.readMeTitle, readMeContent);
+      case FILE_TYPE_TEMPLATES:
+        return downloadTemplates();
       default:
         return null;
     }
@@ -197,7 +215,7 @@ const styles = () => ({
     float: 'left',
   },
   displayBtn: {
-    width: '102px',
+    width: '150px',
     height: '2em',
     boxSizing: 'border-box',
     color: '#0d71a3',
@@ -205,7 +223,6 @@ const styles = () => ({
     textTransform: 'none',
     padding: '7px',
     marginRight: '0',
-    float: 'left',
     '&:hover': {
       cursor: 'pointer',
       backgroundColor: '#F2F1F1',
