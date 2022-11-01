@@ -49,13 +49,7 @@ const DataDictionaryPropertyTable = ({
   };
 
   const propertyKeysList = tideIsRequired ? Object.keys(properties)
-    : Object.keys(properties).sort((k1, k2) => {
-      const required1 = requiredProperties.includes(k1);
-      const required2 = requiredProperties.includes(k2);
-      if (required1) return -1;
-      if (required2) return 1;
-      return 0;
-    });;
+    : Object.keys(properties);
   const needHighLgSearchResult = onlyShowMatchedProperties
     || needHighlightSearchResult;
   const matchedPropertiesSummary = needHighlightSearchResult
