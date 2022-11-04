@@ -18,6 +18,7 @@ import HeaderComponent from './Header';
 import Tab from './Tab/Tab';
 import TabPanel from './Tab/TabPanel';
 import TabThemeProvider from './Tab/TabThemeConfig';
+import DictionaryView from './DictionaryView/DictionaryView';
 
 const tabItems = [
   {
@@ -72,7 +73,11 @@ const DataDictionary = ({
           />
           <ReduxFacetFilters />
         </div>
-        <TabThemeProvider>
+        <DictionaryView
+          pdfDownloadConfig={pdfDownloadConfig}
+          handleClearSearchResult={handleClearSearchResult}
+        />
+        {/* <TabThemeProvider>
           <div className={classes.container}>
             <div className={classes.detailContainer}>
               <Tab
@@ -89,7 +94,7 @@ const DataDictionary = ({
               Index 1
             </TabPanel>
           </div>
-        </TabThemeProvider>
+        </TabThemeProvider> */}
         {/* <div className={classes.switch}>
           <span
             className={`${!isGraphView ? classes.switchButton : classes.activeButton}`}
@@ -209,29 +214,7 @@ const styles = () => ({
   hidden: {
     display: 'none',
   },
-  tabPrimaryColor: {
-    color: '#81a6b9',
-    fontWeight: '700',
-    opacity: '1',
-  },
-  tabPrimaryColor: {
-    color: '#81a6b9',
-    fontWeight: '700',
-    opacity: '1',
-  },
-  tabHighlightColor: {
-    color: '#0B3556',
-    fontWeight: '700',
-    // borderBottom: '5px solid rgb(53, 185, 235)',
-  },
-  hrLine: {
-    // marginTop: '-5px',
-    // marginBottom: '0',
-    // borderTop: '5px solid #81a6b9',
-    marginTop: '-4px',
-    height: '0px',
-    border: '1px solid',
-  },
+
 });
 
 export default withStyles(styles)(DataDictionary);

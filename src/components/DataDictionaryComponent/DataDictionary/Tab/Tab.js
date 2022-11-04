@@ -40,10 +40,11 @@ const TabItems = ({
         value={currentTab}
         TabIndicatorProps={{ style: { background: 'none' } }}
         orientation={orientation}
+        className={styleClasses.tabs}
       >
         {TABs}
       </Tabs>
-      <hr className={styleClasses.hrLine} />
+      {/* <hr className={styleClasses.hrLine} /> */}
     </>
   );
 };
@@ -63,6 +64,9 @@ const styles = () => ({
   tabHighlightColor: {
     color: '#ffffff',
   },
+  tabs: {
+    paddingLeft: '10px',
+  }
 });
 
 export default withStyles(styles)(TabItems);

@@ -20,7 +20,7 @@ export default ({
             minWidth: '110px',
           },
           '&.Mui-selected': {
-            borderBottom: '4px solid #fff',
+            borderBottom: '7px solid #fff',
           },
         },
         textColorInherit: {
@@ -32,6 +32,9 @@ export default ({
       root: {
         borderBottom: '2px solid #fff',
       },
+      fixed: {
+        paddingLeft: '10px',
+      }
     },
     Mui: {
       selected: {

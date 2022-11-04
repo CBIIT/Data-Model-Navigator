@@ -1,16 +1,25 @@
 import React from 'react';
+import { Button, withStyles } from '@material-ui/core';
 
 const TabPanel = ({
   children,
   value,
   index,
+  classes,
 }) => (
   <div
+    className={classes.content}
     role="tabpanel"
     hidden={value !== index}
   >
-    <div>{children}</div>
+    {children}
   </div>
 );
 
-export default TabPanel;
+const styles = () => ({
+  content: {
+    height: '100%',
+  },
+});
+
+export default withStyles(styles)(TabPanel);
