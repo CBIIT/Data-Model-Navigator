@@ -5,6 +5,7 @@ import Tab from '../Tab/Tab';
 import TabPanel from '../Tab/TabPanel';
 import TabThemeProvider from '../Tab/TabThemeConfig';
 import DataDictionaryGraph from '../graph/DataDictionaryGraph';
+import ReduxDataDictionaryTable from '../table/DataDictionaryTable';
 
 const tabItems = [
   {
@@ -25,9 +26,6 @@ const DictionaryView = ({
   handleClearSearchResult,
 }) => {
   const dictionarySearcherRef = React.useRef();
-//   const [isGraphView, setGraphView] = useState(false);
-//   const toggoleView = () => setGraphView(!isGraphView);
-
   const [currentTab, setCurrentTab] = React.useState(0);
   const handleTabChange = (event, value) => {
     setCurrentTab(value);
@@ -47,7 +45,7 @@ const DictionaryView = ({
             </div>
             <div className={classes.viewContainer}>
               <TabPanel value={currentTab} index={0}>
-                <div className={classes.graph}>
+                <div className={classes.graphView}>
                   <DataDictionaryGraph
                     onClearSearchResult={handleClearSearchResult}
                     pdfDownloadConfig={pdfDownloadConfig}
@@ -55,7 +53,9 @@ const DictionaryView = ({
                 </div>
               </TabPanel>
               <TabPanel value={currentTab} index={1}>
-                Index 1
+                <div className={classes.tableView}>
+                  <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
+                </div>
               </TabPanel>
             </div>
           </div>

@@ -40,9 +40,12 @@ export default () => ({
     boxShadow: 'inset 0px -8px 3px -2px rgba(50, 50, 50, 0.25)',
     // borderBottom: '0.1em #c4c4c4',
   },
-  graph: {
+  graphView: {
     overflow: 'hidden',
     height: '100%',
     position: 'relative',
   },
+  tableView: {
+    padding: '20px',
+  }
 });

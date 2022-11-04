@@ -11,16 +11,19 @@ export default ({
         root: {
           borderTopLeftRadius: '5px',
           borderTopRightRadius: '5px',
-          borderTop: '2px solid',
-          borderRight: '2px solid',
-          borderLeft: '2px solid',
-          marginRight: '15px',
+          background: 'rgba(28,29,29,0.31)',
+          marginRight: '10px',
+          marginLeft: '25px',
+          marginTop: '20px',
           minWidth: '130px',
           '@media (min-width: 600px)': {
             minWidth: '110px',
           },
           '&.Mui-selected': {
-            borderBottom: '7px solid #fff',
+            boxShadow: '-1px -3px 5px 6px rgba(50, 50, 50, 0.25)',
+            borderBottom: '10px solid #fff',
+            background: '#ffffff',
+            border: '1px solid #fffff5',
           },
         },
         textColorInherit: {
