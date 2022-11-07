@@ -7,12 +7,14 @@ export default () => ({
     width: '100%',
   },
   viewContainer: {
-    height: '100%',
+    height: '90%',
     marginTop: '30px',
     marginLeft: '36px',
     marginRight: '36px',
+    marginBottom: '36px',
     backgroundImage: `url(${backgroundImg})`,
-    borderRadius: '5px'
+    borderRadius: '5px',
+    overflowY: 'scroll',
   },
   tabPrimaryColor: {
     color: '#81a6b9',
@@ -55,5 +57,8 @@ export default () => ({
   },
   tableView: {
     padding: '20px',
+  },
+  tableViewTabPanel: {
+    overflow: 'scroll',
   }
 });

@@ -145,7 +145,7 @@ const styles = () => ({
   dataDictionary: {
     display: 'flex',
     height: 'calc(100vh)',
-    overflowY: 'auto',
+    // overflowY: 'auto',
   },
   container: {
     paddingTop: '60px',
