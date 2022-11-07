@@ -62,7 +62,7 @@ const styles = () => ({
     display: 'none',
   },
   tabHighlightColor: {
-    color: '#ffffff',
+    color: '#6d9eba',
   },
   tabs: {
     paddingLeft: '10px',

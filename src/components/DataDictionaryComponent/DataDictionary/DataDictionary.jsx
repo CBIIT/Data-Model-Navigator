@@ -146,7 +146,6 @@ const styles = () => ({
     display: 'flex',
     height: 'calc(100vh)',
     overflowY: 'auto',
-    // backgroundImage: `url(${backgroundImg})`,
   },
   container: {
     paddingTop: '60px',

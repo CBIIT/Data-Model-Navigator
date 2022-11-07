@@ -1,3 +1,4 @@
+import backgroundImg from '../../assets/Model_View.png';
 export default () => ({
   container: {
     paddingTop: '60px',
@@ -8,21 +9,29 @@ export default () => ({
   },
   viewContainer: {
     height: '100%',
+    marginTop: '30px',
+    marginLeft: '36px',
+    marginRight: '36px',
+    backgroundImage: `url(${backgroundImg})`,
+    borderRadius: '5px'
   },
   tabPrimaryColor: {
     color: '#81a6b9',
     fontWeight: '700',
+    fontSize: '18px',
     opacity: '1',
+    backgroundColor: '#f3f3f3',
   },
   tabPrimaryColor: {
-    color: '#81a6b9',
-    fontWeight: '700',
+    color: '#83a3b5',
+    fontWeight: 'normal',
+    fontSize: '18px',
     opacity: '1',
   },
   tabHighlightColor: {
-    color: '#0B3556',
-    fontWeight: '700',
-    // borderBottom: '5px solid rgb(53, 185, 235)',
+    color: '#6d9eba',
+    fontWeight: 'bold',
+    fontSize: '18px',
   },
   hrLine: {
     // marginTop: '-5px',
@@ -37,7 +46,7 @@ export default () => ({
     paddingLeft: '10%',
   },
   tabItems: {
-    boxShadow: 'inset 0px -8px 3px -2px rgba(50, 50, 50, 0.25)',
+    boxShadow: 'inset 1px -11px 10px -7px rgb(50 50 50 / 25%)',
     // borderBottom: '0.1em #c4c4c4',
   },
   graphView: {
