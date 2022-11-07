@@ -17,22 +17,22 @@ export default () => ({
     overflowY: 'scroll',
   },
   tabPrimaryColor: {
-    color: '#81a6b9',
+    color: '#83A3B5',
     fontWeight: '700',
     fontSize: '18px',
     opacity: '1',
     backgroundColor: '#f3f3f3',
-  },
-  tabPrimaryColor: {
     color: '#83a3b5',
-    fontWeight: 'normal',
+    fontWeight: '500',
     fontSize: '18px',
     opacity: '1',
+    fontFamily: 'Lato',
   },
   tabHighlightColor: {
     color: '#6d9eba',
     fontWeight: 'bold',
     fontSize: '18px',
+    fontFamily: 'Lato',
   },
   hrLine: {
     // marginTop: '-5px',
