@@ -1,7 +1,6 @@
 import backgroundImg from '../../assets/Model_View.png';
 export default () => ({
   container: {
-    paddingTop: '60px',
     fontFamily: 'Raleway, sans-serif',
     paddingLeft: '0px',
     paddingRight: '0px',
