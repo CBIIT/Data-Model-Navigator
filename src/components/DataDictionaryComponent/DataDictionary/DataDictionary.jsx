@@ -15,6 +15,23 @@ import ReduxFacetFilters from './search/Filter/ReduxFacetFilter';
 // import { facetSearchData } from '../../../bento/dataDictionaryData';
 import './DataDictionary.css';
 import HeaderComponent from './Header';
+import Tab from './Tab/Tab';
+import TabPanel from './Tab/TabPanel';
+import TabThemeProvider from './Tab/TabThemeConfig';
+import DictionaryView from './DictionaryView/DictionaryView';
+
+const tabItems = [
+  {
+    index: 0,
+    label: 'Graph View',
+    value: 'graph_view',
+  },
+  {
+    index: 1,
+    label: 'Table View',
+    value: 'table_view',
+  },
+];
 
 const DataDictionary = ({
   classes,
@@ -39,31 +56,16 @@ const DataDictionary = ({
     dictionarySearcherRef.current.launchClearSearchFromOutside();
   };
 
+  const [currentTab, setCurrentTab] = React.useState(0);
+  const handleTabChange = (event, value) => {
+    setCurrentTab(value);
+  };
+
   return (
     <div>
       <HeaderComponent pdfDownloadConfig={pdfDownloadConfig} />
       <div className={classes.dataDictionary}>
         <div className={classes.sidebar}>
-          <div className={classes.switch}>
-            <span
-              className={`${!isGraphView ? classes.switchButton : classes.activeButton}`}
-              onClick={() => { setGraphView(true); }}
-              onKeyPress={() => { setGraphView(true); }}
-              role="button"
-              tabIndex={0}
-            >
-              Graph View
-            </span>
-            <span
-              className={`${isGraphView ? classes.switchButton : classes.activeButton}`}
-              onClick={() => { setGraphView(false); }}
-              onKeyPress={() => { setGraphView(true); }}
-              role="button"
-              tabIndex={0}
-            >
-              Table View
-            </span>
-          </div>
           <ReduxDictionarySearcher ref={dictionarySearcherRef} />
           {/* <ReduxDataModelStructure /> */}
           <ReduxDictionarySearchHistory
@@ -71,7 +73,49 @@ const DataDictionary = ({
           />
           <ReduxFacetFilters />
         </div>
-        <div className={isGraphView ? classes.mainGraphView : classes.mainTableView}>
+        <DictionaryView
+          pdfDownloadConfig={pdfDownloadConfig}
+          handleClearSearchResult={handleClearSearchResult}
+        />
+        {/* <TabThemeProvider>
+          <div className={classes.container}>
+            <div className={classes.detailContainer}>
+              <Tab
+                styleClasses={classes}
+                tabItems={tabItems}
+                currentTab={currentTab}
+                handleTabChange={handleTabChange}
+              />
+            </div>
+            <TabPanel value={currentTab} index={0}>
+              Index 0
+            </TabPanel>
+            <TabPanel value={currentTab} index={1}>
+              Index 1
+            </TabPanel>
+          </div>
+        </TabThemeProvider> */}
+        {/* <div className={classes.switch}>
+          <span
+            className={`${!isGraphView ? classes.switchButton : classes.activeButton}`}
+            onClick={() => { setGraphView(true); }}
+            onKeyPress={() => { setGraphView(true); }}
+            role="button"
+            tabIndex={0}
+          >
+            Graph View
+          </span>
+          <span
+            className={`${isGraphView ? classes.switchButton : classes.activeButton}`}
+            onClick={() => { setGraphView(false); }}
+            onKeyPress={() => { setGraphView(true); }}
+            role="button"
+            tabIndex={0}
+          >
+            Table View
+          </span>
+        </div> */}
+        {/* <div className={isGraphView ? classes.mainGraphView : classes.mainTableView}>
           <div className={`${classes.graph} ${!isGraphView ? classes.hidden : null}`}>
             <DataDictionaryGraph
               onClearSearchResult={handleClearSearchResult}
@@ -81,7 +125,7 @@ const DataDictionary = ({
           <div className={`${classes.table} ${isGraphView ? classes.hidden : null}`}>
             <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -101,8 +145,23 @@ const styles = () => ({
   dataDictionary: {
     display: 'flex',
     height: 'calc(100vh)',
-    overflowY: 'auto',
-    backgroundImage: `url(${backgroundImg})`,
+    // overflowY: 'auto',
+  },
+  container: {
+    paddingTop: '60px',
+    fontFamily: 'Raleway, sans-serif',
+    paddingLeft: '27px',
+    paddingRight: '27px',
+  },
+  detailContainer: {
+    margin: 'auto',
+    paddingTop: '30px',
+    paddingLeft: '50px',
+    paddingRight: '50px',
+    letterSpacing: '0.014em',
+    color: '#000000',
+    size: '12px',
+    lineHeight: '23px',
   },
   sidebar: {
     width: '320px',
@@ -113,7 +172,7 @@ const styles = () => ({
     borderRight: '1px solid var(--g3-color__smoke)',
   },
   switch: {
-    display: 'flex',
+    // display: 'flex',
     border: '1px solid var(--g3-color__black)',
     borderRadius: '4px',
     cursor: 'pointer',
@@ -154,6 +213,7 @@ const styles = () => ({
   hidden: {
     display: 'none',
   },
+
 });
 
 export default withStyles(styles)(DataDictionary);
