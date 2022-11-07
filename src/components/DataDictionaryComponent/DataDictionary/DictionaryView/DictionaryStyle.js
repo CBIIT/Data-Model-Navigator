@@ -17,11 +17,9 @@ export default () => ({
     overflowY: 'scroll',
   },
   tabPrimaryColor: {
-    color: '#83A3B5',
     fontWeight: '700',
     fontSize: '18px',
     opacity: '1',
-    backgroundColor: '#f3f3f3',
     color: '#83a3b5',
     fontWeight: '500',
     fontSize: '18px',
