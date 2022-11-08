@@ -3,12 +3,12 @@ import {
   withStyles,
   createTheme,
   MuiThemeProvider,
-} from '@material-ui/core'
+  Box,
+} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {ArrowDownward, ExpandMore as ExpandMoreIcon} from '@material-ui/icons';
-import { Box } from '@material-ui/core';
+import { ArrowDownward, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import { saveAs } from 'file-saver';
 import { capitalizeFirstLetter, createFileName } from '../../../../utils';
 
@@ -75,7 +75,7 @@ const theme = {
       },
       outlined: {
         border: 'none',
-      }
+      },
     },
   },
 };
@@ -98,17 +98,17 @@ const DownloadFileTypeBtn = ({
     setAnchorElement(null);
   };
 
-  const setFileType = (value) => {  
+  const setFileType = (value) => {
     setLabel(value);
     setAnchorElement(null);
-  }
+  };
 
   const download = (data, fileType, contentType) => {
-    const exportData = new Blob([data], {type: contentType});
+    const exportData = new Blob([data], { type: contentType });
     const nodeTitle = capitalizeFirstLetter(node);
     const fileName = createFileName(`${nodeTitle}-${propertyKey}`, filePerfix);
     saveAs(exportData, `${fileName}.${fileType.toLowerCase()}`);
-  }
+  };
 
   const downladFile = () => {
     if (label === FILE_TYPE_JSON) {
@@ -124,14 +124,14 @@ const DownloadFileTypeBtn = ({
       }
       download(content, FILE_TYPE_TSV, CONTENT_TYPE_TSV);
     }
-  }
+  };
 
   const MenuItem = (type) => (
     <MuiMenuItem className={classes.menuItem} onClick={() => setFileType(type)}>
       {type}
     </MuiMenuItem>
   );
-  
+
   const options = fileTypes.map((item) => MenuItem(item));
 
   return (
