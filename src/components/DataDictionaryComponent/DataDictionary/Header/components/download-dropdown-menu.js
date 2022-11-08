@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   withStyles,
   createTheme,
@@ -16,13 +16,19 @@ import LandscapePDFDoc from '../../LandscapeNodePDF/Pdf';
 import PdfDocument from '../../NodePDF/Pdf';
 import { category2NodeList, sortByCategory } from '../../utils/download-helper-functions';
 import { downloadFile } from '../../../ReadMe/ReadMe.component';
-import { convertToTSV, createFileName } from '../../../utils';
+import { convertToTSV, createFileName, generateVocabFullDownload } from '../../../utils';
 
 const DOWNLOADS = 'DOWNLOADS';
 const FILE_TYPE_FULL_DICTIONARY = 'Full dictionary';
 const FILE_TYPE_README = 'ReadMe';
 const FILE_TYPE_TEMPLATES = 'All Data Loading Templates';
-const fileTypes = [FILE_TYPE_FULL_DICTIONARY, FILE_TYPE_README, FILE_TYPE_TEMPLATES];
+const FILE_TYPE_CONTROLLED_VOCAB_TSV = 'All Controlled Vocabularies (TSV)';
+const fileTypes = [
+  FILE_TYPE_FULL_DICTIONARY,
+  FILE_TYPE_README,
+  FILE_TYPE_TEMPLATES,
+  FILE_TYPE_CONTROLLED_VOCAB_TSV,
+];
 
 const MuiMenu = withStyles({
   paper: {
@@ -99,18 +105,21 @@ const generatePdfDocument = async (object, config, setLoading, fileName) => {
 
 const DownloadFileTypeBtn = ({
   classes,
-  fileName,
   config,
-  documentsData,
+  filteredDictionary,
   readMeContent,
   readMeConfig,
+  fullDictionary,
 }) => {
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [label, setLabel] = useState('DOWNLOADS');
   const [isLoading, setLoading] = React.useState(false);
 
-  const c2nl = category2NodeList(documentsData);
-  const processedDocumentsData = sortByCategory(c2nl, documentsData);
+  const filteredDictionaryC2nl = category2NodeList(filteredDictionary);
+  // eslint-disable-next-line no-unused-vars
+  const processedFilteredDictionary = sortByCategory(filteredDictionaryC2nl, filteredDictionary);
+  const fullDictionaryC2nl = category2NodeList(fullDictionary);
+  const processedFullDictionary = sortByCategory(fullDictionaryC2nl, fullDictionary);
 
   const clickHandler = (event) => {
     setLabel('DOWNLOADS');
@@ -126,22 +135,23 @@ const DownloadFileTypeBtn = ({
     setAnchorElement(null);
   };
 
-  const downloadPdf = () => {
+  const downloadFullDictionaryPdf = () => {
+    const fileName = createFileName('ICDC_Data_Model', '');
     setLoading(true);
     setTimeout(() => {
-      generatePdfDocument(processedDocumentsData, config, setLoading, fileName);
+      generatePdfDocument(processedFullDictionary, config, setLoading, fileName);
     }, 50);
   };
 
-  const downloadTemplates = () => {
+  const downloadAllTemplates = () => {
     // eslint-disable-next-line no-unused-vars
-    const filteredDocumentsData = Object.fromEntries(Object.entries(documentsData).filter(([_key, value]) => value.template === 'Yes'));
-    const nodesValueArray = Object.values(filteredDocumentsData);
-    const nodesKeyArray = Object.keys(filteredDocumentsData);
+    const fullDictionaryTemplates = Object.fromEntries(Object.entries(fullDictionary).filter(([_key, value]) => value.template === 'Yes'));
+    const nodesValueArray = Object.values(fullDictionary);
+    const nodesKeyArray = Object.keys(fullDictionaryTemplates);
     const nodesTSV = nodesValueArray.map((node) => node.template === 'Yes' && convertToTSV(node));
 
     const zip = new JSZip();
-    nodesTSV.forEach((nodeTSV, index) => zip.file(createFileName(nodesKeyArray[index], 'ICDC_Data_Loading_Template-'), nodeTSV));
+    nodesTSV.forEach((nodeTSV, index) => zip.file(`${createFileName(nodesKeyArray[index], 'ICDC_Data_Loading_Template-')}.tsv`, nodeTSV));
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
       saveAs(thisContent, createFileName('', 'ICDC_Data_Loading_Templates'));
@@ -151,11 +161,13 @@ const DownloadFileTypeBtn = ({
   const downladFile = () => {
     switch (label) {
       case FILE_TYPE_FULL_DICTIONARY:
-        return downloadPdf();
+        return downloadFullDictionaryPdf();
       case FILE_TYPE_README:
         return downloadFile(readMeConfig.readMeTitle, readMeContent);
       case FILE_TYPE_TEMPLATES:
-        return downloadTemplates();
+        return downloadAllTemplates();
+      case FILE_TYPE_CONTROLLED_VOCAB_TSV:
+        return generateVocabFullDownload(fullDictionary, 'TSV');
       default:
         return null;
     }

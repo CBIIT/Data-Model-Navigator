@@ -1,4 +1,7 @@
 import * as d3 from 'd3-scale';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { category2NodeList } from './DataDictionary/utils/download-helper-functions';
 
 // import { submissionApiPath } from './localconf';
 
@@ -306,4 +309,46 @@ export const convertToTSV = (node) => {
   });
   const text = `${line}\r\n${node.title}`;
   return text;
+};
+
+export const generateVocabFullDownload = (fullDictionary, format) => {
+  const c2nl = category2NodeList(fullDictionary);
+  const enumArr = [];
+  const zip = new JSZip();
+
+  Object.keys(c2nl).forEach((category) => {
+    const nodes = c2nl[category];
+    nodes.forEach(({ title, properties }) => {
+      const propertyKeyList = Object.keys(properties);
+      propertyKeyList.forEach((propertyKey) => {
+        const property = properties[propertyKey];
+        if (property.enum) {
+          enumArr.push({ title, enums: property.enum, propertyKey });
+        }
+      });
+    });
+  });
+
+  switch (format) {
+    case 'TSV': {
+      const vocabTSVArr = enumArr.map(({ enums, title, propertyKey }) => {
+        let content = '';
+        if (enums && enums.length) {
+          enums.forEach((item, index) => {
+            content += (index === 0) ? item : `${'\n'}${item}`;
+          });
+        }
+        return { content, title, propertyKey };
+      });
+
+      vocabTSVArr.forEach(({ title, propertyKey, content }) => zip.file(`${createFileName(`${title}-${propertyKey}`, 'ICDC_Controlled_Vocabulary-')}.tsv`, content));
+      const fileName = createFileName('ICDC_Controlled_Vocabularies', '');
+      zip.generateAsync({ type: 'blob' }).then((thisContent) => {
+        saveAs(thisContent, fileName);
+      });
+    }
+      break;
+    default:
+      break;
+  }
 };

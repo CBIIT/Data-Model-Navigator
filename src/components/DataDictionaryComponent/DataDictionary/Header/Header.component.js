@@ -11,7 +11,7 @@ import ReadMeComponent from '../../ReadMe/ReadMe.controller';
 import DownloadDropdownMenu from './components/download-dropdown-menu';
 
 const HeaderComponent = ({
-  pdfDownloadConfig, dictionary,
+  pdfDownloadConfig, dictionary, fullDictionary,
 }) => {
   const [displayReadMe, setDisplayReadMe] = useState(false);
   const [content, setContent] = useState(undefined);
@@ -43,8 +43,8 @@ const HeaderComponent = ({
 
           <DownloadDropdownMenu
             config={{ ...pdfDownloadConfig, type: 'document' }}
-            documentsData={dictionary}
-            fileName="test"
+            filteredDictionary={dictionary}
+            fullDictionary={fullDictionary}
             readMeContent={content}
             readMeConfig={config}
           />

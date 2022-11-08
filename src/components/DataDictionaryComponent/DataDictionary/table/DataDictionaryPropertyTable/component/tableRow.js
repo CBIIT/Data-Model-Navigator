@@ -27,7 +27,6 @@ const TableRow = ({
   isSearchMode,
   title,
 }) => {
-
   const config = useSelector((state) => (state.submission && state.submission.ctrlVocabConfig
     ? state.submission.ctrlVocabConfig : ctrlConfig));
   const required = (requiredFlag, preferredFlag) => (
@@ -159,7 +158,8 @@ const TableRow = ({
                       node={title}
                       propertyKey={propertyKey}
                     />
-                    <br/><br/>
+                    <br />
+                    <br />
                   </>
                 ) : (
                   <>
