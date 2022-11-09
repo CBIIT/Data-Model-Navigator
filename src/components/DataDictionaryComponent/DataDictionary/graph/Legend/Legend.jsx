@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { capitalizeFirstLetter } from '../../../utils';
 import { getLegendCategoryIconSVG, getCategoryColor } from '../../NodeCategories/helper';
 import './Legend.css';
+import relationshipSvg from '../../NodeCategories/icons/Legend/lg_relationship_links.svg';
 
 class Legend extends React.Component {
   constructor(props) {
@@ -33,7 +34,8 @@ class Legend extends React.Component {
                   tabIndex={0}
                 />
                 <div className="data-dictionary-graph-legend__item body">
-                  <i className="data-dictionary-graph-legend__required-icon data-dictionary-graph-legend__required-icon g3-icon g3-icon--minus" />
+                  {/* <i className="data-dictionary-graph-legend__required-icon data-dictionary-graph-legend__required-icon g3-icon g3-icon--minus" /> */}
+                  <img src={relationshipSvg} alt="relation" />
                   <span className="data-dictionary-graph-legend__text">Relationships</span>
                 </div>
                 {
