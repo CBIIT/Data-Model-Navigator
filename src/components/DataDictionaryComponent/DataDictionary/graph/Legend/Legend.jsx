@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { capitalizeFirstLetter } from '../../../utils';
-import { getGraphCategoryIconSVG, getCategoryColor } from '../../NodeCategories/helper';
+import { getLegendCategoryIconSVG, getCategoryColor } from '../../NodeCategories/helper';
 import './Legend.css';
 
 class Legend extends React.Component {
@@ -39,7 +39,8 @@ class Legend extends React.Component {
                 {
                   this.props.items.map((category) => {
                     const itemColor = getCategoryColor(category);
-                    const IconSvg = getGraphCategoryIconSVG(category);
+                    // console.log(category);
+                    const IconSvg = getLegendCategoryIconSVG(category);
                     return (
                       <div
                         key={category}
