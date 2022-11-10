@@ -43,7 +43,7 @@ const DictionaryView = ({
               handleTabChange={handleTabChange}
             />
             </div>
-            <div className={classes.viewContainer}>
+            <div className={currentTab == 0 ? classes.viewGraphContainer : classes.viewTableContainer}>
               <TabPanel value={currentTab} index={0}>
                 <div className={classes.graphView}>
                   <DataDictionaryGraph

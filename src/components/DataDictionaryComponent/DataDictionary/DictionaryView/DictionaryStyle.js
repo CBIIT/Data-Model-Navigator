@@ -6,7 +6,16 @@ export default () => ({
     paddingRight: '0px',
     width: '100%',
   },
-  viewContainer: {
+  viewGraphContainer: {
+    height: '90%',
+    marginTop: '30px',
+    marginLeft: '36px',
+    marginRight: '36px',
+    marginBottom: '36px',
+    backgroundImage: `url(${backgroundImg})`,
+    borderRadius: '5px',
+  },
+  viewTableContainer: {
     height: '90%',
     marginTop: '30px',
     marginLeft: '36px',
