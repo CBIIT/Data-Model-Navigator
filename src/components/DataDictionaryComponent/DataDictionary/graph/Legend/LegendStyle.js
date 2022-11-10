@@ -80,7 +80,7 @@ export default () => ({
   item: {
     lineHeight: '20px',
     verticalAlign: 'middle',
-    marginBottom: '5px',
+    marginBottom: '2px',
     display: 'flex',
     paddingLeft: '20px',
     paddingTop: '10px',
