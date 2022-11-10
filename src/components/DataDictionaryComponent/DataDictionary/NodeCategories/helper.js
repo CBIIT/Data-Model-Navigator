@@ -292,7 +292,6 @@ export const getGraphCategoryIconSVG = (category) => {
 
 export const getLegendCategoryIconSVG = (category) => {
   if (nodeLgCategoryList[category]) {
-    console.log(category);
     return nodeLgCategoryList[category].icon;
   }
 

@@ -31,7 +31,7 @@ const ReduxGraphDrawer = (() => {
     onCancelHoverNode: () => dispatch(hoverNode(null)),
     onClickNode: (nodeID) => dispatch(clickNode(nodeID)),
     onGraphNodesSVGElementsUpdated: (graphNodesSVGElements) =>
-      dispatch(setGraphNodesSVGElements(graphNodesSVGElements)),
+    dispatch(setGraphNodesSVGElements(graphNodesSVGElements)),
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(GraphDrawer);
