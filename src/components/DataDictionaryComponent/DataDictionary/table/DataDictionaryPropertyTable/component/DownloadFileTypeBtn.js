@@ -103,8 +103,8 @@ const DownloadFileTypeBtn = ({
     setAnchorElement(null);
   };
 
-  const download = (data, fileType, contentType) => {
-    const exportData = new Blob([data], { type: contentType });
+  const download = (thisData, fileType, contentType) => {
+    const exportData = new Blob([thisData], { type: contentType });
     const nodeTitle = capitalizeFirstLetter(node);
     const fileName = createFileName(`${nodeTitle}-${propertyKey}`, filePerfix);
     saveAs(exportData, `${fileName}.${fileType.toLowerCase()}`);
@@ -119,20 +119,20 @@ const DownloadFileTypeBtn = ({
       let content = '';
       if (data && data.length) {
         data.forEach((item, index) => {
-          content += (index == 0) ? item : `${'\n'}${item}`;
+          content += (index === 0) ? item : `${'\n'}${item}`;
         });
       }
       download(content, FILE_TYPE_TSV, CONTENT_TYPE_TSV);
     }
   };
 
-  const MenuItem = (type) => (
+  const menuItem = (type) => (
     <MuiMenuItem className={classes.menuItem} onClick={() => setFileType(type)}>
       {type}
     </MuiMenuItem>
   );
 
-  const options = fileTypes.map((item) => MenuItem(item));
+  const options = fileTypes.map((item) => menuItem(item));
 
   return (
     <MuiThemeProvider theme={createTheme(theme)}>
