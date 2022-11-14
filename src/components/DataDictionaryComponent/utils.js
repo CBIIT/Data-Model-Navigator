@@ -329,6 +329,8 @@ export const generateVocabFullDownload = (fullDictionary, format) => {
     });
   });
 
+  const zipFileName = createFileName('ICDC_Controlled_Vocabularies', '');
+  const getFileName = (title, propertyKey, format) => `${createFileName(`${title}-${propertyKey}`, 'ICDC_Controlled_Vocabulary-')}.${format}`
   switch (format) {
     case 'TSV': {
       const vocabTSVArr = enumArr.map(({ enums, title, propertyKey }) => {
@@ -341,10 +343,17 @@ export const generateVocabFullDownload = (fullDictionary, format) => {
         return { content, title, propertyKey };
       });
 
-      vocabTSVArr.forEach(({ title, propertyKey, content }) => zip.file(`${createFileName(`${title}-${propertyKey}`, 'ICDC_Controlled_Vocabulary-')}.tsv`, content));
-      const fileName = createFileName('ICDC_Controlled_Vocabularies', '');
+      vocabTSVArr.forEach(({ title, propertyKey, content }) => zip.file(getFileName(title, propertyKey, 'tsv'), content));
       zip.generateAsync({ type: 'blob' }).then((thisContent) => {
-        saveAs(thisContent, fileName);
+        saveAs(thisContent, zipFileName);
+      });
+    }
+      break;
+    // eslint-disable-next-line no-lone-blocks
+    case 'JSON': {
+      enumArr.forEach(({ title, enums, propertyKey }) => zip.file(getFileName(title, propertyKey, 'json'), JSON.stringify(enums)));
+      zip.generateAsync({ type: 'blob' }).then((thisContent) => {
+        saveAs(thisContent, zipFileName);
       });
     }
       break;

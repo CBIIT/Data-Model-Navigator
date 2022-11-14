@@ -23,11 +23,13 @@ const FILE_TYPE_FULL_DICTIONARY = 'Full dictionary';
 const FILE_TYPE_README = 'ReadMe';
 const FILE_TYPE_TEMPLATES = 'All Data Loading Templates';
 const FILE_TYPE_CONTROLLED_VOCAB_TSV = 'All Controlled Vocabularies (TSV)';
+const FILE_TYPE_CONTROLLED_VOCAB_JSON = 'All Controlled Vocabularies (JSON)';
 const fileTypes = [
   FILE_TYPE_FULL_DICTIONARY,
   FILE_TYPE_README,
   FILE_TYPE_TEMPLATES,
   FILE_TYPE_CONTROLLED_VOCAB_TSV,
+  FILE_TYPE_CONTROLLED_VOCAB_JSON,
 ];
 
 const MuiMenu = withStyles({
@@ -168,6 +170,8 @@ const DownloadFileTypeBtn = ({
         return downloadAllTemplates();
       case FILE_TYPE_CONTROLLED_VOCAB_TSV:
         return generateVocabFullDownload(fullDictionary, 'TSV');
+      case FILE_TYPE_CONTROLLED_VOCAB_JSON:
+        return generateVocabFullDownload(fullDictionary, 'JSON');
       default:
         return null;
     }
