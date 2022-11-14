@@ -23,7 +23,9 @@ class GraphDrawer extends React.Component {
       }
       })
        .reduce((acc, cur) => {
-         acc[cur.nodeID] = cur.svgElement;
+         if(cur) {
+            acc[cur.nodeID] = cur.svgElement;
+         }
          return acc;
        }, {});
      this.nodeSVGElementInitialized = true;

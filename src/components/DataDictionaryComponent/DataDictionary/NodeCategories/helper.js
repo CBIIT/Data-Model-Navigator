@@ -55,6 +55,62 @@ import IconImaging from '-!react-svg-loader!./icons/icon_imaging.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconStudyAdministration from '-!react-svg-loader!./icons/icon_study_administration.svg';
 
+// Holustic icons
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import LgAdministrationSvg from '-!react-svg-loader!./icons/Legend/lg_administrative.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import LgAnalysisSvg from '-!react-svg-loader!./icons/Legend/lg_analysis.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import LgBiospecimenSvg from '-!react-svg-loader!./icons/Legend/lg_biospecimen.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import LgCaseSvg from '-!react-svg-loader!./icons/Legend/lg_case.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import LgClinicalTrialSvg from '-!react-svg-loader!./icons/Legend/lg_clinical_trial.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import LgClinicalSvg from '-!react-svg-loader!./icons/Legend/lg_clinical.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import LgFileSvg from '-!react-svg-loader!./icons/Legend/lg_file.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import LgRelationSvg from '-!react-svg-loader!./icons/Legend/lg_relationship_links.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import LgStudySvg from '-!react-svg-loader!./icons/Legend/lg_study.svg';
+
+const nodeLgCategoryList = {
+  administrative: {
+    icon: LgAdministrationSvg,
+    color: '#9b2d20',
+  },
+  analysis: {
+    icon: LgAnalysisSvg,
+    color: '#b533a9',
+  },
+  biospecimen: {
+    icon: LgBiospecimenSvg,
+    color: '#00785a',
+  },
+  case: {
+    icon: LgCaseSvg,
+    color: '#ff7f15',
+  },
+  clinical_trial: {
+    icon: LgClinicalTrialSvg,
+    color: '#00b5d3',
+  },
+  clinical: {
+    icon: LgClinicalSvg,
+    color: '#1c75bc',
+  },
+  data_file: {
+    icon: LgFileSvg,
+    color: '#00ad0e',
+  },
+  study: {
+    icon: LgStudySvg,
+    color: '#9875ff',
+  },
+}
+
+
 const nodeCategoryList = {
   clinical: {
     icon: IconClinical,
@@ -229,6 +285,14 @@ export const getCategoryColor = (category) => {
 export const getGraphCategoryIconSVG = (category) => {
   if (graphNodeCategoryList[category]) {
     return graphNodeCategoryList[category].icon;
+  }
+
+  return defaultCategory.icon;
+};
+
+export const getLegendCategoryIconSVG = (category) => {
+  if (nodeLgCategoryList[category]) {
+    return nodeLgCategoryList[category].icon;
   }
 
   return defaultCategory.icon;
