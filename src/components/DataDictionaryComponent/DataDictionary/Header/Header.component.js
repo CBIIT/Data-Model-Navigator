@@ -10,8 +10,9 @@ import CustomTheme from './Header.theme.config';
 import ReadMeComponent from '../../ReadMe/ReadMe.controller';
 import DownloadDropdownMenu from './components/download-dropdown-menu';
 
+const dogIconSrc = 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/4a3fb8e201e6ba2a858d7ec1226d2fd6ea2b5298/icdc/images/svgs/Icon-DMNav.85x85.svg';
 const HeaderComponent = ({
-  pdfDownloadConfig, dictionary, fullDictionary,
+  pdfDownloadConfig, dictionary, fullDictionary, classes,
 }) => {
   const [displayReadMe, setDisplayReadMe] = useState(false);
   const [content, setContent] = useState(undefined);
@@ -34,29 +35,53 @@ const HeaderComponent = ({
   };
 
   return (
-    <div>
+    <>
       <CustomTheme>
-        <div>
-          <Button color="primary" onClick={displayReadMeHandler}>
-            ReadMe
-          </Button>
+        <div
+          className={classes.titleContainer}
+        >
+          <div
+            className={classes.logoAndTitle}
+          >
+            <img
+              className={classes.dogIcon}
+              alt="dog-icon"
+              src={dogIconSrc}
+            />
+            <h2
+              className={classes.title}
+            >
+              Data Model Navigator
 
-          <DownloadDropdownMenu
-            config={{ ...pdfDownloadConfig, type: 'document' }}
-            filteredDictionary={dictionary}
-            fullDictionary={fullDictionary}
-            readMeContent={content}
-            readMeConfig={config}
+            </h2>
+          </div>
+
+          <div
+            className={classes.btnGroup}
+          >
+            <Button color="primary" onClick={displayReadMeHandler}>
+              ReadMe
+            </Button>
+
+            <DownloadDropdownMenu
+              config={{ ...pdfDownloadConfig, type: 'document' }}
+              filteredDictionary={dictionary}
+              fullDictionary={fullDictionary}
+              readMeContent={content}
+              readMeConfig={config}
+            />
+          </div>
+          <ReadMeComponent
+            content={content}
+            config={config}
+            display={displayReadMe}
+            displayReadMeDialog={displayReadMeHandler}
           />
         </div>
+        <hr className={classes.divider} />
       </CustomTheme>
-      <ReadMeComponent
-        content={content}
-        config={config}
-        display={displayReadMe}
-        displayReadMeDialog={displayReadMeHandler}
-      />
-    </div>
+    </>
+
   );
 };
 

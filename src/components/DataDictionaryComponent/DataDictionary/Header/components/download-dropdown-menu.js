@@ -228,7 +228,6 @@ const styles = () => ({
     boxSizing: 'border-box',
     backgroundColor: '#0D71A3',
     borderRadius: '5px',
-    float: 'left',
   },
   displayBtn: {
     width: '150px',
