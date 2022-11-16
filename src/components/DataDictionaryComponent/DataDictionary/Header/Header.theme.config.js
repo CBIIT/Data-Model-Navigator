@@ -8,7 +8,7 @@ export default ({
     overrides: {
     },
   };
-  
+
   const computedTheme = createTheme(theme);
   return (
     <MuiThemeProvider theme={computedTheme}>
