@@ -62,7 +62,7 @@ const DataDictionary = ({
   };
 
   return (
-    <div>
+    <div className={classes.dictionaryContainer}>
       <HeaderComponent pdfDownloadConfig={pdfDownloadConfig} />
       <div className={classes.dataDictionary}>
         <div className={classes.sidebar}>
@@ -142,6 +142,9 @@ DataDictionary.defaultProps = {
 };
 
 const styles = () => ({
+  dictionaryContainer: {
+    marginTop: '-40px',
+  },
   dataDictionary: {
     display: 'flex',
     height: 'calc(100vh)',
