@@ -31,6 +31,14 @@ export default () => ({
 
   categoryIcon: {
     verticalAlign: 'middle',
-    marginRight: '10px',
+    marginRight: '13px',
   },
+  title: {
+    color: '#FFFFFF',
+    fontFamily: 'Lato',
+    fontSize: '19px',
+    fontWeight: '500',
+    letterSpacing: '0',
+    lineHeight: '0',
+  }
 });
