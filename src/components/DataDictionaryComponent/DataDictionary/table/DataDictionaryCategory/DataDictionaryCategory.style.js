@@ -7,8 +7,8 @@ export default () => ({
 
   categoryHead: {
     background: '#fff',
-    paddingTop: '6px',
-    paddingBottom: '6px',
+    paddingTop: '3px',
+    paddingBottom: '3px',
     paddingLeft: '12px',
     paddingRight: '10px',
     fontWeight: '900',
@@ -31,6 +31,15 @@ export default () => ({
 
   categoryIcon: {
     verticalAlign: 'middle',
-    marginRight: '10px',
+    marginRight: '13px',
   },
+  title: {
+    color: '#FFFFFF',
+    fontFamily: 'Lato',
+    fontSize: '19px',
+    fontWeight: '500',
+    letterSpacing: '0',
+    lineHeight: '0.7',
+    verticalAlign: 'text-bottom',
+  }
 });

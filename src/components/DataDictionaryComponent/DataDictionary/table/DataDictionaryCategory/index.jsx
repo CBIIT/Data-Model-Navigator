@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import { getCategoryColor, getCategoryIconSVG } from '../../NodeCategories/helper';
+import { getCategoryStyle } from '../../NodeCategories/helper';
 import { capitalizeFirstLetter } from '../../../utils';
 import DataDictionaryNode from '../DataDictionaryNode';
 import styles from './DataDictionaryCategory.style';
@@ -10,21 +10,28 @@ import styles from './DataDictionaryCategory.style';
 class DataDictionaryCategory extends React.Component {
   render() {
     const { classes, category, highlightingNodeID } = this.props;
-    const IconSVG = getCategoryIconSVG(category);
+    const styles = getCategoryStyle(category);
+    const IconSVG = styles.icon;
+    const categoryColor = styles.color;
+    const background = styles.background ? styles.background : styles.color;
     return (
       <div className={classes.category}>
         <div
           className={classes.categoryHead}
-          style={{ borderLeftColor: getCategoryColor(category) }}
+          style={{
+            borderLeftColor: categoryColor,
+            background: background,
+            color: '#ffffff',
+          }}
         >
           <IconSVG className={`${classes.categoryIcon} ${category}`} />
-          <span style={{ color: getCategoryColor(category) }}>
+          <span className={classes.title}>
             {capitalizeFirstLetter(category)}
           </span>
         </div>
         <div
           className={classes.categoryDivider}
-          style={{ borderLeftColor: getCategoryColor(category) }}
+          style={{ borderLeftColor: categoryColor }}
         />
         {
         this.props.nodes.map(

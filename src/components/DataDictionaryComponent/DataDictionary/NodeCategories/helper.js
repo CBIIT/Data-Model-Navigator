@@ -1,39 +1,23 @@
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import IconAdministrative from '-!react-svg-loader!./icons/Administrative.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import IconAdministrativeGraph from '-!react-svg-loader!./icons/Administrative_graph.svg';
 /* eslint-disable import/no-unresolved */
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import IconStudy from '-!react-svg-loader!./icons/Study.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconStudyGraph from '-!react-svg-loader!./icons/Study_graph.svg';
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import IconClinicalTrial from '-!react-svg-loader!./icons/Clinical_Trial.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import IconClinicalTrialGraph from '-!react-svg-loader!./icons/Clinical_Trial_graph.svg';
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import IconCase from '-!react-svg-loader!./icons/Case.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import IconCaseGraph from '-!react-svg-loader!./icons/Case_graph.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import IconAnalysis from '-!react-svg-loader!./icons/icon_analysis.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconAnalysisGraph from '-!react-svg-loader!./icons/icon_analysis_graph.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import IconBiospecimen from '-!react-svg-loader!./icons/icon_biospecimen.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import IconBiospecimenGraph from '-!react-svg-loader!./icons/icon_biospecimen_graph.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import IconClinical from '-!react-svg-loader!./icons/icon_clinical.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconClinicalGraph from '-!react-svg-loader!./icons/icon_clinical_graph.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconClinicalAssessment from '-!react-svg-loader!./icons/icon_clinical_assessment.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import IconDataFile from '-!react-svg-loader!./icons/icon_data_file.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconDataFileGraph from '-!react-svg-loader!./icons/icon_data_file_graph.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
@@ -75,6 +59,24 @@ import LgRelationSvg from '-!react-svg-loader!./icons/Legend/lg_relationship_lin
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import LgStudySvg from '-!react-svg-loader!./icons/Legend/lg_study.svg';
 
+//Table view icons
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Administrative from '-!react-svg-loader!./icons/Table/Administrative.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Study from '-!react-svg-loader!./icons/Table/Study.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import ClinicalTrial from '-!react-svg-loader!./icons/Table/ClinicalTrial.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Case from '-!react-svg-loader!./icons/Table/Case.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Biospecimen from '-!react-svg-loader!./icons/Table/Biospecimen.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Clinical from '-!react-svg-loader!./icons/Table/Clinical.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import Analysis from '-!react-svg-loader!./icons/Table/Analysis.svg';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import DataFile from '-!react-svg-loader!./icons/Table/DataFile.svg';
+
 const nodeLgCategoryList = {
   administrative: {
     icon: LgAdministrationSvg,
@@ -110,80 +112,51 @@ const nodeLgCategoryList = {
   },
 }
 
-
 const nodeCategoryList = {
-  clinical: {
-    icon: IconClinical,
-    color: '#05B8EE',
+  administrative: {
+    icon: Administrative,
+    color: '#9C2E1F',
+    background: '#691706',
+  },
+  study: {
+    icon: Study,
+    color: '#9775FF',
+    background: '#4D31A2',
+  },
+  clinical_trial: {
+    icon: ClinicalTrial,
+    color: '#00A0BA',
+    background: '#043F55',
+  },
+  case: {
+    icon: Case,
+    color: '#FF7E14',
+    background: '#672900',
   },
   biospecimen: {
-    icon: IconBiospecimen,
-    color: '#28AE60',
+    icon: Biospecimen,
+    color: '#00785A',
+    background: '#063126',
+  },
+  clinical: {
+    icon: Clinical,
+    color: '#1C75BB',
+    background: '#073A61',
   },
   data_file: {
-    icon: IconDataFile,
-    color: '#7EC500',
+    icon: DataFile,
+    color: '#00AC0E',
+    background: '#023806',
   },
   metadata_file: {
     icon: IconMetadata,
     color: '#F4B940',
   },
   analysis: {
-    icon: IconAnalysis,
-    color: '#FF7ABC',
-  },
-  administrative: {
-    icon: IconAdministrative,
-    color: '#9B2C1F',
-  },
-  case: {
-    icon: IconCase,
-    color: '#FF7F15',
-  },
-  study: {
-    icon: IconStudy,
-    color: '#AD91FF',
-  },
-  clinical_trial: {
-    icon: IconClinicalTrial,
-    color: '#1C75BC',
-  },
-  notation: {
-    icon: IconNotation,
-    color: '#E74C3C',
-  },
-  index_file: {
-    icon: IconIndexFile,
-    color: '#26D9B1',
-  },
-  clinical_assessment: {
-    icon: IconClinicalAssessment,
-    color: '#3283C8',
-  },
-  medical_history: {
-    icon: IconClinical,
-    color: '#05B8EE',
-  },
-  data_observations: {
-    icon: IconDataObservations,
-    color: '#FF8585',
-  },
-  experimental_methods: {
-    icon: IconExperimentalMethods,
-    color: '#E74C3C',
-  },
-  subject_characteristics: {
-    icon: IconSubjectCharacteristics,
-    color: '#05B8EE',
-  },
-  imaging: {
-    icon: IconImaging,
-    color: '#7EC500',
-  },
-  study_administration: {
-    icon: IconStudyAdministration,
-    color: '#733EA3',
-  },
+    icon: Analysis,
+    color: '#B533A9',
+    background: '#6F0065',
+  }
 };
 
 const graphNodeCategoryList = {
@@ -277,6 +250,14 @@ export const getCategoryIconSVG = (category) => {
 export const getCategoryColor = (category) => {
   if (nodeCategoryList[category]) {
     return nodeCategoryList[category].color;
+  }
+
+  return defaultCategory.color;
+};
+
+export const getCategoryStyle = (category) => {
+  if (nodeCategoryList[category]) {
+    return nodeCategoryList[category];
   }
 
   return defaultCategory.color;
