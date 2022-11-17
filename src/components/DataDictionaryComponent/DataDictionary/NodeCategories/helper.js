@@ -1,39 +1,23 @@
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import IconAdministrative from '-!react-svg-loader!./icons/Administrative.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import IconAdministrativeGraph from '-!react-svg-loader!./icons/Administrative_graph.svg';
 /* eslint-disable import/no-unresolved */
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import IconStudy from '-!react-svg-loader!./icons/Study.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconStudyGraph from '-!react-svg-loader!./icons/Study_graph.svg';
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import IconClinicalTrial from '-!react-svg-loader!./icons/Clinical_Trial.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import IconClinicalTrialGraph from '-!react-svg-loader!./icons/Clinical_Trial_graph.svg';
 /* eslint-disable import/no-unresolved */
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import IconCase from '-!react-svg-loader!./icons/Case.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import IconCaseGraph from '-!react-svg-loader!./icons/Case_graph.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import IconAnalysis from '-!react-svg-loader!./icons/icon_analysis.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconAnalysisGraph from '-!react-svg-loader!./icons/icon_analysis_graph.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
-import IconBiospecimen from '-!react-svg-loader!./icons/icon_biospecimen.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
 import IconBiospecimenGraph from '-!react-svg-loader!./icons/icon_biospecimen_graph.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import IconClinical from '-!react-svg-loader!./icons/icon_clinical.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconClinicalGraph from '-!react-svg-loader!./icons/icon_clinical_graph.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconClinicalAssessment from '-!react-svg-loader!./icons/icon_clinical_assessment.svg';
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import IconDataFile from '-!react-svg-loader!./icons/icon_data_file.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import IconDataFileGraph from '-!react-svg-loader!./icons/icon_data_file_graph.svg';
 // eslint-disable-next-line import/no-webpack-loader-syntax
