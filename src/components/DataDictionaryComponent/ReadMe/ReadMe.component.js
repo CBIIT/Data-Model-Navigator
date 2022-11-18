@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { pdf } from '@react-pdf/renderer';
 import ReactMarkdown from 'react-markdown';
 import { marked } from "marked";
+import html2pdf from 'html2pdf.js';
 import PdfTemplate from './ReadMePdf';
 import styles from './ReadMe.style';
 import CustomTheme from './ReadMe.theme.config';
@@ -32,15 +33,38 @@ export const downloadFile = async (title, content) => {
   // saveAs(blob, `${fileName}.pdf`);
 };
 
-const downloadMarkdownPdf = (title, content) => {
+const downloadMarkdownPdf = async (title, content) => {
   // const MdPdf = markDwnContent(content);
   // downloadFile(title, content)
   // console.log(cont);
   const wrapper = document.createElement('div');
   wrapper.innerHTML = marked(content);
+  
   console.log(wrapper);
-}
-
+  const page = document.getElementById('readMe_content');
+  // page.innerHTML = marked(content);
+  console.log(page)
+  // await html2PDF(page, {
+  //   jsPDF: {
+  //     format: 'a4',
+  //   },
+  //   imageType: 'image/jpeg',
+  //   output: './pdf/generate.pdf'
+  // });
+  const element = document.getElementById('readMe_content');
+  const opt = {
+    margin:       1,
+    filename:     'myfile.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+  // New Promise-based usage:
+  // html2pdf().set(opt).from(element).save();
+  html2pdf().set(opt).from(wrapper).toPdf().get('pdf').then(function (pdf) {
+    pdf.addPage();
+  }).toPdf().save();
+} 
 
 const ReadMeDialogComponent = ({
   classes,
