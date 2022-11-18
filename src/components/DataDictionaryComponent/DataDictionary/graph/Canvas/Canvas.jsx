@@ -64,9 +64,7 @@ class Canvas extends React.Component {
   }
 
   handleResize = () => {
-    if (this.props.isGraphView) {
-      this.updateCanvasSize();
-    }
+    this.updateCanvasSize();
   }
 
   updateCanvasSize() {
@@ -121,7 +119,7 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <div className='canvas' ref={this.canvasElement} style={{ width: '100%', height: '100%' }}>
+      <div className='canvas' ref={this.canvasElement} style={{ width: '99%', height: '100%' }}>
         <div className='canvas__zoom-button-group'>
           <div
             className='canvas__zoom-button canvas__zoom-button--reset'
