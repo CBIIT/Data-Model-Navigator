@@ -75,7 +75,7 @@ export const downloadFile = async (title, content) => {
       .toPdf()
       .get('pdf')
       .then((pdf) => {
-        pdf.addPage();
+        // pdf.addPage();
         const totalPages = pdf.internal.getNumberOfPages();
         const pageSz = pdf.internal.pageSize;
         for (let i = 1; i <= totalPages; i++) {
