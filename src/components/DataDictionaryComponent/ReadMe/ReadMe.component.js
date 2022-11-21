@@ -19,6 +19,9 @@ import PdfTemplate from './ReadMePdf';
 import styles from './ReadMe.style';
 import CustomTheme from './ReadMe.theme.config';
 import { createFileName } from '../utils';
+import footer_line from './footer_line.png';
+
+const date = new Date().toLocaleString('en-us', { month: 'long', year: 'numeric', day: 'numeric' });
 
 export const downloadFile = async (title, content) => {
   const cossnt = await marked(content);
@@ -31,19 +34,6 @@ export const downloadFile = async (title, content) => {
     // )).toBlob();
     // const fileName = createFileName('read_me', 'ICDC_Data_Model-');
     // saveAs(blob, `${fileName}.pdf`);
-  };
-
-  function pdfCallback(pdf) {
-    const totalPages = pdf.internal.getNumberOfPages();
-    const pageSz = pdf.internal.pageSize;
-    for (let i = 1; i <= totalPages; i++) {
-      pdf.setPage(i);
-      pdf.setFontSize(5);
-      pdf.setTextColor(0);
-      pdf.text(pageSz.getWidth() - 1, pageSz.getHeight() - 0.5, `YOUR_TEXT ${i}`);
-      pdf.text(pageSz.getWidth() - 8, pageSz.getHeight() - 0.5, `CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL`);
-      pdf.addImage("YOUR_IMAGE", 'JPEG', pageSz.getWidth() - 1.1, pageSz.getHeight() - 0.25, 1, 0.2);
-    }
 }
 
   const downloadMarkdownPdf = async (title, content) => {
@@ -51,23 +41,14 @@ export const downloadFile = async (title, content) => {
     wrapper.innerHTML += '<span>Understanding the ICDC Data Model</span>';
     wrapper.innerHTML += marked(content);
     
-    console.log(wrapper);
+    const fileName = createFileName('read_me', 'ICDC_Data_Model-');
     const opt = {
       margin:       1,
-      filename:     'myfile.pdf',
+      filename:     fileName,
       image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2 },
+      html2canvas:  { scale: 1.5 },
       jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
-
-    // html2pdf(wrapper, {
-    //   margin: 10,
-    //   filename: "my.pdf",
-    //   image: {type: 'jpeg', quality: 1},
-    //   html2canvas: {dpi: 1000, letterRendering: true},
-    //   jsPDF: {unit: 'mm', format: 'a4', orientation: 'portrait'},
-    //   pdfCallback: pdfCallback
-    // })
 
     html2pdf()
       .set(opt)
@@ -75,16 +56,16 @@ export const downloadFile = async (title, content) => {
       .toPdf()
       .get('pdf')
       .then((pdf) => {
-        // pdf.addPage();
         const totalPages = pdf.internal.getNumberOfPages();
         const pageSz = pdf.internal.pageSize;
         for (let i = 1; i <= totalPages; i++) {
           pdf.setPage(i);
-          pdf.setFontSize(5);
+          pdf.setFont('Source Sans Pro,sans-serif');
+          pdf.setFontSize(8);
           pdf.setTextColor(0);
-          pdf.text(pageSz.getWidth() - 1.5, pageSz.getHeight() - 0.5, `YOUR_TEXT ${i}`);
+          pdf.text(pageSz.getWidth() - 2, pageSz.getHeight() - 0.5, `${date} | ${i}`);
           pdf.text(pageSz.getWidth() - 7.5, pageSz.getHeight() - 0.5, `CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL`);
-          // pdf.addImage("YOUR_IMAGE", 'JPEG', pageSz.getWidth() - 1.1, pageSz.getHeight() - 0.25, 1, 0.2);
+          pdf.addImage(footer_line, 'JPEG', pageSz.getWidth() - 7.5, pageSz.getHeight() - 0.75, 6.5, 0.05);
         }
     }).save();
 }
