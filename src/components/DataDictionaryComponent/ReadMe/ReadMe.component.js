@@ -35,37 +35,57 @@ export const downloadFile = async (title, content) => {
     // const fileName = createFileName('read_me', 'ICDC_Data_Model-');
     // saveAs(blob, `${fileName}.pdf`);
 }
-
+  /** download pdf of marked down file 
+   * 1.convert or generate html element of marked object
+   * 2. uses html2pdf library to convert html to pdf
+   * all the html style from marked down file will be reflected on PDF
+   */
   const downloadMarkdownPdf = async (title, content) => {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML += '<span>Understanding the ICDC Data Model</span>';
-    wrapper.innerHTML += marked(content);
+    /** create html elment for pdf - convert marked object to html*/
+    const readMeContent = document.createElement('div');
+    readMeContent.innerHTML += '<span>Understanding the ICDC Data Model</span>';
+    readMeContent.innerHTML += marked(content);
     
+    /** set pdf fileneam */
     const fileName = createFileName('read_me', 'ICDC_Data_Model-');
-    const opt = {
+    /** configure pdf increase pixel of the PDF*/
+    const options = {
       margin:       1,
       filename:     fileName,
       image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 1.5 },
-      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      html2canvas:  {
+        dpi: 192,
+        scale:4,
+        letterRendering: true,
+        useCORS: true
+      },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
 
     html2pdf()
-      .set(opt)
-      .from(wrapper)
+      .set(options)
+      .from(readMeContent)
       .toPdf()
       .get('pdf')
       .then((pdf) => {
         const totalPages = pdf.internal.getNumberOfPages();
         const pageSz = pdf.internal.pageSize;
+        const pgHeight = pageSz.getHeight();
+        const pgWidth = pageSz.getWidth();
+
+        /** set header and footer content for each pdf page
+         * page height and width is used for assigning header and footer element
+         * adjust height & width for footer
+         * adjust height & width for header
+         */
         for (let i = 1; i <= totalPages; i++) {
           pdf.setPage(i);
           pdf.setFont('Source Sans Pro,sans-serif');
           pdf.setFontSize(8);
           pdf.setTextColor(0);
-          pdf.text(pageSz.getWidth() - 2, pageSz.getHeight() - 0.5, `${date} | ${i}`);
-          pdf.text(pageSz.getWidth() - 7.5, pageSz.getHeight() - 0.5, `CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL`);
-          pdf.addImage(footer_line, 'JPEG', pageSz.getWidth() - 7.5, pageSz.getHeight() - 0.75, 6.5, 0.05);
+          pdf.text(pgWidth - 2, pgHeight - 0.5, `${date} | ${i}`);
+          pdf.text(pgWidth - 7.5, pgHeight - 0.5, `CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL`);
+          pdf.addImage(footer_line, 'JPEG', pgWidth - 7.5, pgHeight - 0.75, 6.5, 0.05);
         }
     }).save();
 }
