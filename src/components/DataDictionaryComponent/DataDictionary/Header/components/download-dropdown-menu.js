@@ -11,7 +11,6 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { pdf } from '@react-pdf/renderer';
-import DownloadSVG from '../assets/download.svg';
 import LandscapePDFDoc from '../../LandscapeNodePDF/Pdf';
 import PdfDocument from '../../NodePDF/Pdf';
 import { category2NodeList, sortByCategory } from '../../utils/download-helper-functions';
