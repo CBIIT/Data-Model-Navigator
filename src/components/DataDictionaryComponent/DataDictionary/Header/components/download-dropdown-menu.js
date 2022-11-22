@@ -97,9 +97,8 @@ const theme = {
 
 const generatePdfDocument = async (object, config, setLoading, fileName) => {
   const document = (config.type === 'document') ? object : [object];
-
   const blob = await pdf((
-    config.landscape ? <LandscapePDFDoc nodes={document} /> : <PdfDocument nodes={document} />
+    config.landscape ? <LandscapePDFDoc nodes={document} icon={config.catagoryIcon} /> : <PdfDocument nodes={document} />
   )).toBlob();
   setLoading(false);
   saveAs(blob, `${fileName}.pdf`);

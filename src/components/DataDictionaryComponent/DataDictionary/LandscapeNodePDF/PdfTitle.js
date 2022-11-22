@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import { useDispatch, useSelector } from 'react-redux';
 import renderSvgElement from './RenderSvg';
 import { getCategoryColor } from '../NodeCategories/helper';
 import { capitalizeFirstLetter } from '../../utils';
@@ -125,24 +124,13 @@ const styles = StyleSheet.create({
 });
 
 const createStyle = (classes, categoryColor) => ({ ...classes, ...{ borderLeft: `5px solid ${categoryColor}` } });
-const getIconUrl = (path, node) => {
-  console.log(path);
-  console.log(node);
-  return `${path}/Pdf/${node}`
-} 
 const PdfTitle = (node) => {
-  const config = useSelector((state) => (state.submission && state.submission.pdfConfig
-    ? state.submission.pdfConfig : {}));
-  // const svgNode = document.querySelector(`svg.${node.category}`);
-  // const SvgIcon = renderSvgElement(svgNode);
-  const url = getIconUrl(config.iconUrl, capitalizeFirstLetter(node.category));
-  console.log(config);
   const categoryColor = getCategoryColor(node.category);
   return (
     <View>
       <View style={createStyle(styles.categoryStyle, categoryColor)}>
         {/* {SvgIcon} */}
-        <Image style={styles.icon} src={url} />
+        <Image style={styles.icon} src={node.iconUrl} />
         <Text style={{ color: categoryColor, ...styles.categoryHeader }}>
           {capitalizeFirstLetter(node.category)}
         </Text>
