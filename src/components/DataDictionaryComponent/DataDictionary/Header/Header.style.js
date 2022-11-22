@@ -38,4 +38,15 @@ export default () => ({
     height: '3px',
     backgroundColor: '#686F7F',
   },
+  readMeBtnRoot: {
+    height: '38px',
+    width: '137px',
+    background: '#0D71A3',
+  },
+  readMeBtnLabel: {
+    color: '#FFF',
+    fontFamily: 'Lato',
+    fontSize: '16px',
+    lineHeight: '22px',
+  },
 });
