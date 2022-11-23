@@ -33,7 +33,7 @@ const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/deve
 const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
 
 const readMeConfig=  {
-  readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
+  readMeUrl: 'https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/dev/data-model-navigator/header.md',
   readMeTitle: 'Understanding the ICDC Data Model',
 };
 

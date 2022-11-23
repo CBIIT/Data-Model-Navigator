@@ -24,8 +24,6 @@ import footer_line from './footer_line.png';
 const date = new Date().toLocaleString('en-us', { month: 'long', year: 'numeric', day: 'numeric' });
 
 export const downloadFile = async (title, content) => {
-  const cossnt = await marked(content);
-    console.log(cossnt);
     // const blob = await pdf((
     //   <PdfTemplate
     //     title={title}
@@ -43,7 +41,8 @@ export const downloadFile = async (title, content) => {
   const downloadMarkdownPdf = async (title, content) => {
     /** create html elment for pdf - convert marked object to html*/
     const readMeContent = document.createElement('div');
-    readMeContent.innerHTML += '<span>Understanding the ICDC Data Model</span>';
+    const titleEl = `<span style='color: #4D6787'>${title}</span>`;
+    readMeContent.innerHTML += titleEl;
     readMeContent.innerHTML += marked(content);
     
     /** set pdf fileneam */
