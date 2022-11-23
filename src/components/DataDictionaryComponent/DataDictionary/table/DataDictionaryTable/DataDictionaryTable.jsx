@@ -85,8 +85,8 @@ const DataDictionaryTable = ({
   const { nodesCount, propertiesCount } = getNodePropertyCount(dictionary);
   return (
     <>
-      <DownloadLinkWrapper>
-        <p>
+      {/* <DownloadLinkWrapper> */}
+        <p className={classes.tableInfo}>
           <span>{dictionaryName}</span>
           <span> dictionary has </span>
           <span>{nodesCount}</span>
@@ -94,12 +94,12 @@ const DataDictionaryTable = ({
           <span>{propertiesCount}</span>
           <span> properties </span>
         </p>
-        <DownloadButton
+        {/* <DownloadButton
           config={{ ...pdfDownloadConfig, type: 'document' }}
           documentData={sortByCategory(c2nl, dictionary)}
           fileName={createFileName('', pdfDownloadConfig.prefix)}
-        />
-      </DownloadLinkWrapper>
+        /> */}
+      {/* </DownloadLinkWrapper> */}
       <div className={classes.tableBody}>
         {Object.keys(c2nl).map((category) => (
           <DataDictionaryCategory
@@ -132,8 +132,16 @@ DataDictionaryTable.defaultProps = {
 
 const styles = () => ({
   tableBody: {
-    border: '0.75px solid #c1c1c1',
-    padding: '24px 23px',
+  },
+  tableInfo: {
+    marginTop: '0',
+    marginBottom: '0',
+    marginLeft: '15px',
+    color: '#32495A',
+    fontFamily: 'Lato',
+    fontSize: '14px',
+    letterSpacing: '0',
+    lineHeight: '26.06px',
   },
 });
 
