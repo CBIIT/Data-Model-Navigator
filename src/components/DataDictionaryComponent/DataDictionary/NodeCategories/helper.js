@@ -259,7 +259,6 @@ export const getCategoryStyle = (category) => {
   if (nodeCategoryList[category]) {
     return nodeCategoryList[category];
   }
-
   return defaultCategory.color;
 };
 
@@ -275,6 +274,5 @@ export const getLegendCategoryIconSVG = (category) => {
   if (nodeLgCategoryList[category]) {
     return nodeLgCategoryList[category].icon;
   }
-
   return defaultCategory.icon;
 };

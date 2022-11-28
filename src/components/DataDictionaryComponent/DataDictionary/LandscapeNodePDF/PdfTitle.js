@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import renderSvgElement from './RenderSvg';
 import { getCategoryColor } from '../NodeCategories/helper';
 import { capitalizeFirstLetter } from '../../utils';
 import { FontRegistry } from './util';
+// import logo from '../NodeCategories/icons/Pdf/Administrative.png';
 
 const styles = StyleSheet.create({
   row: {
@@ -115,18 +116,21 @@ const styles = StyleSheet.create({
     height: '13px',
     fontFamily: FontRegistry('NunitoNormal'),
   },
+  icon: {
+    width: "30px",
+    height : "30px",
+    backgroundColor: '#ffffff'
+  }
 });
 
 const createStyle = (classes, categoryColor) => ({ ...classes, ...{ borderLeft: `5px solid ${categoryColor}` } });
-
 const PdfTitle = (node) => {
-  const svgNode = document.querySelector(`svg.${node.category}`);
-  const SvgIcon = renderSvgElement(svgNode);
   const categoryColor = getCategoryColor(node.category);
   return (
     <View>
       <View style={createStyle(styles.categoryStyle, categoryColor)}>
-        {SvgIcon}
+        {/* {SvgIcon} */}
+        <Image style={styles.icon} src={node.iconUrl} />
         <Text style={{ color: categoryColor, ...styles.categoryHeader }}>
           {capitalizeFirstLetter(node.category)}
         </Text>

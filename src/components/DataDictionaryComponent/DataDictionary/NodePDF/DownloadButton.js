@@ -72,11 +72,10 @@ const DownloadButton = ({
     const text = `${line}\r\n${node.title}`;
     return text;
   };
-
   const generatePdfDocument = async (object) => {
     const document = (config.type === 'document') ? object : [object];
     const blob = await pdf((
-      config.landscape ? <LandscapePDFDoc nodes={document} /> : <PdfDocument nodes={document} />
+      config.landscape ? <LandscapePDFDoc nodes={document} icon={config.catagoryIcon} /> : <PdfDocument nodes={document} />
     )).toBlob();
     setLoading(false);
     saveAs(blob, `${fileName}.pdf`);

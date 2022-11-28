@@ -29,27 +29,32 @@ const styles = StyleSheet.create({
 
 const PdfDocument = ({
   nodes,
-}) => (
-  <Document style={styles.doc}>
-    <Page style={styles.page} size="A4" orientation="landscape">
-      <PdfHeader />
-      <View style={styles.body}>
-        {nodes.map((node) => (
-          <View style={styles.tableContainer}>
-            <PdfTitle
-              title={node.id}
-              nodeClass={node.class}
-              assignment={node.assignment}
-              desc={node.desc}
-              category={node.category} />
-            <div style={styles.spacer} />
-            <PdfTable node={node} categoryColor={getCategoryColor(node.category)} />
-          </View>
-        ))}
-      </View>
-      <PdfFooter />
-    </Page>
-  </Document>
-);
+  icon,
+}) => {
+  const {url, type} = icon;
+  return (
+    <Document style={styles.doc}>
+      <Page style={styles.page} size="A4" orientation="landscape">
+        <PdfHeader />
+        <View style={styles.body}>
+          {nodes.map((node) => (
+            <View style={styles.tableContainer}>
+              <PdfTitle
+                title={node.id}
+                nodeClass={node.class}
+                assignment={node.assignment}
+                desc={node.desc}
+                iconUrl={`${url}${node.category}${type}`}
+                category={node.category} />
+              <div style={styles.spacer} />
+              <PdfTable node={node} categoryColor={getCategoryColor(node.category)} />
+            </View>
+          ))}
+        </View>
+        <PdfFooter />
+      </Page>
+    </Document>
+  );
+}
 
 export default PdfDocument;
