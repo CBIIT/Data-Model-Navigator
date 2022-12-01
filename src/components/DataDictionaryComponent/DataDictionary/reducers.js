@@ -191,6 +191,46 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         secondHighlightingNodeID: null,
       };
     }
+    case 'TABLE_EXPAND_NODES': {
+      const { nodeState, nodeID } = action;
+      let newHighlightingNode = null;
+      let expandedNodeIDs = [];
+      if (nodeID) {
+        newHighlightingNode = state.nodes.find((n) => n.id === nodeID);
+        switch (nodeState) {
+          case 'open':
+            if (state.tableExpandNodeID) {
+              if (state.tableExpandNodeID.length) {
+                expandedNodeIDs = [nodeID, ...state.tableExpandNodeID];
+              } else {
+                expandedNodeIDs.push(nodeID);
+              }
+            } else {
+              expandedNodeIDs.push(nodeID);
+            }
+            break;
+          case 'close':
+            if (state.tableExpandNodeID) {
+              if (state.tableExpandNodeID.length) {
+                expandedNodeIDs = [...state.tableExpandNodeID];
+                expandedNodeIDs.splice(
+                  expandedNodeIDs.findIndex((n) => n === nodeID), 1,
+                );
+              }
+            }
+            break;
+          default:
+            break;
+        }
+      }
+
+      return {
+        ...state,
+        tableExpandNodeID: expandedNodeIDs,
+        highlightingNode: newHighlightingNode,
+        secondHighlightingNodeID: null,
+      };
+    }
     case 'SEARCH_SET_IS_SEARCHING_STATUS': {
       return {
         ...state,

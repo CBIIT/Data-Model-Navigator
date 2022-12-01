@@ -86,15 +86,15 @@ const DataDictionaryTable = ({
   return (
     <>
       {/* <DownloadLinkWrapper> */}
-        <p className={classes.tableInfo}>
-          <span>{dictionaryName}</span>
-          <span> dictionary has </span>
-          <span>{nodesCount}</span>
-          <span> nodes and </span>
-          <span>{propertiesCount}</span>
-          <span> properties </span>
-        </p>
-        {/* <DownloadButton
+      <p className={classes.tableInfo}>
+        <span>{dictionaryName}</span>
+        <span> dictionary has </span>
+        <span>{nodesCount}</span>
+        <span> nodes and </span>
+        <span>{propertiesCount}</span>
+        <span> properties </span>
+      </p>
+      {/* <DownloadButton
           config={{ ...pdfDownloadConfig, type: 'document' }}
           documentData={sortByCategory(c2nl, dictionary)}
           fileName={createFileName('', pdfDownloadConfig.prefix)}
