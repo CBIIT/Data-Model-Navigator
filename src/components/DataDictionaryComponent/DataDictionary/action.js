@@ -64,9 +64,16 @@ export const setOverlayPropertyTableHidden = (isHidden) => ({
   isHidden,
 });
 
-export const setExpandNode = (nodeID) => ({
+export const setExpandNode = (nodeID, action) => ({
   type: 'TABLE_EXPAND_NODE',
   nodeID,
+  action,
+});
+
+export const setExpandNodes = (nodeID, nodeState) => ({
+  type: 'TABLE_EXPAND_NODES',
+  nodeID,
+  nodeState,
 });
 
 export const setGraphView = (isGraphView) => ({

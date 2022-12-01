@@ -1,8 +1,12 @@
 import React from 'react';
 import {
+  Button,
   Grid,
   withStyles,
 } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import styles from './NodeViewComponent.style';
 import { capitalizeFirstLetter, createFileName } from '../../../../utils';
 import IconDownloadPDF from '../../icons/icon_download_PDF.svg';
@@ -22,6 +26,8 @@ const NodeViewComponent = ({
   matchedResult,
   pdfDownloadConfig,
   fileManifestConfig,
+  propertyCount,
+  isExpanded,
 }) => {
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
@@ -58,87 +64,89 @@ const NodeViewComponent = ({
   };
 
   return (
-    <>
-      <Grid container>
-        <Grid item lg={3} md={3} sm={3} xs={12}>
-          <span className={classes.nodeTitle}>
-            {getTitle()}
-            {/* {capitalizeFirstLetter(node.title)} */}
-            {/* <i className={`g3-icon g3-icon--chevron-${this.props.expanded
-              ? 'down' : 'right'} ${styles.nodeToggleIcon}`} /> */}
-          </span>
-        </Grid>
-        <Grid item lg={9} md={9} sm={9} xs={9} className={classes.nodeDescription}>
-          <span>
-            {(node.desc) ? getDescription(node.desc) : description}
-          </span>
-        </Grid>
-        <Grid item lg={3} md={3} sm={3} xs={12} />
-        <Grid
-          item
-          lg={4}
-          md={4}
-          sm={4}
-          xs={12}
-          className={classes.nodeAssignmentGroup}
+    <div className={classes.container}>
+      <div className={classes.titleAndDescContainer}>
+        <span className={classes.nodeTitle}>
+          {getTitle()}
+        </span>
+
+        <p className={classes.nodeDescription}>
+          {(node.desc) ? getDescription(node.desc) : description}
+        </p>
+      </div>
+
+      <div className={classes.tagsAndBtnContainer}>
+        <div />
+
+        <div
+          className={classes.tagsAndBtn}
         >
-          { (node.assignment) && (
-          <>
-            <span className={classes.nodeLabel}>
-              <span>
-                Assignment:
+          <Button
+            startIcon={!isExpanded ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+            variant="contained"
+            className={classes.propertyCountBtn}
+          >
+            {propertyCount === 1 ? (
+              <p style={{ fontSize: '12px' }}>
+                {`${propertyCount} property`}
+              </p>
+            ) : (
+              <p style={{ fontSize: '12px' }}>
+                {`${propertyCount} properties`}
+              </p>
+            )}
+          </Button>
+          {/* </div> */}
+
+          <div className={classes.assignmentAndClassTags}>
+            { (node.assignment) && (
+            <>
+              <span className={classes.nodeLabel}>
+                <span>
+                  Assignment:
+                </span>
+                <span className={classes.nodeAssignment}>
+                  {capitalizeFirstLetter(node.assignment)}
+                </span>
               </span>
-              <span className={classes.nodeAssignment}>
-                {capitalizeFirstLetter(node.assignment)}
+            </>
+            )}
+            {(node.class) && (
+            <>
+              <span className={classes.nodeLabel}>
+                Class:
+                <span className={classes.nodeClass}>
+                  {capitalizeFirstLetter(node.class)}
+                </span>
               </span>
-            </span>
-          </>
-          )}
-          {(node.class) && (
-          <>
-            <span className={classes.nodeLabel}>
-              Class:
-              <span className={classes.nodeClass}>
-                {capitalizeFirstLetter(node.class)}
-              </span>
-            </span>
-          </>
-          )}
-        </Grid>
-        <Grid
-          item
-          lg={5}
-          md={5}
-          sm={5}
-          xs={12}
-          className={classes.nodeDownloadButtonGroup}
-        >
-          <div className={classes.buttonWrap}>
+            </>
+            )}
+          </div>
+
+          <ButtonGroup>
             <DownloadButton
               config={{ ...pdfDownloadConfig, type: 'single', image: IconDownloadPDF }}
               documentData={node}
               fileName={createFileName(node.id, pdfDownloadConfig.prefix)}
             />
-          </div>
-          <div className={classes.buttonWrap}>
             {
-              (isTemplate || isFileManifest)
-              && (
-              <DownloadButton
-                config={csvBtnDownloadConfig}
-                documentData={node}
-                template={node.template}
-                isFileManifest={isFileManifest}
-                fileName={isFileManifest
-                  ? createFileName('', fileManifestDownloadSettings.filename_prefix)
-                  : createFileName(node.id, csvBtnDownloadConfig.prefix)}
-              />
-              )
-            }
-          </div>
-        </Grid>
-      </Grid>
-    </>
+               (isTemplate || isFileManifest)
+               && (
+               <DownloadButton
+                 config={csvBtnDownloadConfig}
+                 documentData={node}
+                 template={node.template}
+                 isFileManifest={isFileManifest}
+                 fileName={isFileManifest
+                   ? createFileName('', fileManifestDownloadSettings.filename_prefix)
+                   : createFileName(node.id, csvBtnDownloadConfig.prefix)}
+               />
+               )
+             }
+          </ButtonGroup>
+        </div>
+      </div>
+    </div>
   );
 };
 

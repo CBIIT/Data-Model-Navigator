@@ -7,51 +7,55 @@ import { capitalizeFirstLetter } from '../../../utils';
 import DataDictionaryNode from '../DataDictionaryNode';
 import styles from './DataDictionaryCategory.style';
 
-class DataDictionaryCategory extends React.Component {
-  render() {
-    const { classes, category, highlightingNodeID } = this.props;
-    const styles = getCategoryStyle(category);
-    const IconSVG = styles.icon;
-    const categoryColor = styles.color;
-    const background = styles.background ? styles.background : styles.color;
-    return (
-      <div className={classes.category}>
-        <div
-          className={classes.categoryHead}
-          style={{
-            borderLeftColor: categoryColor,
-            background: background,
-            color: '#ffffff',
-          }}
-        >
-          <IconSVG className={`${classes.categoryIcon} ${category}`} />
-          <span className={classes.title}>
-            {capitalizeFirstLetter(category)}
-          </span>
-        </div>
-        <div
-          className={classes.categoryDivider}
-          style={{ borderLeftColor: categoryColor }}
-        />
-        {
-        this.props.nodes.map(
+const DataDictionaryCategory = ({
+  classes, category,
+  highlightingNodeID,
+  pdfDownloadConfig,
+  onExpandNode,
+  nodes,
+}) => {
+  const categoryStyles = getCategoryStyle(category);
+  const IconSVG = categoryStyles.icon;
+  const categoryColor = categoryStyles.color;
+  const background = categoryStyles.background ? categoryStyles.background : categoryStyles.color;
+
+  return (
+    <div className={classes.category}>
+      <div
+        className={classes.categoryHead}
+        style={{
+          borderLeftColor: categoryColor,
+          background,
+          color: '#ffffff',
+        }}
+      >
+        <IconSVG className={`${classes.categoryIcon} ${category}`} />
+        <span className={classes.title}>
+          {capitalizeFirstLetter(category)}
+        </span>
+      </div>
+      <div
+        className={classes.categoryDivider}
+        style={{ borderLeftColor: categoryColor }}
+      />
+      {
+        nodes.map(
           (node) => (
             <DataDictionaryNode
               node={node}
               key={node.id}
               description={node.description}
-              pdfDownloadConfig={this.props.pdfDownloadConfig}
+              pdfDownloadConfig={pdfDownloadConfig}
               expanded={highlightingNodeID
-                && highlightingNodeID === node.id}
-              onExpandNode={this.props.onExpandNode}
+                && highlightingNodeID.includes(node.id)}
+              onExpandNode={onExpandNode}
             />
           ),
         )
       }
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 DataDictionaryCategory.propTypes = {
   category: PropTypes.string.isRequired,

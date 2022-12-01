@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Button, withStyles } from '@material-ui/core';
 import Styles from './DictionaryStyle';
 import Tab from '../Tab/Tab';
@@ -34,36 +34,36 @@ const DictionaryView = ({
   return (
     <>
       <TabThemeProvider>
-          <div className={classes.container}>
-            <div className={classes.tabItems}>
+        <div className={classes.container}>
+          <div className={classes.tabItems}>
             <Tab
               styleClasses={classes}
               tabItems={tabItems}
               currentTab={currentTab}
               handleTabChange={handleTabChange}
             />
-            </div>
-            <div className={currentTab == 0 ? classes.viewGraphContainer : classes.viewTableContainer}>
-              <TabPanel value={currentTab} index={0}>
-                <div className={classes.graphView}>
-                  {currentTab == 0 && (
-                    <DataDictionaryGraph
-                      onClearSearchResult={handleClearSearchResult}
-                      pdfDownloadConfig={pdfDownloadConfig}
-                  />
-                  )}
-                </div>
-              </TabPanel>
-              <TabPanel value={currentTab} index={1}>
-                <div className={classes.tableView}>
-                  <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
-                </div>
-              </TabPanel>
-            </div>
           </div>
-        </TabThemeProvider>
+          <div className={currentTab == 0 ? classes.viewGraphContainer : classes.viewTableContainer}>
+            <TabPanel value={currentTab} index={0}>
+              <div className={classes.graphView}>
+                {currentTab == 0 && (
+                <DataDictionaryGraph
+                  onClearSearchResult={handleClearSearchResult}
+                  pdfDownloadConfig={pdfDownloadConfig}
+                />
+                )}
+              </div>
+            </TabPanel>
+            <TabPanel value={currentTab} index={1}>
+              <div className={classes.tableView}>
+                <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
+              </div>
+            </TabPanel>
+          </div>
+        </div>
+      </TabThemeProvider>
     </>
-  )
-}
+  );
+};
 
 export default withStyles(Styles)(DictionaryView);

@@ -1,4 +1,29 @@
 export default () => ({
+  container: {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    gap: '2em',
+  },
+  titleAndDescContainer: {
+    display: 'flex',
+  },
+  tagsAndBtnContainer: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    paddingLeft: '96px',
+  },
+  tagsAndBtn: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '79.5%',
+    alignItems: 'center',
+  },
+  assignmentAndClassTags: {
+    display: 'flex',
+    gap: '15px',
+  },
   nodeTitle: {
     width: '260px',
     flexGrow: '0',
@@ -12,61 +37,39 @@ export default () => ({
     lineHeight: '14px',
   },
   nodeDescription: {
-    flexGrow: '3',
-    paddingRight: '21px',
+    paddingRight: '33px',
     fontSize: '14px',
-    lineHeight: '17px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    paddingTop: '10px',
-    paddingLeft: '0',
     color: '#4A4A4A',
     textAlign: 'justify',
+    margin: '0px',
   },
-  nodeAssignmentGroup: {
-    textAlign: 'right',
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '-12.5px',
-    paddingBottom: '8px',
+  propertyCountBtn: {
+    width: '145px',
+    height: '26px',
+    backgroundColor: '#EEF5F7',
   },
   nodeLabel: {
-    marginTop: '10px',
-    float: 'left',
     color: '#8e8e8e',
     fontWeight: '900',
-    marginRight: '5px',
     borderRadius: '100px',
     border: '1px solid #cdcdcd',
-    textAlign: 'center',
-    padding: '2px 12px',
     background: '#fff',
     fontSize: '12px',
-  },
-  nodeClass: {
-    marginLeft: '5px',
-    color: '#2982af',
-    fontWeight: '500',
+    height: '22px',
+    width: '136px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '5px',
   },
   nodeAssignment: {
-    marginLeft: '5px',
     color: '#2982af',
     fontWeight: '500',
   },
-  nodeDownloadButtonGroup: {
-    textAlign: 'right',
-    marginTop: '2em',
-    paddingRight: '1.5em',
-  },
-  buttonWrap: {
-    float: 'right',
-    marginTop: '-8px',
-    '&:last-child': {
-      borderRight: 'none',
-    },
-  },
-  spanHighlight: {
-    color: 'var(--g3-color__highlight-orange)',
-    fontWeight: '600',
+  nodeClass: {
+    color: '#2982af',
+    fontWeight: '500',
   },
 });

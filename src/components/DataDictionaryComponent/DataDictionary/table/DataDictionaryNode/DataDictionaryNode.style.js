@@ -1,5 +1,5 @@
 export default () => ({
-  node : {
+  node: {
     backgroundColor: '#f4f5f5',
     borderRight: '1px solid var(--dictionary-border-color)',
     display: 'flex',
@@ -17,7 +17,7 @@ export default () => ({
       color: 'var(--g3-color__base-blue)',
     },
   },
-  nodeTitle : {
+  nodeTitle: {
     width: '260px',
     flexGrow: '0',
     flexShrink: '0',
@@ -29,12 +29,12 @@ export default () => ({
     fontSize: '15px',
     lineHeight: '14px',
   },
-  nodeFileIcon : {
+  nodeFileIcon: {
     marginRight: '10px',
     position: 'relative',
     top: '3px',
   },
-  nodeToggleIcon : {
+  nodeToggleIcon: {
     marginLeft: '10px',
     position: 'relative',
     top: '3px',
@@ -62,7 +62,7 @@ export default () => ({
     background: '#fff',
     fontSize: '12px',
   },
-  nodeAssignmentGroup : {
+  nodeAssignmentGroup: {
     textAlign: 'right',
   },
   nodeClass: {
@@ -73,23 +73,23 @@ export default () => ({
   nodeClassGroup: {
     paddingLeft: '18px',
   },
-  nodeDownloadButtonGroup : {
+  nodeDownloadButtonGroup: {
     textAlign: 'right',
     marginTop: '15px',
     paddingRight: '15px',
   },
-  downloadGroup : {
+  downloadGroup: {
     display: 'inline',
     flexGrow: '0',
     flexShrink: '0',
     paddingLeft: '5px',
   },
-  buttonWrap : {
+  buttonWrap: {
     float: 'right',
     marginTop: '-8px',
     '&:last-child': {
       borderRight: 'none',
-    }
+    },
   },
   downloadButtonTsv: {
     padding: '0',
@@ -97,18 +97,18 @@ export default () => ({
     border: 'none',
     backgroundColor: 'inherit',
     marginRight: '10px',
-    '&:hover':{
+    '&:hover': {
       cursor: 'pointer',
-    }
+    },
   },
-  downloadButtonGroupLoading : {
+  downloadButtonGroupLoading: {
     opacity: '05',
     color: '#f4f5f5',
     backgroundColor: '#0a4a6d',
     float: 'left',
     width: '400px',
   },
-  downloadButtonPdf : {
+  downloadButtonPdf: {
     height: '30px',
     margin: '5px 6px 0 6px',
     padding: 'unset', /* override g3-button's paddings */
@@ -117,22 +117,20 @@ export default () => ({
     color: 'var(--g3-color__white)',
     textAlign: 'right',
     border: 'none',
-    '&:hover':{
+    '&:hover': {
       cursor: 'pointer',
-    }
-  },
-  loading : {
-    padding: '5px 5px',
-    backgroundColor: '#0b3557',
-    color: '#fff',
-  },
-  downloadButtonPdf: {
+    },
     '& img': {
       width: '35px',
       marginTop: '-5px',
     },
   },
-  downloadButton:{
+  loading: {
+    padding: '5px 5px',
+    backgroundColor: '#0b3557',
+    color: '#fff',
+  },
+  downloadButton: {
     position: 'relative',
     top: '1px',
     left: '-2px',
@@ -140,7 +138,7 @@ export default () => ({
       cursor: 'pointer',
     },
   },
-  property : {
+  property: {
     backgroundColor: '#fff',
     padding: '10px 18px 18px 23px',
     position: 'relative',
@@ -152,20 +150,4 @@ export default () => ({
     paddingLeft: '17px',
     marginBottom: '8px',
   },
-  propertyClose : {
-    float: 'right',
-    cursor: 'pointer',
-    '&:hover': {
-      color: 'var(--g3-color__black)',
-    },
-    '&:hover $propertyCloseIcon': {
-      backgroundColor: 'var(--g3-color__black)',
-    }
-  },
-  propertyCloseIcon : {
-    position: 'relative',
-    top: '4px',
-    marginRight: '20px',
-    backgroundColor: 'var(--g3-color__gray)',
-  },
-})
+});

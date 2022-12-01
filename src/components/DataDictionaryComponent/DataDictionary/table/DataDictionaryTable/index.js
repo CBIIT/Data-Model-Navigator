@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setExpandNode } from '../../action';
+import { setExpandNode, setExpandNodes } from '../../action';
 import DataDictionaryTable from './DataDictionaryTable';
 
 const ReduxDataDictionaryTable = (() => {
@@ -10,7 +10,7 @@ const ReduxDataDictionaryTable = (() => {
   });
 
   const mapDispatchToProps = (dispatch) => ({
-    onExpandNode: (nodeID) => dispatch(setExpandNode(nodeID)),
+    onExpandNode: (nodeID, nodeState) => dispatch(setExpandNodes(nodeID, nodeState)),
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(DataDictionaryTable);

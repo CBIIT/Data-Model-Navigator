@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // import { PDFDownloadLink } from '@react-pdf/renderer';
 // eslint-disable-next-line no-unused-vars
 import {
-  Grid,
   withStyles,
 } from '@material-ui/core';
 // import Button from '@gen3/ui-component/dist/components/Button';
@@ -16,28 +15,43 @@ import styles from './DataDictionaryNode.style';
 // import PdfDocument from '../../NodePDF';
 import NodeViewComponent from './components/NodeViewComponent';
 
+const NODE_STATE = {
+  OPEN: 'open',
+  CLOSE: 'close',
+};
+
 class DataDictionaryNode extends React.Component {
   notHorizontal = true; // supports landscape orientation
 
   handleClickNode(nodeID) {
-    if (!this.props.expanded) {
-      this.props.onExpandNode(nodeID);
+    const { expanded, onExpandNode } = this.props;
+    if (!expanded) {
+      onExpandNode(nodeID, NODE_STATE.OPEN);
     } else {
-      this.props.onExpandNode(null);
+      onExpandNode(nodeID, NODE_STATE.CLOSE);
     }
   }
 
   handleCloseNode = () => {
-    this.props.onExpandNode(null);
+    const { onExpandNode } = this.props;
+    onExpandNode(null);
   }
 
   handleDownloadTemplate = (e, format) => {
+    const { node } = this.props;
     e.stopPropagation(); // no toggling
-    downloadTemplate(format, this.props.node.id);
+    downloadTemplate(format, node.id);
   }
 
   render() {
-    const { classes, node, pdfDownloadConfig } = this.props;
+    const {
+      classes,
+      node,
+      pdfDownloadConfig,
+      description,
+      expanded,
+    } = this.props;
+    const propertyCount = Object.keys(node.properties).length;
     return (
       <>
         <div
@@ -50,29 +64,22 @@ class DataDictionaryNode extends React.Component {
         >
           <NodeViewComponent
             node={node}
-            description={this.props.description}
+            isExpanded={expanded}
+            description={description}
             pdfDownloadConfig={pdfDownloadConfig}
+            propertyCount={propertyCount}
           />
         </div>
         {
-          this.props.expanded && (
+          expanded && (
             <div className={classes.property}>
-              <span
-                className={classes.propertyClose}
-                onClick={this.handleCloseNode}
-                onKeyPress={this.handleCloseNode}
-                role="button"
-                tabIndex={0}
-              >
-                <i className={`${classes.propertyCloseIcon} g3-icon g3-icon--sm g3-icon--cross`} />
-              </span>
               {
                 this.notHorizontal && (
                   <div className={classes.propertySummary}>
                     <i>
                       <span>{node.title}</span>
                       <span> has </span>
-                      <span>{Object.keys(node.properties).length}</span>
+                      <span>{propertyCount}</span>
                       <span> properties. </span>
                     </i>
                   </div>
