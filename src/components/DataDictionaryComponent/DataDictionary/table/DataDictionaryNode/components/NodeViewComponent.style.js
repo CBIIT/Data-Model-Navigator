@@ -17,7 +17,7 @@ export default () => ({
   tagsAndBtn: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '79.5%',
+    width: '82%',
     alignItems: 'center',
   },
   assignmentAndClassTags: {
