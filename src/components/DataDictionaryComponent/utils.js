@@ -2,6 +2,7 @@ import * as d3 from 'd3-scale';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { category2NodeList } from './DataDictionary/utils/download-helper-functions';
+import { fileManifestDownload } from '../../config/file-manifest-config';
 
 // import { submissionApiPath } from './localconf';
 
@@ -307,6 +308,23 @@ export const convertToTSV = (node) => {
   Object.keys(node.properties).forEach((key) => {
     line += ('\t').concat(`${key}`);
   });
+  const text = `${line}\r\n${node.title}`;
+  return text;
+};
+
+export const isFileManifest = (node) => node.id === 'file';
+
+export const generateFileManifest = (node) => {
+  let line = tsvMiddleware(node);
+
+  const arr = Object.entries(node.properties);
+  const mergedArr = arr.concat(fileManifestDownload);
+  mergedArr.forEach(([key, value]) => {
+    if (value.src !== 'Loader-derived') {
+      line += ('\t').concat(`${key}`);
+    }
+  });
+
   const text = `${line}\r\n${node.title}`;
   return text;
 };

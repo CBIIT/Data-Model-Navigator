@@ -11,11 +11,14 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { pdf } from '@react-pdf/renderer';
+import { node } from 'prop-types';
 import LandscapePDFDoc from '../../LandscapeNodePDF/Pdf';
 import PdfDocument from '../../NodePDF/Pdf';
 import { category2NodeList, sortByCategory } from '../../utils/download-helper-functions';
-import { downloadFile } from '../../../ReadMe/ReadMe.component';
-import { convertToTSV, createFileName, generateVocabFullDownload } from '../../../utils';
+import { downloadMarkdownPdf } from '../../../ReadMe/ReadMe.component';
+import {
+  convertToTSV, createFileName, generateFileManifest, generateVocabFullDownload, isFileManifest,
+} from '../../../utils';
 
 const DOWNLOADS = 'Available Downloads';
 const FILE_TYPE_FULL_DICTIONARY = 'Data Dictionary (PDF)';
@@ -115,12 +118,24 @@ const DownloadFileTypeBtn = ({
   const downloadAllTemplates = () => {
     // eslint-disable-next-line no-unused-vars
     const fullDictionaryTemplates = Object.fromEntries(Object.entries(fullDictionary).filter(([_key, value]) => value.template === 'Yes'));
-    const nodesValueArray = Object.values(fullDictionary);
+    const nodesValueArray = Object.values(fullDictionaryTemplates);
     const nodesKeyArray = Object.keys(fullDictionaryTemplates);
-    const nodesTSV = nodesValueArray.map((node) => node.template === 'Yes' && convertToTSV(node));
+    const nodesTSV = nodesValueArray.map(
+      (elem) => (isFileManifest(elem) ? {
+        type: 'file-manifest',
+        content: generateFileManifest(elem),
+      } : {
+        type: 'template',
+        content: convertToTSV(elem),
+      }
+      ),
+    );
 
     const zip = new JSZip();
-    nodesTSV.forEach((nodeTSV, index) => zip.file(`${createFileName(nodesKeyArray[index], 'ICDC_Data_Loading_Template-')}.tsv`, nodeTSV));
+    const titlePrefix = (nodeTSV) => (nodeTSV.type === 'file-manifest'
+      ? 'ICDC_File_Transfer_Manifest' : 'ICDC_Data_Loading_Template-');
+    const nodeName = (name) => (name === 'file' ? '' : name);
+    nodesTSV.forEach((nodeTSV, index) => zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV))}.tsv`, nodeTSV.content));
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
       saveAs(thisContent, createFileName('', 'ICDC_Data_Loading_Templates'));
@@ -132,7 +147,7 @@ const DownloadFileTypeBtn = ({
       case FILE_TYPE_FULL_DICTIONARY:
         return downloadFullDictionaryPdf();
       case FILE_TYPE_README:
-        return downloadFile(readMeConfig.readMeTitle, readMeContent);
+        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent);
       case FILE_TYPE_TEMPLATES:
         return downloadAllTemplates();
       case FILE_TYPE_CONTROLLED_VOCAB_TSV:

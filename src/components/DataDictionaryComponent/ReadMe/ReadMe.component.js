@@ -38,7 +38,7 @@ const date = new Date().toLocaleString('en-us', { month: 'long', year: 'numeric'
    * 2. uses html2pdf library to convert html to pdf
    * all the html style from marked down file will be reflected on PDF
    */
-const downloadMarkdownPdf = async (title, content) => {
+export const downloadMarkdownPdf = async (title, content) => {
   /** create html elment for pdf - convert marked object to html */
   const readMeContent = document.createElement('div');
   const titleEl = `<span style='color: #4D6787'>${title}</span>`;
