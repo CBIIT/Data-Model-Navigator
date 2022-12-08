@@ -13,6 +13,7 @@ export default () => ({
     paddingRight: '10px',
     fontWeight: '900',
     fontSize: '18px',
+    height: '40px',
     borderLeft: '5px solid var(--dictionary-border-color)',
     /* box-shadow: inset -2px -4px 0 -2px var(--dictionary-border-color)', */
   },
@@ -39,7 +40,14 @@ export default () => ({
     fontSize: '19px',
     fontWeight: '500',
     letterSpacing: '0',
-    lineHeight: '0.7',
+    lineHeight: '3',
+    marginLeft: '10px',
     verticalAlign: 'text-bottom',
+    height: '40px',
+    lineHeight: '2.5',
+    paddingLeft: '40px',
+  },
+  categoryIcon: {
+    float: 'left',
   }
 });

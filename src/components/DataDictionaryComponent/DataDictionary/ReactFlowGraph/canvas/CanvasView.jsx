@@ -8,6 +8,7 @@ import ReactFlow, {
     useNodesState,
     useEdgesState,
 } from 'reactflow';
+import './assets/style.css';
 import NodeView from '../node/NodeView';
 
 import { nodes as initialNodes, edges as initialEdges } from './initial-elements';
