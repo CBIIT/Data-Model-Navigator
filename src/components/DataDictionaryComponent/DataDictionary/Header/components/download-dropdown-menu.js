@@ -58,7 +58,8 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     '&:focus': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: '#0F4C91',
+      color: 'white',
       '& .MuiListItemText-primary': {
         color: theme.palette.common.white,
       },
@@ -174,7 +175,7 @@ const DownloadFileTypeBtn = ({
 
   return (
     <>
-      <ButtonGroup variant="contained">
+      <ButtonGroup variant="contained" classes={{ root: classes.btnGrpRoot }}>
         <Button
           classes={{
             root: classes.availableDownloadDropdownBtn,
@@ -217,18 +218,21 @@ const DownloadFileTypeBtn = ({
 };
 
 const styles = () => ({
+  btnGrpRoot: {
+    borderRadius: '10px',
+  },
   availableDownloadDropdownBtn: {
     width: '195px',
     height: '38px',
   },
   availableDownloadBtn: {
     width: '44px',
-    backgroundColor: '#0D71A3',
+    backgroundColor: '#0F4C91',
     '&:hover': {
-      backgroundColor: '#0D71A3',
+      backgroundColor: '#0F4C91',
     },
     '&:disabled': {
-      backgroundColor: '#0D71A3',
+      backgroundColor: '#B695C0',
     },
   },
   availableDownloadDropdownBtnLabel: {
