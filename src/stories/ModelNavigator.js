@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
-import { storiesOf } from '@storybook/react';
+// import { storiesOf } from '@storybook/react';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import _ from 'lodash';
 import store from '../store';
-import Header from '../components/headers';
 // import AutoComplete from '../stubs/autocomplete';
 // import init from '../components/DataDictionaryComponent/dictionaryController';
 import ReduxDataDictionary from '../components/DataDictionaryComponent/DataDictionary/ReduxDataDictionary';
@@ -21,8 +20,6 @@ const nihLogoImg = {
   marginLeft: '9px',
 };
 
-storiesOf('Header', module)
-  .add('Header default', () => <Header alt="hello" homeLink="https://www.google.com" />);
 
 // import store from '../../store';
 // import env from '../../utils/env';
@@ -33,7 +30,7 @@ const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/deve
 const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
 
 const readMeConfig=  {
-  readMeUrl: 'https://raw.githubusercontent.com/CBIIT/icdc-readMe-content/dev/data-model-navigator/header.md',
+  readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
   readMeTitle: 'Understanding the ICDC Data Model',
 };
 
@@ -281,13 +278,13 @@ const ModelExplorer = () => {
   return <ReduxDataDictionary pdfDownloadConfig={pdfDownloadConfig} />;
 }
 
-storiesOf('Data Explorer', module)
-  .add('Explorer', () =>
+const ModelNavigator = () =>
   (
     <CustomThemeProvider>
       <Provider store={store}>
         <ModelExplorer  />
       </Provider>
     </CustomThemeProvider>
-  )
-);
+  );
+
+export default ModelNavigator;

@@ -6,6 +6,7 @@ import TabPanel from '../Tab/TabPanel';
 import TabThemeProvider from '../Tab/TabThemeConfig';
 import DataDictionaryGraph from '../graph/DataDictionaryGraph';
 import ReduxDataDictionaryTable from '../table/DataDictionaryTable';
+import CanvasView from '../ReactFlowGraph/canvas/CanvasView';
 
 const tabItems = [
   {
@@ -16,6 +17,11 @@ const tabItems = [
   {
     index: 1,
     label: 'Table View',
+    value: 'table_view',
+  },
+  {
+    index: 2,
+    label: 'React Flow',
     value: 'table_view',
   },
 ];
@@ -57,6 +63,11 @@ const DictionaryView = ({
             <TabPanel value={currentTab} index={1}>
               <div className={classes.tableView}>
                 <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
+              </div>
+            </TabPanel>
+            <TabPanel value={currentTab} index={2}>
+              <div className={classes.tableView}>
+                <CanvasView />
               </div>
             </TabPanel>
           </div>

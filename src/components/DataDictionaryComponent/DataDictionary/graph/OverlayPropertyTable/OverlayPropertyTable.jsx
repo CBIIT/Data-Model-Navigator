@@ -15,7 +15,7 @@ import {
 
 import { SearchResultItemShape } from '../../utils';
 import { capitalizeFirstLetter, createFileName } from '../../../utils';
-import { getCategoryColor, getCategoryIconSVG } from '../../NodeCategories/helper';
+import { getCategoryColor, tableIconUrl } from '../../NodeCategories/helper';
 import DataDictionaryPropertyTable from '../../table/DataDictionaryPropertyTable';
 import styles from './OverlayPropertyTable.style';
 import NodeViewComponent from '../../table/DataDictionaryNode/components/NodeViewComponent';
@@ -76,9 +76,9 @@ class OverlayPropertyTable extends React.Component {
       hidden,
     } = this.props;
     if (!node || hidden) return (<></>);
-    const IconSVG = getCategoryIconSVG(node.category);
+    // const IconSVG = getCategoryIconSVG(node.category);
     // eslint-disable-next-line no-console
-    const searchedNodeNotOpened = isSearchMode && !this.props.isSearchResultNodeOpened;
+    // const searchedNodeNotOpened = isSearchMode && !this.props.isSearchResultNodeOpened;
     const needHighlightSearchResult = isSearchMode;
     // const expanded = true;
     const categoryColor = getCategoryColor(node.category);
@@ -92,7 +92,7 @@ class OverlayPropertyTable extends React.Component {
                 className={classes.category}
                 style={{ borderLeftColor: categoryColor }}
               >
-                <IconSVG className={`${classes.categoryIcon} ${node.category}`} />
+                <img src={`${tableIconUrl}${node.category}.svg`} alt="icon" className={`${classes.categoryIcon} ${node.category}`} />
                 <h4 style={{ color: categoryColor }} className={classes.categoryText}>{capitalizeFirstLetter(node.category)}</h4>
                 {/* {
                   isSearchMode && (

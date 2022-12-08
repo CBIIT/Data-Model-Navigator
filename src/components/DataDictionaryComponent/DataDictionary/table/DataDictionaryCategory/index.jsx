@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import { getCategoryStyle } from '../../NodeCategories/helper';
+import { getCategoryStyle, tableIconUrl } from '../../NodeCategories/helper';
 import { capitalizeFirstLetter } from '../../../utils';
 import DataDictionaryNode from '../DataDictionaryNode';
 import styles from './DataDictionaryCategory.style';
@@ -15,7 +15,7 @@ const DataDictionaryCategory = ({
   nodes,
 }) => {
   const categoryStyles = getCategoryStyle(category);
-  const IconSVG = categoryStyles.icon;
+  // const IconSVG = categoryStyles.icon;
   const categoryColor = categoryStyles.color;
   const background = categoryStyles.background ? categoryStyles.background : categoryStyles.color;
 
@@ -29,10 +29,12 @@ const DataDictionaryCategory = ({
           color: '#ffffff',
         }}
       >
-        <IconSVG className={`${classes.categoryIcon} ${category}`} />
-        <span className={classes.title}>
-          {capitalizeFirstLetter(category)}
-        </span>
+        <img src={`${tableIconUrl}${category}.svg`} alt="icon" className={classes.categoryIcon}/>
+        <div className={classes.title}>
+          <span>
+            {capitalizeFirstLetter(category)}
+          </span>
+        </div>
       </div>
       <div
         className={classes.categoryDivider}

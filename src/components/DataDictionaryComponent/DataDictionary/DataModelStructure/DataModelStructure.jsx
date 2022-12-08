@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import Button from '@gen3/ui-component/dist/components/Button';
 import Dropdown from '@gen3/ui-component/dist/components/Dropdown';
-import { getGraphCategoryIconSVG } from '../NodeCategories/helper';
+// import { getGraphCategoryIconSVG } from '../NodeCategories/helper';
 import { downloadMultiTemplate } from '../utils';
 import { intersection } from '../../utils';
 import styles from './DataModelStructure.style';
@@ -67,7 +67,6 @@ class DataModelStructure extends React.Component {
               const {
                 nodeID, nodeIDsBefore, linksBefore, category,
               } = entry;
-              const IconSVG = getGraphCategoryIconSVG(category);
               const lastNodeModifier = (i === dataModelStructure.length - 1)
                 ? classes.node_name__last : '';
               return (
@@ -98,7 +97,7 @@ class DataModelStructure extends React.Component {
                     )
                   }
                   <div className={classes.node}>
-                    <IconSVG className={classes.icon} />
+                  <img src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/data_model_pdf_icons/icdc/DMN/table/default.svg" alt="icon" className={classes.icon} />
                     <span className={`${classes.nodeName} ${lastNodeModifier}`}>
                       {nodeID}
                     </span>

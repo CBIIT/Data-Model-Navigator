@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core';
-import { getLegendCategoryIconSVG, getCategoryColor } from '../../NodeCategories/helper';
+import { Icon, withStyles } from '@material-ui/core';
+import { legendIconUrl } from '../../NodeCategories/helper';
 import relationshipSvg from '../../NodeCategories/icons/Legend/lg_relationship_links.svg';
 import toggleSvg from '../../NodeCategories/icons/Legend/lg_link.svg';
 import Styles from './LegendStyle';
@@ -15,14 +15,15 @@ const Legend = ({
 
   const categoryListComponent = categoryItems.map((category) => {
     // const categoryColor = getCategoryColor(category);
-    const IconSvg = getLegendCategoryIconSVG(category);
+    // const IconSvg = getLegendCategoryIconSVG(category);
+    const imgUrl = `${legendIconUrl}${category}.svg`;
     return (
       <div
         key={category}
         className={classes.category}
       >
         <div className={classes.categoryIcon}>
-            <IconSvg/>
+          <img src={imgUrl} alt="icon"/>
         </div>
         <span className={classes.text}>{capitalizeFirstLetter(category)}</span>
       </div>

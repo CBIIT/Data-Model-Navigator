@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getGraphCategoryIconSVG } from '../../NodeCategories/helper';
+import { table } from '../../NodeCategories/helper';
 import { MatchedIndicesShape } from '../../utils';
 import { getNodeTitleSVGFragment } from '../../highlightHelper';
 import './GraphNode.css';
@@ -34,7 +34,6 @@ class GraphNode extends React.Component {
       ? 'graph-node--clickable' : 'graph-node--not-clickable';
     const nodeIsCurrentHighlightingClassModifier = this.props.isHighlightingNode
       ? 'graph-drawer__node--current-highlighting' : '';
-    const IconSVG = getGraphCategoryIconSVG(this.props.node.type);
     return (
       <g
         ref={this.svgElement}
@@ -75,7 +74,7 @@ class GraphNode extends React.Component {
             transform={`translate(${-this.props.node.iconRadius}, ${-this.props.node.iconRadius})`}
           >
             {
-              IconSVG ? <IconSVG /> : (
+              (table + 'default.svg') ? <img src={table + `${this.props.node.names}.svg`} alt="icon" /> : (
                 <circle
                   cx={this.props.node.iconRadius}
                   cy={this.props.node.iconRadius}
