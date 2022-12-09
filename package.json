@@ -10,7 +10,7 @@
     "clean": "rimraf lib dist es coverage",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --copy-files",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --copy-files",
-    "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files",
+    "build": "npm run build:commonjs && npm run build:es",
     "app-build": "webpack",
     "start": "webpack serve --mode production --port 9090",
     "storybook": "start-storybook -p 9006",
