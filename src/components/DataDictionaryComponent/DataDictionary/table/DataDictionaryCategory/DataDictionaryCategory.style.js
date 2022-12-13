@@ -13,7 +13,6 @@ export default () => ({
     paddingRight: '10px',
     fontWeight: '900',
     fontSize: '18px',
-    height: '40px',
     borderLeft: '5px solid var(--dictionary-border-color)',
     /* box-shadow: inset -2px -4px 0 -2px var(--dictionary-border-color)', */
   },
