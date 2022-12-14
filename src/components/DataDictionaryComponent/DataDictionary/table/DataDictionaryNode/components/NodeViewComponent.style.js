@@ -24,6 +24,12 @@ export default () => ({
     display: 'flex',
     gap: '15px',
   },
+  overlaySpacer: {
+    width: '74px',
+  },
+  spacer: {
+    width: '45px'
+  },
   nodeTitle: {
     width: '260px',
     flexGrow: '0',

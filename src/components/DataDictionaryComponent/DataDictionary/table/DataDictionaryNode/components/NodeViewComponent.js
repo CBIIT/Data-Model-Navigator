@@ -77,7 +77,7 @@ const NodeViewComponent = ({
       </div>
 
       <div className={classes.tagsAndBtnContainer}>
-        <div />
+        <div className={isOverlay ? classes.overlaySpacer : classes.spacer} />
 
         <div
           className={classes.tagsAndBtn}
