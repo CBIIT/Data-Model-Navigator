@@ -41,7 +41,11 @@ const date = new Date().toLocaleString('en-us', { month: 'long', year: 'numeric'
 export const downloadMarkdownPdf = async (title, content) => {
   /** create html elment for pdf - convert marked object to html */
   const readMeContent = document.createElement('div');
-  const titleEl = `<span style='color: #4D6787'>${title}</span>`;
+  /** add header logo on first page */
+  const headerLogo = `<img src='${nihLogo}' height="50px" width="400px"  alt='logo' />
+  <br> <hr style="height:3px" color="#173554" />`;
+  readMeContent.innerHTML += headerLogo;
+  const titleEl = `<br><span style='color: #4D6787'>${title}</span>`;
   readMeContent.innerHTML += titleEl;
   readMeContent.innerHTML += marked(content);
 
@@ -85,12 +89,10 @@ export const downloadMarkdownPdf = async (title, content) => {
         pdf.text(pgWidth - 1.75, pgHeight - 0.5, `${date} | ${i}`);
         pdf.text(pgWidth - 7.75, pgHeight - 0.5, 'CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL');
         pdf.addImage(footerLine, 'JPEG', pgWidth - 7.75, pgHeight - 0.75, 7, 0.05);
-
-        /** add header logo on first page */
-        if (i === 1) {
-          pdf.addImage(nihLogo, 'JPEG', pgWidth - 7.75, pgHeight - 10.75, 4, 0.5);
-          pdf.addImage(footerLine, 'JPEG', pgWidth - 7.75, pgHeight - 10.15, 7, 0.05);
-        }
+        // if (i === 1) {
+          // pdf.addImage(nihLogo, 'JPEG', pgWidth - 7.75, pgHeight - 10.75, 4, 0.5);
+          // pdf.addImage(footerLine, 'JPEG', pgWidth - 7.75, pgHeight - 10.15, 7, 0.05);
+        // }
       }
     })
     .save();

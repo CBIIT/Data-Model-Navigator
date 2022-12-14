@@ -247,3 +247,9 @@ export const SearchResultItemShape = PropTypes.shape({
   item: SearchItemShape,
   matches: PropTypes.arrayOf(MatchedItemShape),
 });
+
+// reactflow graph events
+export const onViewChange = (payload) => {
+  localStorage.setItem('reactflowGraphView', JSON.stringify(payload));
+  return payload;
+}

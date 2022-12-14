@@ -16,11 +16,11 @@ import './assets/style.css';
 import NodeView from '../node/NodeView';
 import dagre from 'dagre';
 
-import { nodes as initialNodes, edges as initialEdges } from './initial-elements';
 import Styles from './CanvasStyle';
 import './Canvas.css';
 import { useEffect } from 'react';
 import { useMemo } from 'react';
+import ReduxViewPort from './ReduxViewPort';
 
 const nodeTypes = {
     custom: NodeView,
@@ -64,16 +64,12 @@ const getLayoutedElements = (nodes, edges, nodeInternals, direction = 'TB') => {
     dagreGraph.setGraph({ rankdir: direction });
 
     nodes.forEach((node) => {
-        console.log('node ---><', node);
         if (nodeInternals && nodeInternals.size > 0) {
             const nodeObj = nodeInternals.get(`${node.id}`);
-            console.log('internals', nodeObj);
-
             // dagreGraph.setNode(node.id, { width: node, height });
         } else {
             dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
         }
-
     });
 
     edges.forEach((edge) => {
@@ -96,7 +92,6 @@ const getLayoutedElements = (nodes, edges, nodeInternals, direction = 'TB') => {
 
         return node;
     });
-
     return { nodes, edges };
 };
 
@@ -122,6 +117,7 @@ const AutoFitView = (nodes) => {
     //         setEdges(layoutedEdges);
     //     }
     // }, [flowData])
+    return null;
 }
 
 const CanvasView = ({ classes, dictionary, flowData }) => {
@@ -140,7 +136,7 @@ const CanvasView = ({ classes, dictionary, flowData }) => {
         );
         setNodes(layoutedNodes);
         setEdges(layoutedEdges);
-    }, [flowData])
+    }, [flowData]);
 
     const onConnect = useCallback(
         (params) =>
@@ -156,7 +152,6 @@ const CanvasView = ({ classes, dictionary, flowData }) => {
                 edges,
                 direction
             );
-
             setNodes([...layoutedNodes]);
             setEdges([...layoutedEdges]);
         },
@@ -175,12 +170,14 @@ const CanvasView = ({ classes, dictionary, flowData }) => {
                     onInit={onInit}
                     // attributionPosition="bottom-left"
                     nodeTypes={nodeTypes}
+                    minZoom={0.7}
                     maxZoom={2}
                     fitView
                 >
                     <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' />
                     <Controls position='top-left' />
                     <AutoFitView  />
+                    <ReduxViewPort />
                     <Background color="#aaa" gap={12} />
                 </ReactFlow>
             </ReactFlowProvider>

@@ -2,7 +2,9 @@ import {
   getSearchHistoryItems,
   clearSearchHistoryItems,
   addSearchHistoryItems,
+  onViewChange,
 } from './utils';
+import * as actionTypes from './store/actions/actionTypes';
 
 const ddgraphInitialState = {
   isGraphView: true,
@@ -295,6 +297,12 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         highlightingMatchedNodeOpened: action.opened,
       };
     }
+    case actionTypes.ON_GRAPH_VIEW_CHANGE:
+      const { view } = action;
+      return {
+        ...state,
+        reactFlowView: onViewChange(view),
+      }
     default:
       return state;
   }
