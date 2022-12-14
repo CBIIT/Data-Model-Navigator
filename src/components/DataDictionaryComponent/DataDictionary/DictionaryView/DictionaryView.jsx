@@ -7,8 +7,6 @@ import TabThemeProvider from '../Tab/TabThemeConfig';
 import DataDictionaryGraph from '../graph/DataDictionaryGraph';
 import ReduxDataDictionaryTable from '../table/DataDictionaryTable';
 import CanvasView from '../ReactFlowGraph/canvas/CanvasView';
-import { newCreateNodesAndEdges } from '../../GraphUtils/utils';
-import { useEffect } from 'react';
 
 const tabItems = [
   {
@@ -32,18 +30,9 @@ const DictionaryView = ({
   classes,
   pdfDownloadConfig,
   handleClearSearchResult,
-  dictionary,
 }) => {
   const dictionarySearcherRef = React.useRef();
   const [currentTab, setCurrentTab] = React.useState(0);
-  const graphData = newCreateNodesAndEdges({dictionary}, true, []);
-  const [flowData, setFlowData] =React.useState(graphData)
-  
-  useEffect(() => {
-    const graphData = newCreateNodesAndEdges({dictionary}, true, []);
-    setFlowData(graphData);
-  }, [dictionary])
-
   const handleTabChange = (event, value) => {
     setCurrentTab(value);
   };
@@ -60,7 +49,7 @@ const DictionaryView = ({
               handleTabChange={handleTabChange}
             />
           </div>
-          <div className={currentTab == 0 ? classes.viewGraphContainer : currentTab === 2 ? classes.reactFlowContainer : classes.viewTableContainer}>
+          <div className={currentTab == 0 ? classes.viewGraphContainer : classes.viewTableContainer}>
             <TabPanel value={currentTab} index={0}>
               <div className={classes.graphView}>
                 {currentTab == 0 && (
@@ -77,8 +66,8 @@ const DictionaryView = ({
               </div>
             </TabPanel>
             <TabPanel value={currentTab} index={2}>
-              <div className={classes.graphView}>
-                <CanvasView flowData={flowData} dictionary={dictionary} />
+              <div className={classes.tableView}>
+                <CanvasView />
               </div>
             </TabPanel>
           </div>
