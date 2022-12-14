@@ -132,6 +132,8 @@ class OverlayPropertyTable extends React.Component {
                 isSearchMode={isSearchMode}
                 matchedResult={this.props.matchedResult}
                 pdfDownloadConfig={this.props.pdfDownloadConfig}
+                propertyCount={Object.keys(node.properties).length}
+                isOverlay={true}
               />
             </div>
 

@@ -46,7 +46,7 @@ export default () => ({
     margin: '0px',
   },
   propertyCountBtn: {
-    width: '145px',
+    width: '150px',
     height: '26px',
     backgroundColor: '#EEF5F7',
   },

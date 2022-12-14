@@ -28,6 +28,7 @@ const NodeViewComponent = ({
   fileManifestConfig,
   propertyCount,
   isExpanded,
+  isOverlay,
 }) => {
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
@@ -84,14 +85,17 @@ const NodeViewComponent = ({
           <Button
             startIcon={!isExpanded ? <ExpandMoreIcon /> : <ExpandLessIcon />}
             variant="contained"
-            className={classes.propertyCountBtn}
+            disabled={isOverlay}
+            classes={{
+              root: classes.propertyCountBtn
+            }}
           >
             {propertyCount === 1 ? (
-              <p style={{ fontSize: '12px' }}>
+              <p style={{ fontSize: '11px' }}>
                 {`${propertyCount} property`}
               </p>
             ) : (
-              <p style={{ fontSize: '12px' }}>
+              <p style={{ fontSize: '11px' }}>
                 {`${propertyCount} properties`}
               </p>
             )}
@@ -124,11 +128,6 @@ const NodeViewComponent = ({
           </div>
 
           <ButtonGroup>
-            <DownloadButton
-              config={{ ...pdfDownloadConfig, type: 'single', image: IconDownloadPDF }}
-              documentData={node}
-              fileName={createFileName(node.id, pdfDownloadConfig.prefix)}
-            />
             {
                (isTemplate || isFileManifest)
                && (
@@ -143,6 +142,11 @@ const NodeViewComponent = ({
                />
                )
              }
+             <DownloadButton
+              config={{ ...pdfDownloadConfig, type: 'single', image: IconDownloadPDF }}
+              documentData={node}
+              fileName={createFileName(node.id, pdfDownloadConfig.prefix)}
+            />
           </ButtonGroup>
         </div>
       </div>
