@@ -117,7 +117,7 @@ const generateNodes = (nodes) => {
 
 const generateEdges = (edges) => {
   const DEFAULT_EDGE_TYPE = {
-    type: 'smoothstep',
+    type: 'bezier',
     animated: false,
   }
 

@@ -1,3 +1,6 @@
+
+import * as actionTypes from './store/actions/actionTypes';
+
 export const clickBlankSpace = () => ({
   type: 'GRAPH_CLICK_BLANK_SPACE',
 });
@@ -124,3 +127,8 @@ export const setHighlightingMatchedNodeOpened = (opened) => ({
   type: 'GRAPH_MATCHED_NODE_OPENED',
   opened,
 });
+
+export const onViewChange = (view) => ({
+  type: actionTypes.ON_GRAPH_VIEW_CHANGE,
+  view
+})
