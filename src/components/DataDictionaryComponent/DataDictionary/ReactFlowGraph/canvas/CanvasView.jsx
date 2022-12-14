@@ -103,8 +103,8 @@ const AutoFitView = (nodes) => {
 
     useEffect(() => {
         fitView()
-    })
-
+    }, []);
+    return null;
     // useEffect(() => {
     //     if (nodeInternals && nodeInternals.size > 0) {
     //         console.log('fig', nodeInternals)
@@ -117,8 +117,7 @@ const AutoFitView = (nodes) => {
     //         setEdges(layoutedEdges);
     //     }
     // }, [flowData])
-    return null;
-}
+};
 
 const CanvasView = ({ classes, dictionary, flowData }) => {
     const onInit = (reactFlowInstance) => console.log('flow loaded:', reactFlowInstance);
