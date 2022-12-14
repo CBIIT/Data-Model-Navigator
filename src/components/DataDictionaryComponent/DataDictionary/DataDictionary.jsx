@@ -38,6 +38,7 @@ const DataDictionary = ({
   onSetGraphView,
   isGraphView,
   pdfDownloadConfig,
+  dictionary,
 }) => {
   const dictionarySearcherRef = React.useRef();
   const setGraphView = (isGraphView) => {
@@ -76,6 +77,7 @@ const DataDictionary = ({
         <DictionaryView
           pdfDownloadConfig={pdfDownloadConfig}
           handleClearSearchResult={handleClearSearchResult}
+          dictionary={dictionary}
         />
         {/* <TabThemeProvider>
           <div className={classes.container}>

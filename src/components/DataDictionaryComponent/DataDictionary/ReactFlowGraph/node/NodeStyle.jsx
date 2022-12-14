@@ -3,6 +3,7 @@ export default () => ({
     backgroundColor: '#2D4455',
     borderRadius: '2px',
     // border: '1.5px solid #0C3759',
+    width: '200px'
   },
   customNodeCollapse: {
     fontSize: '10px',
