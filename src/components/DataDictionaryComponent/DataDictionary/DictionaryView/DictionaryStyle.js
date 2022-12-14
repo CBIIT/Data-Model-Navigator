@@ -15,6 +15,14 @@ export default () => ({
     backgroundImage: `url(${backgroundImg})`,
     borderRadius: '5px',
   },
+  reactFlowContainer: {
+    height: '90%',
+    marginTop: '30px',
+    marginLeft: '36px',
+    marginRight: '36px',
+    marginBottom: '36px',
+    borderRadius: '5px',
+  },
   viewTableContainer: {
     height: '90%',
     marginTop: '30px',
