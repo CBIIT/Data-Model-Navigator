@@ -58,7 +58,7 @@ const DictionaryView = ({
 
   const handleTabChange = (event, value) => {
     setCurrentTab(value);
-    onSetGraphView(value === 2)
+    onSetGraphView(value === 0)
   };
 
   return (
@@ -73,7 +73,7 @@ const DictionaryView = ({
               handleTabChange={handleTabChange}
             />
           </div>
-          <div className={currentTab == 0 ? classes.viewGraphContainer : currentTab === 2 ? classes.reactFlowContainer : classes.viewTableContainer}>
+          <div className={currentTab == 0 ? classes.viewGraphContainer : currentTab === 0 ? classes.reactFlowContainer : classes.viewTableContainer}>
             <TabPanel value={currentTab} index={0}>
               <div className={classes.graphView}>
                 <CanvasView flowData={flowData} dictionary={dictionary} />
@@ -102,8 +102,6 @@ const DictionaryView = ({
 };
 
 const mapStateToProps = (state) => {
-  console.log("data dictionary view ");
-  console.log(state);
   return {
     graphView: state.ddgraph.isGraphView,
 }};

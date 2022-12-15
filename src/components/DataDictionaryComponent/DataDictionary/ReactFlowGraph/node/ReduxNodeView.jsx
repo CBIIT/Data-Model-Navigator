@@ -5,7 +5,6 @@ import NodeView from './NodeView';
 const ReduxNodeView = (props) => (<NodeView {...props} />);
 
 const mapStateToProps = (state) => ({
-
 });
 
 const mapDispatchToProps = (dispatch) => ({

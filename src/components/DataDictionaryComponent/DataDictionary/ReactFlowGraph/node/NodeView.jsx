@@ -3,7 +3,13 @@ import { Button, withStyles } from '@material-ui/core';
 import { Handle, useReactFlow, useStoreApi } from 'reactflow';
 import Styles from './NodeStyle';
 
-const NodeView = ({ classes, id, handleId, data, onViewTable }) => {
+const NodeView = ({
+  classes,
+  id,
+  handleId,
+  data,
+  onViewTable,
+}) => {
   const [display, setDisplay] = useState(false);
   const expandHandler = () => {
     const view = localStorage.getItem('reactflowGraphView');
