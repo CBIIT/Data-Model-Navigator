@@ -8,7 +8,7 @@ import {
 import CircularProgress from '@material-ui/core/CircularProgress';
 import dagre from 'dagre';
 import CanvasView from './CanvasView';
-import { setMatchingNodeClass } from './util';
+import { setMatchingNodeClasses } from './util';
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -20,6 +20,11 @@ const CanvasController = ({
   flowData,
   ddgraph
 }) => {
+    /** node
+    * 1. position (x, y)
+    * 2. title
+    * 3. highlight node based on matching search query to desc, properties and title
+    */
     const getLayoutedElements = (nodes, edges, nodeInternals, direction = 'TB') => {
         const isHorizontal = direction === 'LR';
         dagreGraph.setGraph({ rankdir: direction });
@@ -35,13 +40,6 @@ const CanvasController = ({
             dagreGraph.setEdge(edge.source, edge.target);
         });
         dagre.layout(dagreGraph);
-
-        /** node
-        * 1. position (x, y)
-        * 2. title
-        * 3. highlight node based on matching search query to desc, properties and title
-        */
-        const { matchedNodeIDs, matchedNodeIDsInNameAndDescription, matchedNodeIDsInProperties } = ddgraph;
         nodes.forEach((node) => {
             const nodeWithPosition = dagreGraph.node(node.id);
             node.targetPosition = isHorizontal ? 'left' : 'top';
@@ -56,7 +54,7 @@ const CanvasController = ({
             /**
              * set class for matching search query to desc, properties and title
              */
-            setMatchingNodeClass(matchedNodeIDs, matchedNodeIDsInNameAndDescription, matchedNodeIDsInProperties);
+             setMatchingNodeClasses(ddgraph);
             return node;
         });
         return { nodes, edges };

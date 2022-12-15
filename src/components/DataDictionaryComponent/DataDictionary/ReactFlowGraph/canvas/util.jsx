@@ -22,7 +22,12 @@ export const nodeColor = (node) => {
   }
 };
 
-export const setMatchingNodeClass = ({
+
+/**
+ * 
+ * @param {*} param0 
+ */
+export const setMatchingNodeClasses = ({
   matchedNodeIDs,
   matchedNodeIDsInNameAndDescription,
   matchedNodeIDsInProperties
