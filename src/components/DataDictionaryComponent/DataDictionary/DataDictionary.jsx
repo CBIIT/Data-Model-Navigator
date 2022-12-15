@@ -78,6 +78,7 @@ const DataDictionary = ({
           pdfDownloadConfig={pdfDownloadConfig}
           handleClearSearchResult={handleClearSearchResult}
           dictionary={dictionary}
+          ref={dictionarySearcherRef}
         />
         {/* <TabThemeProvider>
           <div className={classes.container}>

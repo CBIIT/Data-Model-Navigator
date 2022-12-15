@@ -3,17 +3,20 @@ import { Button, withStyles } from '@material-ui/core';
 import { Handle, useReactFlow, useStoreApi } from 'reactflow';
 import Styles from './NodeStyle';
 
-const NodeView = ({ classes, id, handleId, data }) => {
+const NodeView = ({ classes, id, handleId, data, onViewTable }) => {
   const [display, setDisplay] = useState(false);
   const expandHandler = () => {
     const view = localStorage.getItem('reactflowGraphView');
-    console.log(view);
     setDisplay(!display);
   }
   const { label, icon } = data;
+
+  //dispatch event - on table view
   const displayOverviewTable = () => {
-    console.log("display overview table");
+    const nodeId = 1;
+    onViewTable(nodeId);
   }
+
   return (
     <>
       <div className={display ? classes.propDialog : ''}>
@@ -40,6 +43,6 @@ const NodeView = ({ classes, id, handleId, data }) => {
       </div>
     </>
   );
-}
+};
 
 export default withStyles(Styles)(memo(NodeView));

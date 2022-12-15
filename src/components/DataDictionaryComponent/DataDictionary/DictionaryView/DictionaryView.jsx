@@ -6,7 +6,7 @@ import TabPanel from '../Tab/TabPanel';
 import TabThemeProvider from '../Tab/TabThemeConfig';
 import DataDictionaryGraph from '../graph/DataDictionaryGraph';
 import ReduxDataDictionaryTable from '../table/DataDictionaryTable';
-import CanvasView from '../ReactFlowGraph/canvas/CanvasView';
+import CanvasView from '../ReactFlowGraph/canvas/CanvasController';
 import { newCreateNodesAndEdges } from '../../GraphUtils/utils';
 import { useEffect } from 'react';
 
@@ -34,10 +34,10 @@ const DictionaryView = ({
   handleClearSearchResult,
   dictionary,
 }) => {
-  const dictionarySearcherRef = React.useRef();
+  // const dictionarySearcherRef = React.useRef();
   const [currentTab, setCurrentTab] = React.useState(0);
   const graphData = newCreateNodesAndEdges({dictionary}, true, []);
-  const [flowData, setFlowData] =React.useState(graphData)
+  const [flowData, setFlowData] = React.useState(graphData)
   
   useEffect(() => {
     const graphData = newCreateNodesAndEdges({dictionary}, true, []);
