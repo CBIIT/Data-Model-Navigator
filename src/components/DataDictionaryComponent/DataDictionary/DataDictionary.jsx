@@ -45,6 +45,8 @@ const DataDictionary = ({
     onSetGraphView(isGraphView);
   };
 
+  console.log("test 123");
+
   React.useEffect(() => {
     setGraphView(true);
   }, []);
@@ -57,10 +59,10 @@ const DataDictionary = ({
     dictionarySearcherRef.current.launchClearSearchFromOutside();
   };
 
-  const [currentTab, setCurrentTab] = React.useState(0);
-  const handleTabChange = (event, value) => {
-    setCurrentTab(value);
-  };
+  // const [currentTab, setCurrentTab] = React.useState(0);
+  // const handleTabChange = (event, value) => {
+  //   setCurrentTab(value);
+  // };
 
   return (
     <div className={classes.dictionaryContainer}>
@@ -78,7 +80,7 @@ const DataDictionary = ({
           pdfDownloadConfig={pdfDownloadConfig}
           handleClearSearchResult={handleClearSearchResult}
           dictionary={dictionary}
-          ref={dictionarySearcherRef}
+          isGraphView={isGraphView}
         />
         {/* <TabThemeProvider>
           <div className={classes.container}>

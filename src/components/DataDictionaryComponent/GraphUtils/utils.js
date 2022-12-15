@@ -7,7 +7,6 @@ import biospecimenIcon from '../DataDictionary/ReactFlowGraph/canvas/assets/grap
 import analysisIcon from '../DataDictionary/ReactFlowGraph/canvas/assets/graph_icon/analysis.svg';
 import dataFileIcon from '../DataDictionary/ReactFlowGraph/canvas/assets/graph_icon/data_file.svg';
 import clinicalIcon from '../DataDictionary/ReactFlowGraph/canvas/assets/graph_icon/clinical.svg';
-import { edges } from '../DataDictionary/ReactFlowGraph/canvas/initial-elements';
 
 const graphIcons = {
   administrative: adminIcon,
@@ -52,7 +51,6 @@ const generateNodes = (nodes) => {
     type: 'custom',
     position: {x: 0, y: 0},
   };
-
 
   const generatedNodes = nodes.map((node, index) => {
 

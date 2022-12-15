@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import { connect } from 'react-redux';
 import {
     addEdge,
     useNodesState,
@@ -14,7 +15,9 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 100;
 const nodeHeight = 36;
 
-const CanvasController = ({ flowData }) => {
+const CanvasController = ({
+  flowData
+}) => {
     const getLayoutedElements = (nodes, edges, nodeInternals, direction = 'TB') => {
         const isHorizontal = direction === 'LR';
         dagreGraph.setGraph({ rankdir: direction });
@@ -80,4 +83,12 @@ const CanvasController = ({ flowData }) => {
     )
 }
 
-export default CanvasController;
+const mapStateToProps = (state) => ({
+    
+});
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CanvasController);

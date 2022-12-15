@@ -12,7 +12,7 @@ export default () => ({
     marginLeft: '36px',
     marginRight: '36px',
     marginBottom: '36px',
-    backgroundImage: `url(${backgroundImg})`,
+    // backgroundImage: `url(${backgroundImg})`,
     borderRadius: '5px',
   },
   reactFlowContainer: {
