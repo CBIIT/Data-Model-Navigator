@@ -71,22 +71,22 @@ const generateNodes = (nodes, edges, windowWidth) => {
     const index = name2Level[name] !== undefined ? name2Level[name] : treeLevel2Names.length;
     const nodeItems = treeLevel2Names[index];
     // console.log(index);
-    y = (index + 1) * 90;
+    y = (index + 1) * 80;
     let x = windowWidth/3;
     if (nodeItems) {
       const count = nodeItems.length;
-      // console.log(name);
-      // console.log(count);
+      console.log(name);
+      console.log(count);
       if (count > 1) {
-        const branchIndex = nodeItems.indexOf(name) + 1;
+        const treeLevel2Index = nodeItems.indexOf(name);
         if (count % 2 === 0) {
-          x = (branchIndex) * 200 - 200;
+          x = (treeLevel2Index) * 200 - 200;
         } else {
-          if (branchIndex == count/2 + 1) {
+          if (treeLevel2Index == count/2 + 1) {
             // console.log(name);
             x = windowWidth/3;
           } else {
-            x = (branchIndex + 1) * 200;
+            x = (treeLevel2Index + 1) * 200;
           }
         }
       }
@@ -165,7 +165,7 @@ const generateNodes = (nodes, edges, windowWidth) => {
     //     }
     // }
   });
-  console.log(generatedNodes);
+  // console.log(generatedNodes);
 
   return generatedNodes;
 }

@@ -33,22 +33,27 @@ const NodeView = ({
     onViewTable(nodeId);
   }
 
-  const [matchingClasses, setMatchingClasses] = useState(setMatchingNodeClasses(ddgraph, label, classes));
+  // const [matchingClasses, setMatchingClasses] = useState(setMatchingNodeClasses(ddgraph, label, classes));
 
   /**
    * light node based on reasult of search query
    */
   useEffect(() => {
-    const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes);
-    setMatchingClasses(nodeClasses);
+    // const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
+    // setMatchingClasses(nodeClasses);
   }, [isSearchMode, currentSearchKeyword]);
+
+  /**
+   * style classes for search query
+   */
+  const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
 
   return (
     <>
       <div className={clsx({[classes.propDialog]: display})}>
         <div className={display ? classes.customNodeExpand : classes.customNodeCollapse}>
-          <div className={matchingClasses}>
-            <button className={clsx(classes.nodeTitleBtn, classes[category])}
+          <div className={classes.nodeTitle}>
+            <button className={isSearchMode ? nodeClasses : clsx(classes.nodeTitleBtn, classes[category])}
               onClick={isSearchMode ? displayOverviewTable : expandHandler}
             >
               <img className={classes.nodeIcon} src={icon} alt="category_icon" /> 

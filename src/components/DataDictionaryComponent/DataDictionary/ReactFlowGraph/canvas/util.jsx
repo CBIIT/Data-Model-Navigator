@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import _ from 'underscore';
 
 export const nodeColor = (node) => { 
   switch (node.category) {
@@ -42,3 +43,11 @@ export const setMatchingNodeClasses = ({
   });
   node.data['matchingClasses'] = nodeClass;
 } 
+
+
+/**
+ * Get a set of types from an array of nodes
+ * @param {Node[]} nodes
+ * @returns {string[]} array of type names(duplicating names removed) of given nodes
+ */
+ export const getDistinctCategoryItems = (nodes) => _.uniq(nodes.map((node) => node.category));

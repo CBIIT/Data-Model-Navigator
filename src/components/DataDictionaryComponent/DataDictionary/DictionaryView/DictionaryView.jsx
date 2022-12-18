@@ -1,7 +1,7 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Button, CircularProgress, withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 import Styles from './DictionaryStyle';
 import Tab from '../Tab/Tab';
 import TabPanel from '../Tab/TabPanel';
@@ -9,8 +9,6 @@ import TabThemeProvider from '../Tab/TabThemeConfig';
 import DataDictionaryGraph from '../graph/DataDictionaryGraph';
 import ReduxDataDictionaryTable from '../table/DataDictionaryTable';
 import CanvasView from '../ReactFlowGraph/canvas/CanvasController';
-import { newCreateNodesAndEdges } from '../../GraphUtils/utils';
-import { useEffect } from 'react';
 import { setGraphView } from '../action';
 
 const tabItems = [

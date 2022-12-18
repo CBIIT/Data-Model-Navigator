@@ -6,13 +6,14 @@ import ReactFlow, {
   Background,
   ReactFlowProvider,
 } from 'reactflow';
-import './assets/style.css';
 import NodeView from '../node/ReduxNodeView';
 import Styles from './CanvasStyle';
 import ReduxViewPort from './ReduxViewPort';
 import ReduxAutoFitView from './ReduxAutoFitView';
 import { nodeColor } from './util';
+import LegendView from '../../graph/Legend/LegendView';
 import './Canvas.css';
+import './assets/style.css';
 
 const nodeTypes = {
   custom: NodeView,
@@ -29,10 +30,14 @@ const CanvasView = ({
   onConnect,
   onNodesChange,
   onEdgesChange,
+  categories
 }) => {
-    
+
     return (
       <div className={classes.mainWindow}>
+        <LegendView
+          categoryItems={categories}
+        />
         <ReactFlowProvider>
           <ReactFlow
             nodes={nodes}

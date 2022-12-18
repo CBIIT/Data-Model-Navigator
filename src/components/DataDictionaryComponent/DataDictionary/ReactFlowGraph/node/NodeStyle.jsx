@@ -42,6 +42,7 @@ export default () => ({
     border: '2.5px solid #2E2E2E',
     padding: '0',
     borderRadius: '5px',
+    cursor: 'pointer',
   },
   viewSection: {
     marginTop: '10px',
@@ -69,10 +70,16 @@ export default () => ({
 
   },
   matchedInNameAndDesc: {
-    border: '4px solid red',
+    // border: '2px solid red',
   },
   matchedNodeIDsInProps: {
-    border: '4px solid blue',
+    border: '2.5px dashed #2E2E2E',
+
+  },
+  excludeNode: {
+    opacity: '0.3',
+    cursor: 'not-allowed',
+    pointerEvents: 'none',
   },
   administrative: {
     '& img': {

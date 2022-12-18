@@ -1,33 +1,26 @@
 import classNames from 'classnames';
+import clsx from 'clsx';
 import { nodeColor } from '../canvas/util';
 
 /**
  * 
  * @param {*} param0 
- * set classes for matching nodes for search query
+ * set classes for matching nodes base on search query
  */
  export const setMatchingNodeClasses = ({
     matchedNodeIDs = [],
     matchedNodeIDsInNameAndDescription = [],
     matchedNodeIDsInProperties = [],
-  }, node, classes) => {
+  },
+  node,
+  classes,
+  category) => {
     const id = `${node}`.toLowerCase();
-    // const nodeClass = classNames({
-    //   nodeTitle: true,
-    //   matchedNodeIDs: (matchedNodeIDs.indexOf(id) !== -1),
-    //   matchedInNameAndDesc: (matchedNodeIDsInNameAndDescription
-    //       .indexOf(id) !== -1),
-    //   matchedInProperties: (matchedNodeIDsInProperties.indexOf(id) !== -1)
-    // });
-    let nodeClassses = `${classes.nodeTitle}`
-    if (matchedNodeIDs.indexOf(id) !== -1) {
-        nodeClassses += `${classes.matchedNodeIDs}`;
-    }
-    if (matchedNodeIDsInNameAndDescription.indexOf(id) !== -1) {
-        nodeClassses += `${classes.matchedInNameAndDesc}`;
-    }
-    if (matchedNodeIDsInProperties.indexOf(id) !== -1) {
-        nodeClassses+=  `${classes.matchedNodeIDsInProps}`;
-    }
-    return nodeClassses;
+    return clsx(classes.nodeTitleBtn, classes[category], {
+      [classes.matchedNodeIDs]: (matchedNodeIDs.indexOf(id) !== -1),
+      [classes.matchedInNameAndDesc]: (matchedNodeIDsInNameAndDescription.indexOf(id) !== -1),
+      [classes.matchedNodeIDsInProps]: (matchedNodeIDsInProperties.indexOf(id) !== -1)
+        && (matchedNodeIDsInNameAndDescription.indexOf(id) === -1),
+      [classes.excludeNode]: (matchedNodeIDs.indexOf(id) === -1),
+    });
 }

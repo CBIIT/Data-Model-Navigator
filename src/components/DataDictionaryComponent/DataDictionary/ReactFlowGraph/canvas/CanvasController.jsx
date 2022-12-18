@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
     addEdge,
@@ -9,12 +9,24 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import dagre from 'dagre';
 import CanvasView from './CanvasView';
 import { newCreateNodesAndEdges } from '../../../GraphUtils/utils';
+import { getAllTypes } from '../../graph/GraphCalculator/graphCalculatorHelper';
+import { getDistinctCategoryItems } from './util';
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 const nodeWidth = 100;
 const nodeHeight = 36;
+
+/**
+ * Handles all canvas state
+ * 1. nodes
+ * 2. edges
+ * 3. positioning of nodes with BFS 
+ * 4. tracks search mode
+ * @param {*} param0 
+ * @returns canvas component
+ */
 
 const CanvasController = ({
 //   flowData,
@@ -71,6 +83,7 @@ const CanvasController = ({
 
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const [categories, setCategories] = useState([]);
 
     /**
      * reactflow graph view 
@@ -79,9 +92,18 @@ const CanvasController = ({
     const [flowData, setFlowData] = React.useState(null);
 
     useEffect(() => {
-        const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
-        setFlowData(graphData);
-      }, [dictionary]);
+      // const legends = getAllTypes()
+      const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
+      setFlowData(graphData);
+    }, [dictionary]);
+
+    /**
+     * initalize category item for Legend
+     */
+    useEffect(() => {
+        const categories = getDistinctCategoryItems(Object.values(dictionary));
+        setCategories(categories);
+    }, []);
 
     useEffect(() => {
         console.log("use effect canvas controller");
@@ -92,7 +114,6 @@ const CanvasController = ({
         );
         setNodes(layoutedNodes);
         setEdges(layoutedEdges);
-        console.log(flowData);
     }, [flowData, currentSearchKeyword]);
 
     const onConnect = useCallback(
@@ -114,6 +135,7 @@ const CanvasController = ({
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
+            categories={categories}
         />
     )
 }
@@ -121,7 +143,7 @@ const CanvasController = ({
 const mapStateToProps = (state) => ({
     ddgraph: state.ddgraph,
     isSearchMode: state.ddgraph.isSearchMode,
-    currentSearchKeyword: state.ddgraph.currentSearchKeyword
+    currentSearchKeyword: state.ddgraph.currentSearchKeyword,
 });
 
 const mapDispatchToProps = (dispatch) => ({
