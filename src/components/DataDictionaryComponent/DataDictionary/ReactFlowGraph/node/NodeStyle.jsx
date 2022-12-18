@@ -36,10 +36,12 @@ export default () => ({
   nodeName: {
     float: 'right',
     display: 'block',
-    padding: '5px 10px 5px 10px',
+    padding: '5px 10px 0px 10px',
   },
   nodeTitleBtn: {
-    padding: '0'
+    border: '2.5px solid #2E2E2E',
+    padding: '0',
+    borderRadius: '5px',
   },
   viewSection: {
     marginTop: '10px',
@@ -63,4 +65,61 @@ export default () => ({
     width: '100%',
     height: '20px',
   },
+  matchedNodeIDs: {
+
+  },
+  matchedInNameAndDesc: {
+    border: '4px solid red',
+  },
+  matchedNodeIDsInProps: {
+    border: '4px solid blue',
+  },
+  administrative: {
+    '& img': {
+      background: '#9b2d20',
+      borderLeft: '2px solid #9b2d20',
+    }
+  },
+  study: {
+    '& img': {
+      background: '#9875ff',
+      borderLeft: '2px solid #9875f',
+    }
+  },
+  case: {
+    '& img': {
+      background: '#ff7f15',
+      borderLeft: '2px solid #ff7f15',
+    }
+  },
+  clinical_trial: {
+    '& img': {
+      background: '#00A1BB',
+      borderLeft: '2px solid #00A1BB',
+    }
+  },
+  biospecimen: {
+    '& img': {
+      background: '#00785a',
+      borderLeft: '2px solid #00785a',
+    }
+  },
+  analysis: {
+    '& img': {
+      background: '#b533a9',
+      borderLeft: '2px solid #b533a9',
+    }
+  },
+  data_file: {
+    '& img': {
+      background: '#00ad0e',
+      borderLeft: '2px solid #00ad0e',
+    }
+  },
+  clinical: {
+    '& img': {
+      background: '#1c75bc',
+      borderLeft: '2px solid #1c75bc',
+    }
+  }
 });

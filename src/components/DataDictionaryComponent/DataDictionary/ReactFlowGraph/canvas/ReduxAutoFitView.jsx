@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { useReactFlow } from 'reactflow';
 
-const AutoFitView = (nodes) => {
+const ReduxAutoFitView = (nodes) => {
     const { fitView } = useReactFlow();
     // const store = useStoreApi();
     // const state = store.getState();
     // const nodeInternals = useMemo(() => state.nodeInternals);
-
     useEffect(() => {
         fitView()
     }, []);
@@ -25,4 +25,10 @@ const AutoFitView = (nodes) => {
     // }, [flowData])
 };
 
-export default AutoFitView;
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxAutoFitView);

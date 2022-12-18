@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Button, withStyles } from '@material-ui/core';
+import { Button, CircularProgress, withStyles } from '@material-ui/core';
 import Styles from './DictionaryStyle';
 import Tab from '../Tab/Tab';
 import TabPanel from '../Tab/TabPanel';
@@ -40,13 +40,24 @@ const DictionaryView = ({
   onSetGraphView,
 }) => {
   const [currentTab, setCurrentTab] = React.useState(0);
-  const graphData = newCreateNodesAndEdges({dictionary}, true, []);
-  const [flowData, setFlowData] = React.useState(graphData);
+  /**
+   * get witdh of tab 
+   */
+   const ref = useRef(null);
+   const [tabViewWidth, setTabViewWidth] = useState(0);
+   useLayoutEffect(() => {
+     setTabViewWidth(ref.current.offsetWidth);
+   }, []);
+  /**
+   * reactflow graph view 
+   */
+  // const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
+  // const [flowData, setFlowData] = React.useState(null);
   
-  useEffect(() => {
-    const graphData = newCreateNodesAndEdges({dictionary}, true, []);
-    setFlowData(graphData);
-  }, [dictionary]);
+  // useEffect(() => {
+  //   const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
+  //   setFlowData(graphData);
+  // }, [dictionary]);
 
   //set to graph view incase of search entry
   useEffect(() => {
@@ -64,7 +75,7 @@ const DictionaryView = ({
   return (
     <>
       <TabThemeProvider>
-        <div className={classes.container}>
+        <div className={classes.container} ref={ref}>
           <div className={classes.tabItems}>
             <Tab
               styleClasses={classes}
@@ -73,10 +84,16 @@ const DictionaryView = ({
               handleTabChange={handleTabChange}
             />
           </div>
-          <div className={currentTab == 0 ? classes.viewGraphContainer : currentTab === 0 ? classes.reactFlowContainer : classes.viewTableContainer}>
+          <div className={currentTab == 0
+            ? classes.viewTableContainer : currentTab === 1
+            ? classes.viewTableContainer : classes.viewTableContainer}
+          >
             <TabPanel value={currentTab} index={0}>
-              <div className={classes.graphView}>
-                <CanvasView flowData={flowData} dictionary={dictionary} />
+              <div className={classes.tableView}>
+                <CanvasView
+                  dictionary={dictionary}
+                  tabViewWidth={tabViewWidth}
+                />
               </div>
             </TabPanel>
             <TabPanel value={currentTab} index={1}>

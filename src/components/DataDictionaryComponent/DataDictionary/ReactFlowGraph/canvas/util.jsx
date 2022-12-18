@@ -1,5 +1,6 @@
+import classNames from 'classnames';
 
-export const nodeColor = (node) => {
+export const nodeColor = (node) => { 
   switch (node.category) {
     case 'administrative':
         return '#9B2D20';
@@ -22,17 +23,22 @@ export const nodeColor = (node) => {
   }
 };
 
-
 /**
  * 
  * @param {*} param0 
+ * set classes for matching nodes
  */
 export const setMatchingNodeClasses = ({
-  matchedNodeIDs,
-  matchedNodeIDsInNameAndDescription,
-  matchedNodeIDsInProperties
-}) => {
-  console.log(matchedNodeIDs);
-  console.log(matchedNodeIDsInNameAndDescription);
-  console.log(matchedNodeIDsInProperties);
+  matchedNodeIDs = [],
+  matchedNodeIDsInNameAndDescription = [],
+  matchedNodeIDsInProperties = [],
+}, node) => {
+  const nodeClass = classNames({
+    nodeTitle: true,
+    matchedNodeIDs: (matchedNodeIDs.indexOf(node.id) !== -1),
+    matchedInNameAndDescription: (matchedNodeIDsInNameAndDescription
+        .indexOf(node.id) !== -1),
+    matchedInProperties: (matchedNodeIDsInProperties.indexOf(node.id) !== -1)
+  });
+  node.data['matchingClasses'] = nodeClass;
 } 

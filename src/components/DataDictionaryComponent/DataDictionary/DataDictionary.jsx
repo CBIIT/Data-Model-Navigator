@@ -45,8 +45,6 @@ const DataDictionary = ({
     onSetGraphView(isGraphView);
   };
 
-  console.log("test 123");
-
   React.useEffect(() => {
     setGraphView(true);
   }, []);

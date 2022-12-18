@@ -5,6 +5,10 @@ import NodeView from './NodeView';
 const ReduxNodeView = (props) => (<NodeView {...props} />);
 
 const mapStateToProps = (state) => ({
+  isSearchMode: state.ddgraph.isSearchMode,
+  ddgraph: state.ddgraph,
+  currentSearchKeyword: state.ddgraph.currentSearchKeyword,
+  
 });
 
 const mapDispatchToProps = (dispatch) => ({

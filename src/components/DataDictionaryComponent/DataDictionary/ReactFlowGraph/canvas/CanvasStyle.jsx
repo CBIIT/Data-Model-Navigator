@@ -1,6 +1,6 @@
 export default () => ({
   mainWindow: {
-    height: '85%',
+    height: '1100px',
     display: 'block',
   }
 });
