@@ -1,5 +1,5 @@
 export default () => ({
-  legendExapand: {
+  legendExpand: {
     position: 'absolute',
     right: '12px',
     top: '400px',

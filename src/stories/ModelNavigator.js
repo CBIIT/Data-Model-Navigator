@@ -25,6 +25,12 @@ const nihLogoImg = {
 // import env from '../../utils/env';
 // import ReduxDataDictionary from './DataDictionary/ReduxDataDictionary';
 
+/**
+ * data model navigator redux configuration 
+ * 1. end points
+ * 2. styles
+ */
+
 const version = { commit: '913161064b02bcef024d072873e77c8c79cc1a68', dictionary: { commit: '520a25999fd183f6c5b7ddef2980f3e839517da5', version: '0.2.1-9-g520a259' }, version: '4.0.0-44-g9131610' };
 const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml";
 const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
@@ -33,6 +39,34 @@ const readMeConfig=  {
   readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
   readMeTitle: 'Understanding the ICDC Data Model',
 };
+
+const graphViewConfig = {
+  legend: {
+    styles: {
+      legendExpand: {
+        position: 'absolute',
+        right: '25px',
+        top: '300px',
+        backgroundColor: '#494949',
+        zIndex: '1',
+        border: '2px solid #5486AF',
+        borderTopLeftRadius: '10px 10px',
+        borderBottomLeftRadius: '10px 10px',
+        paddingBottom: '15px',
+      },
+      legendCollapse: {
+        position: 'absolute',
+        right: '25px',
+        top: '300px',
+        backgroundColor: '#18588C',
+        zIndex: '1',
+        border: '1px solid #125C5D',
+        borderTopLeftRadius: '10px 10px',
+        borderBottomLeftRadius: '10px 10px',
+      },
+    }
+  }
+}
 
 // const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_file.yaml";
 // const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_properties_file.yaml";
@@ -257,6 +291,7 @@ async function init() {
             properties: propertyList,
             facetfilterConfig: filterConfig,
             readMeConfig: readMeConfig,
+            graphViewConfig: graphViewConfig,
           },
         }),
         store.dispatch({

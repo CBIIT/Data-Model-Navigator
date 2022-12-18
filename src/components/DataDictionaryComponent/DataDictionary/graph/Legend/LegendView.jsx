@@ -9,10 +9,10 @@ import { capitalizeFirstLetter } from '../../../utils';
 const Legend = ({
   classes,
   categoryItems,
+  styles,
 }) => {
   const [display, setDisplay] = useState(true);
   const toggleLegend = () => setDisplay(!display);
-
   const categoryListComponent = categoryItems.map((category) => {
     // const categoryColor = getCategoryColor(category);
     // const IconSvg = getLegendCategoryIconSVG(category);
@@ -31,14 +31,15 @@ const Legend = ({
   });
 
   const ToggleBtn = () => (
-    <div className={display ? classes.headerExpand : classes.headerCollapse}>
+    <div className={
+      display ? classes.headerExpand : classes.headerCollapse}
+    >
       {display && (
         <span className={classes.headerTitle}>Node Category</span>
       )}
       <span
         className={classes.toggleBtn}
         onClick={toggleLegend}
-        onKeyPress={toggleLegend}
         role='button'
         tabIndex={0}
       >
@@ -49,7 +50,9 @@ const Legend = ({
 
   return (
     <>
-     <div className={display ? classes.legendExapand : classes.legendCollapse}>
+     <div
+      className={display ? classes.legendExpand : classes.legendCollapse}
+      style={display ? {...styles.legendExpand}: {...styles.legendCollapse}}>
       {
         <>
           <ToggleBtn />

@@ -11,7 +11,7 @@ import Styles from './CanvasStyle';
 import ReduxViewPort from './ReduxViewPort';
 import ReduxAutoFitView from './ReduxAutoFitView';
 import { nodeColor } from './util';
-import LegendView from '../../graph/Legend/LegendView';
+import LegendView from '../../graph/Legend/ReduxLegendView';
 import './Canvas.css';
 import './assets/style.css';
 

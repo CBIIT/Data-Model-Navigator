@@ -167,7 +167,7 @@ const mapStateToProps = (state) => ({
     ddgraph: state.ddgraph,
     isSearchMode: state.ddgraph.isSearchMode,
     currentSearchKeyword: state.ddgraph.currentSearchKeyword,
-    searchResults: state.ddgraph.searchResult
+    searchResults: state.ddgraph.searchResult,
 });
 
 const mapDispatchToProps = (dispatch) => ({
