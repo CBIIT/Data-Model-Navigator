@@ -1,7 +1,8 @@
+import React from 'react';
+import _ from 'underscore';
 import classNames from 'classnames';
 import clsx from 'clsx';
 import { nodeColor } from '../canvas/util';
-
 /**
  * 
  * @param {*} param0 
@@ -15,7 +16,7 @@ import { nodeColor } from '../canvas/util';
   node,
   classes,
   category) => {
-    const id = `${node}`.toLowerCase();
+    const id = `${node}`.trim().toLowerCase();
     return clsx(classes.nodeTitleBtn, classes[category], {
       [classes.matchedNodeIDs]: (matchedNodeIDs.indexOf(id) !== -1),
       [classes.matchedInNameAndDesc]: (matchedNodeIDsInNameAndDescription.indexOf(id) !== -1),
@@ -23,4 +24,28 @@ import { nodeColor } from '../canvas/util';
         && (matchedNodeIDsInNameAndDescription.indexOf(id) === -1),
       [classes.excludeNode]: (matchedNodeIDs.indexOf(id) === -1),
     });
+}
+
+/**
+ * highlight the matching string based on search query result
+ */
+export const highlightMatchingTitle = (node, matchedNodeNameQuery = '', classes) => {
+    let id = `${node}`.trim().toLowerCase();
+    /**check for exact match */
+    if (matchedNodeNameQuery.toLowerCase() === id) {
+      console.log(matchedNodeNameQuery);
+      return (<b className={classes.highLightNode}>{node}</b>);
+    }
+
+    const arr = node.replace(matchedNodeNameQuery, `,${matchedNodeNameQuery},`).split(",");
+    const highlightTitle = arr.map((text) => {
+      if (text === matchedNodeNameQuery) {
+        return (
+        <b className={classes.highLightNode}>
+          {matchedNodeNameQuery}
+        </b>);
+      }
+      return (<span>{text}</span>);
+    });
+    return highlightTitle;
 }

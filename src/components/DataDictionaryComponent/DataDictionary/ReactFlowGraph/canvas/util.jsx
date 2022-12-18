@@ -51,3 +51,20 @@ export const setMatchingNodeClasses = ({
  * @returns {string[]} array of type names(duplicating names removed) of given nodes
  */
  export const getDistinctCategoryItems = (nodes) => _.uniq(nodes.map((node) => node.category));
+
+ /**
+  * Active Search Mode 
+  * set node title for matching query 
+  */
+ export const setMatchingNodeTitle = (searchResult = []) => {
+    let matchedNodeNameIndices = {};
+    searchResult.forEach((item) => {
+      item.matches.forEach((matchItem) => {
+          const { value, key } = matchItem;
+        if (key === 'title') {
+          matchedNodeNameIndices[value] = matchItem.indices;
+        }
+      });
+    });
+    return matchedNodeNameIndices;
+ }

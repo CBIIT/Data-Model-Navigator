@@ -10,7 +10,7 @@ import dagre from 'dagre';
 import CanvasView from './CanvasView';
 import { newCreateNodesAndEdges } from '../../../GraphUtils/utils';
 import { getAllTypes } from '../../graph/GraphCalculator/graphCalculatorHelper';
-import { getDistinctCategoryItems } from './util';
+import { getDistinctCategoryItems, setMatchingNodeTitle } from './util';
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -32,9 +32,10 @@ const CanvasController = ({
 //   flowData,
   ddgraph,
   currentSearchKeyword,
-  isSearchMode,
   tabViewWidth,
-  dictionary
+  dictionary,
+  searchResults,
+  isSearchMode
 }) => {
 
     if (tabViewWidth === 0) {
@@ -78,6 +79,24 @@ const CanvasController = ({
         //      */
         //     return node;
         // });
+        
+        /**
+         * highlight node based on matching search query to desc, properties and title
+         * setMatchingNodeTitle return indexes to highlight node title (string)
+         */
+        if (isSearchMode) {
+            const matchingNodeTitle = setMatchingNodeTitle(searchResults);
+            console.log(matchingNodeTitle);
+            // console.log(node.id);
+            nodes.forEach((node) => {
+                if(matchingNodeTitle[node.id]) {
+                    console.log(node.id);
+                    node.data.matchedNodeNameQuery = currentSearchKeyword;
+                }
+            });
+        }
+        
+
         return { nodes, edges };
     };
 
@@ -92,7 +111,6 @@ const CanvasController = ({
     const [flowData, setFlowData] = React.useState(null);
 
     useEffect(() => {
-      // const legends = getAllTypes()
       const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
       setFlowData(graphData);
     }, [dictionary]);
@@ -105,6 +123,11 @@ const CanvasController = ({
         setCategories(categories);
     }, []);
 
+    /**
+     * update states
+     * 1. nodes and edges
+     * 2. toggle between on/off for serach mode
+     */
     useEffect(() => {
         console.log("use effect canvas controller");
         const flowData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
@@ -144,6 +167,7 @@ const mapStateToProps = (state) => ({
     ddgraph: state.ddgraph,
     isSearchMode: state.ddgraph.isSearchMode,
     currentSearchKeyword: state.ddgraph.currentSearchKeyword,
+    searchResults: state.ddgraph.searchResult
 });
 
 const mapDispatchToProps = (dispatch) => ({

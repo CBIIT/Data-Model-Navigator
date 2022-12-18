@@ -24,9 +24,14 @@ export default () => ({
     opacity: '0.97',
     // backgroundColor: '#2D4455',
   },
+  highLightNode: {
+    fontSize: '15px',
+    fontWeight: '900',
+  },
   nodeTitle: {
-    height: '25px',
-    // backgroundColor: '#2D4455',
+    backgroundColor: '#ffffff',
+    borderRadius: '5px',
+    border: '0.5px solid #ffffff',
   },
   nodeIcon: {
     float: 'left',
@@ -77,9 +82,9 @@ export default () => ({
 
   },
   excludeNode: {
-    opacity: '0.3',
     cursor: 'not-allowed',
     pointerEvents: 'none',
+    opacity: '0.4',
   },
   administrative: {
     '& img': {

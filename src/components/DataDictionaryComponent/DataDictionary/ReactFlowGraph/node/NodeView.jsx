@@ -3,7 +3,7 @@ import { Button, withStyles } from '@material-ui/core';
 import { Handle, useReactFlow, useStoreApi } from 'reactflow';
 import clsx from 'clsx';
 import Styles from './NodeStyle';
-import { setMatchingNodeClasses } from './util';
+import { highlightMatchingTitle, setMatchingNodeClasses } from './util';
 
 const NodeView = ({
   classes,
@@ -16,16 +16,15 @@ const NodeView = ({
   currentSearchKeyword
 }) => {
   const [display, setDisplay] = useState(false);
-
   /**
    * expand node in normal mode (when search mode is false)
    * use view option to adjust the fontsize on property dialog 
    */
-  const expandHandler = () => {
+  const expandNode = () => {
     const view = localStorage.getItem('reactflowGraphView');
     setDisplay(!display);
   }
-  const { label, icon, category } = data;
+  const { label, icon, category, matchedNodeNameQuery } = data;
 
   //dispatch event - on table view
   const displayOverviewTable = () => {
@@ -44,7 +43,7 @@ const NodeView = ({
   }, [isSearchMode, currentSearchKeyword]);
 
   /**
-   * style classes for search query
+   * highlight nodes based on search query
    */
   const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
 
@@ -54,10 +53,15 @@ const NodeView = ({
         <div className={display ? classes.customNodeExpand : classes.customNodeCollapse}>
           <div className={classes.nodeTitle}>
             <button className={isSearchMode ? nodeClasses : clsx(classes.nodeTitleBtn, classes[category])}
-              onClick={isSearchMode ? displayOverviewTable : expandHandler}
+              onClick={isSearchMode ? displayOverviewTable : expandNode}
             >
               <img className={classes.nodeIcon} src={icon} alt="category_icon" /> 
-              <span className={classes.nodeName}>{label}</span>
+              <span className={classes.nodeName}>
+                {(isSearchMode && matchedNodeNameQuery) ?
+                  (<>
+                    {highlightMatchingTitle(label, matchedNodeNameQuery, classes)}
+                  </>) : label}
+              </span>
             </button>
           </div>
           <div className={display ? classes.viewSection : classes.hideSection}>

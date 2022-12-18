@@ -22,11 +22,11 @@ const tabItems = [
     label: 'Table View',
     value: 'table_view',
   },
-  {
-    index: 2,
-    label: 'Graph View',
-    value: 'graph_view',
-  },
+  // {
+  //   index: 2,
+  //   label: 'Graph View',
+  //   value: 'graph_view',
+  // },
 ];
 
 const DictionaryView = ({
@@ -39,7 +39,7 @@ const DictionaryView = ({
 }) => {
   const [currentTab, setCurrentTab] = React.useState(0);
   /**
-   * get witdh of tab 
+   * get witdh of the tab to position nodes in the graph view
    */
    const ref = useRef(null);
    const [tabViewWidth, setTabViewWidth] = useState(0);
