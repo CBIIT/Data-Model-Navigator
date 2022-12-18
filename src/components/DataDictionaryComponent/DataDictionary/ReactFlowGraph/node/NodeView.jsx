@@ -18,7 +18,7 @@ const NodeView = ({
   const [display, setDisplay] = useState(false);
   /**
    * expand node in normal mode (when search mode is false)
-   * use view option to adjust the fontsize on property dialog 
+   * use view option to adjust the fontSize on property dialog 
    */
   const expandNode = () => {
     const view = localStorage.getItem('reactflowGraphView');
@@ -31,8 +31,6 @@ const NodeView = ({
     const nodeId = 1;
     onViewTable(nodeId);
   }
-
-  // const [matchingClasses, setMatchingClasses] = useState(setMatchingNodeClasses(ddgraph, label, classes));
 
   /**
    * light node based on reasult of search query
@@ -60,7 +58,7 @@ const NodeView = ({
                 {(isSearchMode && matchedNodeNameQuery) ?
                   (<>
                     {highlightMatchingTitle(label, matchedNodeNameQuery, classes)}
-                  </>) : label}
+                  </>) : `${label}`.toLowerCase()}
               </span>
             </button>
           </div>

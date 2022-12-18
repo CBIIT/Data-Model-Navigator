@@ -86,17 +86,12 @@ const CanvasController = ({
          */
         if (isSearchMode) {
             const matchingNodeTitle = setMatchingNodeTitle(searchResults);
-            console.log(matchingNodeTitle);
-            // console.log(node.id);
             nodes.forEach((node) => {
-                if(matchingNodeTitle[node.id]) {
-                    console.log(node.id);
-                    node.data.matchedNodeNameQuery = currentSearchKeyword;
-                }
+              if(matchingNodeTitle[node.id]) {
+                node.data.matchedNodeNameQuery = currentSearchKeyword;
+              }
             });
         }
-        
-
         return { nodes, edges };
     };
 
@@ -129,7 +124,6 @@ const CanvasController = ({
      * 2. toggle between on/off for serach mode
      */
     useEffect(() => {
-        console.log("use effect canvas controller");
         const flowData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
         const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
             flowData.nodes,
@@ -140,11 +134,11 @@ const CanvasController = ({
     }, [flowData, currentSearchKeyword]);
 
     const onConnect = useCallback(
-        (params) =>
-            setEdges((eds) =>
-                addEdge({ ...params, type: ConnectionLineType.SmoothStep, animated: true }, eds)
-            ),
-        []
+      (params) =>
+        setEdges((eds) =>
+          addEdge({ ...params, type: ConnectionLineType.SmoothStep, animated: true }, eds)
+        ),
+      []
     );
 
     if (nodes.length === 0 && edges.length === 0) {
@@ -152,14 +146,14 @@ const CanvasController = ({
     }
 
     return (
-        <CanvasView
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            categories={categories}
-        />
+      <CanvasView
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        categories={categories}
+      />
     )
 }
 

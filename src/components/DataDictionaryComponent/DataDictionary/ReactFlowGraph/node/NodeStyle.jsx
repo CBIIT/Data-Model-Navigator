@@ -32,6 +32,7 @@ export default () => ({
     backgroundColor: '#ffffff',
     borderRadius: '5px',
     border: '0.5px solid #ffffff',
+    height: '31px',
   },
   nodeIcon: {
     float: 'left',
@@ -48,6 +49,10 @@ export default () => ({
     padding: '0',
     borderRadius: '5px',
     cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#ef8523',
+      color: '#ffffff',
+    },
   },
   viewSection: {
     marginTop: '10px',

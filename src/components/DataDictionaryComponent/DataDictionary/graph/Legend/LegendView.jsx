@@ -52,7 +52,7 @@ const Legend = ({
     <>
      <div
       className={display ? classes.legendExpand : classes.legendCollapse}
-      style={display ? {...styles.legendExpand}: {...styles.legendCollapse}}>
+      style={display ? {...styles?.legendExpand}: {...styles?.legendCollapse}}>
       {
         <>
           <ToggleBtn />

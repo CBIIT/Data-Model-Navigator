@@ -7,6 +7,7 @@ import ReactFlow, {
   ReactFlowProvider,
 } from 'reactflow';
 import NodeView from '../node/ReduxNodeView';
+import EdgeView from '../edge/ReduxEdgeView';
 import Styles from './CanvasStyle';
 import ReduxViewPort from './ReduxViewPort';
 import ReduxAutoFitView from './ReduxAutoFitView';
@@ -17,6 +18,10 @@ import './assets/style.css';
 
 const nodeTypes = {
   custom: NodeView,
+};
+
+const edgeTypes = {
+  custom: EdgeView,
 };
 
 const minimapStyle = {
@@ -46,8 +51,9 @@ const CanvasView = ({
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             nodeTypes={nodeTypes}
-            minZoom={0.9}
-            maxZoom={2}
+            edgeTypes={edgeTypes}
+            minZoom={1}
+            maxZoom={1.8}
             fitView
           >
             <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' />

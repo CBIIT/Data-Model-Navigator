@@ -53,7 +53,6 @@ const generateNodes = (nodes, edges, windowWidth) => {
    * assignPosition() method to set (x, y) position of the node
    */
   const result = assignNodePositions(nodes, edges, undefined);
-  console.log("set node position bosed on graph view width {} and hierarchy ", windowWidth)
   /**
    * 1. name2Level - x position 
    * 2. treeLevel2Name - y position
@@ -166,7 +165,7 @@ const generateNodes = (nodes, edges, windowWidth) => {
 
 const generateEdges = (edges) => {
   const DEFAULT_EDGE_TYPE = {
-    type: 'bezier',
+    type: 'custom',
     animated: false,
   }
 

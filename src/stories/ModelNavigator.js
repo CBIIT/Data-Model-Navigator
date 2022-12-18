@@ -40,6 +40,7 @@ const readMeConfig=  {
   readMeTitle: 'Understanding the ICDC Data Model',
 };
 
+// example set legend style (position)
 const graphViewConfig = {
   legend: {
     styles: {

@@ -1,8 +1,9 @@
 import React, { memo, useState } from 'react';
+import { withStyles } from '@material-ui/core';
 import { getBezierPath } from 'reactflow';
 import Styles from './CustomEdgeStyle';
 
-const EdgeView = ({
+const CustomEdgeView = ({
   id,
   sourceX,
   sourceY,
@@ -13,7 +14,9 @@ const EdgeView = ({
   style = {},
   data,
   markerEnd,
+  isSearchMode
 }) => {
+  console.log('custom edge');
   const [edgePath] = getBezierPath({
     sourceX,
     sourceY,
@@ -27,8 +30,10 @@ const EdgeView = ({
     <>
       <path
         id={id}
-        style={style}
-        className="react-flow__edge-path"
+        fill="none"
+        stroke={isSearchMode ? '#b1b1b7' : "#222"}
+        strokeWidth={1}
+        className="animated"
         d={edgePath}
         markerEnd={markerEnd}
       />
@@ -36,4 +41,4 @@ const EdgeView = ({
   )
 }
 
-export default withStyles(Styles)(memo(EdgeView));
+export default withStyles(Styles)(memo(CustomEdgeView));

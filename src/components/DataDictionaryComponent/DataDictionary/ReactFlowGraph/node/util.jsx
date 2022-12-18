@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'underscore';
-import classNames from 'classnames';
 import clsx from 'clsx';
 import { nodeColor } from '../canvas/util';
 /**
@@ -33,13 +32,13 @@ export const highlightMatchingTitle = (node, matchedNodeNameQuery = '', classes)
     let id = `${node}`.trim().toLowerCase();
     /**check for exact match */
     if (matchedNodeNameQuery.toLowerCase() === id) {
-      console.log(matchedNodeNameQuery);
-      return (<b className={classes.highLightNode}>{node}</b>);
+      return (<b className={classes.highLightNode}>{id}</b>);
     }
 
-    const arr = node.replace(matchedNodeNameQuery, `,${matchedNodeNameQuery},`).split(",");
+    //split text to highlight node title 
+    const arr = id.replace(matchedNodeNameQuery, `,${matchedNodeNameQuery},`).split(",");
     const highlightTitle = arr.map((text) => {
-      if (text === matchedNodeNameQuery) {
+      if (text.toLowerCase() === matchedNodeNameQuery.toLowerCase()) {
         return (
         <b className={classes.highLightNode}>
           {matchedNodeNameQuery}
@@ -47,5 +46,5 @@ export const highlightMatchingTitle = (node, matchedNodeNameQuery = '', classes)
       }
       return (<span>{text}</span>);
     });
-    return highlightTitle;
+  return highlightTitle;
 }
