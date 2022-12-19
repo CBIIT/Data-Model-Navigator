@@ -55,6 +55,10 @@ export default () => ({
       backgroundColor: '#ef8523',
       color: '#ffffff',
     },
+    '& img': {
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
+    }
   },
   viewSection: {
     marginTop: '10px',
@@ -86,29 +90,40 @@ export default () => ({
   },
   matchedNodeIDsInProps: {
     border: '2.5px dashed #2E2E2E',
-
   },
   excludeNode: {
     cursor: 'not-allowed',
     pointerEvents: 'none',
     opacity: '0.4',
   },
+  categoryIcon: {
+    '& img': {
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
+    }
+  },
   administrative: {
     '& img': {
       background: '#9b2d20',
       borderLeft: '2px solid #9b2d20',
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
     }
   },
   study: {
     '& img': {
       background: '#9875ff',
       borderLeft: '2px solid #9875f',
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
     }
   },
   case: {
     '& img': {
       background: '#ff7f15',
       borderLeft: '2px solid #ff7f15',
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
     }
   },
   clinical_trial: {

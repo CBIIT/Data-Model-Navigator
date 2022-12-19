@@ -68,13 +68,13 @@ const CustomFlowView = ({
       <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' />
       {/* <Controls position='top-left' /> */}
       <div className={classes.controls}>
-        <div onClick={handleTransform} className={classes.controlBtn}>
+        <div onClick={handleTransform} title="reset" className={classes.controlBtn}>
           <img src={resetIcon} alt="reset_icon" />
         </div>
-        <div onClick={() => zoomIn({ duration: 200 })} className={classes.controlBtn}>
+        <div title="zoom in" onClick={() => zoomIn({ duration: 200 })} className={classes.controlBtn}>
           <img src={ZoomInIcon} alt="ZoomInIcon" />
         </div>
-        <div onClick={() => zoomOut({ duration: 200 })} className={classes.controlBtn}>
+        <div title="zoom out" onClick={() => zoomOut({ duration: 200 })} className={classes.controlBtn}>
           <img src={ZoomOutIcon} alt="ZoomOutIcon" />
         </div>
       </div>
