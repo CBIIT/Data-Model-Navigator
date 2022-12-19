@@ -91,6 +91,7 @@ const DictionaryView = ({
                 <CanvasView
                   dictionary={dictionary}
                   tabViewWidth={tabViewWidth}
+                  onClearSearchResult={handleClearSearchResult}
                 />
               </div>
             </TabPanel>

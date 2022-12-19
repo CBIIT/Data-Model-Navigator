@@ -15,6 +15,7 @@ import { nodeColor } from './util';
 import LegendView from '../../graph/Legend/ReduxLegendView';
 import './Canvas.css';
 import './assets/style.css';
+import ActionLayer from './components/ReduxActionLayer';
 
 const nodeTypes = {
   custom: NodeView,
@@ -35,7 +36,8 @@ const CanvasView = ({
   onConnect,
   onNodesChange,
   onEdgesChange,
-  categories
+  categories,
+  onClearSearchResult
 }) => {
 
     return (
@@ -43,6 +45,7 @@ const CanvasView = ({
         <LegendView
           categoryItems={categories}
         />
+        <ActionLayer handleClearSearchResult={onClearSearchResult} />
         <ReactFlowProvider>
           <ReactFlow
             nodes={nodes}

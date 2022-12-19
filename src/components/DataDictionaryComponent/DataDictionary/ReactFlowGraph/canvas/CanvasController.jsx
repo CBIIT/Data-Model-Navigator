@@ -35,7 +35,8 @@ const CanvasController = ({
   tabViewWidth,
   dictionary,
   searchResults,
-  isSearchMode
+  isSearchMode,
+  onClearSearchResult
 }) => {
 
     if (tabViewWidth === 0) {
@@ -153,6 +154,7 @@ const CanvasController = ({
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         categories={categories}
+        onClearSearchResult={onClearSearchResult}
       />
     )
 }

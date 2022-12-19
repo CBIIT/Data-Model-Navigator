@@ -16,7 +16,6 @@ const CustomEdgeView = ({
   markerEnd,
   isSearchMode
 }) => {
-  console.log('custom edge');
   const [edgePath] = getBezierPath({
     sourceX,
     sourceY,
@@ -32,7 +31,7 @@ const CustomEdgeView = ({
         id={id}
         fill="none"
         stroke={isSearchMode ? '#b1b1b7' : "#222"}
-        strokeWidth={1}
+        strokeWidth={0.7}
         className="animated"
         d={edgePath}
         markerEnd={markerEnd}
