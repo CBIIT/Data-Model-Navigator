@@ -33,6 +33,7 @@ export default () => ({
     borderRadius: '5px',
     border: '0.5px solid #ffffff',
     height: '31px',
+    textAlign: 'center',
   },
   nodeIcon: {
     float: 'left',
@@ -43,6 +44,7 @@ export default () => ({
     float: 'right',
     display: 'block',
     padding: '5px 10px 0px 10px',
+    minWidth: '60px',
   },
   nodeTitleBtn: {
     border: '2.5px solid #2E2E2E',
