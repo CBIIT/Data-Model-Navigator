@@ -87,6 +87,14 @@ const CanvasController = ({
          * highlight node based on matching search query to desc, properties and title
          * setMatchingNodeTitle return indexes to highlight node title (string)
          */
+        if (isSearchMode) {
+          const matchingNodeTitle = setMatchingNodeTitle(searchResults);
+          nodes.forEach((node) => {
+            if(matchingNodeTitle[node.id]) {
+              node.data.matchedNodeNameQuery = currentSearchKeyword;
+            }
+          });
+        }
         return { nodes, edges };
     };
 
