@@ -4,21 +4,19 @@ export default () => ({
     right: '12px',
     top: '400px',
     backgroundColor: '#494949',
-    zIndex: '10',
     border: '2px solid #5486AF',
     borderTopLeftRadius: '10px 10px',
     borderBottomLeftRadius: '10px 10px',
     paddingBottom: '15px',
   },
-  zeroZIndex: {
-    zIndex: '0',
+  zvlaue: {
+    zIndex: '10',
   },
   legendCollapse: {
     position: 'absolute',
     right: '12px',
     top: '400px',
     backgroundColor: '#18588C',
-    zIndex: '10',
     border: '1px solid #125C5D',
     borderTopLeftRadius: '10px 10px',
     borderBottomLeftRadius: '10px 10px',

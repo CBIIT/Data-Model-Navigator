@@ -9,4 +9,7 @@ export default () => ({
     marginTop: '15px',
     cursor: 'pointer',
   },
+  zvalue: {
+    zIndex: '0',
+  }
 });

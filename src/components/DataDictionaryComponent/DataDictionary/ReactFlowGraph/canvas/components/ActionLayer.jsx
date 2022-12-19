@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import Button from '@gen3/ui-component/dist/components/Button';
 import styles from './ActionLayer.style';
+import clsx from 'clsx';
 
 /**
 * A layer over the graph.
@@ -11,18 +12,23 @@ import styles from './ActionLayer.style';
 const ActionLayer = ({
   classes,
   isSearchMode = false,
-  handleClearSearchResult
+  handleClearSearchResult,
+  overlayPropertyHidden
 }) => {
   const handleClearSearch = () => {
     handleClearSearchResult();
   }
 
   return (
-    <div className={classes.actionLayer}>
+    <div className={clsx(classes.actionLayer, {
+      [classes.zvalue]: !overlayPropertyHidden,
+    })}>
       {
         isSearchMode && (
           <Button
-            className={classes.clearSearch}
+            className={clsx(classes.clearSearch, {
+              [classes.zvalue]: !overlayPropertyHidden,
+            })}
             onClick={handleClearSearch}
             label="Clear Search Result"
           />

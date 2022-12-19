@@ -54,9 +54,9 @@ const Legend = ({
     <>
      <div
       className={clsx({
+        [classes.zvlaue] : overlayPropertyHidden,
         [classes.legendExpand] : display,
         [classes.legendCollapse] : !display,
-        [classes.zeroZIndex] : !overlayPropertyHidden,
       })}
       style={display ? {...styles?.legendExpand}: {...styles?.legendCollapse}}>
       {
