@@ -49,7 +49,6 @@ const graphViewConfig = {
         right: '25px',
         top: '300px',
         backgroundColor: '#494949',
-        zIndex: '1',
         border: '2px solid #5486AF',
         borderTopLeftRadius: '10px 10px',
         borderBottomLeftRadius: '10px 10px',
@@ -60,7 +59,6 @@ const graphViewConfig = {
         right: '25px',
         top: '300px',
         backgroundColor: '#18588C',
-        zIndex: '1',
         border: '1px solid #125C5D',
         borderTopLeftRadius: '10px 10px',
         borderBottomLeftRadius: '10px 10px',
@@ -281,29 +279,40 @@ async function init() {
     //   data: newDataList,
     //   version: version,
     // }
+    const pdfDownloadConfig = {
+      fileType: 'pdf',
+      prefix: 'ICDC_Data_Model_',
+      landscape: 'true',
+    };
   
-    Promise.all(
-      [
-        store.dispatch({
-          type: 'RECEIVE_DICTIONARY',
-          // data: newDict
-          payload: {
-            data: newDataList,
-            properties: propertyList,
-            facetfilterConfig: filterConfig,
-            readMeConfig: readMeConfig,
-            graphViewConfig: graphViewConfig,
-          },
-        }),
-        store.dispatch({
-          type: 'RECEIVE_VERSION_INFO',
-          data: version,
-        }),
-      ],
-    );
-  }
+  Promise.all(
+    [
+      store.dispatch({
+        type: 'RECEIVE_DICTIONARY',
+        // data: newDict
+        payload: {
+          data: newDataList,
+          properties: propertyList,
+          facetfilterConfig: filterConfig,
+          readMeConfig: readMeConfig,
+          graphViewConfig: graphViewConfig,
+          pdfDownloadConfig: pdfDownloadConfig
+        },
+      }),
+      store.dispatch({
+        type: 'REACT_FLOW_GRAPH_DICTIONARY',
+        dictionary: newDataList,
+        pdfDownloadConfig: pdfDownloadConfig
+      }),
+      store.dispatch({
+        type: 'RECEIVE_VERSION_INFO',
+        data: version,
+      }),
+    ],
+  );
+}
 
-export const pdfDownloadConfig = {
+const pdfDownloadConfig = {
   fileType: 'pdf',
   prefix: 'ICDC_Data_Model_',
   landscape: 'true',

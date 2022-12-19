@@ -205,7 +205,7 @@ const generateFlowData = (nodes, edges, windowWidth) => {
  * @returns { nodes, edges } Object containing nodes and edges
  */
  export function newCreateNodesAndEdges(props, createAll, nodesToHide = ['program'], windowWidth = 0) {
-  console.log('deets running createNodesAndEdges');
+  // console.log('deets running createNodesAndEdges');
   const { dictionary } = props;
   const nodes = Object.keys(dictionary).filter(
     (key) => !key.startsWith('_') && dictionary[key].type === 'object'

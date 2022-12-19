@@ -4,6 +4,7 @@ import { Handle, useReactFlow, useStoreApi } from 'reactflow';
 import clsx from 'clsx';
 import Styles from './NodeStyle';
 import { highlightMatchingTitle, setMatchingNodeClasses } from './util';
+import { clickNode } from '../../action';
 
 const NodeView = ({
   classes,
@@ -13,7 +14,8 @@ const NodeView = ({
   onViewTable,
   isSearchMode,
   ddgraph,
-  currentSearchKeyword
+  currentSearchKeyword,
+  onClickNode
 }) => {
   const [display, setDisplay] = useState(false);
   /**
@@ -22,14 +24,16 @@ const NodeView = ({
    */
   const expandNode = () => {
     const view = localStorage.getItem('reactflowGraphView');
+    onClickNode(id);
     setDisplay(!display);
   }
   const { label, icon, category, matchedNodeNameQuery } = data;
 
   //dispatch event - on table view
   const displayOverviewTable = () => {
-    const nodeId = 1;
-    onViewTable(nodeId);
+    console.log("display overview table");
+    onClickNode(id);
+    onViewTable(false);
   }
 
   /**

@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import { withStyles } from '@material-ui/core';
+import { useSelector } from "react-redux";
+import { CircularProgress, withStyles } from '@material-ui/core';
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -20,6 +21,7 @@ import ActionLayer from './components/ReduxActionLayer';
 import resetIcon from './assets/graph_icon/Reset.svg';
 import ZoomInIcon from './assets/graph_icon/ZoomIn.svg';
 import ZoomOutIcon from './assets/graph_icon/ZoomOut.svg';
+import ReduxOverlayPropertyTable from '../../graph/OverlayPropertyTable';
 
 const nodeTypes = {
   custom: NodeView,
@@ -52,6 +54,16 @@ const CustomFlowView = ({
     setViewport({x: 0, y: 0, zoom: 1 }, { duration: 200 });
   }, [setViewport]);
 
+  /**
+   * pdf configuration
+   */
+  const pdfDownloadConfig = useSelector(state => state.ddgraph.pdfDownloadConfig);
+  if (!pdfDownloadConfig) {
+    return <CircularProgress />
+  }
+
+  const overlayPropertyHidden = useSelector(state => state.ddgraph.overlayPropertyHidden);
+
   return (
     <ReactFlow
       nodes={nodes}
@@ -65,6 +77,7 @@ const CustomFlowView = ({
       maxZoom={1.8}
       fitView
     >
+      <ReduxOverlayPropertyTable pdfDownloadConfig={pdfDownloadConfig} />
       <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' />
       {/* <Controls position='top-left' /> */}
       <div className={classes.controls}>
@@ -103,24 +116,6 @@ const CanvasView = ({
         />
         <ActionLayer handleClearSearchResult={onClearSearchResult} />
         <ReactFlowProvider>
-          {/* <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            nodeTypes={nodeTypes}
-            edgeTypes={edgeTypes}
-            minZoom={1}
-            maxZoom={1.8}
-            fitView
-          >
-            <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' />
-            <Controls position='top-left' />
-            <ReduxAutoFitView />
-            <ReduxViewPort />
-            <Background color="#aaa" gap={12} />
-          </ReactFlow> */}
           <CustomFlowView
             nodes={nodes}
             edges={edges}

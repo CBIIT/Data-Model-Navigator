@@ -33,6 +33,8 @@ const ddgraphInitialState = {
   isSearching: false,
   highlightingMatchedNodeID: null,
   highlightingMatchedNodeOpened: false,
+  dictionary: {},
+  pdfDownloadConfig: {},
 };
 
 const ddgraph = (state = ddgraphInitialState, action) => {
@@ -117,6 +119,44 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         secondHighlightingNodeID: null,
         tableExpandNodeID: null,
       };
+    }
+    case 'REACT_FLOW_GRAPH_DICTIONARY': {
+      return {
+        ...state,
+        dictionary: action.dictionary,
+        pdfDownloadConfig: action.pdfDownloadConfig
+      }
+    }
+    case 'REACT_FLOW_SET_GRAPH_DATA': {
+      // console.log('REACT_FLOW_SET_GRAPH_DATA');
+      // console.log(state);
+      return {
+        ...state,
+        nodes: action.nodes,
+        edges: action.edges,
+      }
+    }
+    case 'REACT_FLOW_GRAPH_CLICK_NODE': {
+      console.log('REACT_FLOW_GRAPH_CLICK_NODE');
+      console.log(state);
+      if (state.isSearchMode) {
+        // clicking node in search mode opens property table
+        return {
+          ...state,
+          highlightingMatchedNodeID: action.nodeID,
+          highlightingNode: state.dictionary[action.nodeID],
+          highlightingMatchedNodeOpened: false,
+          overlayPropertyHidden: false,
+        };
+      }
+      // if serach mode is false
+      return {
+        ...state,
+          highlightingMatchedNodeID: action.nodeID,
+          highlightingNode: state.dictionary[action.nodeID],
+          highlightingMatchedNodeOpened: false,
+          overlayPropertyHidden: true,
+      }
     }
     case 'GRAPH_CLICK_NODE': {
       if (state.isSearchMode) {

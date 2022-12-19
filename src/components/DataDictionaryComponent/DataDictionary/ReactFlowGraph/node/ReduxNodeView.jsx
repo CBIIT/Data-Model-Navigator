@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { clickNode, setOverlayPropertyTableHidden } from '../../action';
 import NodeView from './NodeView';
 
 const ReduxNodeView = (props) => (<NodeView {...props} />);
@@ -12,7 +13,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onViewTable: (nodeId) => console.log("display Overview table"),
+  onClickNode: (nodeID) => dispatch(clickNode(nodeID)),
+  onViewTable: (hide) => dispatch(setOverlayPropertyTableHidden(hide)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxNodeView);

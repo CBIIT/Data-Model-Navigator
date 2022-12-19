@@ -11,6 +11,7 @@ import CanvasView from './CanvasView';
 import { newCreateNodesAndEdges } from '../../../GraphUtils/utils';
 import { getAllTypes } from '../../graph/GraphCalculator/graphCalculatorHelper';
 import { getDistinctCategoryItems, setMatchingNodeTitle } from './util';
+import { setReactFlowGraphData } from '../../action';
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -36,7 +37,8 @@ const CanvasController = ({
   dictionary,
   searchResults,
   isSearchMode,
-  onClearSearchResult
+  onClearSearchResult,
+  setGraphData
 }) => {
 
     if (tabViewWidth === 0) {
@@ -80,19 +82,11 @@ const CanvasController = ({
         //      */
         //     return node;
         // });
-        
+
         /**
          * highlight node based on matching search query to desc, properties and title
          * setMatchingNodeTitle return indexes to highlight node title (string)
          */
-        if (isSearchMode) {
-            const matchingNodeTitle = setMatchingNodeTitle(searchResults);
-            nodes.forEach((node) => {
-              if(matchingNodeTitle[node.id]) {
-                node.data.matchedNodeNameQuery = currentSearchKeyword;
-              }
-            });
-        }
         return { nodes, edges };
     };
 
@@ -104,12 +98,12 @@ const CanvasController = ({
      * reactflow graph view 
      */
     // const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
-    const [flowData, setFlowData] = React.useState(null);
+    // const [flowData, setFlowData] = React.useState(null);
 
-    useEffect(() => {
-      const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
-      setFlowData(graphData);
-    }, [dictionary]);
+    // useEffect(() => {
+    //   const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
+    //   setFlowData(graphData);
+    // }, [dictionary]);
 
     /**
      * initalize category item for Legend
@@ -130,9 +124,10 @@ const CanvasController = ({
             flowData.nodes,
             flowData.edges,
         );
+        // console.log(flowData);
         setNodes(layoutedNodes);
         setEdges(layoutedEdges);
-    }, [flowData, currentSearchKeyword]);
+    }, [dictionary, currentSearchKeyword]);
 
     const onConnect = useCallback(
       (params) =>
@@ -167,7 +162,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-
+  setGraphData: (graphData) => {dispatch(setReactFlowGraphData(graphData))}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CanvasController);
