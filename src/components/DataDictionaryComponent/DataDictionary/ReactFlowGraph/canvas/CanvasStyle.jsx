@@ -9,7 +9,8 @@ export default () => ({
     top: '5px',
     zIndex: '10',
     fontSize: '12px',
-    width: '32px'
+    width: '32px',
+    marginLeft: '20px',
   },
   controlBtn: {
     backgroundColor: '#545555',

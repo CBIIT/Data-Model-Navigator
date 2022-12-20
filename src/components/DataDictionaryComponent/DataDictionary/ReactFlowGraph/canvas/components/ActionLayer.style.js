@@ -6,7 +6,6 @@ export default () => ({
   },
   clearSearch: {
     marginLeft: '60px',
-    marginTop: '15px',
     cursor: 'pointer',
   },
   zvalue: {
