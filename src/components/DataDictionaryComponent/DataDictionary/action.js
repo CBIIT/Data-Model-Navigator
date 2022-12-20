@@ -52,10 +52,14 @@ export const hoverNode = (nodeID) => ({
   type: 'GRAPH_UPDATE_HOVERING_NODE',
   nodeID,
 });
-
+export const setReactFlowGraphData = (flowData) => ({
+  type: 'REACT_FLOW_SET_GRAPH_DATA',
+  nodes: flowData.nodes,
+  edges: flowData.edges,
+});
 export const clickNode = (nodeID) => ({
-  type: 'GRAPH_CLICK_NODE',
-  nodeID,
+  type: 'REACT_FLOW_GRAPH_CLICK_NODE',
+  nodeID
 });
 
 export const resetGraphHighlight = () => ({

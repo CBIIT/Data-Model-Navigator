@@ -1,27 +1,69 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { Button, withStyles } from '@material-ui/core';
 import { Handle, useReactFlow, useStoreApi } from 'reactflow';
+import clsx from 'clsx';
 import Styles from './NodeStyle';
+import { highlightMatchingTitle, setMatchingNodeClasses } from './util';
+import { clickNode } from '../../action';
 
-const NodeView = ({ classes, id, handleId, data }) => {
+const NodeView = ({
+  classes,
+  id,
+  handleId,
+  data,
+  onViewTable,
+  isSearchMode,
+  ddgraph,
+  currentSearchKeyword,
+  onClickNode
+}) => {
   const [display, setDisplay] = useState(false);
-  const expandHandler = () => {
+  /**
+   * expand node in normal mode (when search mode is false)
+   * use view option to adjust the fontSize on property dialog 
+   */
+  const expandNode = () => {
     const view = localStorage.getItem('reactflowGraphView');
-    console.log(view);
+    onClickNode(id);
     setDisplay(!display);
   }
-  const { label, icon } = data;
+  const { label, icon, category, matchedNodeNameQuery } = data;
+
+  //dispatch event - on table view
   const displayOverviewTable = () => {
     console.log("display overview table");
+    onClickNode(id);
+    onViewTable(false);
   }
+
+  /**
+   * light node based on reasult of search query
+   */
+  useEffect(() => {
+    // const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
+    // setMatchingClasses(nodeClasses);
+  }, [isSearchMode, currentSearchKeyword]);
+
+  /**
+   * highlight nodes based on search query
+   */
+  const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
+
   return (
     <>
-      <div className={display ? classes.propDialog : ''}>
+      <div className={clsx({[classes.propDialog]: display})}>
         <div className={display ? classes.customNodeExpand : classes.customNodeCollapse}>
           <div className={classes.nodeTitle}>
-            <button className={classes.nodeTitleBtn} onClick={expandHandler}>
-              <img className={classes.nodeIcon} src={icon} alt="study_icon" /> 
-              <span className={classes.nodeName}>{label}</span>
+            <button className={isSearchMode ? nodeClasses : clsx(classes.nodeTitleBtn, classes[category])}
+              onClick={isSearchMode ? displayOverviewTable : expandNode}
+            >
+              <img className={classes.nodeIcon} src={icon} alt="category_icon" /> 
+              <span className={classes.nodeName}>
+                {(isSearchMode && matchedNodeNameQuery) ?
+                  (<>
+                    {highlightMatchingTitle(label, matchedNodeNameQuery, classes)}
+                  </>) : `${label}`.toLowerCase()}
+              </span>
             </button>
           </div>
           <div className={display ? classes.viewSection : classes.hideSection}>
@@ -40,6 +82,6 @@ const NodeView = ({ classes, id, handleId, data }) => {
       </div>
     </>
   );
-}
+};
 
 export default withStyles(Styles)(memo(NodeView));

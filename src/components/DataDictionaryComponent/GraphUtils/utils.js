@@ -7,7 +7,6 @@ import biospecimenIcon from '../DataDictionary/ReactFlowGraph/canvas/assets/grap
 import analysisIcon from '../DataDictionary/ReactFlowGraph/canvas/assets/graph_icon/analysis.svg';
 import dataFileIcon from '../DataDictionary/ReactFlowGraph/canvas/assets/graph_icon/data_file.svg';
 import clinicalIcon from '../DataDictionary/ReactFlowGraph/canvas/assets/graph_icon/clinical.svg';
-import { edges } from '../DataDictionary/ReactFlowGraph/canvas/initial-elements';
 
 const graphIcons = {
   administrative: adminIcon,
@@ -47,22 +46,70 @@ const getSubgroupLinks = (link, nameToNode, sourceId) => {
   return subgroupLinks;
 };
 
-const generateNodes = (nodes) => {
-  const DEFAULT_NODE_OBJECT = {
-    type: 'custom',
-    position: {x: 0, y: 0},
-  };
+const generateNodes = (nodes, edges, windowWidth) => {
 
+  /**
+   * use hierarchy order provided by
+   * assignPosition() method to set (x, y) position of the node
+   */
+  const result = assignNodePositions(nodes, edges, undefined);
+  /**
+   * 1. name2Level - x position 
+   * 2. treeLevel2Name - y position
+   * note: some nodes (like biospecimen does not belong to tree)
+   * should be placed at bottom
+   */
+  // console.log(result);
+  const { name2Level, treeLevel2Names } = result;
+
+  // const yPosition = (node) => name2Level[node] * 100 + 50;
+  const getNodePosition = ({name}) => {
+    let y = 0
+    const index = name2Level[name] !== undefined ? name2Level[name] : treeLevel2Names.length;
+    const nodeItems = treeLevel2Names[index];
+    y = (index + 1) * 80;
+    let x = windowWidth/3;
+    if (nodeItems) {
+      const count = nodeItems.length;
+      if (count > 1) {
+        const treeLevel2Index = nodeItems.indexOf(name);
+        if (count % 2 === 0) {
+          x = (treeLevel2Index) * 200 - 200;
+        } else {
+          if (treeLevel2Index == count/2 + 1) {
+            x = windowWidth/3;
+          } else {
+            x = (treeLevel2Index + 1) * 200;
+          }
+        }
+      }
+    } else {
+      x = 100;
+    }
+    return {
+      x: x,
+      y: y
+    };
+  }
+
+  // const DEFAULT_NODE_OBJECT = {
+  //   type: 'custom',
+  //   position: {x: 0, y: 0},
+  // };
 
   const generatedNodes = nodes.map((node, index) => {
-
+      const position = getNodePosition(node);
+      // console.log(position);
+      
       return {
-        ...DEFAULT_NODE_OBJECT,
+        type: 'custom',
+        position: {...position},
         id: `${node.id}`,
         category: `${node.category}`,
         data: {
           label: _.capitalize(node.name),
-          icon: graphIcons[node.category]
+          icon: graphIcons[node.category],
+          category: `${node.category}`,
         }
       }
 
@@ -111,13 +158,14 @@ const generateNodes = (nodes) => {
     //     }
     // }
   });
+  // console.log(generatedNodes);
 
   return generatedNodes;
 }
 
 const generateEdges = (edges) => {
   const DEFAULT_EDGE_TYPE = {
-    type: 'bezier',
+    type: 'custom',
     animated: false,
   }
 
@@ -133,9 +181,9 @@ const generateEdges = (edges) => {
   return generatedEdges;
 }
 
-const generateFlowData = (nodes, edges) => {
+const generateFlowData = (nodes, edges, windowWidth) => {
   return {
-    nodes: generateNodes(nodes),
+    nodes: generateNodes(nodes, edges, windowWidth),
     edges: generateEdges(edges),
   }
 }
@@ -156,8 +204,8 @@ const generateFlowData = (nodes, edges) => {
  * @param nodesToHide: Array of nodes to hide from graph
  * @returns { nodes, edges } Object containing nodes and edges
  */
- export function newCreateNodesAndEdges(props, createAll, nodesToHide = ['program']) {
-  console.log('deets running createNodesAndEdges');
+ export function newCreateNodesAndEdges(props, createAll, nodesToHide = ['program'], windowWidth = 0) {
+  // console.log('deets running createNodesAndEdges');
   const { dictionary } = props;
   const nodes = Object.keys(dictionary).filter(
     (key) => !key.startsWith('_') && dictionary[key].type === 'object'
@@ -226,8 +274,10 @@ const generateFlowData = (nodes, edges) => {
     // filter out if no instances of this link exists and createAll is not specified
       (link) => createAll || link.exists || link.exists === undefined,
     );
+  
+  //assignNodePositions
 
-  return generateFlowData(nodes, edges);
+  return generateFlowData(nodes, edges, windowWidth);
 }
 
 /**
@@ -315,6 +365,7 @@ export function createNodesAndEdges(props, createAll, nodesToHide = ['program'])
     // filter out if no instances of this link exists and createAll is not specified
       (link) => createAll || link.exists || link.exists === undefined,
     );
+  
   return {
     nodes,
     edges,
@@ -564,6 +615,7 @@ export function assignNodePositions(nodes, edges, opts) {
       );
     },
   );
+  // console.log(breadthFirstInfo);
   return breadthFirstInfo;
 }
 

@@ -5,7 +5,7 @@ export default () => ({
     bottom: '0',
     left: '0',
     right: '0',
-    zIndex: '3',
+    zIndex: '15',
   },
   background: {
     position: 'absolute',

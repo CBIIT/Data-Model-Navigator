@@ -1,6 +1,6 @@
 {
   "name": "data-model-navigator",
-  "version": "1.0.25",
+  "version": "1.0.28",
   "description": "",
   "main": "lib/index.js",
   "private": false,
@@ -34,7 +34,8 @@
     "axios": "^0.19.2",
     "bento-components": "^0.1.106",
     "browserify-zlib": "^0.2.0",
-    "classnames": "^2.2.6",
+    "classnames": "^2.3.2",
+    "clsx": "^1.1.0",
     "cross-env": "^7.0.2",
     "d3-array": "^1.2.0",
     "d3-ease": "^1.0.5",

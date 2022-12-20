@@ -24,9 +24,16 @@ export default () => ({
     opacity: '0.97',
     // backgroundColor: '#2D4455',
   },
+  highLightNode: {
+    fontSize: '15px',
+    fontWeight: '900',
+  },
   nodeTitle: {
-    height: '25px',
-    // backgroundColor: '#2D4455',
+    backgroundColor: '#ffffff',
+    borderRadius: '5px',
+    border: '0.5px solid #ffffff',
+    height: '31px',
+    textAlign: 'center',
   },
   nodeIcon: {
     float: 'left',
@@ -36,10 +43,22 @@ export default () => ({
   nodeName: {
     float: 'right',
     display: 'block',
-    padding: '5px 10px 5px 10px',
+    padding: '5px 10px 0px 10px',
+    minWidth: '60px',
   },
   nodeTitleBtn: {
-    padding: '0'
+    border: '2.5px solid #2E2E2E',
+    padding: '0',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#ef8523',
+      color: '#ffffff',
+    },
+    '& img': {
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
+    }
   },
   viewSection: {
     marginTop: '10px',
@@ -63,4 +82,78 @@ export default () => ({
     width: '100%',
     height: '20px',
   },
+  matchedNodeIDs: {
+
+  },
+  matchedInNameAndDesc: {
+    // border: '2px solid red',
+  },
+  matchedNodeIDsInProps: {
+    border: '2.5px dashed #2E2E2E',
+  },
+  excludeNode: {
+    cursor: 'not-allowed',
+    pointerEvents: 'none',
+    opacity: '0.4',
+  },
+  categoryIcon: {
+    '& img': {
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
+    }
+  },
+  administrative: {
+    '& img': {
+      background: '#9b2d20',
+      borderLeft: '2px solid #9b2d20',
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
+    }
+  },
+  study: {
+    '& img': {
+      background: '#9875ff',
+      borderLeft: '2px solid #9875f',
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
+    }
+  },
+  case: {
+    '& img': {
+      background: '#ff7f15',
+      borderLeft: '2px solid #ff7f15',
+      borderTopLeftRadius: '2px',
+      borderBottomLeftRadius: '2px',
+    }
+  },
+  clinical_trial: {
+    '& img': {
+      background: '#00A1BB',
+      borderLeft: '2px solid #00A1BB',
+    }
+  },
+  biospecimen: {
+    '& img': {
+      background: '#00785a',
+      borderLeft: '2px solid #00785a',
+    }
+  },
+  analysis: {
+    '& img': {
+      background: '#b533a9',
+      borderLeft: '2px solid #b533a9',
+    }
+  },
+  data_file: {
+    '& img': {
+      background: '#00ad0e',
+      borderLeft: '2px solid #00ad0e',
+    }
+  },
+  clinical: {
+    '& img': {
+      background: '#1c75bc',
+      borderLeft: '2px solid #1c75bc',
+    }
+  }
 });

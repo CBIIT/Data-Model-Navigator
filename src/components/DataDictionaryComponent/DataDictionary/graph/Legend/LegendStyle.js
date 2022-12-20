@@ -1,21 +1,22 @@
 export default () => ({
-  legendExapand: {
+  legendExpand: {
     position: 'absolute',
-    right: '0px',
-    top: '35px',
+    right: '15px',
+    top: '400px',
     backgroundColor: '#494949',
-    zIndex: '1',
     border: '2px solid #5486AF',
     borderTopLeftRadius: '10px 10px',
     borderBottomLeftRadius: '10px 10px',
     paddingBottom: '15px',
   },
+  zvlaue: {
+    zIndex: '10',
+  },
   legendCollapse: {
     position: 'absolute',
-    right: '0px',
-    top: '35px',
+    right: '15px',
+    top: '400px',
     backgroundColor: '#18588C',
-    zIndex: '1',
     border: '1px solid #125C5D',
     borderTopLeftRadius: '10px 10px',
     borderBottomLeftRadius: '10px 10px',

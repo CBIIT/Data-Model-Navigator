@@ -5,7 +5,7 @@ import { onViewChange } from '../../action';
 
 const ReduxViewPort = ({ onGraphViewChange }) => {
   const { x, y, zoom } = useViewport();
-  onGraphViewChange(useViewport());
+  // onGraphViewChange(useViewport());
   // useEffect(() => {
   //   console.log(x, y, zoom);
   // }, [x, y, zoom]);

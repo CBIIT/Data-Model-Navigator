@@ -5,14 +5,16 @@ import relationshipSvg from '../../NodeCategories/icons/Legend/lg_relationship_l
 import toggleSvg from '../../NodeCategories/icons/Legend/lg_link.svg';
 import Styles from './LegendStyle';
 import { capitalizeFirstLetter } from '../../../utils';
+import clsx from 'clsx';
 
 const Legend = ({
   classes,
   categoryItems,
+  styles,
+  overlayPropertyHidden
 }) => {
   const [display, setDisplay] = useState(true);
   const toggleLegend = () => setDisplay(!display);
-
   const categoryListComponent = categoryItems.map((category) => {
     // const categoryColor = getCategoryColor(category);
     // const IconSvg = getLegendCategoryIconSVG(category);
@@ -31,14 +33,15 @@ const Legend = ({
   });
 
   const ToggleBtn = () => (
-    <div className={display ? classes.headerExpand : classes.headerCollapse}>
+    <div className={
+      display ? classes.headerExpand : classes.headerCollapse}
+    >
       {display && (
         <span className={classes.headerTitle}>Node Category</span>
       )}
       <span
         className={classes.toggleBtn}
         onClick={toggleLegend}
-        onKeyPress={toggleLegend}
         role='button'
         tabIndex={0}
       >
@@ -49,7 +52,13 @@ const Legend = ({
 
   return (
     <>
-     <div className={display ? classes.legendExapand : classes.legendCollapse}>
+     <div
+      className={clsx({
+        [classes.zvlaue] : overlayPropertyHidden,
+        [classes.legendExpand] : display,
+        [classes.legendCollapse] : !display,
+      })}
+      style={display ? {...styles?.legendExpand}: {...styles?.legendCollapse}}>
       {
         <>
           <ToggleBtn />
