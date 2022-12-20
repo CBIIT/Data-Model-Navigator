@@ -11,6 +11,7 @@ export default () => ({
     fontSize: '12px',
     width: '32px',
     marginLeft: '20px',
+    marginTop: '15px',
   },
   controlBtn: {
     backgroundColor: '#545555',

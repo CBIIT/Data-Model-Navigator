@@ -137,8 +137,6 @@ const ddgraph = (state = ddgraphInitialState, action) => {
       }
     }
     case 'REACT_FLOW_GRAPH_CLICK_NODE': {
-      console.log('REACT_FLOW_GRAPH_CLICK_NODE');
-      console.log(state);
       if (state.isSearchMode) {
         // clicking node in search mode opens property table
         return {
