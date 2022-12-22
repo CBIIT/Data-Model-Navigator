@@ -260,6 +260,14 @@ export const getCategoryColor = (category) => {
   return defaultCategory.color;
 };
 
+export const getCategoryBackground = (category) => {
+  if (nodeCategoryList[category]) {
+    return nodeCategoryList[category].background ||  nodeCategoryList[category].color;
+  }
+
+  return defaultCategory.color;
+}
+
 export const getCategoryStyle = (category) => {
   if (nodeCategoryList[category]) {
     return nodeCategoryList[category];

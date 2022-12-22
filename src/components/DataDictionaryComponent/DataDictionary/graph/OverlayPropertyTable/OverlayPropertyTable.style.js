@@ -53,7 +53,6 @@ export default () => ({
     lineHeight: '40px',
     verticalAlign: 'middle',
     borderLeft: '5px solid',
-    backgroundColor: '#043F55',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
