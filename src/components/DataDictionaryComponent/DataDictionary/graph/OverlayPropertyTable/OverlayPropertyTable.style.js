@@ -49,7 +49,7 @@ export default () => ({
   },
   category: {
     // backgroundColor: 'var(--dictionary-header-color)',
-    padding: '10px 15px',
+    padding: '3px 15px 0px 15px',
     lineHeight: '40px',
     verticalAlign: 'middle',
     borderLeft: '5px solid',

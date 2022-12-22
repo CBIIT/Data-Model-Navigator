@@ -8,11 +8,12 @@
   }
   
   .react-flow__node-custom .react-flow__handle {
-    top: 35px;
+    top: 41px;
     right: -15px;
-    width: 1px;
-    height: 1px;
-    background-color: #778899;
+    width: 5px;
+    height: 5px;
+    /* background-color: #778899; */
+    background-color: #2E2E2E;
   }
   
   .react-flow__node.circle {

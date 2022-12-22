@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
-import Button from '@gen3/ui-component/dist/components/Button';
+import { Button, withStyles } from '@material-ui/core';
 import styles from './ActionLayer.style';
 import clsx from 'clsx';
 
@@ -31,7 +29,8 @@ const ActionLayer = ({
             })}
             onClick={handleClearSearch}
             label="Clear Search Result"
-          />
+          > Clear Search Result
+            </Button>
         )
       }
     </div>

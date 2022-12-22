@@ -21,12 +21,7 @@ const tabItems = [
     index: 1,
     label: 'Table View',
     value: 'table_view',
-  },
-  // {
-  //   index: 2,
-  //   label: 'Graph View',
-  //   value: 'graph_view',
-  // },
+  }
 ];
 
 const DictionaryView = ({
@@ -46,16 +41,6 @@ const DictionaryView = ({
    useLayoutEffect(() => {
      setTabViewWidth(ref.current.offsetWidth);
    }, []);
-  /**
-   * reactflow graph view 
-   */
-  // const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
-  // const [flowData, setFlowData] = React.useState(null);
-  
-  // useEffect(() => {
-  //   const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
-  //   setFlowData(graphData);
-  // }, [dictionary]);
 
   //set to graph view incase of search entry
   useEffect(() => {

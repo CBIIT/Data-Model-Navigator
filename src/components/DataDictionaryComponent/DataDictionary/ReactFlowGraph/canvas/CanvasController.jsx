@@ -9,9 +9,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import dagre from 'dagre';
 import CanvasView from './CanvasView';
 import { newCreateNodesAndEdges } from '../../../GraphUtils/utils';
-import { getAllTypes } from '../../graph/GraphCalculator/graphCalculatorHelper';
 import { getDistinctCategoryItems, setMatchingNodeTitle } from './util';
 import { setReactFlowGraphData } from '../../action';
+import { getNodePosition } from './CanvasHelper';
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -38,7 +38,9 @@ const CanvasController = ({
   searchResults,
   isSearchMode,
   onClearSearchResult,
-  setGraphData
+  setGraphData,
+  nodeTree,
+  unfilteredDictionary
 }) => {
 
     if (tabViewWidth === 0) {
@@ -95,6 +97,20 @@ const CanvasController = ({
             }
           });
         }
+        /**
+         * assign node position
+         */
+        if (dictionary && nodeTree) {
+          const nodePosition = getNodePosition(dictionary, nodeTree, tabViewWidth);
+          nodes.forEach((node) => {
+            const position = nodePosition[node.id];
+            node.position = {
+              x: position[0],
+              y: position[1]
+            }
+          });
+        }
+
         return { nodes, edges };
     };
 
@@ -103,21 +119,10 @@ const CanvasController = ({
     const [categories, setCategories] = useState([]);
 
     /**
-     * reactflow graph view 
-     */
-    // const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
-    // const [flowData, setFlowData] = React.useState(null);
-
-    // useEffect(() => {
-    //   const graphData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
-    //   setFlowData(graphData);
-    // }, [dictionary]);
-
-    /**
      * initalize category item for Legend
      */
     useEffect(() => {
-        const categories = getDistinctCategoryItems(Object.values(dictionary));
+        const categories = getDistinctCategoryItems(Object.values(unfilteredDictionary));
         setCategories(categories);
     }, []);
 
@@ -127,7 +132,7 @@ const CanvasController = ({
      * 2. toggle between on/off for serach mode
      */
     useEffect(() => {
-        const flowData = newCreateNodesAndEdges({dictionary}, true, [], tabViewWidth);
+        const flowData = newCreateNodesAndEdges({dictionary}, true, []);
         const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
             flowData.nodes,
             flowData.edges,
@@ -167,6 +172,8 @@ const mapStateToProps = (state) => ({
     isSearchMode: state.ddgraph.isSearchMode,
     currentSearchKeyword: state.ddgraph.currentSearchKeyword,
     searchResults: state.ddgraph.searchResult,
+    nodeTree : state.submission.node2Level,
+    unfilteredDictionary: state.submission.unfilteredDictionary
 });
 
 const mapDispatchToProps = (dispatch) => ({

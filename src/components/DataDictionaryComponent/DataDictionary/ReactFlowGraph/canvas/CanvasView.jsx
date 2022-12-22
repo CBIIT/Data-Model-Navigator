@@ -39,7 +39,8 @@ const minimapStyle = {
  * 
  * @param {*} param0 
  * @returns 
- * reactflow requirement to add customize control buttons
+ * reactflow requires to create child component
+ *  to add customize control buttons
  */
 const CustomFlowView = ({
   classes,
@@ -51,7 +52,7 @@ const CustomFlowView = ({
 }) => {
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
   const handleTransform = useCallback(() => {
-    setViewport({x: 0, y: 0, zoom: 1 }, { duration: 200 });
+    setViewport({x: -200, y: 0, zoom: 1 }, { duration: 200 });
   }, [setViewport]);
 
   /**
