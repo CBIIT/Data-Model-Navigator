@@ -23,7 +23,9 @@ export default () => ({
     padding: '15px 40px',
   },
   content: {
-    // backgroundColor: '#fff',
+    backgroundColor: '#fff',
+    padding: '20px',
+    boxShadow: '-5px 4px 21px 18px rgba(27,28,28,0.32)',
   },
   header: {
     // position: '-webkit-sticky',
@@ -51,7 +53,10 @@ export default () => ({
     lineHeight: '40px',
     verticalAlign: 'middle',
     borderLeft: '5px solid',
-    backgroundColor: '#fff',
+    backgroundColor: '#043F55',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   categoryText: {
     display: 'inline',
@@ -86,6 +91,10 @@ export default () => ({
   propertyTable: {
     padding: '10px 18px 18px 23px',
     backgroundColor: '#fff',
+    borderRight: '1px solid #ADBEC4',
+    borderBottom: '1px solid #ADBEC4',
+    borderLeftWidth: '5px',
+    borderLeftStyle: 'solid',
   },
   downloadButton: {
     minWidth: 'unset', /* override .g3-button's 152px min-width */
