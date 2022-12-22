@@ -17,7 +17,7 @@ import {
 
 import { SearchResultItemShape } from '../../utils';
 import { capitalizeFirstLetter, createFileName } from '../../../utils';
-import { getCategoryColor, tableIconUrl } from '../../NodeCategories/helper';
+import { getCategoryBackground, getCategoryColor, tableIconUrl } from '../../NodeCategories/helper';
 import DataDictionaryPropertyTable from '../../table/DataDictionaryPropertyTable';
 import styles from './OverlayPropertyTable.style';
 import NodeViewComponent from '../../table/DataDictionaryNode/components/NodeViewComponent';
@@ -92,7 +92,7 @@ class OverlayPropertyTable extends React.Component {
             <div className={classes.header}>
               <div
                 className={classes.category}
-                style={{ borderLeftColor: categoryColor }}
+                style={{ borderLeftColor: categoryColor, backgroundColor: getCategoryBackground(node.category) }}
               >
                 <div>
                   <img src={`${tableIconUrl}${node.category}.svg`} alt="icon" className={`${classes.categoryIcon} ${node.category}`} />
