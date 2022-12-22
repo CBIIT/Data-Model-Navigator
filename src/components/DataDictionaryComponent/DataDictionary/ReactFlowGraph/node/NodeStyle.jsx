@@ -32,19 +32,21 @@ export default () => ({
     backgroundColor: '#ffffff',
     borderRadius: '5px',
     border: '0.5px solid #ffffff',
-    height: '31px',
+    height: '36px',
     textAlign: 'center',
   },
   nodeIcon: {
     float: 'left',
     width: '33px',
-    height: '25px'
+    height: '30px'
   },
   nodeName: {
     float: 'right',
     display: 'block',
-    padding: '5px 10px 0px 10px',
+    padding: '5px 10px 5px 10px',
     minWidth: '60px',
+    fontSize: '16px',
+    fontWeight: '500',
   },
   nodeTitleBtn: {
     border: '2.5px solid #2E2E2E',

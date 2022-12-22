@@ -12,7 +12,9 @@ import {
   generateSubjectCountsAndFilterData,
   getAllFilters,
   toggleCheckBoxAction,
+  setNodeHierarchy,
 } from '../../utils/modelExplorerUtil';
+import { generateNodeTree } from '../../ReactFlowGraph/canvas/CanvasHelper';
 
 const initialState = {
   allActiveFilters: {},
@@ -100,7 +102,7 @@ const toggleCheckBox = (payload, state) => {
   updatedCheckboxData = sortFacetSections(sortCheckboxData, state.sortByList);
   const updateState = {
     ...state,
-    dictionary: filtered.dictionary,
+    dictionary: setNodeHierarchy(filtered.dictionary, state.nodeHierarchy),
     allActiveFilters: allActiveFilters,
     checkbox: {
       data: setSubjectCount(updatedCheckboxData, filtered.subjectCounts),
@@ -122,11 +124,13 @@ const moduleReducers = (state = initialState, action) => {
       return ({
         ...state,
         dictionary: dictionary,
+        nodeHierarchy: Object.keys(dictionary),
         properties: payload.properties,
         nodeTypes: getNodeTypes(payload.data),
         file_nodes: getFileNodes(payload.data),
         allActiveFilters: getAllFilters(filterConfig.facetSearchData),
         unfilteredDictionary: dictionary,
+        node2Level: generateNodeTree(dictionary),
         filteredDictionary: dictionary,
         filterHashMap: initializeFilterHashMap(dictionary, filterConfig.filterSections),
         subjectCountObject: filtered,

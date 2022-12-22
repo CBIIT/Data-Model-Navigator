@@ -11,7 +11,6 @@
  * 
  */
 export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
-    // console.log(dictionary);
     const nodes = Object.keys(dictionary);
     /**
      * initialize level to zero for all the nodes
@@ -23,8 +22,8 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
      * edge1 of hierarchy node is selected 
      * 
      * CAUTION
-     * Dst - where edge originates (source)
-     * Src - where edge ends (target)
+     * Dst - node/point where edge originates (source)
+     * Src - node/point where edge ends (target)
      */
     const distinctLinks = {};
     let maxLevel = 0;
@@ -92,8 +91,10 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
 }
 
 /**
-* generate sub tree based on filtered dictionary
-* based on complete tree
+* generate sub tree based on filter dictionary
+* use case - calculate position of the each filtered node
+* @param {*} distionary
+* @param {*} nodeTree
 */
 export const generateSubTree = (dictionary, nodeTree) => {
     const nodes = Object.keys(dictionary);
@@ -112,16 +113,17 @@ export const generateSubTree = (dictionary, nodeTree) => {
 /**
  * Calculates the node position based on node level
  * 
- * @param {*} param0 
+ * @param {*} dictionary - filtered dictionary
+ * @param {*} nodeTree - complete tree
+ * @param {*} tabViewWidth - calculate the position
  * @returns postion of the nodes
  * 
  */
-export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yIntervel = 80, xIntervel = 200) => {
+export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yIntervel = 80, xIntervel = 220) => {
     const subtree = generateSubTree(dictionary, nodeTree);
     const position = {};
     let x = tabViewWidth/2;
     for (const [level, nodes] of Object.entries(subtree)) {
-        console.log(nodes.length);
         const { length } = nodes;
         /**
          * single node in a level
@@ -150,4 +152,5 @@ export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yIntervel = 
     }
 
     return position;
-}   
+}
+

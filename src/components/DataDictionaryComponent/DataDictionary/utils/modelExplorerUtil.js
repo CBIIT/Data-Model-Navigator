@@ -440,3 +440,16 @@ export const toggleCheckBoxAction = (payload, state) => {
   }
   return currentAllFilterVariables;
 };
+
+/**
+ * sort hierarchy order of filter nodes
+ */
+export const setNodeHierarchy = (dictionary, nodeHierarchy) => {
+  const nodes = nodeHierarchy.reduce((result, key) => {
+    if (dictionary[key]) {
+      result[key] = _.cloneDeep(dictionary[key]);
+    }
+    return result;
+  }, {});
+  return nodes;
+} 

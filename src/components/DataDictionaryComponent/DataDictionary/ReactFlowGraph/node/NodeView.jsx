@@ -31,7 +31,6 @@ const NodeView = ({
 
   //dispatch event - on table view
   const displayOverviewTable = () => {
-    console.log("display overview table");
     onClickNode(id);
     onViewTable(false);
   }
