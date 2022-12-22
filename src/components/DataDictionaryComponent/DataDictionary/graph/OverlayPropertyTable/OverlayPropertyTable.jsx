@@ -2,6 +2,8 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 import {
   Grid,
   withStyles,
@@ -92,8 +94,10 @@ class OverlayPropertyTable extends React.Component {
                 className={classes.category}
                 style={{ borderLeftColor: categoryColor }}
               >
-                <img src={`${tableIconUrl}${node.category}.svg`} alt="icon" className={`${classes.categoryIcon} ${node.category}`} />
-                <h4 style={{ color: categoryColor }} className={classes.categoryText}>{capitalizeFirstLetter(node.category)}</h4>
+                <div>
+                  <img src={`${tableIconUrl}${node.category}.svg`} alt="icon" className={`${classes.categoryIcon} ${node.category}`} />
+                  <h4 style={{ color: '#FFF' }} className={classes.categoryText}>{capitalizeFirstLetter(node.category)}</h4>
+                </div>
                 {/* {
                   isSearchMode && (
                     <Button
@@ -114,7 +118,12 @@ class OverlayPropertyTable extends React.Component {
                 >
                   <i className={`${classes.closeIcon} g3-icon g3-icon--cross g3-icon--sm`} />
                 </span> */}
-                <div className={classes.buttonWrap} />
+                {/* <div className={classes.buttonWrap} /> */}
+                <div>
+                  <IconButton onClick={this.handleClose}>
+                    <CloseIcon style={{ color: '#FFF' }} />
+                  </IconButton>
+                </div>
               </div>
             </div>
             <div
@@ -123,7 +132,7 @@ class OverlayPropertyTable extends React.Component {
             />
             <div
               className={classes.node}
-              style={{ borderLeftColor: getCategoryColor(node.category) }}
+              style={{ borderLeftColor: getCategoryColor(node.category), marginBottom: '0px', borderRight: '1px solid #ADBEC4' }}
             >
 
               <NodeViewComponent
@@ -137,25 +146,7 @@ class OverlayPropertyTable extends React.Component {
               />
             </div>
 
-            <div className={classes.propertyTable}>
-              <div className={classes.propertySummary}>
-                <span
-                  className={classes.close}
-                  onClick={this.handleClose}
-                  onKeyPress={this.handleClose}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <i className={`${classes.closeIcon} g3-icon g3-icon--cross g3-icon--sm`} />
-                </span>
-                <i>
-                  <span>{node.title}</span>
-                  <span> has </span>
-                  <span>{Object.keys(node.properties).length}</span>
-                  <span> properties. </span>
-                </i>
-              </div>
-
+            <div className={classes.propertyTable} style={{ borderLeftColor: categoryColor }}>
               <div className={classes.property}>
                 <DataDictionaryPropertyTable
                   title={node.title}
@@ -192,11 +183,11 @@ OverlayPropertyTable.propTypes = {
 OverlayPropertyTable.defaultProps = {
   hidden: true,
   node: null,
-  onCloseOverlayPropertyTable: () => {},
+  onCloseOverlayPropertyTable: () => { },
   isSearchMode: false,
   matchedResult: {},
-  onOpenMatchedProperties: () => {},
-  onCloseMatchedProperties: () => {},
+  onOpenMatchedProperties: () => { },
+  onCloseMatchedProperties: () => { },
   isSearchResultNodeOpened: false,
 };
 
