@@ -108,6 +108,7 @@ export default () => ({
     '& img': {
       background: '#9b2d20',
       borderLeft: '2px solid #9b2d20',
+      borderRight: '2px solid #9b2d20',
       borderTopLeftRadius: '2px',
       borderBottomLeftRadius: '2px',
     }
@@ -116,6 +117,7 @@ export default () => ({
     '& img': {
       background: '#9875ff',
       borderLeft: '2px solid #9875f',
+      borderRight: '2px solid #9875f',
       borderTopLeftRadius: '2px',
       borderBottomLeftRadius: '2px',
     }
@@ -124,6 +126,7 @@ export default () => ({
     '& img': {
       background: '#ff7f15',
       borderLeft: '2px solid #ff7f15',
+      borderRight: '2px solid #ff7f15',
       borderTopLeftRadius: '2px',
       borderBottomLeftRadius: '2px',
     }
@@ -132,30 +135,35 @@ export default () => ({
     '& img': {
       background: '#00A1BB',
       borderLeft: '2px solid #00A1BB',
+      borderRight: '2px solid #00A1BB',
     }
   },
   biospecimen: {
     '& img': {
       background: '#00785a',
       borderLeft: '2px solid #00785a',
+      borderRight: '2px solid #00785a',
     }
   },
   analysis: {
     '& img': {
       background: '#b533a9',
       borderLeft: '2px solid #b533a9',
+      borderRight: '2px solid #b533a9',
     }
   },
   data_file: {
     '& img': {
       background: '#00ad0e',
       borderLeft: '2px solid #00ad0e',
+      borderRight: '2px solid #00ad0e',
     }
   },
   clinical: {
     '& img': {
       background: '#1c75bc',
       borderLeft: '2px solid #1c75bc',
+      borderRight: '2px solid #1c75bc',
     }
   }
 });
