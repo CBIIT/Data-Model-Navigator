@@ -40,7 +40,8 @@ const CanvasController = ({
   onClearSearchResult,
   setGraphData,
   nodeTree,
-  unfilteredDictionary
+  unfilteredDictionary,
+  highlightedNodes
 }) => {
 
     if (tabViewWidth === 0) {
@@ -163,6 +164,7 @@ const CanvasController = ({
         onConnect={onConnect}
         categories={categories}
         onClearSearchResult={onClearSearchResult}
+        highlightedNodes={highlightedNodes}
       />
     )
 }
@@ -173,6 +175,7 @@ const mapStateToProps = (state) => ({
     currentSearchKeyword: state.ddgraph.currentSearchKeyword,
     searchResults: state.ddgraph.searchResult,
     nodeTree : state.submission.node2Level,
+    highlightedNodes: state.ddgraph.highlightedNodes,
     unfilteredDictionary: state.submission.unfilteredDictionary
 });
 
