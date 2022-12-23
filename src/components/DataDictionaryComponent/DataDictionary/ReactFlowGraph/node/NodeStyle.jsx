@@ -116,8 +116,8 @@ export default () => ({
   study: {
     '& img': {
       background: '#9875ff',
-      borderLeft: '2px solid #9875f',
-      borderRight: '2px solid #9875f',
+      borderLeft: '2px solid #9875ff',
+      borderRight: '2px solid #9875ff',
       borderTopLeftRadius: '2px',
       borderBottomLeftRadius: '2px',
     }
