@@ -119,7 +119,7 @@ export const generateSubTree = (dictionary, nodeTree) => {
  * @returns postion of the nodes
  * 
  */
-export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yIntervel = 80, xIntervel = 220) => {
+export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yInterval = 80, xInterval = 220) => {
     const subtree = generateSubTree(dictionary, nodeTree);
     const position = {};
     let x = tabViewWidth/2;
@@ -131,21 +131,21 @@ export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yIntervel = 
          * set vertical position based on tree level
          * yIntervel to adjust the distance between each level
          */
-        const y  = (Number(level) + 1) * yIntervel;
+        const y  = (Number(level) + 1) * yInterval;
         if (length === 1){
             position[nodes[0]] = [x, y];
         } else {
-            let xMin = x - (xIntervel * length)/2;
-            let intervel = xIntervel;
+            let xMin = x - (xInterval * length)/2;
+            let interval = xInterval;
             /**
              * adjusted for icdc data model
              */
             if (length < 3) {
-                xMin = x - (xIntervel * (length + 1))
-                intervel = 2 * xIntervel
+                xMin = x - (xInterval * (length + 1))
+                interval = 2 * xInterval
             }
             nodes.forEach((node, index) => {
-              const adjustedX = xMin + intervel * (index + 1);
+              const adjustedX = xMin + interval * (index + 1);
               position[node] = [adjustedX, y];
             });
         }
