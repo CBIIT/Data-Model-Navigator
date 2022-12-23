@@ -137,6 +137,16 @@ const ddgraph = (state = ddgraphInitialState, action) => {
       }
     }
     case 'REACT_FLOW_GRAPH_CLICK_NODE': {
+      let newArray;
+      if (state.highlightedNodes) {
+        if (state.highlightedNodes.includes(action.nodeID)) {
+          newArray = state.highlightedNodes.filter((el) => el !== action.nodeID)
+        } else {
+          newArray = [...state.highlightedNodes, action.nodeID]
+        }
+      } else {
+        newArray = [action.nodeID]
+      }
       if (state.isSearchMode) {
         // clicking node in search mode opens property table
         return {
@@ -145,6 +155,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
           highlightingNode: state.dictionary[action.nodeID],
           highlightingMatchedNodeOpened: false,
           overlayPropertyHidden: false,
+          highlightedNodes: newArray,
         };
       }
       // if serach mode is false
@@ -154,6 +165,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
           highlightingNode: state.dictionary[action.nodeID],
           highlightingMatchedNodeOpened: false,
           overlayPropertyHidden: true,
+          highlightedNodes: newArray,
       }
     }
     case 'GRAPH_CLICK_NODE': {

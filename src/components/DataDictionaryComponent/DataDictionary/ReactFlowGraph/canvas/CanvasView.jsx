@@ -49,10 +49,11 @@ const CustomFlowView = ({
   onConnect,
   onNodesChange,
   onEdgesChange,
+  highlightedNodes,
 }) => {
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
   const handleTransform = useCallback(() => {
-    setViewport({x: -200, y: 0, zoom: 1 }, { duration: 200 });
+    setViewport({ x: -200, y: 0, zoom: 1 }, { duration: 200 });
   }, [setViewport]);
 
   /**
@@ -94,7 +95,16 @@ const CustomFlowView = ({
       </div>
       <ReduxAutoFitView />
       <ReduxViewPort />
-      <Background color="#aaa" gap={12} />
+      <Background
+        style={{
+          backgroundColor: highlightedNodes
+            && !!highlightedNodes.length
+            ? '#C5DEEA'
+            : '#E7F3F7'
+        }}
+        color="#aaa"
+        gap={12}
+      />
     </ReactFlow>
   );
 }
@@ -107,27 +117,29 @@ const CanvasView = ({
   onNodesChange,
   onEdgesChange,
   categories,
-  onClearSearchResult
+  onClearSearchResult,
+  highlightedNodes,
 }) => {
-    
-    return (
-      <div className={classes.mainWindow}>
-        <LegendView
-          categoryItems={categories}
+
+  return (
+    <div className={classes.mainWindow}>
+      <LegendView
+        categoryItems={categories}
+      />
+      <ActionLayer handleClearSearchResult={onClearSearchResult} />
+      <ReactFlowProvider>
+        <CustomFlowView
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          classes={classes}
+          highlightedNodes={highlightedNodes}
         />
-        <ActionLayer handleClearSearchResult={onClearSearchResult} />
-        <ReactFlowProvider>
-          <CustomFlowView
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            classes={classes}
-          />
-        </ReactFlowProvider>
-      </div>
-    );
+      </ReactFlowProvider>
+    </div>
+  );
 }
 
 export default withStyles(Styles)(CanvasView);
