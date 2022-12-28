@@ -53,7 +53,7 @@ const NodeView = ({
       <div className={clsx({[classes.propDialog]: display})}>
         <div className={display ? classes.customNodeExpand : classes.customNodeCollapse}>
           <div className={classes.nodeTitle}>
-            <button className={isSearchMode ? nodeClasses : clsx(classes.nodeTitleBtn, classes[category])}
+            <button className={isSearchMode ? nodeClasses : clsx(classes.nodeTitleBtn, classes.categoryIcon, classes[category])}
               onClick={isSearchMode ? displayOverviewTable : expandNode}
             >
               <img className={classes.nodeIcon} src={icon} alt="category_icon" /> 
