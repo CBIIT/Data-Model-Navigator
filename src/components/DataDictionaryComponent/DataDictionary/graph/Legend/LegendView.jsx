@@ -15,9 +15,14 @@ const Legend = ({
 }) => {
   const [display, setDisplay] = useState(true);
   const toggleLegend = () => setDisplay(!display);
+
+  /**
+   * set legend position
+   */
+  const positionRight = window.innerWidth - document.documentElement.clientWidth
+  const position = {right: positionRight};
+
   const categoryListComponent = categoryItems.map((category) => {
-    // const categoryColor = getCategoryColor(category);
-    // const IconSvg = getLegendCategoryIconSVG(category);
     const imgUrl = `${legendIconUrl}${category}.svg`;
     return (
       <div
@@ -58,7 +63,8 @@ const Legend = ({
         [classes.legendExpand] : display,
         [classes.legendCollapse] : !display,
       })}
-      style={display ? {...styles?.legendExpand}: {...styles?.legendCollapse}}>
+      style={display ? {...styles?.legendExpand, ...position}
+        : {...styles?.legendCollapse, ...position}}>
       {
         <>
           <ToggleBtn />

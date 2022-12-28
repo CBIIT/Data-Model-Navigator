@@ -14,8 +14,8 @@ import { setGraphView } from '../action';
 const tabItems = [
   {
     index: 0,
-    label: 'React Flow',
-    value: 'table_view',
+    label: 'Graph View',
+    value: 'graph_view',
   },
   {
     index: 1,
@@ -67,9 +67,7 @@ const DictionaryView = ({
               handleTabChange={handleTabChange}
             />
           </div>
-          <div className={currentTab == 0
-            ? classes.viewTableContainer : currentTab === 1
-            ? classes.viewTableContainer : classes.viewTableContainer}
+          <div className={classes.viewTableContainer}
           >
             <TabPanel value={currentTab} index={0}>
               <div className={classes.tableView}>
