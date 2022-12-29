@@ -41,7 +41,8 @@ const CanvasController = ({
   setGraphData,
   nodeTree,
   unfilteredDictionary,
-  highlightedNodes
+  highlightedNodes,
+  graphViewConfig
 }) => {
 
     if (tabViewWidth === 0) {
@@ -138,7 +139,6 @@ const CanvasController = ({
             flowData.nodes,
             flowData.edges,
         );
-        // console.log(flowData);
         setNodes(layoutedNodes);
         setEdges(layoutedEdges);
     }, [dictionary, currentSearchKeyword]);
@@ -165,6 +165,7 @@ const CanvasController = ({
         categories={categories}
         onClearSearchResult={onClearSearchResult}
         highlightedNodes={highlightedNodes}
+        graphViewConfig={graphViewConfig}
       />
     )
 }
@@ -176,7 +177,8 @@ const mapStateToProps = (state) => ({
     searchResults: state.ddgraph.searchResult,
     nodeTree : state.submission.node2Level,
     highlightedNodes: state.ddgraph.highlightedNodes,
-    unfilteredDictionary: state.submission.unfilteredDictionary
+    unfilteredDictionary: state.submission.unfilteredDictionary,
+    graphViewConfig: state.submission.graphViewConfig,
 });
 
 const mapDispatchToProps = (dispatch) => ({

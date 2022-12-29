@@ -1,7 +1,10 @@
 export default () => ({
   propDialog: {
     backgroundColor: '#2D4455',
-    borderRadius: '2px',
+    borderRadius: '5px',
+    marginTop: '-5px',
+    marginLeft: '-5px',
+    zIndex: '10',
   },
   customNodeCollapse: {
     fontSize: '10px',
@@ -15,42 +18,71 @@ export default () => ({
     fontSize: '10px',
     color: '#222',
     // boxShadow: '0 4px 6px -1px rgb(0 0 0 / 15%), 0 2px 4px -1px rgb(0 0 0 / 8%)',
-    // borderRadius: '2px',
-    padding: '10px 10px 0px 10px',
+    borderRadius: '5px',
+    padding: '0px 0px 0px 0px',
     // boxSizing: 'border-box',
     opacity: '0.97',
-    // backgroundColor: '#2D4455',
+    boxSizing: 'border-box',
+    // border: '1.5px solid #0C3759',
+    backgroundColor: '#2D4455',
   },
   highLightNode: {
     fontSize: '15px',
     fontWeight: '900',
   },
   nodeTitle: {
-    backgroundColor: '#ffffff',
+    // backgroundColor: '#ffffff',
     borderRadius: '5px',
-    border: '0.5px solid #ffffff',
-    height: '36px',
+    // border: '0.5px solid #ffffff',
+    height: '33px',
     textAlign: 'center',
+    // backgroundColor: '#2d4455',
+  },
+  iconBar: {
+    height: '17px',
+    width: '100%',
+    paddingTop: '5px',
+  },
+  closeIcon: {
+    float: 'right',
+    color: '#ffffff',
+    height: '13px',
+    width: '20px',
+    cursor: 'pointer',
   },
   nodeIcon: {
     float: 'left',
     width: '33px',
-    height: '30px'
+    // height: '30px',
+  },
+  iconWrapper: {
+    width: '33px',
+    float: 'left',
+    height: '100%',
   },
   nodeName: {
     float: 'right',
     display: 'block',
     padding: '5px 10px 5px 10px',
-    minWidth: '60px',
+    minWidth: '90px',
     fontSize: '16px',
     fontWeight: '500',
+  },
+  btnPadding: {
+    paddingLeft: '20px',
+    paddingRight: '20px',
+  },
+  nodeTitleBtnWrapper: {
+    outline: '0.5px solid #ffffff',
   },
   nodeTitleBtn: {
     border: '2px solid #2E2E2E',
     padding: '0',
-    borderRadius: '5px',
+    minWidth: '115px',
+    borderRadius: '6px',
     cursor: 'pointer',
     backgroundColor: '#ffffff',
+    height: '32px',
     '&:hover': {
       backgroundColor: '#ef8523',
       color: '#ffffff',
@@ -61,7 +93,7 @@ export default () => ({
     }
   },
   viewSection: {
-    marginTop: '10px',
+    marginTop: '30px',
     color: '#FFFFFF',
     fontSize: '10px',
   },
@@ -75,12 +107,53 @@ export default () => ({
     paddingBottom: '5px',
   },
   listItem: {
-    fontSize: '9px',
+    textAlign: 'left',
+    marginLeft: '15px',
+    fontSize: '12px',
+    lineHeight: '18px',
+    color: '#0077c1',
+    padding: '0px 25px 0px 0px',
+    textAlign: 'center'
+  },
+  listItemLabel: {
+    color: '#FFFFFF',
+    fontFamily: 'Nunito',
+    fontSize: '13px',
+    fontWeight: '300',
+    letterSpacing: '0',
+    lineHeight: '24px',
+  },
+  listItemValue: {
+    color: '#3fd9ff',
+    fontFamily: 'Nunito',
+    fontSize: '13px',
+    fontWeight: '600',
+    letterSpacing: '0',
+    lineHeight: '24px',
   },
   viewPropBtn: {
+    cursor: 'pointer',
     fontSize: '9px',
     width: '100%',
-    height: '20px',
+    height: '50px',
+    height: '50px',
+    marginTop: '15px',
+    border: '1px solid #14212b',
+    backgroundColor: '#14212b',
+    color: '#ffffff',
+    fontFamily: 'Lato',
+    fontSize: '16px',
+    lineHeight: '13px',
+    textAlign: 'center',
+    borderBottomLeftRadius: '5px',
+    borderBottomRightRadius: '5px',
+  },
+  divider: {
+    margin: '0',
+    height: '1px',
+    background: '#5f86a4',
+    border: '0',
+    opacity: '0.85',
   },
   matchedNodeIDs: {
 
@@ -98,52 +171,61 @@ export default () => ({
   },
   categoryIcon: {
     '& img': {
-      borderTopLeftRadius: '2px',
-      borderBottomLeftRadius: '2px',
-      marginTop: '-0.5px',
+      borderTopLeftRadius: '5px',
+      borderBottomLeftRadius: '5px',
+      // marginTop: '-0.5px',
       marginLeft: '-0.5px',
-      borderTopLeftRadius: '2px',
-      borderBottomLeftRadius: '2px',
     }
   },
   administrative: {
     '& img': {
       background: '#9b2d20',
+      borderTop: '1px solid #9b2d20',
     }
   },
   study: {
+    '& .iconWrapper': {
+      background: '#9875ff',
+    },
     '& img': {
       background: '#9875ff',
+      borderTop: '1px solid #9875ff',
     }
   },
   case: {
     '& img': {
       background: '#ff7f15',
+      borderTop: '1px solid #ff7f15',
     }
   },
   clinical_trial: {
     '& img': {
       background: '#00A1BB',
+      borderTop: '1px solid #00A1BB',
     }
   },
   biospecimen: {
     '& img': {
       background: '#00785a',
+      borderTop: '1px solid #00785a',
     }
   },
   analysis: {
     '& img': {
       background: '#b533a9',
+      borderTop: '1px solid #b533a9',
     }
   },
   data_file: {
     '& img': {
       background: '#00ad0e',
+      borderTop: '1px solid #00ad0e',
     }
   },
   clinical: {
     '& img': {
       background: '#1c75bc',
+      borderTop: '1px solid #1c75bc',
     }
   }
 });

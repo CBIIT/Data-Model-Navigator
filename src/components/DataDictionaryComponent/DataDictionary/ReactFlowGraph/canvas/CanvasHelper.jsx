@@ -15,7 +15,7 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
     /**
      * initialize level to zero for all the nodes
      */
-    let node2Level = nodes.reduce((acc, node) => {acc[node] = 0; return acc}, {});
+    const node2Level = nodes.reduce((acc, node) => {acc[node] = 0; return acc}, {});
     /**
      * check only distinct links are processed
      * edge1 = node1 -> node2, edge/link with be included on both nodes

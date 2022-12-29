@@ -63,6 +63,11 @@ const generateNodes = (nodes, edges, windowWidth) => {
           label: _.capitalize(node.name),
           icon: graphIcons[node.category],
           category: `${node.category}`,
+          nodeAssignment: _.capitalize(`${node.assignment}`),
+          nodeClass: _.capitalize(`${node.class}`),
+          reqPropsCount: node.required ? node.required.length : 0,
+          prefPropsCount: node.preferred ? node.preferred.length : 0,
+          optPropsCount: node.optional ? node.optional.length : 0,
         }
       }
 

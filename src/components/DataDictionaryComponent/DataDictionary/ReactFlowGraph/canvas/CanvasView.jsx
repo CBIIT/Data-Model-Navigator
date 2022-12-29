@@ -50,10 +50,13 @@ const CustomFlowView = ({
   onNodesChange,
   onEdgesChange,
   highlightedNodes,
+  graphViewConfig,
 }) => {
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
+
+  const { fit } = graphViewConfig.canvas;
   const handleTransform = useCallback(() => {
-    setViewport({ x: -200, y: 0, zoom: 1 }, { duration: 200 });
+    setViewport({ x: fit?.x, y: fit?.y, zoom: fit?.zoom }, { duration: 200 });
   }, [setViewport]);
 
   /**
@@ -75,8 +78,8 @@ const CustomFlowView = ({
       onConnect={onConnect}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
-      minZoom={1}
-      maxZoom={1.8}
+      minZoom={fit?.minZoom ? fit.minZoom : 0.5}
+      maxZoom={fit?.maxZoom ? fit.axZoom : 3}
       fitView
     >
       <ReduxOverlayPropertyTable pdfDownloadConfig={pdfDownloadConfig} />
@@ -119,8 +122,8 @@ const CanvasView = ({
   categories,
   onClearSearchResult,
   highlightedNodes,
+  graphViewConfig,
 }) => {
-
   return (
     <div className={classes.mainWindow}>
       <LegendView
@@ -136,6 +139,7 @@ const CanvasView = ({
           onConnect={onConnect}
           classes={classes}
           highlightedNodes={highlightedNodes}
+          graphViewConfig={graphViewConfig}
         />
       </ReactFlowProvider>
     </div>

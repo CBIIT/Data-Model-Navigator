@@ -20,7 +20,6 @@ const nihLogoImg = {
   marginLeft: '9px',
 };
 
-
 // import store from '../../store';
 // import env from '../../utils/env';
 // import ReduxDataDictionary from './DataDictionary/ReduxDataDictionary';
@@ -41,6 +40,7 @@ const readMeConfig=  {
 };
 
 // example set legend style (position)
+//set styling and configuration for autofit actions
 const graphViewConfig = {
   legend: {
     styles: {
@@ -64,7 +64,16 @@ const graphViewConfig = {
         borderBottomLeftRadius: '10px 10px',
       },
     }
-  }
+  },
+  canvas: {
+    fit: {
+      x: 0,
+      y: 0,
+      zoom: 0.7,
+      minZoom: 0.7,
+      maxZoom: 2,
+    },
+  },
 }
 
 // const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_file.yaml";
@@ -302,7 +311,7 @@ async function init() {
       store.dispatch({
         type: 'REACT_FLOW_GRAPH_DICTIONARY',
         dictionary: newDataList,
-        pdfDownloadConfig: pdfDownloadConfig
+        pdfDownloadConfig: pdfDownloadConfig,
       }),
       store.dispatch({
         type: 'RECEIVE_VERSION_INFO',
