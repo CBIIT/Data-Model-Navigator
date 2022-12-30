@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { withStyles } from '@material-ui/core';
-import { getBezierPath, getStraightPath } from 'reactflow';
+import { getStraightPath } from 'reactflow';
 import Styles from './CustomEdgeStyle';
 
 const CustomEdgeView = ({
