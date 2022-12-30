@@ -51,6 +51,7 @@ const CustomFlowView = ({
   onEdgesChange,
   highlightedNodes,
   graphViewConfig,
+  onGraphPanelClick
 }) => {
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
@@ -69,6 +70,14 @@ const CustomFlowView = ({
 
   const overlayPropertyHidden = useSelector(state => state.ddgraph.overlayPropertyHidden);
 
+  /**
+   * collapse all property dialog box
+   * @param {*} event 
+   */
+  const onPanelClick = (event) => {
+    onGraphPanelClick();
+  };
+
   return (
     <ReactFlow
       nodes={nodes}
@@ -80,7 +89,10 @@ const CustomFlowView = ({
       edgeTypes={edgeTypes}
       minZoom={fit?.minZoom ? fit.minZoom : 0.5}
       maxZoom={fit?.maxZoom ? fit.axZoom : 3}
+      // elementsSelectable={false}
+      onPaneClick={onPanelClick}
       fitView
+      className={classes.reactFlowView}
     >
       <ReduxOverlayPropertyTable pdfDownloadConfig={pdfDownloadConfig} />
       <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' />
@@ -123,6 +135,7 @@ const CanvasView = ({
   onClearSearchResult,
   highlightedNodes,
   graphViewConfig,
+  onGraphPanelClick,
 }) => {
   return (
     <div className={classes.mainWindow}>
@@ -140,6 +153,7 @@ const CanvasView = ({
           classes={classes}
           highlightedNodes={highlightedNodes}
           graphViewConfig={graphViewConfig}
+          onGraphPanelClick={onGraphPanelClick}
         />
       </ReactFlowProvider>
     </div>

@@ -136,3 +136,7 @@ export const onViewChange = (view) => ({
   type: actionTypes.ON_GRAPH_VIEW_CHANGE,
   view
 })
+
+export const onPanelViewClick = () => ({
+  type: actionTypes.ON_REACT_FLOW_PANEL_CLICK,
+});

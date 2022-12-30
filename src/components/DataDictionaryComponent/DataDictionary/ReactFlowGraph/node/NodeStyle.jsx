@@ -2,9 +2,9 @@ export default () => ({
   propDialog: {
     backgroundColor: '#2D4455',
     borderRadius: '5px',
-    marginTop: '-5px',
-    marginLeft: '-5px',
-    zIndex: '10',
+    marginTop: '-10px',
+    marginLeft: '-10px',
+    zIndex: '1000',
   },
   customNodeCollapse: {
     fontSize: '10px',
@@ -20,11 +20,9 @@ export default () => ({
     // boxShadow: '0 4px 6px -1px rgb(0 0 0 / 15%), 0 2px 4px -1px rgb(0 0 0 / 8%)',
     borderRadius: '5px',
     padding: '0px 0px 0px 0px',
-    // boxSizing: 'border-box',
     opacity: '0.97',
     boxSizing: 'border-box',
-    // border: '1.5px solid #0C3759',
-    backgroundColor: '#2D4455',
+    backgroundColor: '#2d4455',
   },
   highLightNode: {
     fontSize: '15px',

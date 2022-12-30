@@ -15,7 +15,10 @@ const NodeView = ({
   isSearchMode,
   ddgraph,
   currentSearchKeyword,
-  onClickNode
+  onClickNode,
+  expandNodeView,
+  onCollapseNodeView,
+  highlightingNode
 }) => {
   const [display, setDisplay] = useState(false);
   /**
@@ -26,6 +29,9 @@ const NodeView = ({
     const view = localStorage.getItem('reactflowGraphView');
     onClickNode(id);
     setDisplay(!display);
+    if (display) { 
+      onCollapseNodeView();
+    }
   }
   const {
     label,
@@ -51,7 +57,25 @@ const NodeView = ({
   useEffect(() => {
     // const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
     // setMatchingClasses(nodeClasses);
-  }, [isSearchMode, currentSearchKeyword]);
+    // if (`${label}`.toLowerCase() === highlightingNode.id) {
+    //   console.log('collapse node');
+    // }
+
+    if (!expandNodeView) {
+      setDisplay(false);
+    } else {
+      if (`${label}`.toLowerCase() === highlightingNode.id) {
+        setDisplay(true);
+      } else {
+        setDisplay(false);
+      }
+    }
+    // if (expandNodeView && `${label}`.toLowerCase() === highlightingNode.id) {
+    //   console.log('collapse node ' + `${label}`.toLowerCase());
+    //   console.log(highlightingNode.id);
+    //   setDisplay(`${label}`.toLowerCase() === highlightingNode.id);
+    // } 
+  }, [expandNodeView, highlightingNode]);
 
   /**
    * highlight nodes based on search query

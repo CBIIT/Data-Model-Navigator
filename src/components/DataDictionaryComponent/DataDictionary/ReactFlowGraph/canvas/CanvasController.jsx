@@ -10,7 +10,7 @@ import dagre from 'dagre';
 import CanvasView from './CanvasView';
 import { newCreateNodesAndEdges } from '../../../GraphUtils/utils';
 import { getDistinctCategoryItems, setMatchingNodeTitle } from './util';
-import { setReactFlowGraphData } from '../../action';
+import { onPanelViewClick, onViewChange, setReactFlowGraphData } from '../../action';
 import { getNodePosition } from './CanvasHelper';
 
 const dagreGraph = new dagre.graphlib.Graph();
@@ -42,7 +42,8 @@ const CanvasController = ({
   nodeTree,
   unfilteredDictionary,
   highlightedNodes,
-  graphViewConfig
+  graphViewConfig,
+  onGraphPanelClick
 }) => {
 
     if (tabViewWidth === 0) {
@@ -166,6 +167,7 @@ const CanvasController = ({
         onClearSearchResult={onClearSearchResult}
         highlightedNodes={highlightedNodes}
         graphViewConfig={graphViewConfig}
+        onGraphPanelClick={onGraphPanelClick}
       />
     )
 }
@@ -182,7 +184,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setGraphData: (graphData) => {dispatch(setReactFlowGraphData(graphData))}
+  setGraphData: (graphData) => {dispatch(setReactFlowGraphData(graphData))},
+  onGraphPanelClick: () => {dispatch(onPanelViewClick())}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CanvasController);

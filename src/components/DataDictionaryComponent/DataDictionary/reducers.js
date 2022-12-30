@@ -156,6 +156,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
           highlightingNode: state.dictionary[action.nodeID],
           highlightingMatchedNodeOpened: false,
           overlayPropertyHidden: false,
+          expandNodeView: false,
           highlightedNodes: newArray,
         };
       }
@@ -166,6 +167,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
           highlightingNode: state.dictionary[action.nodeID],
           highlightingMatchedNodeOpened: false,
           overlayPropertyHidden: true,
+          expandNodeView: true,
           highlightedNodes: newArray,
       }
     }
@@ -348,7 +350,12 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         highlightingMatchedNodeOpened: action.opened,
       };
     }
-    case actionTypes.ON_GRAPH_VIEW_CHANGE:
+    case actionTypes.ON_REACT_FLOW_PANEL_CLICK:
+      return {
+        ...state,
+        expandNodeView: false,
+      }
+    case actionTypes.ON_REACT_FLOW_GRAPH_VIEW_CHANGE:
       const { view } = action;
       return {
         ...state,
