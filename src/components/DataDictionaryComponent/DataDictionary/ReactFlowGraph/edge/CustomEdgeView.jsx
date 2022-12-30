@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { withStyles } from '@material-ui/core';
-import { getBezierPath } from 'reactflow';
+import { getBezierPath, getStraightPath } from 'reactflow';
 import Styles from './CustomEdgeStyle';
 
 const CustomEdgeView = ({
@@ -16,7 +16,7 @@ const CustomEdgeView = ({
   markerEnd,
   isSearchMode
 }) => {
-  const [edgePath] = getBezierPath({
+  const [edgePath] = getStraightPath({
     sourceX,
     sourceY,
     sourcePosition,
