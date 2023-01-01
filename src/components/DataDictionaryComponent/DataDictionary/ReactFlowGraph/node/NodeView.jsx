@@ -18,7 +18,9 @@ const NodeView = ({
   onClickNode,
   expandNodeView,
   onCollapseNodeView,
-  highlightingNode
+  highlightingNode,
+  onNodeFocus,
+  focusedNodeId
 }) => {
   const [display, setDisplay] = useState(false);
   /**
@@ -55,32 +57,36 @@ const NodeView = ({
    * light node based on reasult of search query
    */
   useEffect(() => {
-    // const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
-    // setMatchingClasses(nodeClasses);
-    // if (`${label}`.toLowerCase() === highlightingNode.id) {
-    //   console.log('collapse node');
-    // }
-
     if (!expandNodeView) {
       setDisplay(false);
     } else {
-      if (`${label}`.toLowerCase() === highlightingNode.id) {
+      if (`${label}`.toLowerCase() === highlightingNode.id
+      ) {
         setDisplay(true);
       } else {
         setDisplay(false);
       }
     }
-    // if (expandNodeView && `${label}`.toLowerCase() === highlightingNode.id) {
-    //   console.log('collapse node ' + `${label}`.toLowerCase());
-    //   console.log(highlightingNode.id);
-    //   setDisplay(`${label}`.toLowerCase() === highlightingNode.id);
-    // } 
   }, [expandNodeView, highlightingNode]);
+
+  useEffect(() => {
+    if (`${label}`.toLowerCase() !== focusedNodeId.id) {
+      setDisplay(false);
+    }
+  }, [focusedNodeId]);
 
   /**
    * highlight nodes based on search query
    */
   const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
+
+  /**
+   * button on focus
+   */
+  const nodeFocusEvent = () => {
+    console.log("on button fucos");
+    onNodeFocus(id);
+  };
 
   return (
     <>
@@ -98,6 +104,7 @@ const NodeView = ({
                   classes[category],
                   {[classes.nodeTitleBtnWrapper]: display})}
               onClick={isSearchMode ? displayOverviewTable : expandNode}
+              onFocus={nodeFocusEvent}
             > <div className={classes.iconWrapper}>
                 <img className={classes.nodeIcon} src={icon} alt="category_icon" /> 
               </div>

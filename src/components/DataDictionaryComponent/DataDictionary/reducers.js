@@ -129,8 +129,6 @@ const ddgraph = (state = ddgraphInitialState, action) => {
       }
     }
     case 'REACT_FLOW_SET_GRAPH_DATA': {
-      // console.log('REACT_FLOW_SET_GRAPH_DATA');
-      // console.log(state);
       return {
         ...state,
         nodes: action.nodes,
@@ -360,6 +358,11 @@ const ddgraph = (state = ddgraphInitialState, action) => {
       return {
         ...state,
         reactFlowView: onViewChange(view),
+      }
+    case actionTypes.ON_REACT_FLOW_NODE_FOCUS:
+      return {
+        ...state,
+        focusedNodeId: action?.nodeID
       }
     default:
       return state;

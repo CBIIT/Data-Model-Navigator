@@ -62,6 +62,11 @@ export const clickNode = (nodeID) => ({
   nodeID
 });
 
+export const focusNode = (nodeID) => ({
+  type: actionTypes.ON_REACT_FLOW_NODE_FOCUS,
+  nodeID
+});
+
 export const resetGraphHighlight = () => ({
   type: 'GRAPH_RESET_HIGHLIGHT',
 });
