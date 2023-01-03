@@ -119,7 +119,7 @@ export const generateSubTree = (dictionary, nodeTree) => {
  * @returns postion of the nodes
  * 
  */
-export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yInterval = 80, xInterval = 220) => {
+export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yInterval = 90, xInterval = 220) => {
     const subtree = generateSubTree(dictionary, nodeTree);
     const position = {};
     let x = tabViewWidth/2;
@@ -131,7 +131,7 @@ export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yInterval = 
          * set vertical position based on tree level
          * yIntervel to adjust the distance between each level
          */
-        const y  = (Number(level) + 1) * yInterval;
+        const y  = (Number(level)) * yInterval;
         if (length === 1){
             position[nodes[0]] = [x, y];
         } else {

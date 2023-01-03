@@ -66,9 +66,9 @@ export default () => ({
     // borderBottom: '0.1em #c4c4c4',
   },
   graphView: {
-    overflow: 'hidden',
+    // overflow: 'hidden',
     height: '100%',
-    position: 'relative',
+    // position: 'relative',
   },
   tableView: {
     // padding: '20px',

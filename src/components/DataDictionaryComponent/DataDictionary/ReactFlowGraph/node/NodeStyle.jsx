@@ -2,8 +2,8 @@ export default () => ({
   propDialog: {
     backgroundColor: '#2D4455',
     borderRadius: '5px',
-    marginTop: '-10px',
-    marginLeft: '-10px',
+    marginTop: '-8px',
+    marginLeft: '-12px',
     zIndex: '1000',
   },
   customNodeCollapse: {
@@ -27,6 +27,7 @@ export default () => ({
   highLightNode: {
     fontSize: '15px',
     fontWeight: '900',
+    lineHeight: '10px',
   },
   nodeTitle: {
     // backgroundColor: '#ffffff',

@@ -84,7 +84,6 @@ const NodeView = ({
    * button on focus
    */
   const nodeFocusEvent = () => {
-    console.log("on button fucos");
     onNodeFocus(id);
   };
 

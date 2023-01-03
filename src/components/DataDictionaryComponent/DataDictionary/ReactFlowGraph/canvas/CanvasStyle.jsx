@@ -1,6 +1,6 @@
 export default () => ({
   mainWindow: {
-    height: '1100px',
+    height: '100%',
     display: 'block',
   },
   controls: {

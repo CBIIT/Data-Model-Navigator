@@ -9,13 +9,13 @@
   
 .react-flow__node-custom .react-flow__handle {
   top: 37px;
-  right: -20px;
-  min-width: 1px;
-  min-height: 1px;
+  left: 50%;
+  width: 2px;
+  height: 2px;
   /* background-color: #778899; */
   background-color: #2E2E2E;
-  display: 'none';
-  left: '48%',
+  /* display: 'none';
+  left: '48%', */
 }
   
 .react-flow__node.circle {

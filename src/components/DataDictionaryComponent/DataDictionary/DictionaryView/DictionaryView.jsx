@@ -70,7 +70,7 @@ const DictionaryView = ({
           <div className={classes.viewTableContainer}
           >
             <TabPanel value={currentTab} index={0}>
-              <div className={classes.tableView}>
+              <div className={classes.graphView}>
                 <CanvasView
                   dictionary={dictionary}
                   tabViewWidth={tabViewWidth}
