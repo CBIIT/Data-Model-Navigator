@@ -105,14 +105,15 @@ export default () => ({
     paddingBottom: '5px',
   },
   listItem: {
-    textAlign: 'left',
-    marginLeft: '15px',
     fontSize: '12px',
     lineHeight: '18px',
     color: '#0077c1',
-    padding: '0px 25px 0px 0px',
-    textAlign: 'center'
+    padding: '0px 25px 0px 25px',
   },
+  content : {
+    margin: 'auto',
+    maxWidth: '140px',
+  }, 
   listItemLabel: {
     color: '#FFFFFF',
     fontFamily: 'Nunito',

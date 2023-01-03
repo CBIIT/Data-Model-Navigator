@@ -60,7 +60,7 @@ const NodeView = ({
     if (!expandNodeView) {
       setDisplay(false);
     } else {
-      if (`${label}`.toLowerCase() === highlightingNode.id
+      if (`${label}`.toLowerCase() === highlightingNode?.id
       ) {
         setDisplay(true);
       } else {
@@ -70,7 +70,7 @@ const NodeView = ({
   }, [expandNodeView, highlightingNode]);
 
   useEffect(() => {
-    if (`${label}`.toLowerCase() !== focusedNodeId.id) {
+    if (`${label}`.toLowerCase() !== focusedNodeId?.id) {
       setDisplay(false);
     }
   }, [focusedNodeId]);
@@ -119,48 +119,58 @@ const NodeView = ({
           <div className={display ? classes.viewSection : classes.hideSection}>
             <ul className={classes.list}>
               <li className={classes.listItem}>
-                <span className={classes.listItemLabel}>
-                  {'Assignment: '}
-                </span>
-                <span className={classes.listItemValue}>
-                  {nodeAssignment}
-                </span>
+                <div className={classes.content}>
+                  <span className={classes.listItemLabel}>
+                    {'Assignment: '}
+                  </span>
+                  <span className={classes.listItemValue}>
+                    {nodeAssignment}
+                  </span>
+                </div>
               </li>
               <hr className={classes.divider}/>
               <li className={classes.listItem}>
-                <span className={classes.listItemLabel}>
-                  {'Class: '}
-                </span>
-                <span className={classes.listItemValue}>
-                  {nodeClass}
-                </span>
+                <div className={classes.content}>
+                  <span className={classes.listItemLabel}>
+                    {'Class: '}
+                  </span>
+                  <span className={classes.listItemValue}>
+                    {nodeClass}
+                  </span>
+                </div>
               </li>
               <hr className={classes.divider}/>
               <li className={classes.listItem}>
-                <span className={classes.listItemLabel}>
-                  {'Required Properties: '}
-                </span>
-                <span className={classes.listItemValue}>
-                  {reqPropsCount}
-                </span>
+                <div className={classes.content}>
+                  <span className={classes.listItemLabel}>
+                    {'Required Properties: '}
+                  </span>
+                  <span className={classes.listItemValue}>
+                    {reqPropsCount}
+                  </span>
+                </div>
               </li>
               <hr className={classes.divider}/>
               <li className={classes.listItem}>
-                <span className={classes.listItemLabel}>
-                  {'Preferred Properties: '}
-                </span>
-                <span className={classes.listItemValue}>
-                  {prefPropsCount}
-                </span>
+                <div className={classes.content}>
+                  <span className={classes.listItemLabel}>
+                    {'Preferred Properties: '}
+                  </span>
+                  <span className={classes.listItemValue}>
+                    {prefPropsCount}
+                  </span>
+                </div>
               </li>
               <hr className={classes.divider}/>
               <li className={classes.listItem}>
-                <span className={classes.listItemLabel}>
-                  {'Optional Properties: '}
-                </span>
-                <span className={classes.listItemValue}>
-                  {optPropsCount}
-                </span>
+                <div className={classes.content}>
+                  <span className={classes.listItemLabel}>
+                    {'Optional Properties: '}
+                  </span>
+                  <span className={classes.listItemValue}>
+                    {optPropsCount}
+                  </span>
+                </div>
               </li>
             </ul>
           </div>
