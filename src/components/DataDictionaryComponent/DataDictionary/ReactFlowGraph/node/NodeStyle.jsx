@@ -45,7 +45,7 @@ export default () => ({
   closeIcon: {
     float: 'right',
     color: '#ffffff',
-    height: '13px',
+    height: '15px',
     width: '20px',
     cursor: 'pointer',
   },
@@ -90,6 +90,10 @@ export default () => ({
       borderTopLeftRadius: '2px',
       borderBottomLeftRadius: '2px',
     }
+  },
+  sourceHandler: {
+    background: '#2e2e2e',
+    top: '39px',
   },
   viewSection: {
     marginTop: '30px',

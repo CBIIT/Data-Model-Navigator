@@ -79,7 +79,7 @@ const NodeView = ({
    * highlight nodes based on search query
    */
   const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
-
+  console.log(ddgraph);
   /**
    * button on focus
    */
@@ -173,8 +173,17 @@ const NodeView = ({
               </li>
             </ul>
           </div>
-          <Handle type="target" position="top" />
-          <Handle type="source" position="bottom" id={handleId} />
+          <Handle type="target" position="top" style={{ top: '12px' }} />
+          <Handle
+            type="source"
+            position="bottom"
+            id={handleId}
+            style={{
+              background: 'transparent',
+              border: 'none',
+              top: '37px',
+            }}
+          />
         </div>
         {display && 
           <button className={classes.viewPropBtn} onClick={displayOverviewTable}>View Properties</button>
