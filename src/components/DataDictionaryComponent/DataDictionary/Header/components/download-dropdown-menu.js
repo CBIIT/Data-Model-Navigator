@@ -222,7 +222,7 @@ const styles = () => ({
     borderRadius: '10px',
   },
   availableDownloadDropdownBtn: {
-    width: '195px',
+    width: '214px',
     height: '38px',
   },
   availableDownloadBtn: {
@@ -232,7 +232,7 @@ const styles = () => ({
       backgroundColor: '#0F4C91',
     },
     '&:disabled': {
-      backgroundColor: '#B695C0',
+      backgroundColor: '#A2ABBF',
     },
   },
   availableDownloadDropdownBtnLabel: {
