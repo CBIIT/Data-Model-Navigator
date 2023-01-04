@@ -146,7 +146,7 @@ const CanvasController = ({
     const onConnect = useCallback(
       (params) =>
         setEdges((eds) =>
-          addEdge({ ...params, type: ConnectionLineType.SmoothStep, animated: true }, eds)
+          addEdge({ ...params, type: ConnectionLineType?.SmoothStep, animated: true }, eds)
         ),
       []
     );
