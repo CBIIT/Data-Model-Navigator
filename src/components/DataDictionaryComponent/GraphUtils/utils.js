@@ -573,7 +573,6 @@ export function assignNodePositions(nodes, edges, opts) {
       );
     },
   );
-  // console.log(breadthFirstInfo);
   return breadthFirstInfo;
 }
 

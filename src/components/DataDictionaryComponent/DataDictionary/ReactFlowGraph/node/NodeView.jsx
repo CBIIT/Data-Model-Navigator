@@ -79,7 +79,6 @@ const NodeView = ({
    * highlight nodes based on search query
    */
   const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
-  console.log(ddgraph);
   /**
    * button on focus
    */
