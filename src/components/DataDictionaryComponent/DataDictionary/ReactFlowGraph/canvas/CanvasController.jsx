@@ -56,7 +56,6 @@ const CanvasController = ({
     * 3. highlight node based on matching search query to desc, properties and title
     */
     const getLayoutedElements = (nodes, edges, nodeInternals, direction = 'TB') => {
-        // console.log("update node details");
         // const isHorizontal = direction === 'LR';
         // dagreGraph.setGraph({ rankdir: direction });
         // nodes.forEach((node) => {
