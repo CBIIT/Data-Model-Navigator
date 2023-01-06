@@ -8,8 +8,8 @@ import {
 } from '@material-ui/core';
 import { pdf } from '@react-pdf/renderer';
 import { cn } from 'bento-components';
-import PdfDocument from '../NodePDF/Pdf';
-import LandscapePDFDoc from './Pdf';
+import PdfDocument from './Pdf';
+import LandscapePDFDoc from '../LandscapeNodePDF/Pdf';
 import { fileManifestDownload } from '../../../../config/file-manifest-config';
 
 const DownloadButton = ({

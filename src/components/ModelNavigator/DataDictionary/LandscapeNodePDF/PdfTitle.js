@@ -2,18 +2,19 @@ import React from 'react';
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import renderSvgElement from './RenderSvg';
 import { getCategoryColor } from '../NodeCategories/helper';
-import { capitalizeFirstLetter } from '../utils';
 import { FontRegistry } from './util';
+import { capitalizeFirstLetter } from '../utils';
 // import logo from '../NodeCategories/icons/Pdf/Administrative.png';
 
 const styles = StyleSheet.create({
   row: {
     margin: 'auto',
-    flexDirection: 'row',
+    // flexDirection: 'row',
   },
   categoryStyle: {
     flexDirection: 'row',
     padding: '7px 0px 7px 10px',
+    height: '75px'
   },
   hr: {
     height: '4px',
@@ -24,11 +25,12 @@ const styles = StyleSheet.create({
     padding: '6px 15px 2px 15px',
     backgroundColor: '#f4f5f5',
     display: 'flex',
+    height: '125px',
   },
   tagsInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: '15px',
+    paddingLeft: '15px',  
     paddingBottom: '5px',
     height: '30px',
     // padding: '6px 0px 2px 15px',
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     border: '0.5px solid #cdcdcd',
     marginRight: '11em',
+    height: '15px',
   },
   nodeClass: {
     paddingTop: '3px',
@@ -78,6 +81,7 @@ const styles = StyleSheet.create({
     borderRadius: '8px',
     backgroundColor: '#fff',
     border: '0.5px solid #cdcdcd',
+    height: '15px',
   },
   tagContainer: {
     position: 'relative',
@@ -88,6 +92,7 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: '900',
     fontSize: '7px',
+    height: '15px',
     paddingTop: '0px',
     paddingBottom: '2px',
     float: 'left',
@@ -125,8 +130,8 @@ const styles = StyleSheet.create({
 
 const createStyle = (classes, categoryColor) => ({ ...classes, ...{ borderLeft: `5px solid ${categoryColor}` } });
 const PdfTitle = (node) => {
-  console.log(node);
   const categoryColor = getCategoryColor(node.category);
+  console.log(node);
   return (
     <View>
       <View style={createStyle(styles.categoryStyle, categoryColor)}>

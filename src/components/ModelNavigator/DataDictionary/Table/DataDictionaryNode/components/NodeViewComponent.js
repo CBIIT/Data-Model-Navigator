@@ -11,7 +11,7 @@ import styles from './NodeViewComponent.style';
 import { capitalizeFirstLetter, createFileName } from '../../../utils';
 import IconDownloadPDF from '../../icons/icon_download_PDF.svg';
 import IconDownloadPTSV from '../../icons/icon_download_TSV.svg';
-import DownloadButton from '../../../LandscapeNodePDF/DownloadButton';
+import DownloadButton from '../../../NodePDF/DownloadButton';
 import { fileManifestDownloadSettings as defaultConfig } from '../../../../../../config/file-manifest-config';
 import {
   getNodeDescriptionFragment,

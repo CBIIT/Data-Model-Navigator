@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 // import stats from '../components/Stats/StatsState';
-import { reducers as modelReducers } from '../components/DataDictionaryComponent/reducers';
+// import { reducers as modelReducers } from '../components/DataDictionaryComponent/reducers';
 import { ddgraph, versionInfo } from '../components/ModelNavigator/DataDictionary/Store/reducers/graph';
 // import submission from '../components/DataDictionaryComponent/reducers';
 import { moduleReducers as submission } from '../components/ModelNavigator/DataDictionary/Store/reducers/filter';

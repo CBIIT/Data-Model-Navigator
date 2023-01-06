@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 import renderSvgElement from './RenderSvg';
 import { getCategoryColor } from '../NodeCategories/helper';
-import { capitalizeFirstLetter } from '../../utils';
+import { capitalizeFirstLetter } from '../utils';
 import { FontRegistry } from './util';
 
 const styles = StyleSheet.create({

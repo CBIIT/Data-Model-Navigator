@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { parseDictionaryNodes } from '../../Utils/utils';
 import { createFileName } from '../../utils';
 import DataDictionaryCategory from '../DataDictionaryCategory';
-import DownloadButton from '../../LandscapeNodePDF/DownloadButton';
 
 // const pdfDownloadConfig = {
 //   type: 'document',

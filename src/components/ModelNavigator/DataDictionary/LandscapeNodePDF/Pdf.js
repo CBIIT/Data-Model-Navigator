@@ -31,7 +31,7 @@ const PdfDocument = ({
   nodes,
   icon,
 }) => {
-  const {url, type} = icon;
+  // const {url, type} = icon;
   return (
     <Document style={styles.doc}>
       <Page style={styles.page} size="A4" orientation="landscape">
@@ -44,7 +44,7 @@ const PdfDocument = ({
                 nodeClass={node.class}
                 assignment={node.assignment}
                 desc={node.desc}
-                iconUrl={`${url}${node.category}${type}`}
+                iconUrl={`${node.category}`}
                 category={node.category} />
               <div style={styles.spacer} />
               <PdfTable node={node} categoryColor={getCategoryColor(node.category)} />
