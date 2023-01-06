@@ -46,7 +46,7 @@ const PdfDocument = ({
                 desc={node.desc}
                 iconUrl={`${node.category}`}
                 category={node.category} />
-              <div style={styles.spacer} />
+              {/* <div style={styles.spacer} /> */}
               <PdfTable node={node} categoryColor={getCategoryColor(node.category)} />
             </View>
           ))}

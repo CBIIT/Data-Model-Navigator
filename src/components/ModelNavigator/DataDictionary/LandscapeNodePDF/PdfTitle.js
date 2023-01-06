@@ -9,12 +9,12 @@ import { capitalizeFirstLetter } from '../utils';
 const styles = StyleSheet.create({
   row: {
     margin: 'auto',
-    // flexDirection: 'row',
+    flexDirection: 'row',
   },
   categoryStyle: {
     flexDirection: 'row',
     padding: '7px 0px 7px 10px',
-    height: '75px'
+    height: '80px'
   },
   hr: {
     height: '4px',
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     padding: '6px 15px 2px 15px',
     backgroundColor: '#f4f5f5',
     display: 'flex',
-    height: '125px',
   },
   tagsInfo: {
     flexDirection: 'row',
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
     paddingLeft: '15px',  
     paddingBottom: '5px',
     height: '30px',
-    // padding: '6px 0px 2px 15px',
+    padding: '6px 0px 2px 15px',
     backgroundColor: '#f4f5f5',
     display: 'flex',
     marginBottom: '-12px',
@@ -44,6 +43,7 @@ const styles = StyleSheet.create({
     fontWeight: 'heavy',
     fontFamily: FontRegistry('NunitoBold'),
     width: '158.5px',
+    flex: '1',
     // marginRight: '75px',
   },
   nodeDesc: {
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     overflowWrap: 'break-word',
     width: '650px',
     textAlign: 'justify',
+    flex: '3',
     fontFamily: FontRegistry('NunitoNormal'),
   },
   categoryHeader: {
@@ -61,10 +62,13 @@ const styles = StyleSheet.create({
     fontWeight: 'heavy',
     fontSize: '11.25px',
     paddingTop: '8px',
+    flex: '1',
     fontFamily: FontRegistry('NunitoExtraBold'),
   },
   nodeAssignment: {
     // float: 'right',
+    width: '105px',
+    height: '17px',
     paddingTop: '3px',
     paddingRight: '10px',
     paddingLeft: '10px',
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     border: '0.5px solid #cdcdcd',
     marginRight: '11em',
-    height: '15px',
+    textAlign: 'center',
   },
   nodeClass: {
     paddingTop: '3px',
@@ -81,7 +85,6 @@ const styles = StyleSheet.create({
     borderRadius: '8px',
     backgroundColor: '#fff',
     border: '0.5px solid #cdcdcd',
-    height: '15px',
   },
   tagContainer: {
     position: 'relative',
@@ -95,6 +98,7 @@ const styles = StyleSheet.create({
     height: '15px',
     paddingTop: '0px',
     paddingBottom: '2px',
+    dispaly: 'block',
     float: 'left',
     color: '#6c6c6c',
     fontFamily: FontRegistry('NunitoExtraBold'),
@@ -142,14 +146,39 @@ const PdfTitle = (node) => {
         </Text>
       </View>
       <View style={createStyle(styles.hr, categoryColor)} />
-      <View style={createStyle(styles.nodeInfo, categoryColor)}>
-        {/* <View style={styles.nodeTitle}> */}
-        <Text style={styles.nodeTitle}>
-          {capitalizeFirstLetter(node.title)}
-        </Text>
+      <View style={{
+        display: "flex",
+        flexDirection: "row",
+        // marginBottom: 1,
+        padding: '6px 15px 20px 15px',
+        borderLeft: `5px solid ${categoryColor}`
+        }}>
+        <Text style={styles.nodeTitle}>{capitalizeFirstLetter(node.title)}</Text>
         <Text style={styles.nodeDesc}>{node.desc}</Text>
       </View>
-      <View style={createStyle(styles.tagsInfo, categoryColor)}>
+      <View style={{
+        display: "flex",
+        flexDirection: "row",
+        // marginBottom: 1,
+        padding: '6px 15px 20px 15px',
+        borderLeft: `5px solid ${categoryColor}`
+        }}>
+          <Text style={styles.nodeAssignment}>
+            <Text style={styles.label}>
+              {'Assignment: '}
+            </Text>
+            <Text style={styles.assignment}>
+              {capitalizeFirstLetter(node.assignment)}
+            </Text>
+          </Text>
+      </View>
+      {/* <View style={createStyle(styles.nodeInfo, categoryColor)}>
+        <Text style={{...styles.nodeTitle}}>
+          {capitalizeFirstLetter(node.title)}
+        </Text>
+        <Text style={{...styles.nodeDesc}}>{node.desc}</Text>
+      </View> */}
+      {/* <View style={createStyle(styles.tagsInfo, categoryColor)}>
         <span style={styles.tagContainer}>
           { (node.assignment) ? (
             <Text style={styles.nodeAssignment}>
@@ -172,7 +201,7 @@ const PdfTitle = (node) => {
             </Text>
           ) : (<Text />)}
         </span>
-      </View>
+      </View> */}
     </View>
   );
 };
