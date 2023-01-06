@@ -3,9 +3,9 @@ import ReduxThunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 // import stats from '../components/Stats/StatsState';
 import { reducers as modelReducers } from '../components/DataDictionaryComponent/reducers';
-import { ddgraph, versionInfo } from '../components/DataDictionaryComponent/DataDictionary/reducers';
+import { ddgraph, versionInfo } from '../components/ModelNavigator/DataDictionary/Store/reducers/graph';
 // import submission from '../components/DataDictionaryComponent/reducers';
-import { moduleReducers as submission } from '../components/DataDictionaryComponent/DataDictionary/store/reducers/modelExplorer';
+import { moduleReducers as submission } from '../components/ModelNavigator/DataDictionary/Store/reducers/filter';
 
 const reducers = {
   ddgraph,

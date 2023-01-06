@@ -8,9 +8,9 @@ import _ from 'lodash';
 import store from '../store';
 // import AutoComplete from '../stubs/autocomplete';
 // import init from '../components/DataDictionaryComponent/dictionaryController';
-import ReduxDataDictionary from '../components/DataDictionaryComponent/DataDictionary/ReduxDataDictionary';
+import ReduxDataDictionary from '../components/ModelNavigator/DataDictionary/ReduxDataDictionary';
 // import { ModelExplorer } from '../index';
-import { filterConfig } from '../components/DataDictionaryComponent/DataDictionary/bento/dataDictionaryData';
+import { filterConfig } from '../components/ModelNavigator/bento/dataDictionaryData';
 
 import { CustomThemeProvider } from './ThemeContext';
 
@@ -38,6 +38,10 @@ const readMeConfig=  {
   readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
   readMeTitle: 'Understanding the ICDC Data Model',
 };
+
+const assetConfig = {
+  iconUrl: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/data_model_pdf_icons/icdc/DMN/'
+}
 
 // example set legend style (position)
 //set styling and configuration for autofit actions
@@ -305,13 +309,15 @@ async function init() {
           facetfilterConfig: filterConfig,
           readMeConfig: readMeConfig,
           graphViewConfig: graphViewConfig,
-          pdfDownloadConfig: pdfDownloadConfig
+          pdfDownloadConfig: pdfDownloadConfig,
+          assetConfig: assetConfig
         },
       }),
       store.dispatch({
         type: 'REACT_FLOW_GRAPH_DICTIONARY',
         dictionary: newDataList,
         pdfDownloadConfig: pdfDownloadConfig,
+        assetConfig: assetConfig
       }),
       store.dispatch({
         type: 'RECEIVE_VERSION_INFO',
