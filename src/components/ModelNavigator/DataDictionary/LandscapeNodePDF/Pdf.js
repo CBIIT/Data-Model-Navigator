@@ -44,7 +44,6 @@ const PdfDocument = ({
                 nodeClass={node.class}
                 assignment={node.assignment}
                 desc={node.desc}
-                iconUrl={`${node.category}`}
                 category={node.category} />
               {/* <div style={styles.spacer} /> */}
               <PdfTable node={node} categoryColor={getCategoryColor(node.category)} />

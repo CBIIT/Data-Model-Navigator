@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import renderSvgElement from './RenderSvg';
-import { getCategoryColor } from '../NodeCategories/helper';
+import { getCategoryColor, pdfNodeCategoryList } from '../NodeCategories/helper';
 import { FontRegistry } from './util';
 import { capitalizeFirstLetter } from '../utils';
 // import logo from '../NodeCategories/icons/Pdf/Administrative.png';
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
   categoryStyle: {
     flexDirection: 'row',
     padding: '7px 0px 7px 10px',
-    height: '80px'
+    // height: '50px'
   },
   hr: {
     height: '4px',
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
   },
   nodeAssignment: {
     // float: 'right',
-    width: '105px',
+    // width: '105px',
     height: '17px',
     paddingTop: '3px',
     paddingRight: '10px',
@@ -75,8 +74,9 @@ const styles = StyleSheet.create({
     borderRadius: '8px',
     backgroundColor: '#fff',
     border: '0.5px solid #cdcdcd',
-    marginRight: '11em',
     textAlign: 'center',
+    marginLeft: '192px',
+    marginRight: '11px',
   },
   nodeClass: {
     paddingTop: '3px',
@@ -134,41 +134,50 @@ const styles = StyleSheet.create({
 
 const createStyle = (classes, categoryColor) => ({ ...classes, ...{ borderLeft: `5px solid ${categoryColor}` } });
 const PdfTitle = (node) => {
-  const categoryColor = getCategoryColor(node.category);
-  console.log(node);
+  const { category, desc, title, assignment, nodeClass } = node;
+  const categoryColor = getCategoryColor(category);
   return (
     <View>
       <View style={createStyle(styles.categoryStyle, categoryColor)}>
         {/* {SvgIcon} */}
-        {/* <Image style={styles.icon} src={node.iconUrl} /> */}
+        <Image style={styles.icon} src={pdfNodeCategoryList[category]?.icon} />
         <Text style={{ color: categoryColor, ...styles.categoryHeader }}>
-          {capitalizeFirstLetter(node.category)}
+          {capitalizeFirstLetter(category)}
         </Text>
       </View>
       <View style={createStyle(styles.hr, categoryColor)} />
       <View style={{
         display: "flex",
         flexDirection: "row",
-        // marginBottom: 1,
-        padding: '6px 15px 20px 15px',
-        borderLeft: `5px solid ${categoryColor}`
-        }}>
-        <Text style={styles.nodeTitle}>{capitalizeFirstLetter(node.title)}</Text>
-        <Text style={styles.nodeDesc}>{node.desc}</Text>
+        padding: '6px 15px 5px 15px',
+        borderLeft: `5px solid ${categoryColor}`,
+        backgroundColor: '#f4f5f5',
+      }}>
+        <Text style={styles.nodeTitle}>{capitalizeFirstLetter(title)}</Text>
+        <Text style={styles.nodeDesc}>{desc}</Text>
       </View>
       <View style={{
         display: "flex",
         flexDirection: "row",
         // marginBottom: 1,
-        padding: '6px 15px 20px 15px',
-        borderLeft: `5px solid ${categoryColor}`
-        }}>
+        borderLeft: `5px solid ${categoryColor}`,
+        backgroundColor: '#f4f5f5',
+        paddingBottom: '10px',
+      }}> 
           <Text style={styles.nodeAssignment}>
             <Text style={styles.label}>
               {'Assignment: '}
             </Text>
             <Text style={styles.assignment}>
-              {capitalizeFirstLetter(node.assignment)}
+              {capitalizeFirstLetter(assignment)}
+            </Text>
+          </Text>
+          <Text style={styles.nodeClass}>
+            <Text style={styles.label}>
+              {'Class: '}
+            </Text>
+            <Text style={styles.class}>
+              {capitalizeFirstLetter(nodeClass)}
             </Text>
           </Text>
       </View>
