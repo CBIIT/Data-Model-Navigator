@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import { getCategoryStyle, tableIconUrl } from '../../NodeCategories/helper';
+import { getCategoryStyle, tableNodeCategoryList } from '../../NodeCategories/helper';
 import { capitalizeFirstLetter } from '../../utils';
 import DataDictionaryNode from '../DataDictionaryNode';
 import styles from './DataDictionaryCategory.style';
@@ -19,7 +19,7 @@ const DataDictionaryCategory = ({
   const categoryStyles = getCategoryStyle(category);
   const categoryColor = categoryStyles.color;
   const background = categoryStyles.background ? categoryStyles.background : categoryStyles.color;
-  const iconURL = `${assetConfig?.iconUrl}table/${category}.svg`
+  const iconURL = tableNodeCategoryList[category].icon;
   return (
     <div className={classes.category}>
       <div

@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     borderRadius: '8px',
     backgroundColor: '#fff',
     border: '0.5px solid #cdcdcd',
-    marginRight: '11em',
+    marginRight: '176px',
   },
   nodeClass: {
     paddingTop: '3px',
