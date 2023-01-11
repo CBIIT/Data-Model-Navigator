@@ -8,9 +8,9 @@ import _ from 'lodash';
 import store from '../store';
 // import AutoComplete from '../stubs/autocomplete';
 // import init from '../components/DataDictionaryComponent/dictionaryController';
-import ReduxDataDictionary from '../components/DataDictionaryComponent/DataDictionary/ReduxDataDictionary';
+import ReduxDataDictionary from '../components/ModelNavigator/DataDictionary/ReduxDataDictionary';
 // import { ModelExplorer } from '../index';
-import { filterConfig } from '../components/DataDictionaryComponent/DataDictionary/bento/dataDictionaryData';
+import { filterConfig } from '../components/ModelNavigator/bento/dataDictionaryData';
 
 import { CustomThemeProvider } from './ThemeContext';
 
@@ -19,7 +19,6 @@ const nihLogoImg = {
   width: '463px',
   marginLeft: '9px',
 };
-
 
 // import store from '../../store';
 // import env from '../../utils/env';
@@ -40,7 +39,12 @@ const readMeConfig=  {
   readMeTitle: 'Understanding the ICDC Data Model',
 };
 
+const assetConfig = {
+  iconUrl: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/data_model_pdf_icons/icdc/DMN/'
+}
+
 // example set legend style (position)
+//set styling and configuration for autofit actions
 const graphViewConfig = {
   legend: {
     styles: {
@@ -64,7 +68,16 @@ const graphViewConfig = {
         borderBottomLeftRadius: '10px 10px',
       },
     }
-  }
+  },
+  canvas: {
+    fit: {
+      x: 0,
+      y: 0,
+      zoom: 0.7,
+      minZoom: 0.7,
+      maxZoom: 2,
+    },
+  },
 }
 
 // const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_file.yaml";
@@ -296,13 +309,15 @@ async function init() {
           facetfilterConfig: filterConfig,
           readMeConfig: readMeConfig,
           graphViewConfig: graphViewConfig,
-          pdfDownloadConfig: pdfDownloadConfig
+          pdfDownloadConfig: pdfDownloadConfig,
+          assetConfig: assetConfig
         },
       }),
       store.dispatch({
         type: 'REACT_FLOW_GRAPH_DICTIONARY',
         dictionary: newDataList,
-        pdfDownloadConfig: pdfDownloadConfig
+        pdfDownloadConfig: pdfDownloadConfig,
+        assetConfig: assetConfig
       }),
       store.dispatch({
         type: 'RECEIVE_VERSION_INFO',
