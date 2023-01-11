@@ -5,6 +5,7 @@ import {
   withStyles,
   createTheme,
   MuiThemeProvider,
+  Button,
 } from '@material-ui/core';
 import AutoComplete from '@gen3/ui-component/dist/components/AutoComplete';
 import { compareTwoStrings } from 'string-similarity';
@@ -140,49 +141,55 @@ class DictionarySearcher extends React.Component {
     return (
       <div className={classes.searcher}>
         <MuiThemeProvider theme={createTheme(theme)}>
-          <AutoComplete
-            className="hermo"
-            ref={this.autoCompleteRef}
-            suggestionList={this.state.suggestionList}
-            inputPlaceHolderText="Search in Dictionary"
-            onSuggestionItemClick={this.suggestionItemClickFunc}
-            onInputChange={this.inputChangeFunc}
-            onSubmitInput={this.submitInputFunc}
-          />
+          <div className={classes.searchBarTitle}>
+            <span className={classes.searchBarTitleText}>Filter & Search</span>
+          </div>
+          <div className={classes.searchInput}>
+            <AutoComplete
+              className="hermo"
+              ref={this.autoCompleteRef}
+              suggestionList={this.state.suggestionList}
+              inputPlaceHolderText="Search in Dictionary"
+              onSuggestionItemClick={this.suggestionItemClickFunc}
+              onInputChange={this.inputChangeFunc}
+              onSubmitInput={this.submitInputFunc}
+            />
+            <Button
+              className={classes.resultClearBtn}
+              onClick={this.onClearResult}
+              role="button"
+              tabIndex={0}
+            >
+              Clear Result
+            </Button>
+          </div>
         </MuiThemeProvider>
         {
           this.state.isSearchFinished && (
-            <>
+            <div className={classes.results}>
               {
                 !this.state.hasError && (
                   this.state.searchResult.matchedNodes.length > 0 ? (
                     <>
-                      <div className={classes.result}>
-                        <h4 className={classes.resultText}>Search Results</h4>
-                        <span
-                          className={classes.resultClear}
-                          onClick={this.onClearResult}
-                          role="button"
-                          tabIndex={0}
-                          onKeyPress={this.onClearResult}
-                        >
-                          Clear Result
-                        </span>
+                      <div className={classes.searchResultText}>
+                        <span>Search Results</span>
                       </div>
-                      <li className={`${classes.resultItem} body`}>
-                        <span className={classes.resultCount}>
-                          {this.state.searchResult.summary.matchedNodeNameAndDescriptionsCount}
-                        </span>
-                        {' '}
-                        matches in nodes (title and description)
-                      </li>
-                      <li className={`${classes.resultItem} body`}>
-                        <span className={classes.resultCount}>
-                          {this.state.searchResult.summary.matchedPropertiesCount}
-                        </span>
-                        {' '}
-                        matches in node properties
-                      </li>
+                      <ul>
+                        <li className={`${classes.resultItem} body`}>
+                          <span className={classes.resultCount}>
+                            {this.state.searchResult.summary.matchedNodeNameAndDescriptionsCount}
+                          </span>
+                          {' '}
+                          Match(es) in nodes (title and description)
+                        </li>
+                        <li className={`${classes.resultItem} body`}>
+                          <span className={classes.resultCount}>
+                            {this.state.searchResult.summary.matchedPropertiesCount}
+                          </span>
+                          {' '}
+                          Match(es) in node properties
+                        </li>
+                      </ul>
                     </>
                   ) : (
                     <p>{ZERO_RESULT_FOUND_MSG}</p>
@@ -194,7 +201,7 @@ class DictionarySearcher extends React.Component {
                   <p>{this.state.errorMsg}</p>
                 )
               }
-            </>
+            </div>
           )
         }
       </div>

@@ -26,7 +26,7 @@ export default () => ({
   viewTableContainer: {
     height: '90%',
     marginTop: '30px',
-    marginLeft: '36px',
+    marginLeft: '16px',
     // marginRight: '36px',
     marginBottom: '36px',
     // backgroundImage: `url(${backgroundImg})`,
