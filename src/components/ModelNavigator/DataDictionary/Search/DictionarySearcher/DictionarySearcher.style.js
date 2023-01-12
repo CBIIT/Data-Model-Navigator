@@ -1,6 +1,6 @@
 export default () => ({
   searcher: {
-    paddingTop: '15px',
+    paddingTop: '0px',
   },
   result: {
     margin: '10px 0',
@@ -10,8 +10,28 @@ export default () => ({
   },
   resultItem: {
     marginBottom: '8px',
+    marginTop: '5px',
   },
-  resultCount: {
+  resultList: {
+    paddingTop: '15px',
+    paddingBottom: '20px',
+  },
+  resultItem: {
+    fontFamily: 'Nunito',
+    fontSize: '14px',
+    fontWeight: '200',
+    letterSpacing: '0',
+    lineHeight: '15px',
+  },
+  resultCountTitleDesc: {
+    height: '35px',
+    width: '25px',
+    color: '#0D71A3',
+    lineHeight: '22px',
+  },
+  resultCountProps: {
+    width: '25px',
+    color: '#0D71A3',
   },
   resultClear: {
     cursor: 'pointer',
@@ -20,10 +40,10 @@ export default () => ({
     }
   },
   searchBarTitle: {
-    height: '37px',
     border: '1px solid #000000',
     backgroundColor: '#488ad4',
     paddingTop: '15px',
+    paddingBottom: '15px',
     paddingLeft: '33px',
   },
   searchBarTitleText: {
@@ -32,11 +52,10 @@ export default () => ({
     fontfamily: 'Lato',
     fontSize: '18px',
     fontWeight: 'bold',
-    lineHeight: '18px',
   },
   searchInput: {
     width: '100%',
-    height: '85px',
+    textAlign: 'right',
     boxSizing: 'border-box',
     border: '1px solid #000000',
     backgroundColor: '#0f4c91',
@@ -45,7 +64,8 @@ export default () => ({
     float: 'right',
   },
   searchResultText: {
-    textAlign: 'center',
+    // textAlign: 'center',
+    paddingLeft: '20%',
     height: '12px',
     color: '#323232',
     fontFamily: 'Raleway',
@@ -55,5 +75,25 @@ export default () => ({
   },
   results: {
     paddingTop: '20px',
-  }
+    minHeight: '40px',
+  },
+  clearAllButtonRoot: {
+    marginRight: '13px',
+    marginBottom: '12px',
+  },
+  customButton: {
+    borderRadius: '100px',
+    marginTop: '4px',
+    minHeight: '20px',
+    fontSize: 9,
+    textTransform: 'none',
+    color: '#000000',
+    marginLeft: '100px',
+    marginBottom: '10px',
+    background: '#fff',
+    '&:hover': {
+      backgroundColor: '#566672',
+      color: 'white',
+    },
+  },
 });

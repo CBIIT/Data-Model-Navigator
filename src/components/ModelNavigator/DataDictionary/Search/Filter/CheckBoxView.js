@@ -17,20 +17,22 @@ import _ from 'lodash';
 
 const styles = {
   listItemGutters: {
-    padding: '10px 0px 10px 0px',
-    paddingRight: '5px',
+    padding: '10px 20px 10px 0px',
+    // paddingRight: '5px',
+    boxShadow: 'inset -10px -1px 10px -7px rgb(50 50 50 / 25%)',
   },
   checkboxRoot: {
     marginLeft: '5px',
     height: 12,
   },
   panelDetailText: {
-    color: '#000000',
+    color: '#323232',
     fontFamily: 'Nunito',
     fontSize: '14px',
+    fontWeight: '200',
   },
   panelSubjectText: {
-    color: '#000000',
+    color: '#323232',
     fontFamily: 'Nunito',
     fontSize: '14px',
     marginRight: '0px',
@@ -43,6 +45,16 @@ function CheckBoxView(props) {
     classes, checkboxItem, handleToggle, sideBarItem, facetSectionVariables,
     defaultFacetSectionVariables, backgroundColor, dataDictionary,
   } = props;
+
+  const getStyles = () => {
+    if (checkboxItem.isChecked) {
+      return {
+        backgroundColor: backgroundColor,
+        boxShadow: 'none',
+      }
+    }
+  }
+
   return (
     <>
       <ListItem
@@ -52,9 +64,7 @@ function CheckBoxView(props) {
         selected={checkboxItem.isChecked}
         onClick={handleToggle({...checkboxItem, ...sideBarItem})}
         className={classes.nested}
-        style={{
-          backgroundColor: checkboxItem.isChecked ? backgroundColor : null,
-        }}
+        style={getStyles()}
         classes={{ selected: classes.selected, gutters: classes.listItemGutters }}
       >
         <Checkbox
@@ -67,7 +77,8 @@ function CheckBoxView(props) {
               }}
             />
           )}
-          style={{ color: facetSectionVariables[sideBarItem.section].checkBoxColorsTwo ? facetSectionVariables[sideBarItem.section].checkBoxColorsTwo : '#137fbe' }}
+          style={{ color: facetSectionVariables[sideBarItem.section].checkBoxBorderColor
+            ? facetSectionVariables[sideBarItem.section].checkBoxBorderColor : '#137fbe' }}
           checked={checkboxItem.isChecked}
           tabIndex={-1}
           disableRipple
@@ -115,8 +126,10 @@ function CheckBoxView(props) {
         <ListItemText />
         <div className={classes.panelSubjectText}>
           <span
-            style={{ color: facetSectionVariables[sideBarItem.section] ? facetSectionVariables[sideBarItem.section].color ? facetSectionVariables[sideBarItem.section].color : '' : defaultFacetSectionVariables.color }}
-            edge="end"
+            style={{ color: facetSectionVariables[sideBarItem.section]
+                ? facetSectionVariables[sideBarItem.section].color
+                  ? facetSectionVariables[sideBarItem.section].color : ''
+                    : defaultFacetSectionVariables.color }}
           >
             &nbsp;
             {checkboxItem.subjects}

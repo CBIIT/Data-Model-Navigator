@@ -4,6 +4,7 @@ export default () => ({
     background: '#EAEAEA',
     margin: 'auto',
     position: 'initial',
+    boxShadow: 'inset -10px -1px 10px -7px rgb(50 50 50 / 25%)',
     '&:before': {
       position: 'initial',
     },
@@ -11,8 +12,8 @@ export default () => ({
   expansionPanelsideBarItem: {
     boxShadow: 'none',
     borderTop: '1px solid #D2D2D2',
-    borderLeft: '1px solid #D2D2D2',
-    borderRight: '1px solid #D2D2D2',
+    // borderLeft: '1px solid #D2D2D2',
+    // borderRight: '1px solid #D2D2D2',
     '&:last-child': {
       borderBottom: '1px solid #D2D2D2',
     },
@@ -40,6 +41,7 @@ export default () => ({
   customExpansionPanelSummaryRoot: {
     flexDirection: 'row-reverse',
     paddingLeft: 0,
+    boxShadow: 'inset -10px -1px 10px -7px rgb(50 50 50 / 25%)',
   },
   ExpansionPaneldropDownIcon: {
     left: '-98%',
@@ -75,21 +77,17 @@ export default () => ({
   },
   sortGroup: {
     paddingTop: '10px',
-    marginBottom: '5px',
+    paddingBottom: '5px',
     borderTop: '1px solid #B1B1B1',
     textAlign: 'left',
     marginLeft: '-5px',
+    boxShadow: 'inset -10px 2px 10px -7px rgb(50 50 50 / 25%)',
   },
   sortGroupItem: {
     cursor: 'pointer',
     fontFamily: 'Nunito',
     fontSize: '10px',
     marginRight: '32px',
-  },
-  sortGroupItemCounts: {
-    cursor: 'pointer',
-    fontFamily: 'Nunito',
-    fontSize: '10px',
   },
   sortGroupIcon: {
     cursor: 'pointer',
@@ -121,19 +119,6 @@ export default () => ({
       color: 'white',
     },
   },
-  sortGroup: {
-    paddingTop: '10px',
-    marginBottom: '5px',
-    borderTop: '1px solid #B1B1B1',
-    textAlign: 'left',
-    marginLeft: '-5px',
-  },
-  sortGroupItem: {
-    cursor: 'pointer',
-    fontFamily: 'Nunito',
-    fontSize: '10px',
-    marginRight: '32px',
-  },
   sortGroupItemCounts: {
     cursor: 'pointer',
     fontFamily: 'Nunito',
@@ -141,12 +126,5 @@ export default () => ({
     float: 'right',
     marginRight: '10px',
     marginTop: '5px',
-  },
-  sortGroupIcon: {
-    cursor: 'pointer',
-    fontFamily: 'Nunito',
-    fontSize: '10px',
-    marginRight: '12px',
-    marginLeft: '16px',
   },
 });

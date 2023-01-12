@@ -256,15 +256,15 @@ const FacetFilters = ({
     return (<></>);
   }
 
-  const clearFilterHandler = () => {
-    onClearAllFilter();
-    onClickBlankSpace();
-    hidePropertyTable();
-  };
+  // const clearFilterHandler = () => {
+  //   onClearAllFilter();
+  //   onClickBlankSpace();
+  //   hidePropertyTable();
+  // };
 
   return (
     <>
-      <Button
+      {/* <Button
         id="button_sidebar_clear_all_filters"
         variant="outlined"
         disabled={activeFiltersCount === 0}
@@ -274,7 +274,7 @@ const FacetFilters = ({
         disableRipple
       >
         CLEAR ALL
-      </Button>
+      </Button> */}
       {
     sideBarSections.map((currentSection) => (
       <FacetFilterThemeProvider>

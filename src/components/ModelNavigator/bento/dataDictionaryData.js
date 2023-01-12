@@ -104,9 +104,10 @@ export const facetSearchData = [
 
 export const facetSectionVariables = {
   'Filter By Nodes': {
-    color: '#95CAE4',
-    checkBoxColorsOne: '#95CAE4',
-    checkBoxColorsTwo: '#0D71A3',
+    color: '#0D71A3',
+    checkBoxColorsOne: '#E3F4FD',
+    checkBoxColorsTwo: '#f0f8ff',
+    checkBoxBorderColor: '#0D71A3',
     height: '7px',
     isExpanded: true,
   },
@@ -118,9 +119,10 @@ export const facetSectionVariables = {
     isExpanded: true,
   },
   'Filter By Property': {
-    color: '#95CAE4',
-    checkBoxColorsOne: '#95CAE4',
-    checkBoxColorsTwo: '#95CAE4',
+    color: '#94C0EC',
+    checkBoxColorsOne: '#E3F4FD',
+    checkBoxColorsTwo: '#f0f8ff',
+    checkBoxBorderColor: '#0D71A3',
     height: '7px',
     isExpanded: true,
   },

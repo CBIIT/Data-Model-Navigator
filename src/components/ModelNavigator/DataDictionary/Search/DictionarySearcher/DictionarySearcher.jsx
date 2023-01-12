@@ -6,6 +6,9 @@ import {
   createTheme,
   MuiThemeProvider,
   Button,
+  List,
+  ListItem,
+  ListItemText,
 } from '@material-ui/core';
 import AutoComplete from '@gen3/ui-component/dist/components/AutoComplete';
 import { compareTwoStrings } from 'string-similarity';
@@ -137,7 +140,27 @@ class DictionarySearcher extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const {
+      classes,
+      activeFiltersCount,
+      onClearAllFilter,
+      onClickBlankSpace,
+      hidePropertyTable
+    } = this.props;
+
+    const {
+      isSearchFinished,
+      searchResult,
+      hasError,
+      errorMsg
+    } = this.state;
+
+    const clearFilterHandler = () => {
+      onClickBlankSpace();
+      onClearAllFilter();
+      hidePropertyTable();
+    };
+
     return (
       <div className={classes.searcher}>
         <MuiThemeProvider theme={createTheme(theme)}>
@@ -154,42 +177,54 @@ class DictionarySearcher extends React.Component {
               onInputChange={this.inputChangeFunc}
               onSubmitInput={this.submitInputFunc}
             />
-            <Button
+            {/* <Button
               className={classes.resultClearBtn}
               onClick={this.onClearResult}
               role="button"
               tabIndex={0}
             >
               Clear Result
+            </Button> */}
+            <Button
+              id="button_sidebar_clear_all_filters"
+              variant="outlined"
+              disabled={activeFiltersCount === 0}
+              className={classes.customButton}
+              classes={{ root: classes.clearAllButtonRoot }}
+              onClick={clearFilterHandler}
+              disableRipple
+            >
+              CLEAR ALL
             </Button>
           </div>
         </MuiThemeProvider>
+        <div className={classes.results}>
         {
-          this.state.isSearchFinished && (
-            <div className={classes.results}>
+          isSearchFinished && (
+            <div>
               {
-                !this.state.hasError && (
-                  this.state.searchResult.matchedNodes.length > 0 ? (
+                !hasError && (
+                  searchResult.matchedNodes.length > 0 ? (
                     <>
                       <div className={classes.searchResultText}>
                         <span>Search Results</span>
                       </div>
-                      <ul>
-                        <li className={`${classes.resultItem} body`}>
-                          <span className={classes.resultCount}>
-                            {this.state.searchResult.summary.matchedNodeNameAndDescriptionsCount}
+                      <List className={classes.resultList} component="div" dense>
+                        <ListItem className={classes.resultItem}>
+                          <span className={classes.resultCountTitleDesc}>
+                            {searchResult.summary.matchedNodeNameAndDescriptionsCount}
                           </span>
-                          {' '}
-                          Match(es) in nodes (title and description)
-                        </li>
-                        <li className={`${classes.resultItem} body`}>
-                          <span className={classes.resultCount}>
-                            {this.state.searchResult.summary.matchedPropertiesCount}
+                          &nbsp;
+                          <span>Match(es) in nodes <br/> (title and description)</span>
+                        </ListItem>
+                        <ListItem className={classes.resultItem}>
+                          <span className={classes.resultCountProps}>
+                            {searchResult.summary.matchedPropertiesCount}
                           </span>
-                          {' '}
-                          Match(es) in node properties
-                        </li>
-                      </ul>
+                          &nbsp;
+                          <span>Match(es) in node properties</span>
+                        </ListItem>
+                      </List>
                     </>
                   ) : (
                     <p>{ZERO_RESULT_FOUND_MSG}</p>
@@ -197,13 +232,14 @@ class DictionarySearcher extends React.Component {
                 )
               }
               {
-                this.state.hasError && (
-                  <p>{this.state.errorMsg}</p>
+                hasError && (
+                  <p>{errorMsg}</p>
                 )
               }
             </div>
           )
         }
+        </div>
       </div>
     );
   }
