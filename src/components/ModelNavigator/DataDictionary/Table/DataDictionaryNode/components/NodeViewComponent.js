@@ -18,6 +18,7 @@ import {
   getNodeTitleFragment,
 } from '../../../Utils/highlightHelper';
 
+
 const NodeViewComponent = ({
   classes,
   node,
