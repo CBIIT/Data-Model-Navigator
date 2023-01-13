@@ -83,9 +83,8 @@ const NodeViewComponent = ({
           className={classes.tagsAndBtn}
         >
           <Button
-            startIcon={!isExpanded ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+            startIcon={!isOverlay ? (!isExpanded ? <ExpandMoreIcon /> : <ExpandLessIcon />) : null}
             variant="contained"
-            disabled={isOverlay}
             classes={{
               root: classes.propertyCountBtn
             }}
