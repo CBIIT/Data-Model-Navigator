@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { useState }  from 'react';
 import PropTypes from 'prop-types';
 import {
   withStyles,
@@ -9,17 +9,16 @@ import {
   List,
   ListItem,
   ListItemText,
+  TextField,
 } from '@material-ui/core';
-import AutoComplete from '@gen3/ui-component/dist/components/AutoComplete';
+import { createFilterOptions } from '@material-ui/lab';
+import AutoComplete from '../AutoComplete/AutoCompleteView';
 import { compareTwoStrings } from 'string-similarity';
 import {
   prepareSearchData, searchKeyword, getSearchSummary, ZERO_RESULT_FOUND_MSG, formatText,
 } from './searchHelper';
 import styles from './DictionarySearcher.style';
-
-const theme = {
-
-}
+import SearchThemConfig from './SearchThemConfig';
 
 class DictionarySearcher extends React.Component {
   constructor(props) {
@@ -125,8 +124,10 @@ class DictionarySearcher extends React.Component {
         fullString: str,
         matchedPieceIndices: matchedStrings[str].matchedPieceIndices,
       }));
+    const text = query;
     this.setState({
       suggestionList,
+      text,
     });
   };
 
@@ -152,7 +153,8 @@ class DictionarySearcher extends React.Component {
       isSearchFinished,
       searchResult,
       hasError,
-      errorMsg
+      errorMsg,
+      suggestionList,
     } = this.state;
 
     const clearFilterHandler = () => {
@@ -163,7 +165,7 @@ class DictionarySearcher extends React.Component {
 
     return (
       <div className={classes.searcher}>
-        <MuiThemeProvider theme={createTheme(theme)}>
+        <SearchThemConfig>
           <div className={classes.searchBarTitle}>
             <span className={classes.searchBarTitleText}>Filter & Search</span>
           </div>
@@ -171,12 +173,44 @@ class DictionarySearcher extends React.Component {
             <AutoComplete
               className="hermo"
               ref={this.autoCompleteRef}
-              suggestionList={this.state.suggestionList}
+              suggestionList={suggestionList}
               inputPlaceHolderText="Search in Dictionary"
               onSuggestionItemClick={this.suggestionItemClickFunc}
               onInputChange={this.inputChangeFunc}
               onSubmitInput={this.submitInputFunc}
             />
+            <br/>
+            {/* <Autocomplete
+              query={text}
+              sx={{
+                display: 'inline-block',
+                '& input': {
+                  width: 200,
+                }
+              }}
+              ref={this.autoCompleteRef}
+              options={suggestionList}
+              getOptionLabel={(option) => option.fullString}
+              filterOptions={filterOptions}
+              onInputChange={({target}) => {
+                console.log(target.value);
+                this.inputChangeFunc(target.value);
+              }}
+              renderInput={(props) => 
+                <TextField 
+                  {...props}
+                  size='small'
+                  onKeyDown={(event) => {
+                    console.log(event);
+                    const { target } = event;
+                    console.log(target.value);
+                    if(event.code === 'Enter') {
+                      console.log("serach text");
+                      this.submitInputFunc(target.value);
+                    }
+                  }}
+                />}
+            /> */}
             {/* <Button
               className={classes.resultClearBtn}
               onClick={this.onClearResult}
@@ -197,7 +231,7 @@ class DictionarySearcher extends React.Component {
               CLEAR ALL
             </Button>
           </div>
-        </MuiThemeProvider>
+        </SearchThemConfig>
         <div className={classes.results}>
         {
           isSearchFinished && (

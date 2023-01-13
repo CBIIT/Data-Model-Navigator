@@ -98,6 +98,7 @@ const styles = () => ({
     marginTop: '15px',
     overflowY: 'auto',
     boxShadow: 'inset -10px -1px 10px -7px rgb(50 50 50 / 25%)',
+    borderTopRightRadius: '7px',
   },
   
   mainGraphView: {

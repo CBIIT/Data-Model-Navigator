@@ -40,11 +40,11 @@ export default () => ({
     }
   },
   searchBarTitle: {
-    border: '1px solid #000000',
     backgroundColor: '#488ad4',
     paddingTop: '15px',
-    paddingBottom: '15px',
+    paddingBottom: '13px',
     paddingLeft: '33px',
+    borderTopRightRadius: '7px',
   },
   searchBarTitleText: {
     height: '15px',
@@ -59,6 +59,8 @@ export default () => ({
     boxSizing: 'border-box',
     border: '1px solid #000000',
     backgroundColor: '#0f4c91',
+    paddingTop: '15px',
+    paddingLeft: '10px',
   },
   resultClearBtn: {
     float: 'right',
@@ -91,6 +93,7 @@ export default () => ({
     marginLeft: '100px',
     marginBottom: '10px',
     background: '#fff',
+    marginRight: '30px',
     '&:hover': {
       backgroundColor: '#566672',
       color: 'white',
