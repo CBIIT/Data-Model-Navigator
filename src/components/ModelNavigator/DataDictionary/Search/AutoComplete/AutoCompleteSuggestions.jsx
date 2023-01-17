@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import './AutoCompleteSuggestions.css';
+import styles from './AutoCompleteSuggestnStyle';
 
 /**
  * Wrap suggestion item into HTML, take following as an e.g.:
@@ -20,7 +21,7 @@ import './AutoCompleteSuggestions.css';
  *       a
  *     </span>
  */
-export const getSuggestionItemHTML = (suggestionItem) => {
+export const getSuggestionItemHTML = (suggestionItem, classes) => {
   const { fullString, matchedPieceIndices } = suggestionItem;
   let cursor = 0;
   let currentHighlighPieceIndex = 0;
@@ -39,7 +40,7 @@ export const getSuggestionItemHTML = (suggestionItem) => {
     }
     resultHTMLSnippits.push(
       (
-        <span key={highlightStartPos} className='auto-complete-suggestions__highlight'>
+        <span key={highlightStartPos} className={classes.highlight}>
           {fullString.substring(highlightStartPos, highlightEndPos)}
         </span>
       ),
@@ -65,19 +66,22 @@ class AutoCompleteSuggestions extends Component {
   }
 
   render() {
+    const {
+      suggestionList,
+      classes
+    } = this.props;
     return (
-      <div>
+      <div className={classes.suggestionList}>
         {
-          this.props.suggestionList.map((suggestionItem, i) => (
+          suggestionList.map((suggestionItem, i) => (
             <div
               key={`${i}-${suggestionItem.fullString}`}
-              className='auto-complete-suggestions__item body'
+              className={classes.suggestionItem}
               onClick={() => { this.handleClickItem(suggestionItem, i); }}
-              onKeyPress={() => { this.handleClickItem(suggestionItem, i); }}
               role='button'
               tabIndex={0}
             >
-              {getSuggestionItemHTML(suggestionItem)}
+              {getSuggestionItemHTML(suggestionItem, classes)}
             </div>
           ))
         }
@@ -101,4 +105,4 @@ AutoCompleteSuggestions.defaultProps = {
   onSuggestionItemClick: () => {},
 };
 
-export default AutoCompleteSuggestions;
+export default withStyles(styles)(AutoCompleteSuggestions);

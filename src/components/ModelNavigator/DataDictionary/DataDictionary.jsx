@@ -70,10 +70,13 @@ DataDictionary.defaultProps = {
 const styles = () => ({
   dictionaryContainer: {
     marginTop: '-40px',
+    height: 'calc(100vh)',
+    overflowY: 'auto',
   },
   dataDictionary: {
     display: 'flex',
     height: 'calc(100vh)',
+    overflowY: 'hide',
   },
   container: {
     paddingTop: '60px',

@@ -25,6 +25,10 @@ export default () => ({
       outline: 'none',
     },
   },
+  closeBtn: {
+    minWidth: '15px',
+    padding: '0',
+  },
   closeIcon: {
     width: '25px',
     // color: '#0d71a3',
@@ -33,6 +37,10 @@ export default () => ({
     '& :hover': {
         cursor: 'pointer',
     },
+  },
+  searchBtn:{
+    minWidth: '15px',
+    padding: '0',
   },
   searchIcon: {
     '& :hover': {
