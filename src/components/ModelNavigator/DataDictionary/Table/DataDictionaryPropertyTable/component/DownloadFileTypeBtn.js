@@ -7,6 +7,8 @@ import {
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import MenuItem from '@material-ui/core/MenuItem';
 import { ArrowDownward, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import { saveAs } from 'file-saver';
@@ -20,19 +22,10 @@ const CONTENT_TYPE_TSV = 'data:text/tab-separated-values';
 const FILE_TYPE_TSV = 'TSV';
 const fileTypes = [FILE_TYPE_JSON, FILE_TYPE_TSV];
 
-const MuiMenu = withStyles({
+const StyledMenu = withStyles({
   paper: {
-    border: '1px solid #0D71A3',
-    width: '103px',
-    borderRadius: '0px',
-    '& .MuiList': {
-      marginTop: '0px',
-    },
-  },
-  list: {
-    paddingBottom: '0px',
-    paddingTop: '0px',
-    marginTop: '0px',
+    border: '1px solid #d3d4d5',
+    width: '100px',
   },
 })((props) => (
   <Menu
@@ -40,17 +33,17 @@ const MuiMenu = withStyles({
     getContentAnchorEl={null}
     anchorOrigin={{
       vertical: 'bottom',
-      horizontal: 'center',
+      horizontal: 'left',
     }}
     transformOrigin={{
       vertical: 'top',
-      horizontal: 'center',
+      horizontal: 'left',
     }}
     {...props}
   />
 ));
 
-const MuiMenuItem = withStyles(() => ({
+const StyledMenuItem = withStyles((theme) => ({
   root: {
     '&:focus': {
       backgroundColor: 'none',
@@ -61,24 +54,65 @@ const MuiMenuItem = withStyles(() => ({
   },
 }))(MenuItem);
 
-const theme = {
-  overrides: {
-    MuiButton: {
-      root: {
-        minWidth: '10px',
-      },
-      startIcon: {
-        marginRight: '0px',
-      },
-      label: {
-        justifyContent: 'left',
-      },
-      outlined: {
-        border: 'none',
-      },
-    },
-  },
-};
+// const MuiMenu = withStyles({
+//   paper: {
+//     border: '1px solid #0D71A3',
+//     width: '103px',
+//     borderRadius: '0px',
+//     '& .MuiList': {
+//       marginTop: '0px',
+//     },
+//   },
+//   list: {
+//     paddingBottom: '0px',
+//     paddingTop: '0px',
+//     marginTop: '0px',
+//   },
+// })((props) => (
+//   <Menu
+//     elevation={0}
+//     getContentAnchorEl={null}
+//     anchorOrigin={{
+//       vertical: 'bottom',
+//       horizontal: 'center',
+//     }}
+//     transformOrigin={{
+//       vertical: 'top',
+//       horizontal: 'center',
+//     }}
+//     {...props}
+//   />
+// ));
+
+// const MuiMenuItem = withStyles(() => ({
+//   root: {
+//     '&:focus': {
+//       backgroundColor: 'none',
+//       '& .MuiListItemIcon-root': {
+//         backgroundColor: 'none',
+//       },
+//     },
+//   },
+// }))(MenuItem);
+
+// const theme = {
+//   overrides: {
+//     MuiButton: {
+//       root: {
+//         minWidth: '10px',
+//       },
+//       startIcon: {
+//         marginRight: '0px',
+//       },
+//       label: {
+//         justifyContent: 'left',
+//       },
+//       outlined: {
+//         border: 'none',
+//       },
+//     },
+//   },
+// };
 
 const DownloadFileTypeBtn = ({
   classes,
@@ -127,49 +161,121 @@ const DownloadFileTypeBtn = ({
   };
 
   const menuItem = (type) => (
-    <MuiMenuItem className={classes.menuItem} onClick={() => setFileType(type)}>
+    <StyledMenuItem className={classes.menuItem} onClick={() => setFileType(type)}>
       {type}
-    </MuiMenuItem>
+    </StyledMenuItem>
   );
 
   const options = fileTypes.map((item) => menuItem(item));
 
+  // return (
+  //   <MuiThemeProvider theme={createTheme(theme)}>
+  //     <Box className={classes.menu}>
+  //       <Button
+  //         disableRipple
+  //         disabled={DOWNLOADS === label}
+  //         className={classes.downloadBtn}
+  //         startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}
+  //         onClick={downladFile}
+  //       />
+  //       <Button
+  //         disableRipple
+  //         aria-controls="mui-menu"
+  //         variant="outlined"
+  //         onClick={clickHandler}
+  //         className={classes.displayBtn}
+  //         startIcon={<ExpandMoreIcon className={classes.expandIcon} />}
+  //       >
+  //         <div className={classes.dropDownText}>
+  //           {label}
+  //         </div>
+  //       </Button>
+  //       <MuiMenu
+  //         anchorEl={anchorElement}
+  //         keepMounted
+  //         open={Boolean(anchorElement)}
+  //         onClose={closeHandler}
+  //       >
+  //         {options}
+  //       </MuiMenu>
+  //     </Box>
+  //   </MuiThemeProvider>
+  // );
   return (
-    <MuiThemeProvider theme={createTheme(theme)}>
-      <Box className={classes.menu}>
+    <>
+      <ButtonGroup variant="contained" classes={{ root: classes.btnGrpRoot, groupedHorizontal: classes.btnGrpHrzntl }}>
         <Button
-          disableRipple
-          disabled={DOWNLOADS === label}
-          className={classes.downloadBtn}
-          startIcon={<ArrowDownward className={classes.downloadIcon} id="download_arrow" />}
-          onClick={downladFile}
-        />
-        <Button
-          disableRipple
-          aria-controls="mui-menu"
-          variant="outlined"
+          classes={{
+            root: classes.downloadDropdownBtn,
+            label: classes.downloadDropdownBtnLabel,
+          }}
+          startIcon={<KeyboardArrowDownIcon />}
           onClick={clickHandler}
-          className={classes.displayBtn}
-          startIcon={<ExpandMoreIcon className={classes.expandIcon} />}
         >
-          <div className={classes.dropDownText}>
-            {label}
-          </div>
+          {label}
         </Button>
-        <MuiMenu
-          anchorEl={anchorElement}
-          keepMounted
-          open={Boolean(anchorElement)}
-          onClose={closeHandler}
+        <Button
+          disabled={DOWNLOADS === label}
+          onClick={downladFile}
+          classes={{
+            root: classes.downloadBtn,
+          }}
         >
-          {options}
-        </MuiMenu>
-      </Box>
-    </MuiThemeProvider>
+          <ArrowDownward classes={{
+            root: classes.downloadBtnIcon
+          }} />
+        </Button>
+      </ButtonGroup>
+      <StyledMenu
+        id="customized-menu"
+        anchorEl={anchorElement}
+        keepMounted
+        open={Boolean(anchorElement)}
+        onClose={closeHandler}
+      >
+        {options}
+      </StyledMenu>
+    </>
   );
 };
 
 const styles = () => ({
+  btnGrpRoot: {
+    border: '1px solid #0D71A3',
+    backgroundColor: '#0D71A3',
+    width: '140px',
+    height: '2em',
+    boxShadow: 'none',
+  },
+  btnGrpHrzntl: {
+    borderTopRightRadius: '5px !important',
+    borderBottomRightRadius: '5px !important'
+  },
+  downloadDropdownBtn: {
+    backgroundColor: '#F2F1F1',
+    border: '1px solid #0D71A3',
+    width: '100%',
+  },
+  downloadDropdownBtnLabel: {
+    color: '#0D71A3',
+    fontSize: '10px',
+    fontFamily: 'Open Sans',
+    fontWeight: '600',
+  },
+  downloadBtn: {
+    backgroundColor: '#0D71A3',
+    width: '27px',
+    color: 'white',
+    '&:disabled': {
+      backgroundColor: '#0D71A3',
+    },
+    '&:hover': {
+      backgroundColor: '#0D71A3',
+    }
+  },
+  downloadBtnIcon: {
+    color: '#FFF'
+  },
   menu: {
     border: '1px solid #0D71A3',
     boxSizing: 'border-box',
@@ -217,18 +323,18 @@ const styles = () => ({
       },
     },
   },
-  downloadBtn: {
-    float: 'right',
-    marginBottom: '-20px',
-    height: '27px',
-    width: '27px',
-    backgroundColor: '#0D71A3',
-    borderRadius: '0px',
-    paddingLeft: '8px',
-    '&:hover': {
-      backgroundColor: '#0D71A3',
-    },
-  },
+  // downloadBtn: {
+  //   float: 'right',
+  //   marginBottom: '-20px',
+  //   height: '27px',
+  //   width: '27px',
+  //   backgroundColor: '#0D71A3',
+  //   borderRadius: '0px',
+  //   paddingLeft: '8px',
+  //   '&:hover': {
+  //     backgroundColor: '#0D71A3',
+  //   },
+  // },
   downloadIcon: {
     color: '#fff',
     fontSize: '18px',
