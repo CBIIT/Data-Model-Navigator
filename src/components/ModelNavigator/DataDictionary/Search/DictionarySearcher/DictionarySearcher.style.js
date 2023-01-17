@@ -93,7 +93,7 @@ export default () => ({
     marginLeft: '100px',
     marginBottom: '10px',
     background: '#fff',
-    marginRight: '30px',
+    marginRight: '12px',
     '&:hover': {
       backgroundColor: '#566672',
       color: 'white',

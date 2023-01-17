@@ -25,13 +25,12 @@ class DictionarySearchHistory extends React.Component {
               className={classes.clear}
               onClick={this.handleClearHistory}
               role="button"
-              onKeyPress={this.handleClearHistory}
               tabIndex={0}
             >
               Clear History
             </span>
           </div>
-          <div>
+          <div className={classes.serachedItems}>
             {
               searchHistoryItems && searchHistoryItems.map((item) => {
                 const zeroCountModifier = item.matchedCount === 0
@@ -42,7 +41,6 @@ class DictionarySearchHistory extends React.Component {
                     key={item.keywordStr}
                     onClick={() => this.handleClick(item.keywordStr)}
                     role="button"
-                    onKeyPress={() => this.handleClick(item.keywordStr)}
                     tabIndex={0}
                   >
                     <span className={classes.itemKeyword}>

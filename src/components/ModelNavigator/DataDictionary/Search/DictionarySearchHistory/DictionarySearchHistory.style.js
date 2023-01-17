@@ -1,35 +1,38 @@
 export default () => ({
   searchHistory : {
     padding: '15px',
-    borderTop: '1px solid var(--g3-color__silver)',
+    borderTop: '1px solid #606060',
     fontSize: '14px',
-    color: 'var(--g3-color__gray)',
+    color: '#606060',
+  },
+  serachedItems: {
+    marginTop: '10px',
   },
   item : {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '10px',
-    borderBottom: 'var(--g3-color__silver) 1px solid',
-    borderLeft: 'var(--g3-color__silver) 1px solid',
-    borderRight: 'var(--g3-color__silver) 1px solid',
+    borderBottom: '#e7e7e7 1px solid',
+    borderLeft: '#e7e7e7 1px solid',
+    borderRight: '#e7e7e7 1px solid',
     cursor: 'pointer',
 
     '&:first-child': {
-      borderTop: 'var(--g3-color__silver) 1px solid',
+      borderTop: '#e7e7e7 1px solid',
       borderTopLeftRadius: '4px',
       borderTopRightRadius: '4px',
     },
     '&:last-child': {
-      borderTop: 'var(--g3-color__silver) 1px solid',
+      borderTop: '#e7e7e7 1px solid',
       borderTopLeftRadius: '4px',
       borderTopRightRadius: '4px',
     },
     '&:hover': {
-      backgroundColor: 'var(--g3-color__base-blue)',
-      color: 'var(--g3-color__white)',
+      backgroundColor: '#3283c8',
+      color: '#fff',
       '& $itemBadge': {
-        backgroundColor: 'var(--g3-color__white)',
-        color: 'var(--g3-color__base-blue)',
+        backgroundColor: '#fff',
+        color: '#3283c8',
       },
     },
   },
@@ -39,23 +42,23 @@ export default () => ({
     textOverflow: 'ellipsis',
   },
   itemBadge : {
-    backgroundColor: 'var(--g3-color__base-blue)',
-    color: 'var(--g3-color__white)',
+    backgroundColor: '#3283c8',
+    color: '#fff',
     padding: '0 8px',
     borderRadius: '4px',
   },
   itemBadgeZero : {
-    backgroundColor: 'var(--g3-color__gray)',
+    backgroundColor: '#606060',
   },
   titleText : {
     display: 'inline',
   },
   clear : {
-    color: 'var(--g3-color__base-blue)',
+    color: '#3283c8',
     cursor: 'pointer',
     float: 'right',
     '&:hover': {
-      color: 'var(--g3-color__base-blue-light)',
+      color: '#05b8ee',
     }
   },
 });

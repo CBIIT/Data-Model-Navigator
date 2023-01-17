@@ -41,9 +41,9 @@ const DataDictionary = ({
       <div className={classes.dataDictionary}>
         <div className={classes.sidebar}>
           <ReduxDictionarySearcher ref={dictionarySearcherRef} />
-          {/* <ReduxDictionarySearchHistory
+          <ReduxDictionarySearchHistory
             onClickSearchHistoryItem={handleClickSearchHistoryItem}
-          /> */}
+          />
           <ReduxFacetFilters />
         </div>
         <DictionaryView
