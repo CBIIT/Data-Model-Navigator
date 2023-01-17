@@ -30,10 +30,11 @@ export default () => ({
     padding: '0',
   },
   closeIcon: {
-    width: '25px',
+    width: '22px',
     // color: '#0d71a3',
     height: '25px',
     position: 'relative',
+    color: '#0D71A3',
     '& :hover': {
         cursor: 'pointer',
     },
@@ -43,12 +44,15 @@ export default () => ({
     padding: '0',
   },
   searchIcon: {
+    color: '#0D71A3',
+    width: '22px',
     '& :hover': {
         cursor: 'pointer',
     },
   },
   verticalLine: {
     width: '2px',
+    color: '#0D71A3',
     borderLeft: '1px solid ',
     margin: '0px 2px 0px 2px',
   }
