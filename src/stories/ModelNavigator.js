@@ -70,6 +70,7 @@ const graphViewConfig = {
     }
   },
   canvas: {
+    width: 0,
     fit: {
       x: 0,
       y: 0,
@@ -317,7 +318,8 @@ async function init() {
         type: 'REACT_FLOW_GRAPH_DICTIONARY',
         dictionary: newDataList,
         pdfDownloadConfig: pdfDownloadConfig,
-        assetConfig: assetConfig
+        assetConfig: assetConfig,
+        graphViewConfig: graphViewConfig,
       }),
       store.dispatch({
         type: 'RECEIVE_VERSION_INFO',

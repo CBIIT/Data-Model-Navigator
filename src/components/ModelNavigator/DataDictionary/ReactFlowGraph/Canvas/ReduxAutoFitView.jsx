@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useReactFlow } from 'reactflow';
 
-const ReduxAutoFitView = (nodes) => {
+const ReduxAutoFitView = ({canvasWidth}) => {
     const { fitView } = useReactFlow();
     // const store = useStoreApi();
     // const state = store.getState();
     // const nodeInternals = useMemo(() => state.nodeInternals);
     useEffect(() => {
         fitView()
-    }, []);
+    }, [canvasWidth]);
     return null;
     // useEffect(() => {
     //     if (nodeInternals && nodeInternals.size > 0) {

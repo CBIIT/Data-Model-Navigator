@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { CircularProgress, withStyles } from '@material-ui/core';
 import ReactFlow, {
@@ -55,7 +55,13 @@ const CustomFlowView = ({
 }) => {
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
-  const { fit } = graphViewConfig.canvas;
+  const { fit, width } = graphViewConfig.canvas;
+  
+  useEffect(() => {
+    console.log("chnage in width");
+    console.log(width);
+  }, [width]);
+
   const handleTransform = useCallback(() => {
     setViewport({ x: fit?.x, y: fit?.y, zoom: fit?.zoom }, { duration: 200 });
   }, [setViewport]);
@@ -108,7 +114,7 @@ const CustomFlowView = ({
           <img src={ZoomOutIcon} alt="ZoomOutIcon" />
         </div>
       </div>
-      <ReduxAutoFitView />
+      <ReduxAutoFitView canvasWidth={width} />
       <ReduxViewPort />
       <Background
         style={{
@@ -136,6 +142,7 @@ const CanvasView = ({
   highlightedNodes,
   graphViewConfig,
   onGraphPanelClick,
+
 }) => {
   return (
     <div className={classes.mainWindow}>

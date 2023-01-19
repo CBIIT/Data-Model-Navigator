@@ -3,6 +3,7 @@ import {
   clearSearchHistoryItems,
   addSearchHistoryItems,
   onViewChange,
+  onCnavasWidthChange,
 } from '../../Utils/utils';
 import * as actionTypes from '../actions/actionTypes';
 
@@ -127,6 +128,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         pdfDownloadConfig: action.pdfDownloadConfig,
         graphConfig: action.graphConfig,
         assetConfig: action.assetConfig,
+        graphViewConfig: action.graphViewConfig,
       }
     }
     case 'REACT_FLOW_SET_GRAPH_DATA': {
@@ -364,6 +366,11 @@ const ddgraph = (state = ddgraphInitialState, action) => {
       return {
         ...state,
         focusedNodeId: action?.nodeID
+      }
+    case actionTypes.CNAVAS_WIDTH_CHANGE:
+      return {
+        ...state,
+        graphViewConfig: onCnavasWidthChange({...action, ...state}),
       }
     default:
       return state;

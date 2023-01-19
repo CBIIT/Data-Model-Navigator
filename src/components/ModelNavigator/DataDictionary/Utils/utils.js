@@ -253,3 +253,9 @@ export const onViewChange = (payload) => {
   localStorage.setItem('reactflowGraphView', JSON.stringify(payload));
   return payload;
 }
+
+export const onCnavasWidthChange = ({ canvasWidth, graphViewConfig}) => {
+  const updateGraphViewConfig = _.cloneDeep(graphViewConfig);
+  updateGraphViewConfig.canvas.width = canvasWidth;
+  return updateGraphViewConfig;
+}

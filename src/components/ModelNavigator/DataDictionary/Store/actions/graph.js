@@ -93,6 +93,11 @@ export const setGraphView = (isGraphView) => ({
   isGraphView,
 });
 
+export const setCanvasWidth = (canvasWidth) => ({
+  type: actionTypes.CNAVAS_WIDTH_CHANGE,
+  canvasWidth
+})
+
 export const setNeedReset = (needReset) => ({
   type: 'GRAPH_CANVAS_RESET_REQUIRED',
   needReset,
