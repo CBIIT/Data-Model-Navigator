@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import { CircularProgress, withStyles } from '@material-ui/core';
 import ReactFlow, {
@@ -13,7 +13,7 @@ import EdgeView from '../Edge/ReduxEdgeView';
 import Styles from './CanvasStyle';
 import ReduxViewPort from './ReduxViewPort';
 import ReduxAutoFitView from './ReduxAutoFitView';
-import { nodeColor } from './util';
+import { getMinZoom, nodeColor } from './util';
 import LegendView from '../Legend/ReduxLegendView';
 import './Canvas.css';
 import './assets/style.css';
@@ -56,14 +56,21 @@ const CustomFlowView = ({
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
   const { fit, width } = graphViewConfig.canvas;
+
+  const [minZoom,  setMinZoom] = useState();
   
   useEffect(() => {
     console.log("chnage in width");
     console.log(width);
+    console.log(fit);
+    // setMinZoom(fit?.minZoom);
+    const zoom = getMinZoom({width, ...fit});
+    console.log("set zoom "+ zoom);
+    setMinZoom(zoom);
   }, [width]);
 
   const handleTransform = useCallback(() => {
-    setViewport({ x: fit?.x, y: fit?.y, zoom: fit?.zoom }, { duration: 200 });
+    setViewport({ x: fit?.x, y: fit?.y, zoom: minZoom }, { duration: 200 });
   }, [setViewport]);
 
   /**
@@ -93,8 +100,8 @@ const CustomFlowView = ({
       onConnect={onConnect}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
-      minZoom={fit?.minZoom ? fit.minZoom : 0.5}
-      maxZoom={fit?.maxZoom ? fit.axZoom : 3}
+      minZoom={minZoom}
+      maxZoom={fit?.maxZoom ? fit.maxZoom : 3}
       // elementsSelectable={false}
       onPaneClick={onPanelClick}
       fitView
