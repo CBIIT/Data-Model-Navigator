@@ -57,21 +57,16 @@ const CustomFlowView = ({
 
   const { fit, width } = graphViewConfig.canvas;
 
-  const [minZoom,  setMinZoom] = useState();
+  const [minZoom,  setMinZoom] = useState(fit?.minZoom);
   
   useEffect(() => {
-    console.log("chnage in width");
-    console.log(width);
-    console.log(fit);
-    // setMinZoom(fit?.minZoom);
     const zoom = getMinZoom({width, ...fit});
-    console.log("set zoom "+ zoom);
     setMinZoom(zoom);
   }, [width]);
 
   const handleTransform = useCallback(() => {
-    setViewport({ x: fit?.x, y: fit?.y, zoom: minZoom }, { duration: 200 });
-  }, [setViewport]);
+    setViewport({ x: fit?.x, y: fit?.y, zoom: getMinZoom({width, ...fit}) }, { duration: 200 });
+  }, [setViewport, width]);
 
   /**
    * pdf configuration

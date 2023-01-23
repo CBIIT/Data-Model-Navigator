@@ -45,6 +45,7 @@ const DictionaryView = ({
    };
   
    useEffect(() => {
+    onWidthChange(ref.current.offsetWidth);
     window.addEventListener('resize', setCanvasWidth);
     return () => {
       window.removeEventListener('resize', setCanvasWidth)

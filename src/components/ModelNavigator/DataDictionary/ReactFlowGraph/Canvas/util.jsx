@@ -64,4 +64,4 @@ export const nodeColor = (node) => {
 /**
  * set zoom based on width
  */
-export const getMinZoom = ({width, minZoom}) => width > 1425 ? 1 : minZoom;
+export const getMinZoom = ({width, minZoom}) => width > 1150 ? 1 : minZoom;

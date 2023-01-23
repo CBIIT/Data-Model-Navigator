@@ -40,7 +40,7 @@ const CanvasController = ({
   assetConfig
 }) => {
 
-    if (tabViewWidth === 0) {
+    if (tabViewWidth === 0 || !graphViewConfig) {
       return <CircularProgress />;
     }
 

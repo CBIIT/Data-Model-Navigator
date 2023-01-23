@@ -70,7 +70,6 @@ const graphViewConfig = {
     }
   },
   canvas: {
-    width: 0,
     fit: {
       x: 0,
       y: 0,

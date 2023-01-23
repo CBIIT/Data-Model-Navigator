@@ -128,7 +128,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         pdfDownloadConfig: action.pdfDownloadConfig,
         graphConfig: action.graphConfig,
         assetConfig: action.assetConfig,
-        graphViewConfig: action.graphViewConfig,
+        graphViewConfig: {...action.graphViewConfig, ...state.graphViewConfig},
       }
     }
     case 'REACT_FLOW_SET_GRAPH_DATA': {
