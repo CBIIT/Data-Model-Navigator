@@ -146,8 +146,17 @@ const FacetFilters = ({
   };
 
   function getCheckBoxColor(index, currentSection) {
-    return index % 2 ? facetSectionVariables[currentSection.sectionName] ? facetSectionVariables[currentSection.sectionName].checkBoxColorsTwo ? facetSectionVariables[currentSection.sectionName].checkBoxColorsTwo : '' : defaultFacetSectionVariables.checkBoxColorsTwo
-      : facetSectionVariables[currentSection.sectionName] ? facetSectionVariables[currentSection.sectionName].checkBoxColorsOne ? facetSectionVariables[currentSection.sectionName].checkBoxColorsOne : '' : defaultFacetSectionVariables.checkBoxColorsOne;
+    return facetSectionVariables[currentSection.sectionName]
+      ? facetSectionVariables[currentSection.sectionName].checkBoxColorsOne
+        : defaultFacetSectionVariables.checkBoxColorsOne;
+    // return index % 2 ? facetSectionVariables[currentSection.sectionName]
+    //   ? facetSectionVariables[currentSection.sectionName].checkBoxColorsTwo
+    //     ? facetSectionVariables[currentSection.sectionName].checkBoxColorsTwo : ''
+    //       : defaultFacetSectionVariables.checkBoxColorsTwo
+    //         : facetSectionVariables[currentSection.sectionName]
+    //           ? facetSectionVariables[currentSection.sectionName].checkBoxColorsOne
+    //             ? facetSectionVariables[currentSection.sectionName].checkBoxColorsOne
+    //               : '' : defaultFacetSectionVariables.checkBoxColorsOne;
   }
 
   const handleSectionChange = (panel) => (event, isExpanded) => {
@@ -256,15 +265,15 @@ const FacetFilters = ({
     return (<></>);
   }
 
-  const clearFilterHandler = () => {
-    onClearAllFilter();
-    onClickBlankSpace();
-    hidePropertyTable();
-  };
+  // const clearFilterHandler = () => {
+  //   onClearAllFilter();
+  //   onClickBlankSpace();
+  //   hidePropertyTable();
+  // };
 
   return (
     <>
-      <Button
+      {/* <Button
         id="button_sidebar_clear_all_filters"
         variant="outlined"
         disabled={activeFiltersCount === 0}
@@ -274,7 +283,7 @@ const FacetFilters = ({
         disableRipple
       >
         CLEAR ALL
-      </Button>
+      </Button> */}
       {
     sideBarSections.map((currentSection) => (
       <FacetFilterThemeProvider>

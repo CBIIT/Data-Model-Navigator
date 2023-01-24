@@ -1,6 +1,7 @@
 import FileSaver from 'file-saver';
 import PropTypes from 'prop-types';
 import JSZip from 'jszip';
+import { getMinZoom } from '../ReactFlowGraph/Canvas/util';
 // import { dataDictionaryTemplatePath, appname } from '../localconf';
 
 const dataDictionaryTemplatePath = 'FIXME';
@@ -252,4 +253,12 @@ export const SearchResultItemShape = PropTypes.shape({
 export const onViewChange = (payload) => {
   localStorage.setItem('reactflowGraphView', JSON.stringify(payload));
   return payload;
+}
+
+export const onCnavasWidthChange = ({ canvasWidth, graphViewConfig}) => {
+  const updateGraphViewConfig = _.cloneDeep(graphViewConfig);
+  if (updateGraphViewConfig) {
+    updateGraphViewConfig.canvas.width = canvasWidth;
+  }
+  return updateGraphViewConfig;
 }

@@ -70,6 +70,7 @@ DataDictionary.defaultProps = {
 const styles = () => ({
   dictionaryContainer: {
     marginTop: '-40px',
+    overflowY: 'hidden',
   },
   dataDictionary: {
     display: 'flex',
@@ -95,9 +96,10 @@ const styles = () => ({
     width: '320px',
     minWidth: '320px',
     height: '100%',
+    marginTop: '15px',
     overflowY: 'auto',
-    backgroundColor: 'var(--g3-color__white)',
-    borderRight: '1px solid var(--g3-color__smoke)',
+    boxShadow: 'inset -10px -1px 10px -7px rgb(50 50 50 / 25%)',
+    borderTopRightRadius: '7px',
   },
   
   mainGraphView: {

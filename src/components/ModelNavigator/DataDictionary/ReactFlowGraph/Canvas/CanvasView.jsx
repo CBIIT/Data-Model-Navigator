@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import { CircularProgress, withStyles } from '@material-ui/core';
 import ReactFlow, {
@@ -13,7 +13,7 @@ import EdgeView from '../Edge/ReduxEdgeView';
 import Styles from './CanvasStyle';
 import ReduxViewPort from './ReduxViewPort';
 import ReduxAutoFitView from './ReduxAutoFitView';
-import { nodeColor } from './util';
+import { getMinZoom, nodeColor } from './util';
 import LegendView from '../Legend/ReduxLegendView';
 import './Canvas.css';
 import './assets/style.css';
@@ -55,10 +55,18 @@ const CustomFlowView = ({
 }) => {
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
-  const { fit } = graphViewConfig.canvas;
+  const { fit, width } = graphViewConfig.canvas;
+
+  const [minZoom,  setMinZoom] = useState(fit?.minZoom);
+  
+  useEffect(() => {
+    const zoom = getMinZoom({width, ...fit});
+    setMinZoom(zoom);
+  }, [width]);
+
   const handleTransform = useCallback(() => {
-    setViewport({ x: fit?.x, y: fit?.y, zoom: fit?.zoom }, { duration: 200 });
-  }, [setViewport]);
+    setViewport({ x: fit?.x, y: fit?.y, zoom: getMinZoom({width, ...fit}) }, { duration: 200 });
+  }, [setViewport, width]);
 
   /**
    * pdf configuration
@@ -87,15 +95,15 @@ const CustomFlowView = ({
       onConnect={onConnect}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
-      minZoom={fit?.minZoom ? fit.minZoom : 0.5}
-      maxZoom={fit?.maxZoom ? fit.axZoom : 3}
+      minZoom={minZoom}
+      maxZoom={fit?.maxZoom ? fit.maxZoom : 3}
       // elementsSelectable={false}
       onPaneClick={onPanelClick}
       fitView
       className={classes.reactFlowView}
     >
       <ReduxOverlayPropertyTable pdfDownloadConfig={pdfDownloadConfig} />
-      <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' />
+      {/* <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' /> */}
       {/* <Controls position='top-left' /> */}
       <div className={classes.controls}>
         <div onClick={handleTransform} title="reset" className={classes.controlBtn}>
@@ -108,7 +116,7 @@ const CustomFlowView = ({
           <img src={ZoomOutIcon} alt="ZoomOutIcon" />
         </div>
       </div>
-      <ReduxAutoFitView />
+      <ReduxAutoFitView canvasWidth={width} />
       <ReduxViewPort />
       <Background
         style={{
@@ -136,6 +144,7 @@ const CanvasView = ({
   highlightedNodes,
   graphViewConfig,
   onGraphPanelClick,
+
 }) => {
   return (
     <div className={classes.mainWindow}>

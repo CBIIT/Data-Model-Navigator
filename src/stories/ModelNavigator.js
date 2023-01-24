@@ -317,7 +317,8 @@ async function init() {
         type: 'REACT_FLOW_GRAPH_DICTIONARY',
         dictionary: newDataList,
         pdfDownloadConfig: pdfDownloadConfig,
-        assetConfig: assetConfig
+        assetConfig: assetConfig,
+        graphViewConfig: graphViewConfig,
       }),
       store.dispatch({
         type: 'RECEIVE_VERSION_INFO',

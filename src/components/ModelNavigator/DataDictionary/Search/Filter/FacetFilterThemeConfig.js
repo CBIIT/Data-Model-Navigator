@@ -10,7 +10,7 @@ const theme = {
     },
     MuiAccordionDetails: {
       root: {
-        padding: '0px 1px 0px',
+        padding: '0px 0px 0px',
       },
     },
     MuiAccordion: {

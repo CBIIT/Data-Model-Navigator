@@ -13,8 +13,8 @@ export default () => ({
     '&:last-child': {
       marginBottom: '0',
     },
-    '&:hover': {
-      color: 'var(--g3-color__base-blue)',
+    '&:hover $nodeTitle': {
+      color: '#3283c8',
     },
   },
   nodeTitle: {
@@ -28,6 +28,7 @@ export default () => ({
     userSelect: 'none',
     fontSize: '15px',
     lineHeight: '14px',
+    
   },
   nodeFileIcon: {
     marginRight: '10px',
@@ -114,7 +115,7 @@ export default () => ({
     padding: 'unset', /* override g3-button's paddings */
     fontWeight: 'normal',
     display: 'block',
-    color: 'var(--g3-color__white)',
+    color: '#fff',
     textAlign: 'right',
     border: 'none',
     '&:hover': {

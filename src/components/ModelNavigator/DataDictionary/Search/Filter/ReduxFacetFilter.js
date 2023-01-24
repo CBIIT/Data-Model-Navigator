@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FacetFilters from './FacetFilters';
-import { clickBlankSpace, setOverlayPropertyTableHidden, setNeedReset } from '../../Store/actions/graph';
+import {
+  clickBlankSpace,
+  setOverlayPropertyTableHidden,
+  setNeedReset
+} from '../../Store/actions/graph';
 import { 
   clearAllFilters,
   toggleCheckBox,

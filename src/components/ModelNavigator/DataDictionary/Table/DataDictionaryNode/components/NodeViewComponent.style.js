@@ -5,6 +5,9 @@ export default () => ({
     height: '100%',
     flexDirection: 'column',
     gap: '2em',
+    '&:hover $nodeTitle': {
+      color: '#3283c8',
+    },
   },
   titleAndDescContainer: {
     display: 'flex',

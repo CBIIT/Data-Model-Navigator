@@ -40,7 +40,7 @@ const CanvasController = ({
   assetConfig
 }) => {
 
-    if (tabViewWidth === 0) {
+    if (tabViewWidth === 0 || !graphViewConfig) {
       return <CircularProgress />;
     }
 
@@ -91,7 +91,6 @@ const CanvasController = ({
             }
           });
         }
-        console.log(nodes);
         return { nodes, edges };
     };
 
@@ -133,6 +132,7 @@ const CanvasController = ({
         onClearSearchResult={onClearSearchResult}
         highlightedNodes={highlightedNodes}
         graphViewConfig={graphViewConfig}
+        canvasWidth={tabViewWidth}
         onGraphPanelClick={onGraphPanelClick}
       />
     )
@@ -146,7 +146,7 @@ const mapStateToProps = (state) => ({
     nodeTree : state.submission.node2Level,
     highlightedNodes: state.ddgraph.highlightedNodes,
     unfilteredDictionary: state.submission.unfilteredDictionary,
-    graphViewConfig: state.submission.graphViewConfig,
+    graphViewConfig: state.ddgraph.graphViewConfig,
     assetConfig: state.ddgraph.assetConfig,
 });
 

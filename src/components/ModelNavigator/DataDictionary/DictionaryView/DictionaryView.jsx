@@ -8,7 +8,8 @@ import TabPanel from './Tab/TabPanel';
 import TabThemeProvider from './Tab/TabThemeConfig';
 import ReduxDataDictionaryTable from '../Table/DataDictionaryTable';
 import CanvasView from '../ReactFlowGraph/Canvas/CanvasController';
-import { setGraphView } from '../Store/actions/graph';
+import { setCanvasWidth, setGraphView } from '../Store/actions/graph';
+import { dispatch } from 'd3-dispatch';
 
 const tabItems = [
   {
@@ -30,6 +31,7 @@ const DictionaryView = ({
   dictionary,
   graphView,
   onSetGraphView,
+  onWidthChange,
 }) => {
   const [currentTab, setCurrentTab] = React.useState(0);
   /**
@@ -37,8 +39,21 @@ const DictionaryView = ({
    */
    const ref = useRef(null);
    const [tabViewWidth, setTabViewWidth] = useState(0);
+   const setCanvasWidth = () => {
+    setTabViewWidth(ref.current.offsetWidth);
+    onWidthChange(ref.current.offsetWidth);
+   };
+  
+   useEffect(() => {
+    onWidthChange(ref.current.offsetWidth);
+    window.addEventListener('resize', setCanvasWidth);
+    return () => {
+      window.removeEventListener('resize', setCanvasWidth)
+    }
+   }, []);
+
    useLayoutEffect(() => {
-     setTabViewWidth(ref.current.offsetWidth);
+      setTabViewWidth(ref.current.offsetWidth);
    }, []);
 
   //set to graph view incase of search entry
@@ -96,6 +111,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   onSetGraphView: (isGraphView) => dispatch(setGraphView(isGraphView)),
+  onWidthChange: (canvasWidth) => dispatch(setCanvasWidth(canvasWidth)),
 });
 
 export default compose(connect(mapStateToProps, mapDispatchToProps),

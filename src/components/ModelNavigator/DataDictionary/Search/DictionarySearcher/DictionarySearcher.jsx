@@ -1,21 +1,24 @@
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { useState }  from 'react';
 import PropTypes from 'prop-types';
 import {
   withStyles,
   createTheme,
   MuiThemeProvider,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
 } from '@material-ui/core';
-import AutoComplete from '@gen3/ui-component/dist/components/AutoComplete';
+import { createFilterOptions } from '@material-ui/lab';
+import AutoComplete from '../AutoComplete/AutoCompleteView';
 import { compareTwoStrings } from 'string-similarity';
 import {
   prepareSearchData, searchKeyword, getSearchSummary, ZERO_RESULT_FOUND_MSG, formatText,
 } from './searchHelper';
 import styles from './DictionarySearcher.style';
-
-const theme = {
-
-}
+import SearchThemConfig from './SearchThemConfig';
 
 class DictionarySearcher extends React.Component {
   constructor(props) {
@@ -121,8 +124,10 @@ class DictionarySearcher extends React.Component {
         fullString: str,
         matchedPieceIndices: matchedStrings[str].matchedPieceIndices,
       }));
+    const text = query;
     this.setState({
       suggestionList,
+      text,
     });
   };
 
@@ -136,53 +141,124 @@ class DictionarySearcher extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const {
+      classes,
+      activeFiltersCount,
+      onClearAllFilter,
+      onClickBlankSpace,
+      hidePropertyTable
+    } = this.props;
+
+    const {
+      isSearchFinished,
+      searchResult,
+      hasError,
+      errorMsg,
+      suggestionList,
+    } = this.state;
+
+    const clearFilterHandler = () => {
+      onClickBlankSpace();
+      onClearAllFilter();
+      hidePropertyTable();
+    };
+
     return (
       <div className={classes.searcher}>
-        <MuiThemeProvider theme={createTheme(theme)}>
-          <AutoComplete
-            className="hermo"
-            ref={this.autoCompleteRef}
-            suggestionList={this.state.suggestionList}
-            inputPlaceHolderText="Search in Dictionary"
-            onSuggestionItemClick={this.suggestionItemClickFunc}
-            onInputChange={this.inputChangeFunc}
-            onSubmitInput={this.submitInputFunc}
-          />
-        </MuiThemeProvider>
+        <SearchThemConfig>
+          <div className={classes.searchBarTitle}>
+            <span className={classes.searchBarTitleText}>Filter & Search</span>
+          </div>
+          <div className={classes.searchInput}>
+            <AutoComplete
+              className="hermo"
+              ref={this.autoCompleteRef}
+              suggestionList={suggestionList}
+              inputPlaceHolderText="Search in Dictionary"
+              onSuggestionItemClick={this.suggestionItemClickFunc}
+              onInputChange={this.inputChangeFunc}
+              onSubmitInput={this.submitInputFunc}
+            />
+            <br/>
+            {/* <Autocomplete
+              query={text}
+              sx={{
+                display: 'inline-block',
+                '& input': {
+                  width: 200,
+                }
+              }}
+              ref={this.autoCompleteRef}
+              options={suggestionList}
+              getOptionLabel={(option) => option.fullString}
+              filterOptions={filterOptions}
+              onInputChange={({target}) => {
+                console.log(target.value);
+                this.inputChangeFunc(target.value);
+              }}
+              renderInput={(props) => 
+                <TextField 
+                  {...props}
+                  size='small'
+                  onKeyDown={(event) => {
+                    console.log(event);
+                    const { target } = event;
+                    console.log(target.value);
+                    if(event.code === 'Enter') {
+                      console.log("serach text");
+                      this.submitInputFunc(target.value);
+                    }
+                  }}
+                />}
+            /> */}
+            {/* <Button
+              className={classes.resultClearBtn}
+              onClick={this.onClearResult}
+              role="button"
+              tabIndex={0}
+            >
+              Clear Result
+            </Button> */}
+            <Button
+              id="button_sidebar_clear_all_filters"
+              variant="outlined"
+              disabled={activeFiltersCount === 0}
+              className={classes.customButton}
+              classes={{ root: classes.clearAllButtonRoot }}
+              onClick={clearFilterHandler}
+              disableRipple
+            >
+              CLEAR ALL
+            </Button>
+          </div>
+        </SearchThemConfig>
+        <div className={classes.results}>
         {
-          this.state.isSearchFinished && (
-            <>
+          isSearchFinished && (
+            <div>
               {
-                !this.state.hasError && (
-                  this.state.searchResult.matchedNodes.length > 0 ? (
+                !hasError && (
+                  searchResult.matchedNodes.length > 0 ? (
                     <>
-                      <div className={classes.result}>
-                        <h4 className={classes.resultText}>Search Results</h4>
-                        <span
-                          className={classes.resultClear}
-                          onClick={this.onClearResult}
-                          role="button"
-                          tabIndex={0}
-                          onKeyPress={this.onClearResult}
-                        >
-                          Clear Result
-                        </span>
+                      <div className={classes.searchResultText}>
+                        <span>Search Results</span>
                       </div>
-                      <li className={`${classes.resultItem} body`}>
-                        <span className={classes.resultCount}>
-                          {this.state.searchResult.summary.matchedNodeNameAndDescriptionsCount}
-                        </span>
-                        {' '}
-                        matches in nodes (title and description)
-                      </li>
-                      <li className={`${classes.resultItem} body`}>
-                        <span className={classes.resultCount}>
-                          {this.state.searchResult.summary.matchedPropertiesCount}
-                        </span>
-                        {' '}
-                        matches in node properties
-                      </li>
+                      <List className={classes.resultList} component="div" dense>
+                        <ListItem className={classes.resultItem}>
+                          <span className={classes.resultCountTitleDesc}>
+                            {searchResult.summary.matchedNodeNameAndDescriptionsCount}
+                          </span>
+                          &nbsp;
+                          <span>Match(es) in nodes <br/> (title and description)</span>
+                        </ListItem>
+                        <ListItem className={classes.resultItem}>
+                          <span className={classes.resultCountProps}>
+                            {searchResult.summary.matchedPropertiesCount}
+                          </span>
+                          &nbsp;
+                          <span>Match(es) in node properties</span>
+                        </ListItem>
+                      </List>
                     </>
                   ) : (
                     <p>{ZERO_RESULT_FOUND_MSG}</p>
@@ -190,13 +266,14 @@ class DictionarySearcher extends React.Component {
                 )
               }
               {
-                this.state.hasError && (
-                  <p>{this.state.errorMsg}</p>
+                hasError && (
+                  <p>{errorMsg}</p>
                 )
               }
-            </>
+            </div>
           )
         }
+        </div>
       </div>
     );
   }
