@@ -10,7 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import MenuItem from '@material-ui/core/MenuItem';
-import { ArrowDownward, ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import ForwardIcon from '@material-ui/icons/Forward';
 import { saveAs } from 'file-saver';
 import { capitalizeFirstLetter, createFileName } from '../../../utils';
 
@@ -24,8 +24,11 @@ const fileTypes = [FILE_TYPE_JSON, FILE_TYPE_TSV];
 
 const StyledMenu = withStyles({
   paper: {
-    border: '1px solid #d3d4d5',
-    width: '100px',
+    border: '2px solid #0D71A3',
+    width: '97px',
+    borderBottomRightRadius: '5px !important',
+    borderBottomLeftRadius: '5px !important',
+    borderRadius: '0px',
   },
 })((props) => (
   <Menu
@@ -51,6 +54,9 @@ const StyledMenuItem = withStyles((theme) => ({
         backgroundColor: 'none',
       },
     },
+    '&:hover': {
+      backgroundColor: '#e1f0f7'
+    }
   },
 }))(MenuItem);
 
@@ -221,7 +227,7 @@ const DownloadFileTypeBtn = ({
             root: classes.downloadBtn,
           }}
         >
-          <ArrowDownward classes={{
+          <ForwardIcon classes={{
             root: classes.downloadBtnIcon
           }} />
         </Button>
@@ -247,10 +253,10 @@ const styles = () => ({
     height: '2em',
     boxShadow: 'none',
   },
-  btnGrpHrzntl: {
-    borderTopRightRadius: '5px !important',
-    borderBottomRightRadius: '5px !important'
-  },
+  // btnGrpHrzntl: {
+  //   borderTopRightRadius: '5px !important',
+  //   borderBottomRightRadius: '5px !important'
+  // },
   downloadDropdownBtn: {
     backgroundColor: '#F2F1F1',
     border: '1px solid #0D71A3',
@@ -260,7 +266,7 @@ const styles = () => ({
     color: '#0D71A3',
     fontSize: '10px',
     fontFamily: 'Open Sans',
-    fontWeight: '600',
+    fontWeight: '400',
   },
   downloadBtn: {
     backgroundColor: '#0D71A3',
@@ -274,7 +280,8 @@ const styles = () => ({
     }
   },
   downloadBtnIcon: {
-    color: '#FFF'
+    color: '#FFF',
+    rotate: '90deg'
   },
   menu: {
     border: '1px solid #0D71A3',
