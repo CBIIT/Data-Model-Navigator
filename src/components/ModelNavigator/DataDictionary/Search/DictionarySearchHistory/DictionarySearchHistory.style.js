@@ -28,12 +28,12 @@ export default () => ({
       borderTopRightRadius: '4px',
     },
     '&:hover': {
-      backgroundColor: '#3283c8',
-      color: '#fff',
-      '& $itemBadge': {
-        backgroundColor: '#fff',
-        color: '#3283c8',
-      },
+      backgroundColor: '#f1f1f1',
+      // color: '#fff',
+      // '& $itemBadge': {
+      //   backgroundColor: '#fff',
+      //   color: '#3283c8',
+      // },
     },
   },
   itemKeyword : {

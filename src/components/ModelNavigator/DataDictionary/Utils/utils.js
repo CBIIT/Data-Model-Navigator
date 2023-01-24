@@ -257,17 +257,8 @@ export const onViewChange = (payload) => {
 
 export const onCnavasWidthChange = ({ canvasWidth, graphViewConfig}) => {
   const updateGraphViewConfig = _.cloneDeep(graphViewConfig);
-  console.log(updateGraphViewConfig);
-  console.log(canvasWidth);
-  // const minZoom = getMinZoom({width: canvasWidth, minZoom: graphViewConfig?.fit?.minZoom});
-  // console.log
-  // const minZoom = graphViewConfig?.fit?.minZoom
-  // if (minZoom) {
-  //   updateGraphViewConfig.fit.minZoom = getMinZoom({width: canvasWidth, minZoom: minZoom})
-  //   console.log("update garph zoom")
-  //   console.log(updateGraphViewConfig.fit.minZoom);
-  // }
-  
-  updateGraphViewConfig.canvas.width = canvasWidth;
+  if (updateGraphViewConfig) {
+    updateGraphViewConfig.canvas.width = canvasWidth;
+  }
   return updateGraphViewConfig;
 }

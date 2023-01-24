@@ -14,17 +14,17 @@ export default () => ({
     whiteSpace: 'nowrap',
     borderTop: '1px solid #606060',
     '&:hover': {
-      backgroundColor: '#3283c8',
-      color: '#fff',
+      backgroundColor: '#f1f1f1',
+      // color: '#fff',
     },
-    '&:hover $highlight': {
-      color: '#ef8523',
-    },
+    // '&:hover $highlight': {
+    //   color: '#ef8523',
+    // },
   },
   highlight: {
     color: '#3283c8',
-    '&:hover': {
-      color: '#ef8523',
-    }
+    // '&:hover': {
+    //   color: '#ef8523',
+    // }
   }
 });

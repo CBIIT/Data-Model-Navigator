@@ -12,8 +12,8 @@ export const types = {
 
 export const defaultFacetSectionVariables = {
   color: '#000000',
-  checkBoxColorsOne: '#E8F7DC',
-  checkBoxColorsTwo: '#F5FDEE',
+  checkBoxColorsOne: '#0d71a3',
+  checkBoxColorsTwo: '#0d71a3',
   height: '5px',
   isExpanded: false,
 };
@@ -106,7 +106,7 @@ export const facetSectionVariables = {
   'Filter By Nodes': {
     color: '#0D71A3',
     checkBoxColorsOne: '#E3F4FD',
-    checkBoxColorsTwo: '#f0f8ff',
+    checkBoxColorsTwo: '#0d71a3',
     checkBoxBorderColor: '#0D71A3',
     height: '7px',
     isExpanded: true,
@@ -121,7 +121,7 @@ export const facetSectionVariables = {
   'Filter By Property': {
     color: '#94C0EC',
     checkBoxColorsOne: '#E3F4FD',
-    checkBoxColorsTwo: '#f0f8ff',
+    checkBoxColorsTwo: '#0d71a3',
     checkBoxBorderColor: '#0D71A3',
     height: '7px',
     isExpanded: true,

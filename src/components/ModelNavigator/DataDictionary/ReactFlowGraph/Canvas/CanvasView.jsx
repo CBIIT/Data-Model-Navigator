@@ -103,7 +103,7 @@ const CustomFlowView = ({
       className={classes.reactFlowView}
     >
       <ReduxOverlayPropertyTable pdfDownloadConfig={pdfDownloadConfig} />
-      <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' />
+      {/* <MiniMap nodeColor={nodeColor} style={minimapStyle} pannable position='bottom-left' /> */}
       {/* <Controls position='top-left' /> */}
       <div className={classes.controls}>
         <div onClick={handleTransform} title="reset" className={classes.controlBtn}>
