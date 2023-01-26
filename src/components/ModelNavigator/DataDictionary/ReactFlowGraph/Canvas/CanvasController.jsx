@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CanvasView from './CanvasView';
 import { createNodesAndEdges } from '../GraphUtils/utils';
 import { getDistinctCategoryItems, setMatchingNodeTitle, getCategoryIconUrl } from './util';
-import { onPanelViewClick, onViewChange, setReactFlowGraphData } from '../../Store/actions/graph';
+import { onNodeDragStart, onPanelViewClick, onViewChange, setReactFlowGraphData } from '../../Store/actions/graph';
 import { getNodePosition } from './CanvasHelper';
 
 /**
@@ -37,6 +37,7 @@ const CanvasController = ({
   highlightedNodes,
   graphViewConfig,
   onGraphPanelClick,
+  onGraphNodeDrageStart,
   assetConfig
 }) => {
 
@@ -134,6 +135,7 @@ const CanvasController = ({
         graphViewConfig={graphViewConfig}
         canvasWidth={tabViewWidth}
         onGraphPanelClick={onGraphPanelClick}
+        onGraphNodeDrageStart={onGraphNodeDrageStart}
       />
     )
 }
@@ -152,7 +154,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setGraphData: (graphData) => {dispatch(setReactFlowGraphData(graphData))},
-  onGraphPanelClick: () => {dispatch(onPanelViewClick())}
+  onGraphPanelClick: () => {dispatch(onPanelViewClick())},
+  onGraphNodeDrageStart: () => dispatch(onNodeDragStart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CanvasController);

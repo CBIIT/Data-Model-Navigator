@@ -356,6 +356,11 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         ...state,
         expandNodeView: false,
       }
+    case actionTypes.ON_REACT_FLOW_NODE_DRAG_START:
+      return {
+        ...state,
+        expandNodeView: false,
+      }
     case actionTypes.ON_REACT_FLOW_GRAPH_VIEW_CHANGE:
       const { view } = action;
       return {

@@ -51,7 +51,8 @@ const CustomFlowView = ({
   onEdgesChange,
   highlightedNodes,
   graphViewConfig,
-  onGraphPanelClick
+  onGraphPanelClick,
+  onGraphNodeDrageStart
 }) => {
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
@@ -99,6 +100,7 @@ const CustomFlowView = ({
       maxZoom={fit?.maxZoom ? fit.maxZoom : 3}
       // elementsSelectable={false}
       onPaneClick={onPanelClick}
+      onNodeDragStart={onGraphNodeDrageStart}
       fitView
       className={classes.reactFlowView}
     >
@@ -144,7 +146,7 @@ const CanvasView = ({
   highlightedNodes,
   graphViewConfig,
   onGraphPanelClick,
-
+  onGraphNodeDrageStart,
 }) => {
   return (
     <div className={classes.mainWindow}>
@@ -163,6 +165,7 @@ const CanvasView = ({
           highlightedNodes={highlightedNodes}
           graphViewConfig={graphViewConfig}
           onGraphPanelClick={onGraphPanelClick}
+          onGraphNodeDrageStart={onGraphNodeDrageStart}
         />
       </ReactFlowProvider>
     </div>
