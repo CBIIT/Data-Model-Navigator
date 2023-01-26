@@ -17,20 +17,34 @@ import { category2NodeList, sortByCategory } from '../../Utils/download-helper-f
 import { downloadMarkdownPdf } from '../../ReadMe/ReadMe.component';
 import {
   convertToTSV, createFileName, generateFileManifest, generateVocabFullDownload, isFileManifest,
+  generateLoadingExample
 } from '../../utils';
 
+const {
+  FILE_TYPE_FULL_DICTIONARY,
+  FILE_TYPE_README,
+  FILE_TYPE_TEMPLATES,
+  FILE_TYPE_CONTROLLED_VOCAB_TSV,
+  FILE_TYPE_CONTROLLED_VOCAB_JSON,
+  FILE_TYPE_LOADING_EXAMPLE,
+} = {
+  FILE_TYPE_FULL_DICTIONARY: 'Data Dictionary (PDF)',
+  FILE_TYPE_README: 'Data Model ReadME (PDF)',
+  FILE_TYPE_TEMPLATES: 'All Data Templates (TSV)',
+  FILE_TYPE_CONTROLLED_VOCAB_TSV: 'All Vocabularies (TSV)',
+  FILE_TYPE_CONTROLLED_VOCAB_JSON: 'All Vocabularies (JSON)',
+  FILE_TYPE_LOADING_EXAMPLE: 'Loading File Examples'
+
+}
 const DOWNLOADS = 'Available Downloads';
-const FILE_TYPE_FULL_DICTIONARY = 'Data Dictionary (PDF)';
-const FILE_TYPE_README = 'Data Model ReadME (PDF)';
-const FILE_TYPE_TEMPLATES = 'All Data Templates (TSV)';
-const FILE_TYPE_CONTROLLED_VOCAB_TSV = 'All Vocabularies (TSV)';
-const FILE_TYPE_CONTROLLED_VOCAB_JSON = 'All Vocabularies (JSON)';
+
 const fileTypes = [
   FILE_TYPE_README,
   FILE_TYPE_FULL_DICTIONARY,
   FILE_TYPE_TEMPLATES,
   FILE_TYPE_CONTROLLED_VOCAB_TSV,
   FILE_TYPE_CONTROLLED_VOCAB_JSON,
+  FILE_TYPE_LOADING_EXAMPLE,
 ];
 
 const StyledMenu = withStyles({
@@ -154,6 +168,8 @@ const DownloadFileTypeBtn = ({
         return generateVocabFullDownload(fullDictionary, 'TSV');
       case FILE_TYPE_CONTROLLED_VOCAB_JSON:
         return generateVocabFullDownload(fullDictionary, 'JSON');
+      case FILE_TYPE_LOADING_EXAMPLE:
+        return generateLoadingExample();
       default:
         return null;
     }
@@ -183,7 +199,7 @@ const DownloadFileTypeBtn = ({
           startIcon={<KeyboardArrowDownIcon />}
           onClick={clickHandler}
         >
-          { isLoading ? (<p>Loading...</p>) : (
+          {isLoading ? (<p>Loading...</p>) : (
             <>
               {label}
             </>
