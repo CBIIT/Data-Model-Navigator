@@ -3,6 +3,7 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { category2NodeList } from './Utils/download-helper-functions';
 import { fileManifestDownload } from '../../../config/file-manifest-config';
+import Axios from 'axios';
 
 const submissionApiPath = 'FIXME-submissionApiPath';
 
@@ -252,14 +253,14 @@ export const parseParamWidth = (width) => ((typeof width === 'number') ? `${widt
 
 export const isPageFullScreen = (pathname) => (!!((pathname
   && (pathname.toLowerCase() === '/dd'
-  || pathname.toLowerCase().startsWith('/dd/')
-  || pathname.toLowerCase() === '/cohort-tools'
-  || pathname.toLowerCase().startsWith('/cohort-tools/')
+    || pathname.toLowerCase().startsWith('/dd/')
+    || pathname.toLowerCase() === '/cohort-tools'
+    || pathname.toLowerCase().startsWith('/cohort-tools/')
   ))));
 
 export const isFooterHidden = (pathname) => (!!((pathname
   && (pathname.toLowerCase() === '/dd'
-  || pathname.toLowerCase().startsWith('/dd/')
+    || pathname.toLowerCase().startsWith('/dd/')
   ))));
 
 export function createFileName(fileName, filePreFix) {
@@ -283,7 +284,8 @@ export function createFileName(fileName, filePreFix) {
 
   if (seconds < 10) { seconds = `0${seconds}`; }
 
-  return `${filePreFix}${fileName} ${todaysDate} ${hours}-${minutes}-${seconds}`;
+  return filePreFix ? `${filePreFix}${fileName} ${todaysDate} ${hours}-${minutes}-${seconds}`
+    : `${fileName} ${todaysDate} ${hours}-${minutes}-${seconds}`;
 }
 
 export const tsvMiddleware = (node) => {
@@ -377,3 +379,29 @@ export const generateVocabFullDownload = (fullDictionary, format) => {
       break;
   }
 };
+
+export const generateLoadingExample = async () => {
+  const zip = new JSZip();
+
+  // fetch config
+  const {loadingExamples, title} = await (await Axios.get('https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/zip-group/config.json')).data
+  console.log('figgy', {loadingExamples, title});
+  try {
+    const titleArr = Object.keys(loadingExamples);
+    console.log('titArr', titleArr);
+    const res = await Promise.all(Object.values(loadingExamples).map((example) => Axios.get(example)));
+    const data = res.map((res, index) => ({
+      title: titleArr[index],
+      content: res.data,
+      format: titleArr[index].split('.')[1]
+    }));
+
+    console.log('deets', data);
+    data.forEach(({ title, content, format }) => { console.log('tit', title); zip.file(`${createFileName(title)}.${format}`, content); });
+    zip.generateAsync({ type: 'blob' }).then((thisContent) => {
+      saveAs(thisContent, createFileName(title));
+    });
+  } catch {
+    throw Error("Failed to fetch example files");
+  }
+}
