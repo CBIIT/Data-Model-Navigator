@@ -100,7 +100,7 @@ const CustomFlowView = ({
       maxZoom={fit?.maxZoom ? fit.maxZoom : 3}
       // elementsSelectable={false}
       onPaneClick={onPanelClick}
-      onNodeDragStart={onGraphNodeDrageStart}
+      // onNodeDragStart={onGraphNodeDrageStart}
       fitView
       className={classes.reactFlowView}
     >
