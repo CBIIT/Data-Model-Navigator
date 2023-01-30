@@ -11,7 +11,7 @@ export default () => ({
     // background: '#f5f5f6',
     color: '#222',
     borderRadius: '2px',
-    padding: '10px 10px 0px 10px',
+    padding: '0',
     background: 'transparent',
   },
   customNodeExpand: {
