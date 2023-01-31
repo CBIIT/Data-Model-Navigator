@@ -2,8 +2,8 @@ export default () => ({
   propDialog: {
     backgroundColor: '#2D4455',
     borderRadius: '5px',
-    marginTop: '-8px',
-    marginLeft: '-12px',
+    marginTop: '-18px',
+    marginLeft: '-22px',
     zIndex: '1000',
   },
   customNodeCollapse: {
