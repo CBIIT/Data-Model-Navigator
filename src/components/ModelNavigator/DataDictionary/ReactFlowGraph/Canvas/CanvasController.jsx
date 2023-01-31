@@ -37,7 +37,6 @@ const CanvasController = ({
   highlightedNodes,
   graphViewConfig,
   onGraphPanelClick,
-  onGraphNodeDrageStart,
   assetConfig
 }) => {
 
@@ -135,7 +134,6 @@ const CanvasController = ({
         graphViewConfig={graphViewConfig}
         canvasWidth={tabViewWidth}
         onGraphPanelClick={onGraphPanelClick}
-        onGraphNodeDrageStart={onGraphNodeDrageStart}
       />
     )
 }
@@ -155,7 +153,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setGraphData: (graphData) => {dispatch(setReactFlowGraphData(graphData))},
   onGraphPanelClick: () => {dispatch(onPanelViewClick())},
-  onGraphNodeDrageStart: () => dispatch(onNodeDragStart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CanvasController);
