@@ -7,12 +7,13 @@ export default () => ({
     width: '100%',
   },
   title: {
-    fontSize: '18px',
+    fontSize: '23px',
     marginTop: '20px',
     display: 'inherit',
     fontWeight: '500',
     color: '#0d71a3',
     float: 'left',
+    fontFamily: 'Nunito Light'
   },
   closeBtn: {
     padding: '5px',
