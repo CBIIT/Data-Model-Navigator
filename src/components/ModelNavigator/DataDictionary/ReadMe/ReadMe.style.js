@@ -3,6 +3,9 @@ export default () => ({
     minWidth: '750px',
     overflowY: 'scroll',
   },
+  dialogPaper: {
+    paddingBottom: '10px',
+  },
   titleContent: {
     width: '100%',
   },
