@@ -80,8 +80,8 @@ export const downloadMarkdownPdf = async (title, content) => {
         pdf.text(pgWidth - 7.75, pgHeight - 0.5, 'CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL');
         pdf.addImage(footerLine, 'JPEG', pgWidth - 7.75, pgHeight - 0.75, 7, 0.05);
         // if (i === 1) {
-          // pdf.addImage(nihLogo, 'JPEG', pgWidth - 7.75, pgHeight - 10.75, 4, 0.5);
-          // pdf.addImage(footerLine, 'JPEG', pgWidth - 7.75, pgHeight - 10.15, 7, 0.05);
+        // pdf.addImage(nihLogo, 'JPEG', pgWidth - 7.75, pgHeight - 10.75, 4, 0.5);
+        // pdf.addImage(footerLine, 'JPEG', pgWidth - 7.75, pgHeight - 10.15, 7, 0.05);
         // }
       }
     })
@@ -102,6 +102,9 @@ const ReadMeDialogComponent = ({
   return (
     <CustomTheme>
       <Dialog
+        classes={{
+          paper: classes.dialogPaper
+        }}
         open={display}
         onClose={displayReadMeDialog}
         maxWidth="md"
