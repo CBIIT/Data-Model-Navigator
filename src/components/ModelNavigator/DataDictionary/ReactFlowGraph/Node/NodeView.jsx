@@ -103,15 +103,19 @@ const NodeView = ({
                   {[classes.nodeTitleBtnWrapper]: display})}
               onClick={isSearchMode ? displayOverviewTable : expandNode}
               onFocus={nodeFocusEvent}
-            > <div className={classes.iconWrapper}>
-                <img className={classes.nodeIcon} src={icon} alt="category_icon" /> 
-              </div>
-              <span className={classes.nodeName}>
+            > 
+              <span className={classes.iconWrapper} 
+                style={{backgroundImage: `url(${icon})`, 
+                backgroundRepeat: 'no-repeat'}}
+              >
+                {/* <img className={classes.nodeIcon} src={icon} alt="category_icon" />  */}
+              </span>
+              <p className={classes.nodeName}>
                 {(isSearchMode && matchedNodeNameQuery) ?
                   (<>
                     {highlightMatchingTitle(label, matchedNodeNameQuery, classes)}
                   </>) : `${label}`.toLowerCase()}
-              </span>
+              </p>
             </button>
           </div>
           <div className={display ? classes.viewSection : classes.hideSection}>

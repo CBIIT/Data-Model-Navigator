@@ -150,3 +150,8 @@ export const onViewChange = (view) => ({
 export const onPanelViewClick = () => ({
   type: actionTypes.ON_REACT_FLOW_PANEL_CLICK,
 });
+
+export const onNodeDragStart = () => ({
+  type: actionTypes.ON_REACT_FLOW_NODE_DRAG_START,
+});
+

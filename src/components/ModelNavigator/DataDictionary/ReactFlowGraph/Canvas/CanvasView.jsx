@@ -97,7 +97,6 @@ const CustomFlowView = ({
       edgeTypes={edgeTypes}
       minZoom={minZoom}
       maxZoom={fit?.maxZoom ? fit.maxZoom : 3}
-      // elementsSelectable={false}
       onPaneClick={onPanelClick}
       fitView
       className={classes.reactFlowView}
@@ -144,7 +143,6 @@ const CanvasView = ({
   highlightedNodes,
   graphViewConfig,
   onGraphPanelClick,
-
 }) => {
   return (
     <div className={classes.mainWindow}>

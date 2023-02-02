@@ -2,8 +2,8 @@ export default () => ({
   propDialog: {
     backgroundColor: '#2D4455',
     borderRadius: '5px',
-    marginTop: '-8px',
-    marginLeft: '-12px',
+    marginTop: '-18px',
+    marginLeft: '-22px',
     zIndex: '1000',
   },
   customNodeCollapse: {
@@ -11,7 +11,7 @@ export default () => ({
     // background: '#f5f5f6',
     color: '#222',
     borderRadius: '2px',
-    padding: '10px 10px 0px 10px',
+    padding: '0',
     background: 'transparent',
   },
   customNodeExpand: {
@@ -57,15 +57,21 @@ export default () => ({
   iconWrapper: {
     width: '33px',
     float: 'left',
-    height: '100%',
+    height: '32px',
   },
   nodeName: {
     float: 'right',
     display: 'block',
-    padding: '5px 10px 5px 10px',
+    padding: '0px 10px 0px 10px',
     minWidth: '90px',
     fontSize: '16px',
     fontWeight: '500',
+    height: '100%',
+    margin: '0',
+    background: '#fff',
+    borderTopRightRadius: '5px',
+    borderBottomRightRadius: '5px',
+    lineHeight: '27px',
   },
   btnPadding: {
     paddingLeft: '20px',
@@ -78,10 +84,15 @@ export default () => ({
     border: '2px solid #2E2E2E',
     padding: '0',
     minWidth: '115px',
+    height: '31px',
     borderRadius: '6px',
     cursor: 'pointer',
     backgroundColor: '#ffffff',
-    '&:hover': {
+    // '&:hover': {
+    //   backgroundColor: '#ef8523',
+    //   color: '#ffffff',
+    // },
+    '&:hover $nodeName': {
       backgroundColor: '#ef8523',
       color: '#ffffff',
     },
@@ -183,12 +194,14 @@ export default () => ({
     }
   },
   administrative: {
+    background: '#9b2d20',
     '& img': {
       background: '#9b2d20',
       // borderTop: '1px solid #9b2d20',
     }
   },
   study: {
+    background: '#9875ff',
     '& .iconWrapper': {
       background: '#9875ff',
     },
@@ -198,36 +211,42 @@ export default () => ({
     }
   },
   case: {
+    background: '#ff7f15',
     '& img': {
       background: '#ff7f15',
       // borderTop: '1px solid #ff7f15',
     }
   },
   clinical_trial: {
+    background: '#00A1BB',
     '& img': {
       background: '#00A1BB',
       // borderTop: '1px solid #00A1BB',
     }
   },
   biospecimen: {
+    background: '#00785a',
     '& img': {
       background: '#00785a',
       // borderTop: '1px solid #00785a',
     }
   },
   analysis: {
+    background: '#b533a9',
     '& img': {
       background: '#b533a9',
       // borderTop: '1px solid #b533a9',
     }
   },
   data_file: {
+    background: '#00ad0e',
     '& img': {
       background: '#00ad0e',
       // borderTop: '1px solid #00ad0e',
     }
   },
   clinical: {
+    background: '#1c75bc',
     '& img': {
       background: '#1c75bc',
       // borderTop: '1px solid #1c75bc',
