@@ -35,7 +35,7 @@ export const downloadMarkdownPdf = async (title, content) => {
   const headerLogo = `<img src='${nihLogo}' height="50px" width="400px"  alt='logo' />
   <br> <hr style="height:3px" color="#173554" />`;
   readMeContent.innerHTML += headerLogo;
-  const titleEl = `<br><span style='color: #4D6787'>${title}</span>`;
+  const titleEl = "<br><span style='color: #4D6787; font-size: 23px; font-family: Nunito Light'>".concat(title, "</span>");
   readMeContent.innerHTML += titleEl;
   readMeContent.innerHTML += marked(content);
 
@@ -43,7 +43,7 @@ export const downloadMarkdownPdf = async (title, content) => {
   const fileName = createFileName('read_me', 'ICDC_Data_Model-');
   /** configure pdf increase pixel of the PDF */
   const options = {
-    margin: [1, 0.75, 1, 0.75],
+    margin: [0.85, 0.75, 1, 0.75],
     filename: fileName,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: {
@@ -53,6 +53,9 @@ export const downloadMarkdownPdf = async (title, content) => {
       useCORS: true,
     },
     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+    pagebreak: {
+      mode: ['avoid-all', 'css', 'legacy']
+    }
   };
 
   html2pdf()
