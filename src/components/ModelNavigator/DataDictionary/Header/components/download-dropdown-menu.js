@@ -29,7 +29,7 @@ const {
   FILE_TYPE_LOADING_EXAMPLE,
 } = {
   FILE_TYPE_FULL_DICTIONARY: 'Data Dictionary (PDF)',
-  FILE_TYPE_README: 'Data Model ReadME (PDF)',
+  FILE_TYPE_README: 'Data Model README (PDF)',
   FILE_TYPE_TEMPLATES: 'All Data Templates (TSV)',
   FILE_TYPE_CONTROLLED_VOCAB_TSV: 'All Vocabularies (TSV)',
   FILE_TYPE_CONTROLLED_VOCAB_JSON: 'All Vocabularies (JSON)',
@@ -50,7 +50,7 @@ const fileTypes = [
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
-    width: '195px',
+    width: '214px',
   },
 })((props) => (
   <Menu

@@ -78,7 +78,7 @@ const HeaderComponent = ({
                 />
 )}
             >
-              Read Me
+              README
             </Button>
 
             <DownloadDropdownMenu
