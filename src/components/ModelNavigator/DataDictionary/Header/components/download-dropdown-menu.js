@@ -50,7 +50,9 @@ const fileTypes = [
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
-    width: '214px',
+    width: '257px',
+    borderTopRightRadius: '0px',
+    borderTopLeftRadius: '0px',
   },
 })((props) => (
   <Menu
@@ -70,8 +72,10 @@ const StyledMenu = withStyles({
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
+    padding: '10px',
+    color: '#095c85',
     '&:focus': {
-      backgroundColor: '#0F4C91',
+      backgroundColor: '#0d71a3',
       color: 'white',
       '& .MuiListItemText-primary': {
         color: theme.palette.common.white,
@@ -190,11 +194,12 @@ const DownloadFileTypeBtn = ({
 
   return (
     <>
-      <ButtonGroup variant="contained" classes={{ root: classes.btnGrpRoot }}>
+      <ButtonGroup variant="contained" classes={{ root: classes.btnGrpRoot, contained: classes.btnGrpContained }}>
         <Button
           classes={{
             root: classes.availableDownloadDropdownBtn,
             label: classes.availableDownloadDropdownBtnLabel,
+            contained: classes.availableDownloadBtnContained
           }}
           startIcon={<KeyboardArrowDownIcon />}
           onClick={clickHandler}
@@ -236,9 +241,21 @@ const styles = () => ({
   btnGrpRoot: {
     borderRadius: '10px',
   },
+  btnGrpContained: {
+    boxShadow: 'none',
+  },
+  availableDownloadBtnContained: {
+    '&:focus': {
+      boxShadow: 'none'
+    },
+    '&:hover': {
+      boxShadow: 'none'
+    }
+  },
   availableDownloadDropdownBtn: {
-    width: '214px',
+    width: '258px',
     height: '38px',
+    backgroundColor: '#F2F2F2'
   },
   availableDownloadBtn: {
     width: '44px',
@@ -251,11 +268,14 @@ const styles = () => ({
     },
   },
   availableDownloadDropdownBtnLabel: {
-    fontSize: '12px',
+    fontSize: '16px',
     color: '#0D71A3',
   },
   listItemText: {
-    fontSize: '14px',
+    fontSize: '15px',
+    paddingLeft: '29px',
+    fontFamily: 'Lato',
+    fontWeight: '500'
   },
 
 });
