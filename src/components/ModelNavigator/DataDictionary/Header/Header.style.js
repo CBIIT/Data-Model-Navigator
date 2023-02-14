@@ -28,7 +28,7 @@ export default () => ({
   },
   btnGroup: {
     display: 'flex',
-    gap: '13px',
+    gap: '15px',
   },
   divider: {
     position: 'relative',
