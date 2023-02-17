@@ -19,7 +19,7 @@ const Legend = ({
   /**
    * set legend position
    */
-  const positionRight = window.innerWidth - document.documentElement.clientWidth
+  const positionRight = window.innerWidth - document.documentElement.clientWidth + 4
   const position = {right: positionRight};
 
   const categoryListComponent = categoryItems.map((category) => {

@@ -23,15 +23,22 @@ export default () => ({
     borderRadius: '5px',
     overflowY: 'scroll',
   },
+  viewTableOuterContainer: {
+    height: '99%',
+    overflow: 'hidden',
+    paddingRight: '20px',
+    paddingBottom: '0px'
+  },
   viewTableContainer: {
     height: '90%',
-    marginTop: '30px',
-    marginLeft: '16px',
+    marginTop: '22px',
+    marginLeft: '19px',
     // marginRight: '36px',
     marginBottom: '36px',
     // backgroundImage: `url(${backgroundImg})`,
-    borderRadius: '5px',
-    overflowY: 'scroll',
+    borderRadius: '25px',
+    overflowY: 'auto',
+    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'
   },
   tabPrimaryColor: {
     fontWeight: '700',
