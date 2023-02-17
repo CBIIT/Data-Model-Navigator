@@ -37,28 +37,28 @@ const DictionaryView = ({
   /**
    * get witdh of the tab to position nodes in the graph view
    */
-   const ref = useRef(null);
-   const [tabViewWidth, setTabViewWidth] = useState(0);
-   const setCanvasWidth = () => {
+  const ref = useRef(null);
+  const [tabViewWidth, setTabViewWidth] = useState(0);
+  const setCanvasWidth = () => {
     setTabViewWidth(ref.current.offsetWidth);
     onWidthChange(ref.current.offsetWidth);
-   };
-  
-   useEffect(() => {
+  };
+
+  useEffect(() => {
     onWidthChange(ref.current.offsetWidth);
     window.addEventListener('resize', setCanvasWidth);
     return () => {
       window.removeEventListener('resize', setCanvasWidth)
     }
-   }, []);
+  }, []);
 
-   useLayoutEffect(() => {
-      setTabViewWidth(ref.current.offsetWidth);
-   }, []);
+  useLayoutEffect(() => {
+    setTabViewWidth(ref.current.offsetWidth);
+  }, []);
 
   //set to graph view incase of search entry
   useEffect(() => {
-    if(graphView) {
+    if (graphView) {
       // 0 set for graph view
       setCurrentTab(0);
     }
@@ -81,22 +81,23 @@ const DictionaryView = ({
               handleTabChange={handleTabChange}
             />
           </div>
-          <div className={classes.viewTableContainer}
-          >
-            <TabPanel value={currentTab} index={0}>
-              <div className={classes.graphView}>
-                <CanvasView
-                  dictionary={dictionary}
-                  tabViewWidth={tabViewWidth}
-                  onClearSearchResult={handleClearSearchResult}
-                />
-              </div>
-            </TabPanel>
-            <TabPanel value={currentTab} index={1}>
-              <div className={classes.tableView}>
-                <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
-              </div>
-            </TabPanel>
+          <div className={classes.viewTableOuterContainer}>
+            <div className={classes.viewTableContainer}>
+              <TabPanel value={currentTab} index={0}>
+                <div className={classes.graphView}>
+                  <CanvasView
+                    dictionary={dictionary}
+                    tabViewWidth={tabViewWidth}
+                    onClearSearchResult={handleClearSearchResult}
+                  />
+                </div>
+              </TabPanel>
+              <TabPanel value={currentTab} index={1}>
+                <div className={classes.tableView}>
+                  <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
+                </div>
+              </TabPanel>
+            </div>
           </div>
         </div>
       </TabThemeProvider>
@@ -107,7 +108,8 @@ const DictionaryView = ({
 const mapStateToProps = (state) => {
   return {
     graphView: state.ddgraph.isGraphView,
-}};
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({
   onSetGraphView: (isGraphView) => dispatch(setGraphView(isGraphView)),
@@ -115,4 +117,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default compose(connect(mapStateToProps, mapDispatchToProps),
-  withStyles(Styles)) (DictionaryView);
+  withStyles(Styles))(DictionaryView);
