@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { getCategoryColor, pdfNodeCategoryList } from '../NodeCategories/helper';
 import { FontRegistry } from './util';
 import { capitalizeFirstLetter } from '../utils';
-// import logo from '../NodeCategories/icons/Pdf/Administrative.png';
+// import logo from '../NodeCategories/icons/Pdf/administrative.png';
 
 const styles = StyleSheet.create({
   row: {

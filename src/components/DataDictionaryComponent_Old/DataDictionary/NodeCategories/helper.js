@@ -61,19 +61,19 @@
 
 // //Table view icons
 // // eslint-disable-next-line import/no-webpack-loader-syntax
-// import Administrative from './icons/Table/Administrative.svg';
+// import Administrative from './icons/Table/administrative.svg';
 // // eslint-disable-next-line import/no-webpack-loader-syntax
-// import Study from './icons/Table/Study.svg';
+// import Study from './icons/Table/study.svg';
 // // eslint-disable-next-line import/no-webpack-loader-syntax
 // import ClinicalTrial from './icons/Table/ClinicalTrial.svg';
 // // eslint-disable-next-line import/no-webpack-loader-syntax
-// import Case from './icons/Table/Case.svg';
+// import Case from './icons/Table/case.svg';
 // // eslint-disable-next-line import/no-webpack-loader-syntax
-// import Biospecimen from './icons/Table/Biospecimen.svg';
+// import Biospecimen from './icons/Table/biospecimen.svg';
 // // eslint-disable-next-line import/no-webpack-loader-syntax
-// import Clinical from './icons/Table/Clinical.svg';
+// import Clinical from './icons/Table/clinical.svg';
 // // eslint-disable-next-line import/no-webpack-loader-syntax
-// import Analysis from './icons/Table/Analysis.svg';
+// import Analysis from './icons/Table/analysis.svg';
 // // eslint-disable-next-line import/no-webpack-loader-syntax
 // import DataFile from './icons/Table/DataFile.svg';
 

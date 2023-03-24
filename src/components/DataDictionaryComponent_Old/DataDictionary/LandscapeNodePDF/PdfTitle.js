@@ -4,7 +4,7 @@ import renderSvgElement from './RenderSvg';
 import { getCategoryColor } from '../NodeCategories/helper';
 import { capitalizeFirstLetter } from '../../utils';
 import { FontRegistry } from './util';
-// import logo from '../NodeCategories/icons/Pdf/Administrative.png';
+// import logo from '../NodeCategories/icons/Pdf/administrative.png';
 
 const styles = StyleSheet.create({
   row: {
