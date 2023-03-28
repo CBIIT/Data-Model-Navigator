@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useState }  from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
   withStyles,
   createTheme,
@@ -10,15 +10,19 @@ import {
   ListItem,
   ListItemText,
   TextField,
-} from '@material-ui/core';
-import { createFilterOptions } from '@material-ui/lab';
-import AutoComplete from '../AutoComplete/AutoCompleteView';
-import { compareTwoStrings } from 'string-similarity';
+} from "@material-ui/core";
+import { createFilterOptions } from "@material-ui/lab";
+import AutoComplete from "../AutoComplete/AutoCompleteView";
+import { compareTwoStrings } from "string-similarity";
 import {
-  prepareSearchData, searchKeyword, getSearchSummary, ZERO_RESULT_FOUND_MSG, formatText,
-} from './searchHelper';
-import styles from './DictionarySearcher.style';
-import SearchThemConfig from './SearchThemConfig';
+  prepareSearchData,
+  searchKeyword,
+  getSearchSummary,
+  ZERO_RESULT_FOUND_MSG,
+  formatText,
+} from "./searchHelper";
+import styles from "./DictionarySearcher.style";
+import SearchThemConfig from "./SearchThemConfig";
 
 class DictionarySearcher extends React.Component {
   constructor(props) {
@@ -33,14 +37,16 @@ class DictionarySearcher extends React.Component {
         summary: {},
       },
       hasError: false,
-      errorMsg: '',
+      errorMsg: "",
     };
   }
 
   componentDidMount() {
     // resume search status after switching back from other pages
     if (this.props.currentSearchKeyword) {
-      this.autoCompleteRef.current.setInputText(this.props.currentSearchKeyword);
+      this.autoCompleteRef.current.setInputText(
+        this.props.currentSearchKeyword
+      );
       this.search(this.props.currentSearchKeyword);
     }
   }
@@ -57,11 +63,14 @@ class DictionarySearcher extends React.Component {
   launchSearchFromOutside = (keyword) => {
     this.autoCompleteRef.current.setInputText(keyword);
     this.search(keyword);
-  }
+  };
 
   search = (str) => {
     this.props.setIsSearching(true);
-    const { result, errorMsg } = searchKeyword(this.searchData, formatText(str));
+    const { result, errorMsg } = searchKeyword(
+      this.searchData,
+      formatText(str)
+    );
     if (!result || result.length === 0) {
       this.props.setIsSearching(false);
       this.props.onSearchResultUpdated([], []);
@@ -113,13 +122,20 @@ class DictionarySearcher extends React.Component {
       resItem.matches.forEach((matchItem) => {
         if (!matchedStrings[matchItem.value]) {
           matchedStrings[matchItem.value] = {
-            matchedPieceIndices: matchItem.indices.map((arr) => ([arr[0], arr[1] + 1])),
+            matchedPieceIndices: matchItem.indices.map((arr) => [
+              arr[0],
+              arr[1] + 1,
+            ]),
           };
         }
       });
     });
     const suggestionList = Object.keys(matchedStrings)
-      .sort((str1, str2) => compareTwoStrings(str2, inputText) - compareTwoStrings(str1, inputText))
+      .sort(
+        (str1, str2) =>
+          compareTwoStrings(str2, inputText) -
+          compareTwoStrings(str1, inputText)
+      )
       .map((str) => ({
         fullString: str,
         matchedPieceIndices: matchedStrings[str].matchedPieceIndices,
@@ -146,7 +162,7 @@ class DictionarySearcher extends React.Component {
       activeFiltersCount,
       onClearAllFilter,
       onClickBlankSpace,
-      hidePropertyTable
+      hidePropertyTable,
     } = this.props;
 
     const {
@@ -179,46 +195,9 @@ class DictionarySearcher extends React.Component {
               onInputChange={this.inputChangeFunc}
               onSubmitInput={this.submitInputFunc}
             />
-            <br/>
-            {/* <Autocomplete
-              query={text}
-              sx={{
-                display: 'inline-block',
-                '& input': {
-                  width: 200,
-                }
-              }}
-              ref={this.autoCompleteRef}
-              options={suggestionList}
-              getOptionLabel={(option) => option.fullString}
-              filterOptions={filterOptions}
-              onInputChange={({target}) => {
-                console.log(target.value);
-                this.inputChangeFunc(target.value);
-              }}
-              renderInput={(props) => 
-                <TextField 
-                  {...props}
-                  size='small'
-                  onKeyDown={(event) => {
-                    console.log(event);
-                    const { target } = event;
-                    console.log(target.value);
-                    if(event.code === 'Enter') {
-                      console.log("serach text");
-                      this.submitInputFunc(target.value);
-                    }
-                  }}
-                />}
-            /> */}
-            {/* <Button
-              className={classes.resultClearBtn}
-              onClick={this.onClearResult}
-              role="button"
-              tabIndex={0}
-            >
-              Clear Result
-            </Button> */}
+
+            <br />
+
             <Button
               id="button_sidebar_clear_all_filters"
               variant="outlined"
@@ -227,52 +206,49 @@ class DictionarySearcher extends React.Component {
               classes={{ root: classes.clearAllButtonRoot }}
               onClick={clearFilterHandler}
               disableRipple
+              title="CLEAR ALL"
             >
               CLEAR ALL
             </Button>
           </div>
         </SearchThemConfig>
         <div className={classes.results}>
-        {
-          isSearchFinished && (
+          {isSearchFinished && (
             <div>
-              {
-                !hasError && (
-                  searchResult.matchedNodes.length > 0 ? (
-                    <>
-                      <div className={classes.searchResultText}>
-                        <span>Search Results</span>
-                      </div>
-                      <List className={classes.resultList} component="div" dense>
-                        <ListItem className={classes.resultItem}>
-                          <span className={classes.resultCountTitleDesc}>
-                            {searchResult.summary.matchedNodeNameAndDescriptionsCount}
-                          </span>
-                          &nbsp;
-                          <span>Match(es) in nodes <br/> (title and description)</span>
-                        </ListItem>
-                        <ListItem className={classes.resultItem}>
-                          <span className={classes.resultCountProps}>
-                            {searchResult.summary.matchedPropertiesCount}
-                          </span>
-                          &nbsp;
-                          <span>Match(es) in node properties</span>
-                        </ListItem>
-                      </List>
-                    </>
-                  ) : (
-                    <p>{ZERO_RESULT_FOUND_MSG}</p>
-                  )
-                )
-              }
-              {
-                hasError && (
-                  <p>{errorMsg}</p>
-                )
-              }
+              {!hasError &&
+                (searchResult.matchedNodes.length > 0 ? (
+                  <>
+                    <div className={classes.searchResultText}>
+                      <span>Search Results</span>
+                    </div>
+                    <List className={classes.resultList} component="div" dense>
+                      <ListItem className={classes.resultItem}>
+                        <span className={classes.resultCountTitleDesc}>
+                          {
+                            searchResult.summary
+                              .matchedNodeNameAndDescriptionsCount
+                          }
+                        </span>
+                        &nbsp;
+                        <span>
+                          Match(es) in nodes <br /> (title and description)
+                        </span>
+                      </ListItem>
+                      <ListItem className={classes.resultItem}>
+                        <span className={classes.resultCountProps}>
+                          {searchResult.summary.matchedPropertiesCount}
+                        </span>
+                        &nbsp;
+                        <span>Match(es) in node properties</span>
+                      </ListItem>
+                    </List>
+                  </>
+                ) : (
+                  <p>{ZERO_RESULT_FOUND_MSG}</p>
+                ))}
+              {hasError && <p>{errorMsg}</p>}
             </div>
-          )
-        }
+          )}
         </div>
       </div>
     );
@@ -296,7 +272,7 @@ DictionarySearcher.defaultProps = {
   onSearchHistoryItemCreated: () => {},
   onSearchResultCleared: () => {},
   onSaveCurrentSearchKeyword: () => {},
-  currentSearchKeyword: '',
+  currentSearchKeyword: "",
   onStartSearching: () => {},
 };
 

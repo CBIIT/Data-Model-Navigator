@@ -1,34 +1,34 @@
 export default () => ({
-  searchHistory : {
-    padding: '15px',
-    borderTop: '1px solid #606060',
-    fontSize: '14px',
-    color: '#606060',
+  searchHistory: {
+    padding: "15px",
+    borderTop: "1px solid #606060",
+    fontSize: "14px",
+    color: "#606060",
   },
   serachedItems: {
-    marginTop: '10px',
+    marginTop: "10px",
   },
-  item : {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '10px',
-    borderBottom: '#e7e7e7 1px solid',
-    borderLeft: '#e7e7e7 1px solid',
-    borderRight: '#e7e7e7 1px solid',
-    cursor: 'pointer',
+  item: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "10px",
+    borderBottom: "#e7e7e7 1px solid",
+    borderLeft: "#e7e7e7 1px solid",
+    borderRight: "#e7e7e7 1px solid",
+    cursor: "pointer",
 
-    '&:first-child': {
-      borderTop: '#e7e7e7 1px solid',
-      borderTopLeftRadius: '4px',
-      borderTopRightRadius: '4px',
+    "&:first-child": {
+      borderTop: "#e7e7e7 1px solid",
+      borderTopLeftRadius: "4px",
+      borderTopRightRadius: "4px",
     },
-    '&:last-child': {
-      borderTop: '#e7e7e7 1px solid',
-      borderTopLeftRadius: '4px',
-      borderTopRightRadius: '4px',
+    "&:last-child": {
+      borderTop: "#e7e7e7 1px solid",
+      borderTopLeftRadius: "4px",
+      borderTopRightRadius: "4px",
     },
-    '&:hover': {
-      backgroundColor: '#f1f1f1',
+    "&:hover": {
+      backgroundColor: "#f1f1f1",
       // color: '#fff',
       // '& $itemBadge': {
       //   backgroundColor: '#fff',
@@ -36,29 +36,30 @@ export default () => ({
       // },
     },
   },
-  itemKeyword : {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+  itemKeyword: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
-  itemBadge : {
-    backgroundColor: '#3283c8',
-    color: '#fff',
-    padding: '0 8px',
-    borderRadius: '4px',
+  itemBadge: {
+    color: "rgb(13, 113, 163)",
+    fontSize: "14px",
+    fontFamily: "Nunito",
+    marginRight: "0px",
   },
-  itemBadgeZero : {
-    backgroundColor: '#606060',
+  itemBadgeZero: {
+    backgroundColor: "#606060",
   },
-  titleText : {
-    display: 'inline',
+  titleText: {
+    display: "inline",
   },
-  clear : {
-    color: '#3283c8',
-    cursor: 'pointer',
-    float: 'right',
-    '&:hover': {
-      color: '#05b8ee',
-    }
+  clear: {
+    color: "#3283c8",
+    cursor: "pointer",
+    fontFamily: "Open Sans",
+    float: "right",
+    "&:hover": {
+      color: "#05b8ee",
+    },
   },
 });
