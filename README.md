@@ -7,12 +7,12 @@ Bento UI Building Blocks is a NPM library in an attempt to reuse the shared UI c
 Use the package manager [npm](https://www.npmjs.com/) to install Bento UI Building Blocks.
 
 ```bash
-npm install model-explorer
+npm install data-model-navigator
 ```
 
 ## Usage
 
-### redux configuration
+### 1. redux configuration
 ``` store
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
@@ -43,10 +43,11 @@ store.injectReducer = (key, reducer) => {
 
 export default store;
 ```
-### Create ModelExplorer component
+### 2. Create ModelNavigator component
+[reference - ICDC Navigator Component] (https://github.com/CBIIT/bento-icdc-frontend/blob/Develop/src/components/Layout/utils.js)
 ```react
 import React from 'react';
-import { ReduxDataDictionary, getModelExploreData } from 'model-explorer';
+import { ReduxDataDictionary, getModelExploreData } from 'data-model-navigator';
 import store from '../../store';
 
 async function getData() {
@@ -74,6 +75,9 @@ const ModelExplorer = () => {
 
 export default ModelExplorer;
 ```
+
+### 3. Configuration
+[reference - ICDC DMN Configuration] (https://github.com/CBIIT/bento-icdc-frontend/blob/Develop/src/bento/dataDictionaryData.js)
 
 ## Scripts Available
 
