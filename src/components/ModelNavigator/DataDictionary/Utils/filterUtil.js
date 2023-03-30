@@ -50,12 +50,14 @@ export const createFilterVariables = (data, currentAllActiveFilters) => {
   return filter;
 };
 
-export const hashMapHelper = (groupName, [key, value], hashMap) => {
+export const hashMapHelper = (groupName, [key, value], hashMap = Set()) => {
   switch (groupName) {
     case 'category':
     case 'assignment':
     case 'class':
-      hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
+      if (hashMap && hashMap.get(value[groupName])) {
+        hashMap.set(value[groupName], [...hashMap.get(value[groupName]), ...[[key, value]]]);
+      }
       break;
     case 'uiDisplay':
     case 'inclusion': {
