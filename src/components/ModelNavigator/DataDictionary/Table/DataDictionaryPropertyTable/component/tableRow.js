@@ -157,14 +157,11 @@ const TableRow = ({
                       }
                     />
                   )}
-                  <br />
                   <DownloadFileTypeBtn
                     data={enums}
                     node={title}
                     propertyKey={propertyKey}
                   />
-                  <br />
-                  <br />
                 </div>
               ) : (
                 <>
