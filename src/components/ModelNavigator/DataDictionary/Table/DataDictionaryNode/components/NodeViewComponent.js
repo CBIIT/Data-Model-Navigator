@@ -66,90 +66,92 @@ const NodeViewComponent = ({
       <div className={classes.titleAndDescContainer}>
         <span className={classes.nodeTitle}>{getTitle()}</span>
 
-        <p className={classes.nodeDescription}>
-          {node.desc ? getDescription(node.desc) : description}
-        </p>
-      </div>
-
-      <div className={classes.tagsAndBtnContainer}>
-        <div className={isOverlay ? classes.overlaySpacer : classes.spacer} />
-
-        <div className={classes.tagsAndBtn}>
-          <Button
-            startIcon={
-              !isOverlay ? (
-                !isExpanded ? (
-                  <ExpandMoreIcon />
-                ) : (
-                  <ExpandLessIcon />
-                )
-              ) : null
-            }
-            variant="contained"
-            classes={{
-              root: classes.propertyCountBtn,
-            }}
-          >
-            {propertyCount === 1 ? (
-              <p style={{ fontSize: "11px" }}>{`${propertyCount} property`}</p>
-            ) : (
-              <p style={{ fontSize: "11px" }}>
-                {`${propertyCount} properties`}
-              </p>
-            )}
-          </Button>
-          {/* </div> */}
-
-          <div className={classes.assignmentAndClassTags}>
-            {node.assignment && (
-              <>
-                <span className={classes.nodeLabel}>
-                  <span>Assignment:</span>
-                  <span className={classes.nodeAssignment}>
-                    {capitalizeFirstLetter(node.assignment)}
-                  </span>
-                </span>
-              </>
-            )}
-            {node.class && (
-              <>
-                <span className={classes.nodeLabel}>
-                  Class:
-                  <span className={classes.nodeClass}>
-                    {capitalizeFirstLetter(node.class)}
-                  </span>
-                </span>
-              </>
-            )}
-          </div>
-
-          <ButtonGroup>
-            {(isTemplate || (isFileManifest && isTemplate)) && (
-              <DownloadButton
-                config={csvBtnDownloadConfig}
-                documentData={node}
-                template={node.template}
-                isFileManifest={isFileManifest}
-                fileName={
-                  isFileManifest
-                    ? createFileName(
-                        "",
-                        fileManifestDownloadSettings.filename_prefix
-                      )
-                    : createFileName(node.id, csvBtnDownloadConfig.prefix)
+        <div className={classes.tagsAndDescriptionContainer}>
+          <p className={classes.nodeDescription}>
+            {node.desc ? getDescription(node.desc) : description}
+          </p>
+          <div className={classes.tagsAndBtnContainer}>
+            <div>
+              <Button
+                startIcon={
+                  !isOverlay ? (
+                    !isExpanded ? (
+                      <ExpandMoreIcon />
+                    ) : (
+                      <ExpandLessIcon />
+                    )
+                  ) : null
                 }
-              />
-            )}
-            <DownloadButton
-              config={{
-                ...pdfDownloadConfig,
-                type: "single",
-                image: IconDownloadPDF,
-              }}
-              documentData={node}
-              fileName={createFileName(node.id, pdfDownloadConfig.prefix)}
-            />
-          </ButtonGroup>
+                variant="contained"
+                classes={{
+                  root: classes.propertyCountBtn,
+                }}
+              >
+                {propertyCount === 1 ? (
+                  <p
+                    style={{ fontSize: "11px" }}
+                  >{`${propertyCount} property`}</p>
+                ) : (
+                  <p style={{ fontSize: "11px" }}>
+                    {`${propertyCount} properties`}
+                  </p>
+                )}
+              </Button>
+            </div>
+            <div>
+              <div className={classes.assignmentAndClassTags}>
+                {node.assignment && (
+                  <>
+                    <span className={classes.nodeLabel}>
+                      <span>Assignment:</span>
+                      <span className={classes.nodeAssignment}>
+                        {capitalizeFirstLetter(node.assignment)}
+                      </span>
+                    </span>
+                  </>
+                )}
+                {node.class && (
+                  <>
+                    <span className={classes.nodeLabel}>
+                      Class:
+                      <span className={classes.nodeClass}>
+                        {capitalizeFirstLetter(node.class)}
+                      </span>
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+            <div>
+              <ButtonGroup>
+                {(isTemplate || (isFileManifest && isTemplate)) && (
+                  <DownloadButton
+                    config={csvBtnDownloadConfig}
+                    documentData={node}
+                    template={node.template}
+                    isFileManifest={isFileManifest}
+                    fileName={
+                      isFileManifest
+                        ? createFileName(
+                            "",
+                            fileManifestDownloadSettings.filename_prefix
+                          )
+                        : createFileName(node.id, csvBtnDownloadConfig.prefix)
+                    }
+                  />
+                )}
+                <DownloadButton
+                  config={{
+                    ...pdfDownloadConfig,
+                    type: "single",
+                    image: IconDownloadPDF,
+                  }}
+                  documentData={node}
+                  fileName={createFileName(node.id, pdfDownloadConfig.prefix)}
+                />
+              </ButtonGroup>
+            </div>
+          </div>
         </div>
       </div>
     </div>

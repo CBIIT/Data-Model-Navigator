@@ -10,17 +10,16 @@ export default () => ({
   titleAndDescContainer: {
     display: "flex",
   },
+  tagsAndDescriptionContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "34px",
+  },
   tagsAndBtnContainer: {
     display: "flex",
-    justifyContent: "space-evenly",
-    paddingLeft: "73px",
-  },
-  tagsAndBtn: {
-    display: "flex",
-    marginLeft: "85px",
     justifyContent: "space-between",
-    width: "82%",
     alignItems: "center",
+    paddingRight: "33px",
   },
   assignmentAndClassTags: {
     display: "flex",
