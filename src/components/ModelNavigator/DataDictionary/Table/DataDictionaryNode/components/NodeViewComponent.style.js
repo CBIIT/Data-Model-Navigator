@@ -1,8 +1,6 @@
 export default () => ({
   container: {
     display: "flex",
-    width: "100%",
-    height: "100%",
     flexDirection: "column",
     gap: "2em",
     "&:hover $nodeTitle": {
@@ -15,7 +13,7 @@ export default () => ({
   tagsAndBtnContainer: {
     display: "flex",
     justifyContent: "space-evenly",
-    paddingLeft: "96px",
+    paddingLeft: "73px",
   },
   tagsAndBtn: {
     display: "flex",
