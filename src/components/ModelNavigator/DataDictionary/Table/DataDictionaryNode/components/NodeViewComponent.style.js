@@ -1,8 +1,6 @@
 export default () => ({
   container: {
     display: "flex",
-    width: "100%",
-    height: "100%",
     flexDirection: "column",
     gap: "2em",
     "&:hover $nodeTitle": {
@@ -12,17 +10,16 @@ export default () => ({
   titleAndDescContainer: {
     display: "flex",
   },
+  tagsAndDescriptionContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "34px",
+  },
   tagsAndBtnContainer: {
     display: "flex",
-    justifyContent: "space-evenly",
-    paddingLeft: "96px",
-  },
-  tagsAndBtn: {
-    display: "flex",
-    marginLeft: "85px",
     justifyContent: "space-between",
-    width: "82%",
     alignItems: "center",
+    paddingRight: "33px",
   },
   assignmentAndClassTags: {
     display: "flex",

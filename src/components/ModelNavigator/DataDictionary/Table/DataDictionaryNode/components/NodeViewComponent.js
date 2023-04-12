@@ -1,23 +1,18 @@
-import React from 'react';
-import {
-  Button,
-  Grid,
-  withStyles,
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import styles from './NodeViewComponent.style';
-import { capitalizeFirstLetter, createFileName } from '../../../utils';
-import IconDownloadPDF from '../../icons/icon_download_PDF.svg';
-import IconDownloadPTSV from '../../icons/icon_download_TSV.svg';
-import DownloadButton from '../../../NodePDF/DownloadButton';
-import { fileManifestDownloadSettings as defaultConfig } from '../../../../../../config/file-manifest-config';
+import React from "react";
+import { Button, Grid, withStyles } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import styles from "./NodeViewComponent.style";
+import { capitalizeFirstLetter, createFileName } from "../../../utils";
+import IconDownloadPDF from "../../icons/icon_download_PDF.svg";
+import IconDownloadPTSV from "../../icons/icon_download_TSV.svg";
+import DownloadButton from "../../../NodePDF/DownloadButton";
+import { fileManifestDownloadSettings as defaultConfig } from "../../../../../../config/file-manifest-config";
 import {
   getNodeDescriptionFragment,
   getNodeTitleFragment,
-} from '../../../Utils/highlightHelper';
-
+} from "../../../Utils/highlightHelper";
 
 const NodeViewComponent = ({
   classes,
@@ -31,14 +26,15 @@ const NodeViewComponent = ({
   isExpanded,
   isOverlay,
 }) => {
+  console.log("log node", node);
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
-    fileType: 'tsv',
-    prefix: 'ICDC_Data_Loading_Template-',
+    fileType: "tsv",
+    prefix: "ICDC_Data_Loading_Template-",
   };
 
-  const isFileManifest = node.id === 'file';
-  const isTemplate = node.template === 'Yes';
+  const isFileManifest = node.id === "file";
+  const isTemplate = node.template === "Yes";
   const fileManifestDownloadSettings = fileManifestConfig || defaultConfig;
 
   const getTitle = () => {
@@ -46,7 +42,7 @@ const NodeViewComponent = ({
       const nodeTitleFragment = getNodeTitleFragment(
         matchedResult.matches,
         capitalizeFirstLetter(node.title),
-        'data-dictionary-property-table__span',
+        "data-dictionary-property-table__span"
       );
       return nodeTitleFragment;
     }
@@ -58,7 +54,7 @@ const NodeViewComponent = ({
       const nodeDescriptionFragment = getNodeDescriptionFragment(
         matchedResult.matches,
         description,
-        'data-dictionary-property-table__span',
+        "data-dictionary-property-table__span"
       );
       return nodeDescriptionFragment;
     }
@@ -68,86 +64,94 @@ const NodeViewComponent = ({
   return (
     <div className={classes.container}>
       <div className={classes.titleAndDescContainer}>
-        <span className={classes.nodeTitle}>
-          {getTitle()}
-        </span>
+        <span className={classes.nodeTitle}>{getTitle()}</span>
 
-        <p className={classes.nodeDescription}>
-          {(node.desc) ? getDescription(node.desc) : description}
-        </p>
-      </div>
-
-      <div className={classes.tagsAndBtnContainer}>
-        <div className={isOverlay ? classes.overlaySpacer : classes.spacer} />
-
-        <div
-          className={classes.tagsAndBtn}
-        >
-          <Button
-            startIcon={!isOverlay ? (!isExpanded ? <ExpandMoreIcon /> : <ExpandLessIcon />) : null}
-            variant="contained"
-            classes={{
-              root: classes.propertyCountBtn
-            }}
-          >
-            {propertyCount === 1 ? (
-              <p style={{ fontSize: '11px' }}>
-                {`${propertyCount} property`}
-              </p>
-            ) : (
-              <p style={{ fontSize: '11px' }}>
-                {`${propertyCount} properties`}
-              </p>
-            )}
-          </Button>
-          {/* </div> */}
-
-          <div className={classes.assignmentAndClassTags}>
-            { (node.assignment) && (
-            <>
-              <span className={classes.nodeLabel}>
-                <span>
-                  Assignment:
-                </span>
-                <span className={classes.nodeAssignment}>
-                  {capitalizeFirstLetter(node.assignment)}
-                </span>
-              </span>
-            </>
-            )}
-            {(node.class) && (
-            <>
-              <span className={classes.nodeLabel}>
-                Class:
-                <span className={classes.nodeClass}>
-                  {capitalizeFirstLetter(node.class)}
-                </span>
-              </span>
-            </>
-            )}
+        <div className={classes.tagsAndDescriptionContainer}>
+          <p className={classes.nodeDescription}>
+            {node.desc ? getDescription(node.desc) : description}
+          </p>
+          <div className={classes.tagsAndBtnContainer}>
+            <div>
+              <Button
+                startIcon={
+                  !isOverlay ? (
+                    !isExpanded ? (
+                      <ExpandMoreIcon />
+                    ) : (
+                      <ExpandLessIcon />
+                    )
+                  ) : null
+                }
+                variant="contained"
+                classes={{
+                  root: classes.propertyCountBtn,
+                }}
+              >
+                {propertyCount === 1 ? (
+                  <p
+                    style={{ fontSize: "11px" }}
+                  >{`${propertyCount} property`}</p>
+                ) : (
+                  <p style={{ fontSize: "11px" }}>
+                    {`${propertyCount} properties`}
+                  </p>
+                )}
+              </Button>
+            </div>
+            <div>
+              <div className={classes.assignmentAndClassTags}>
+                {node.assignment && (
+                  <>
+                    <span className={classes.nodeLabel}>
+                      <span>Assignment:</span>
+                      <span className={classes.nodeAssignment}>
+                        {capitalizeFirstLetter(node.assignment)}
+                      </span>
+                    </span>
+                  </>
+                )}
+                {node.class && (
+                  <>
+                    <span className={classes.nodeLabel}>
+                      Class:
+                      <span className={classes.nodeClass}>
+                        {capitalizeFirstLetter(node.class)}
+                      </span>
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+            <div>
+              <ButtonGroup>
+                {(isTemplate || (isFileManifest && isTemplate)) && (
+                  <DownloadButton
+                    config={csvBtnDownloadConfig}
+                    documentData={node}
+                    template={node.template}
+                    isFileManifest={isFileManifest}
+                    fileName={
+                      isFileManifest
+                        ? createFileName(
+                            "",
+                            fileManifestDownloadSettings.filename_prefix
+                          )
+                        : createFileName(node.id, csvBtnDownloadConfig.prefix)
+                    }
+                  />
+                )}
+                <DownloadButton
+                  config={{
+                    ...pdfDownloadConfig,
+                    type: "single",
+                    image: IconDownloadPDF,
+                  }}
+                  documentData={node}
+                  fileName={createFileName(node.id, pdfDownloadConfig.prefix)}
+                />
+              </ButtonGroup>
+            </div>
           </div>
-
-          <ButtonGroup>
-            {
-               (isTemplate || isFileManifest)
-               && (
-               <DownloadButton
-                 config={csvBtnDownloadConfig}
-                 documentData={node}
-                 template={node.template}
-                 isFileManifest={isFileManifest}
-                 fileName={isFileManifest
-                   ? createFileName('', fileManifestDownloadSettings.filename_prefix)
-                   : createFileName(node.id, csvBtnDownloadConfig.prefix)}
-               />
-               )
-             }
-             <DownloadButton
-              config={{ ...pdfDownloadConfig, type: 'single', image: IconDownloadPDF }}
-              documentData={node}
-              fileName={createFileName(node.id, pdfDownloadConfig.prefix)}
-            />
-          </ButtonGroup>
         </div>
       </div>
     </div>
