@@ -14,7 +14,7 @@ export default () => ({
     display: "flex",
     flexDirection: "column",
     gap: "34px",
-    minWidth: "807px",
+    minWidth: "859px",
   },
   tagsAndBtnContainer: {
     display: "flex",
