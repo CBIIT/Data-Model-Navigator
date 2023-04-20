@@ -20,7 +20,6 @@ export default () => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingRight: "33px",
   },
   assignmentAndClassTags: {
     display: "flex",
