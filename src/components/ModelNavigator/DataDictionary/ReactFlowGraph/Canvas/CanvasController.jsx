@@ -39,7 +39,6 @@ const CanvasController = ({
   onGraphPanelClick,
   assetConfig
 }) => {
-
     if (tabViewWidth === 0 || !graphViewConfig) {
       return <CircularProgress />;
     }
@@ -80,8 +79,14 @@ const CanvasController = ({
         /**
          * assign node position
          */
+        const { canvas } = graphViewConfig;
         if (dictionary && nodeTree) {
-          const nodePosition = getNodePosition(dictionary, nodeTree, tabViewWidth);
+          const nodePosition = getNodePosition({
+            dictionary,
+            nodeTree,
+            tabViewWidth,
+            ...canvas?.fit,
+          });
           nodes.forEach((node) => {
             // node.data.icon = iconsURL[node.category];
             const position = nodePosition[node.id];

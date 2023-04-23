@@ -73,9 +73,11 @@ const graphViewConfig = {
     fit: {
       x: 0,
       y: 0,
-      zoom: 0.7,
-      minZoom: 0.7,
+      zoom: 0.5,
+      minZoom: 0.5,
       maxZoom: 2,
+      xInterval: 220,
+      yInterval: 200,
     },
   },
 }

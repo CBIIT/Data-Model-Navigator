@@ -26,6 +26,7 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
      * Src - node/point where edge ends (target)
      */
     const distinctLinks = {};
+    const exploredSoureNodes = {};
     let maxLevel = 0;
     nodes.forEach((node, index) => {
         const links = dictionary[node].links.filter((item) => item.Src !== undefined);
@@ -51,17 +52,30 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
                      * pushes node to bottom of the tree
                      */
                     if (index > 0 && node2Level[source] === 0) {
-                        if (node2Level[target] == 0) {
-                            node2Level[target] = 0;
+                        if (node2Level[target] === 0) {
                             node2Level[target] += nextLevel/2;
                         } else {
-                            node2Level[source] = node2Level[target] - nextLevel/2;
+                            // node2Level[source] = node2Level[target] - nextLevel/2;
+                            /***
+                             * assign level to unexplored parent nodes
+                             */
+                            if (!exploredSoureNodes[source]) {
+                              node2Level[source] = node2Level[target] - nextLevel/2;
+                            }
+                            // node2Level[source] = node2Level[target];
+                            const minLevel = node2Level[target];
+                            nodes.forEach((node) => {
+                              if (minLevel <= node2Level[node]) {
+                                node2Level[node] += nextLevel + 1;
+                              }
+                            });
                         }
                     } else {
                         node2Level[target] = max;
-                        maxLevel = Math.max(max, maxLevel); 
+                        maxLevel = Math.max(max, maxLevel);
                     }
                 }
+                exploredSoureNodes[source] = true;
             }
         });
     });
@@ -119,7 +133,13 @@ export const generateSubTree = (dictionary, nodeTree) => {
  * @returns postion of the nodes
  * 
  */
-export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yInterval = 90, xInterval = 250) => {
+export const getNodePosition = ({
+    dictionary,
+    nodeTree,
+    tabViewWidth,
+    xInterval = 250,
+    yInterval = 90,
+}) => {
     const subtree = generateSubTree(dictionary, nodeTree);
     const position = {};
     let x = tabViewWidth/2;
@@ -135,6 +155,7 @@ export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yInterval = 
         if (length === 1){
             position[nodes[0]] = [x, y];
         } else {
+            
             let xMin = x - (xInterval * length)/2;
             let interval = xInterval;
             /**
@@ -144,10 +165,19 @@ export const getNodePosition = (dictionary, nodeTree, tabViewWidth, yInterval = 
                 xMin = x - (xInterval * (length + 1))
                 interval = 2 * xInterval
             }
-            nodes.forEach((node, index) => {
-              const adjustedX = xMin + interval * (index + 1);
-              position[node] = [adjustedX, y];
-            });
+            if (length >= 8) {
+              nodes.forEach((node, index) => {
+                let xMin = x - (xInterval * length)/3;
+                const adjustedX = xMin + 2 * (interval/3 * index);
+                const yPos = index % 2 === 0 ? y - Number(yInterval) / 5 : y + Number(yInterval) / 5; 
+                position[node] = [adjustedX, yPos];
+              });
+            } else {
+              nodes.forEach((node, index) => {
+                const adjustedX = xMin + interval * (index + 1);
+                position[node] = [adjustedX, y];
+              });
+            }
         }
     }
 
