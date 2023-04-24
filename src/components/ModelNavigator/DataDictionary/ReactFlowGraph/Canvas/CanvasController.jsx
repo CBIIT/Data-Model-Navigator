@@ -11,6 +11,7 @@ import { createNodesAndEdges } from '../GraphUtils/utils';
 import { getDistinctCategoryItems, setMatchingNodeTitle, getCategoryIconUrl } from './util';
 import { onNodeDragStart, onPanelViewClick, onViewChange, setReactFlowGraphData } from '../../Store/actions/graph';
 import { getNodePosition } from './CanvasHelper';
+import defaultIcon from './assets/graph_icon/study.svg';
 
 /**
  * Handles all canvas state
@@ -88,7 +89,9 @@ const CanvasController = ({
             ...canvas?.fit,
           });
           nodes.forEach((node) => {
-            // node.data.icon = iconsURL[node.category];
+            if(!node.data.icon) {
+              node.data.icon = defaultIcon;
+            }
             const position = nodePosition[node.id];
             node.position = {
               x: position[0],
