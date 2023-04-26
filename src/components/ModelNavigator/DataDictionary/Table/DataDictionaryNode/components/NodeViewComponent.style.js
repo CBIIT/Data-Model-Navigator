@@ -3,6 +3,7 @@ export default () => ({
     display: "flex",
     flexDirection: "column",
     gap: "2em",
+    width: "100%",
     "&:hover $nodeTitle": {
       color: "#3283c8",
     },
@@ -14,12 +15,14 @@ export default () => ({
     display: "flex",
     flexDirection: "column",
     gap: "34px",
-    minWidth: "859px",
+    width: "100%",
+    paddingRight: "5px",
   },
   tagsAndBtnContainer: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    width: "100%",
   },
   assignmentAndClassTags: {
     display: "flex",

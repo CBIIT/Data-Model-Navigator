@@ -61,21 +61,6 @@ const NodeViewComponent = ({
     return description;
   };
 
-  function addWhiteSpace(str, length) {
-    return (
-      <div style={{ color: "transparent" }}>{`${" spacer ".repeat(
-        length
-      )}`}</div>
-    );
-  }
-
-  const stringChecker = (desc) => {
-    if (!node.dec) {
-      return desc.length < 147;
-    }
-    return node.desc.length < 147;
-  };
-
   return (
     <div className={classes.container}>
       <div className={classes.titleAndDescContainer}>
@@ -83,32 +68,9 @@ const NodeViewComponent = ({
 
         <div className={classes.tagsAndDescriptionContainer}>
           <p className={classes.nodeDescription}>
-            {node.desc ? (
-              node.desc.length < 147 ? (
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <div>{node.desc}</div>
-                  <div style={{}}>
-                    {addWhiteSpace(getDescription(node.desc), 20)}
-                  </div>
-                </div>
-              ) : (
-                getDescription(node.desc)
-              )
-            ) : description.length < 147 ? (
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div>{node.desc}</div>
-                <div style={{}}>{addWhiteSpace(description, 20)}</div>
-              </div>
-            ) : (
-              description
-            )}
+            {node.desc ? getDescription(node.desc) : description}
           </p>
-          <div
-            className={classes.tagsAndBtnContainer}
-            style={{
-              paddingRight: stringChecker(description) ? "33px" : "45px",
-            }}
-          >
+          <div className={classes.tagsAndBtnContainer}>
             <div>
               <Button
                 startIcon={
