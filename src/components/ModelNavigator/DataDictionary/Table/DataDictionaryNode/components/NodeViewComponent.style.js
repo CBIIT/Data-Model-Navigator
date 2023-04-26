@@ -23,6 +23,7 @@ export default () => ({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
+    paddingRight: "33px",
   },
   assignmentAndClassTags: {
     display: "flex",

@@ -1,6 +1,6 @@
 {
   "name": "data-model-navigator",
-  "version": "1.0.81",
+  "version": "1.0.83",
   "description": "",
   "main": "lib/index.js",
   "private": false,
