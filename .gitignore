@@ -175,6 +175,7 @@ cmake-build-*/
 
 # IntelliJ
 out/
+rcb-settings.xml
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

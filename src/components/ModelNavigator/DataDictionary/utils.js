@@ -384,11 +384,9 @@ export const generateLoadingExample = async () => {
   const zip = new JSZip();
 
   // fetch config
-  const {loadingExamples, title} = await (await Axios.get('https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/zip-group/config.json')).data
-  console.log('figgy', {loadingExamples, title});
+  const {loadingExamples, title} = await (await Axios.get('https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/main/config.json')).data
   try {
     const titleArr = Object.keys(loadingExamples);
-    console.log('titArr', titleArr);
     const res = await Promise.all(Object.values(loadingExamples).map((example) => Axios.get(example)));
     const data = res.map((res, index) => ({
       title: titleArr[index],
@@ -396,8 +394,8 @@ export const generateLoadingExample = async () => {
       format: titleArr[index].split('.')[1]
     }));
 
-    console.log('deets', data);
-    data.forEach(({ title, content, format }) => { console.log('tit', title); zip.file(`${createFileName(title)}.${format}`, content); });
+
+    data.forEach(({ title, content, format }) => { zip.file(`${createFileName(title)}.${format}`, content); });
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
       saveAs(thisContent, createFileName(title));
     });
