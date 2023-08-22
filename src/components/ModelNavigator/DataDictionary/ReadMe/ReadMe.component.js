@@ -18,7 +18,7 @@ import html2pdf from "html2pdf.js";
 import styles from "./ReadMe.style";
 import CustomTheme from "./ReadMe.theme.config";
 import { createFileName } from "../utils";
-import footerLine from "./assets/footer_line.png";
+import footerLine from "./assets/two-pixel-footer-line.png";
 import nihLogo from "./assets/icdc_nih_logo.png";
 import PdfDownloadIcon from "../Header/icons/icon_download_PDF.svg";
 
@@ -26,7 +26,7 @@ const date = new Date().toLocaleString("en-us", {
   month: "long",
   year: "numeric",
   day: "numeric",
-});
+}).toUpperCase();
 
 /** download pdf of marked down file
  * 1.convert or generate html element of marked object
@@ -36,23 +36,25 @@ const date = new Date().toLocaleString("en-us", {
 export const downloadMarkdownPdf = async (title, content) => {
   /** create html elment for pdf - convert marked object to html */
   const readMeContent = document.createElement("div");
+  const body = document.createElement("div");
   /** add header logo on first page */
-  const headerLogo = `<img src='${nihLogo}' height="50px" width="400px"  alt='logo' />
-  <br> <hr style="height:3px" color="#173554" />`;
+  const headerLogo = `<img src='${nihLogo}' width="50%" alt='logo' />
+  <br> <div style="height:1px; background-color: #173554;"/>`;
   readMeContent.innerHTML += headerLogo;
   const titleEl =
-    "<br><span style='color: #4D6787; font-size: 23px; font-family: Nunito Light'>".concat(
+    "<br><span style='color: #4D6787; font-size: 18px; font-family: Lato Bold'>".concat(
       title,
       "</span>"
     );
   readMeContent.innerHTML += titleEl;
-  readMeContent.innerHTML += marked(content);
+  body.innerHTML += `<div style="padding-left: 15px">${marked(content)}</div>`;
+  readMeContent.innerHTML += body.innerHTML;
 
   /** set pdf fileneam */
   const fileName = createFileName("read_me", "ICDC_Data_Model-");
   /** configure pdf increase pixel of the PDF */
   const options = {
-    margin: [0.85, 0.75, 1, 0.75],
+    margin: [0.5, 0.5, 0.8, 0.5],
     filename: fileName,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: {
@@ -85,21 +87,20 @@ export const downloadMarkdownPdf = async (title, content) => {
        */
       for (let i = 1; i <= totalPages; i++) {
         pdf.setPage(i);
-        pdf.setFont("Source Sans Pro,sans-serif");
-        pdf.setFontSize(8);
-        pdf.setTextColor(0);
-        pdf.text(pgWidth - 1.75, pgHeight - 0.5, `${date} | ${i}`);
+        pdf.setFont('Nunito Sans Regular');
+        pdf.setFontSize(7)
+        pdf.text(pgWidth - 1.4, pgHeight - 0.5, `${date} | ${i}`);
         pdf.text(
-          pgWidth - 7.75,
+          pgWidth - 8,
           pgHeight - 0.5,
           "CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL"
         );
         pdf.addImage(
           footerLine,
           "JPEG",
-          pgWidth - 7.75,
+          pgWidth - 8,
           pgHeight - 0.75,
-          7,
+          7.5,
           0.05
         );
         // if (i === 1) {
