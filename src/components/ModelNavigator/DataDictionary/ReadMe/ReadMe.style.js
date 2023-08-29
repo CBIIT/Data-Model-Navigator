@@ -22,11 +22,15 @@ export default () => ({
     fontFamily: "Nunito Light",
   },
   closeBtn: {
-    display: "flex",
-    paddingTop: "13px",
+    padding: '5px',
+    textAlign: 'right',
+    fontSize: '30px',
+  },
+  closBtnContainer: {
+    paddingTop: '8px',
   },
   closeBtnIcon: {
-    paddingTop: "5px",
+    paddingTop: "10px",
   },
   downloadBtn: {
     height: "30px",

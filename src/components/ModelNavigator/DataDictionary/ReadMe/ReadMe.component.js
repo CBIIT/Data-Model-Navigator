@@ -153,7 +153,7 @@ const ReadMeDialogComponent = ({
                 className={classes.downloadIcon}
               />
             </Button>
-            <IconButton onClick={displayReadMeDialog}>
+            <IconButton onClick={displayReadMeDialog} className={classes.closeBtnContainer}>
               <CloseIcon fontSize="small" className={classes.closeBtnIcon} />
             </IconButton>
           </div>
