@@ -26,7 +26,6 @@ const NodeViewComponent = ({
   isExpanded,
   isOverlay,
 }) => {
-  console.log("log node", node);
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
     fileType: "tsv",
