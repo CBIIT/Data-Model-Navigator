@@ -110,7 +110,7 @@ class OverlayPropertyTable extends React.Component {
             />
             <div
               className={classes.node}
-              style={{ borderLeftColor: getCategoryColor(node.category), marginBottom: '0px', borderRight: '1px solid #ADBEC4' }}
+              style={{ borderLeftColor: getCategoryColor(node.category), marginBottom: '0px', borderRight: '1px solid #ADBEC4',backgroundColor: "white" }}
             >
 
               <NodeViewComponent
