@@ -165,6 +165,7 @@ const styles = () => ({
     backgroundColor: "#0D71A3",
     boxShadow: "none",
     height: "27px",
+    maxWidth: "fit-content",
   },
   downloadDropdownIconLabelContainer: {
     display: "flex",
