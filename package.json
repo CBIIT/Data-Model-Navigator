@@ -28,7 +28,7 @@
     "@material-ui/data-grid": "*",
     "@material-ui/icons": ">=4.0.0",
     "@material-ui/lab": "*",
-    "@react-pdf/renderer": "^3.0.2",
+    "@react-pdf/renderer": "^2.0.21",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
