@@ -2,7 +2,7 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import {
   Grid,
@@ -98,8 +98,8 @@ class OverlayPropertyTable extends React.Component {
                   <h4 style={{ color: '#FFF' }} className={classes.categoryText}>{capitalizeFirstLetter(node.category)}</h4>
                 </div>
                 <div>
-                  <IconButton className={classes.iconCloseRounded} onClick={this.handleClose}>
-                    <CloseRoundedIcon style={{ color: '#FFF', fontSize: '18px' }} />
+                  <IconButton onClick={this.handleClose}>
+                    <CloseIcon style={{ color: '#FFF' }} />
                   </IconButton>
                 </div>
               </div>
@@ -110,7 +110,7 @@ class OverlayPropertyTable extends React.Component {
             />
             <div
               className={classes.node}
-              style={{ borderLeftColor: getCategoryColor(node.category), marginBottom: '0px', borderRight: '1px solid #ADBEC4',backgroundColor: "white" }}
+              style={{ borderLeftColor: getCategoryColor(node.category), marginBottom: '0px', borderRight: '1px solid #ADBEC4' }}
             >
 
               <NodeViewComponent

@@ -89,16 +89,10 @@ const NodeViewComponent = ({
                 {propertyCount === 1 ? (
                   <p
                     style={{ fontSize: "11px" }}
-                  >{<span 
-                    style={{ fontSize: "14px", fontWeight: "700", color: "#42779a", fontFamily: "Open Sans"}}>
-                      {propertyCount}</span>
-                    } property</p>
+                  >{`${propertyCount} property`}</p>
                 ) : (
                   <p style={{ fontSize: "11px" }}>
-                    {<span 
-                    style={{ fontSize: "14px", fontWeight: "700", color: "#42779a", fontFamily: "Open Sans"}}>
-                      {propertyCount}</span>
-                    } properties
+                    {`${propertyCount} properties`}
                   </p>
                 )}
               </Button>

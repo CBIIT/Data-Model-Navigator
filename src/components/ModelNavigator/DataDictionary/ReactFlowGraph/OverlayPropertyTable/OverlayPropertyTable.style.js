@@ -24,8 +24,7 @@ export default () => ({
   },
   content: {
     backgroundColor: '#fff',
-    borderRadius: '5px',
-    padding: '19px 17px',
+    padding: '20px',
     boxShadow: '-5px 4px 21px 18px rgba(27,28,28,0.32)',
   },
   header: {
@@ -50,7 +49,7 @@ export default () => ({
   },
   category: {
     // backgroundColor: 'var(--dictionary-header-color)',
-    padding: '3px 0px 0px 15px',
+    padding: '3px 15px 0px 15px',
     lineHeight: '40px',
     verticalAlign: 'middle',
     borderLeft: '5px solid',
@@ -58,14 +57,10 @@ export default () => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  iconCloseRounded: {
-    padding: '9px 17px 16px 0px'
-  },
   categoryText: {
     display: 'inline',
     color: '#fff',
-    fontSize: '19px',
-    fontFamily: 'Lato'
+    fontSize: '18px',
   },
   node: {
     backgroundColor: '#fff',
