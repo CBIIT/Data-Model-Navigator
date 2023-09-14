@@ -120,7 +120,6 @@ const styles = () => ({
     backgroundColor: `var(--g3-color__white)`,
     borderCollapse: 'collapse',
     width: '100%',
-    borderBottom: '0.5px solid #adbec4'
   },
   withOutBorder: {
 

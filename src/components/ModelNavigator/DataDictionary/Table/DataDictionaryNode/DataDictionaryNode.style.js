@@ -1,6 +1,6 @@
 export default () => ({
   node: {
-    backgroundColor: '#adbec4',
+    backgroundColor: '#f4f5f5',
     borderRight: '1px solid var(--dictionary-border-color)',
     display: 'flex',
     justifyContent: 'space-between',
