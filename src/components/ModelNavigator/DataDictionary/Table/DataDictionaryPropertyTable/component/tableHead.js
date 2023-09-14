@@ -31,9 +31,9 @@ const styles = () => ({
   tableHead: {
     color: '#606060',
     fontSize: '13px',
-    background: '#fff',
-    borderTop: '2px solid #606060',
-    borderBottom: '2px solid #606060',
+    background: '#eef5f7',
+    borderTop: '3px solid #adbec4',
+    borderBottom: '3px solid #adbec4',
     '& th': {
       fontWeight: '900',
     },

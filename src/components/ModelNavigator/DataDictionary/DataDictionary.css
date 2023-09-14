@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Nunito:wght@300;400;600;700&display=swap');
+
+
 :root {
   --data-dictionary__sidebar-width: 320px;
   --data-dictionary__switch-border-radius: 4px;
@@ -91,4 +94,3 @@
   border: 2px solid #1178AC;
   background-color: #FFFFFF;
 }
-
