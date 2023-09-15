@@ -127,7 +127,7 @@ const NodeViewComponent = ({
                 )}
               </div>
             </div>
-            <div>
+            <div style={{ paddingRight: "10px"}}>
               <ButtonGroup>
                 {(isTemplate || (isFileManifest && isTemplate)) && (
                   <DownloadButton

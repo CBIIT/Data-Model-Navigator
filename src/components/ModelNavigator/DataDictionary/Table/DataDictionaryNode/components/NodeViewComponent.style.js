@@ -23,7 +23,6 @@ export default () => ({
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    paddingRight: "33px",
   },
   assignmentAndClassTags: {
     display: "flex",
@@ -72,7 +71,6 @@ export default () => ({
     borderRadius: "0px",
   },
   nodeLabel: {
-    fontWeight: "200",
     color: "#000000",
     padding: "0 17px",
     borderRadius: "100px",
@@ -92,7 +90,8 @@ export default () => ({
     fontFamily: "Nunito",
   },
   nodeClass: {
-    color: "#2982af",
-    fontWeight: "500",
+    color: "#009dc4",
+    fontWeight: "600",
+    fontFamily: "Nunito",
   },
 });
