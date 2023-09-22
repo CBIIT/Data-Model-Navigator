@@ -73,18 +73,6 @@ class DataDictionaryNode extends React.Component {
         {
           expanded && (
             <div className={classes.property}>
-              {
-                this.notHorizontal && (
-                  <div className={classes.propertySummary}>
-                    <i>
-                      <span>{node.title}</span>
-                      <span> has </span>
-                      <span>{propertyCount}</span>
-                      <span> properties. </span>
-                    </i>
-                  </div>
-                )
-              }
               <DataDictionaryPropertyTable
                 title={node.title}
                 properties={node.properties}
