@@ -1,5 +1,5 @@
-# Webpack Configuration
-Refer to WEBPACK_CONFIG.md
+## 1. Webpack Configuration
+Refer to [WEBPACK_CONFIG.md](https://github.com/CBIIT/Data-Model-Navigator/blob/documentation/WEBPACK_CONFIG.md)
 
 ## Installation
 
