@@ -1,4 +1,10 @@
 ```
+"devDependencies": {
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.18.9"
+}
+
+
 // parsing fails for on optional operator without this cofiguration.
 // reactflow uses optionsl chaning and nullish coalescing operator 
 // that webpack 4 is unable to prase by default
