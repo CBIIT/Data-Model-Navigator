@@ -1,4 +1,4 @@
-**1. Add dependency** 
+**1. Add dependency for webpack Configuration** 
 ```
 
 "devDependencies": {
