@@ -1,6 +1,5 @@
-# Bento UI Building Blocks
-
-Bento UI Building Blocks is a NPM library in an attempt to reuse the shared UI components across NCI data commons frameworks.
+## 1. Webpack Configuration
+Refer to [WEBPACK_CONFIG.md](https://github.com/CBIIT/Data-Model-Navigator/blob/documentation/WEBPACK_CONFIG.md)
 
 ## Installation
 
