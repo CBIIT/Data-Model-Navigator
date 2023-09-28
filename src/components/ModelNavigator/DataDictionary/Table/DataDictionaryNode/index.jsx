@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import {
   withStyles,
 } from '@material-ui/core';
-// import Button from '@gen3/ui-component/dist/components/Button';
 import { downloadTemplate } from '../../Utils/utils';
 import { getCategoryColor } from '../../NodeCategories/helper';
 import DataDictionaryPropertyTable from '../DataDictionaryPropertyTable';

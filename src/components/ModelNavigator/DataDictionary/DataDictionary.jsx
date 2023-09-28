@@ -68,6 +68,7 @@ const styles = () => ({
   dictionaryContainer: {
     marginTop: "-40px",
     overflowY: "hidden",
+    background: '#fff',
   },
   dataDictionary: {
     display: "flex",
