@@ -6,10 +6,10 @@ const theme = {
   overrides: {
     MuiButton: {
       root: {
-        fontSize: "13.6px",
+        fontSize: "13px",
         textTransform: "none",
-        color: "#277dc6",
-        fontFamily: FontRegistry("NunitoSemiBold"),
+        color: "#1D79A8",
+        fontFamily: FontRegistry("Nunito Sans"),
         float: "right",
         background: "none",
         marginTop: "-20px",
