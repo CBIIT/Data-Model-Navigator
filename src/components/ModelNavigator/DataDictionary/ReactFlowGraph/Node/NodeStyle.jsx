@@ -41,7 +41,7 @@ export default () => ({
   iconBar: {
     display: "flex",
     alignItems: "center",
-    padding: "8px 0",
+    padding: "5px 0",
     justifyContent: "end",
   },
   closeIcon: {
@@ -108,10 +108,17 @@ export default () => ({
     background: "#2e2e2e",
     top: "39px",
   },
+  contentWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "35px",
+  },
   viewSection: {
-    marginTop: "30px",
+    //marginTop: "30px",
     color: "#FFFFFF",
     fontSize: "10px",
+    display: "flex",
+    justifyContent: "center",
   },
   hideSection: {
     display: "none",
@@ -120,15 +127,23 @@ export default () => ({
     paddingLeft: "0px",
     marginBottom: "0px",
     listStyleType: "none",
-    paddingBottom: "5px",
+    flexGrow: "1",
+    //display: "flex",
+    //alignItems: "center",
+    //flexDirection: "column",
+    //paddingBottom: "5px",
   },
   listItem: {
     fontSize: "12px",
     lineHeight: "18px",
     color: "#0077c1",
+    padding: "0 45px",
     display: "flex",
-    justifyContent: "center",
+    //justifyContent: "center",
     gap: "8px",
+
+    //display: "grid",
+    //gridTemplateColumns: "1fr 1fr",
   },
   content: {},
   listItemLabel: {
@@ -170,6 +185,8 @@ export default () => ({
     background: "#5f86a4",
     border: "0",
     opacity: "0.85",
+    //width: "100%",
+    flexGrow: "1",
   },
   matchedNodeIDs: {},
   matchedInNameAndDesc: {
