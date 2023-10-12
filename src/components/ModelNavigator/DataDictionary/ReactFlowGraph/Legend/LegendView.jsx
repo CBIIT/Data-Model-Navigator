@@ -12,7 +12,10 @@ const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden }) => {
   const toggleLegend = () => setDisplay(!display);
 
   /**
-   * set legend position
+   * set legend position - scroll bar width varies based on browser so
+   * legend position must be
+   * adjusted by window.innerWidth and document.documentElement.clientWidth
+   * (refrane from using hard coded value)
    */
   const positionRight =
     window.innerWidth - document.documentElement.clientWidth + 17;
