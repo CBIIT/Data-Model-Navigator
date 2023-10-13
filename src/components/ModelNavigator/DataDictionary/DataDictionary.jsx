@@ -41,6 +41,7 @@ const DataDictionary = ({
           <ReduxDictionarySearchHistory
             onClickSearchHistoryItem={handleClickSearchHistoryItem}
           />
+          <div>new panel</div>
           <ReduxFacetFilters />
         </div>
         <DictionaryView
@@ -68,7 +69,7 @@ const styles = () => ({
   dictionaryContainer: {
     marginTop: "-40px",
     overflowY: "hidden",
-    background: '#fff',
+    background: "#fff",
   },
   dataDictionary: {
     display: "flex",

@@ -1,5 +1,5 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   withStyles,
@@ -24,99 +24,89 @@ import {
 import styles from "./DictionarySearcher.style";
 import SearchThemConfig from "./SearchThemConfig";
 
-class DictionarySearcher extends React.Component {
-  constructor(props) {
-    super(props);
-    this.searchData = prepareSearchData(props.dictionary);
-    this.autoCompleteRef = React.createRef();
-    this.state = {
-      suggestionList: [],
-      isSearchFinished: false,
-      searchResult: {
-        matchedNodes: [],
-        summary: {},
-      },
-      hasError: false,
-      errorMsg: "",
-    };
-  }
+const DictionarySearcher = (props) => {
+  const searchData = prepareSearchData(props.dictionary);
+  const autoCompleteRef = useRef(null);
 
-  componentDidMount() {
-    // resume search status after switching back from other pages
-    if (this.props.currentSearchKeyword) {
-      this.autoCompleteRef.current.setInputText(
-        this.props.currentSearchKeyword
-      );
-      this.search(this.props.currentSearchKeyword);
+  const [suggestionList, setSuggestionList] = useState([]);
+  const [isSearchFinished, setIsSearchFinished] = useState(false);
+  const [searchResult, setSearchResult] = useState({
+    matchedNodes: [],
+    summary: {},
+  });
+  const [hasError, setHasError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (props.currentSearchKeyword) {
+      autoCompleteRef.current.setInputText(props.currentSearchKeyword);
+      search(props.currentSearchKeyword);
     }
-  }
+  }, [props.currentSearchKeyword]);
 
-  onClearResult = () => {
-    this.resetSearchResult();
-    this.autoCompleteRef.current.clearInput();
+  const onClearResult = () => {
+    resetSearchResult();
+    autoCompleteRef.current.clearInput();
   };
 
-  launchClearSearchFromOutside = () => {
-    this.onClearResult();
+  const launchClearSearchFromOutside = () => {
+    onClearResult();
   };
 
-  launchSearchFromOutside = (keyword) => {
-    this.autoCompleteRef.current.setInputText(keyword);
-    this.search(keyword);
+  const clearFilterHandler = () => {
+    onClickBlankSpace();
+    onClearAllFilter();
+    hidePropertyTable();
   };
 
-  search = (str) => {
-    this.props.setIsSearching(true);
-    const { result, errorMsg } = searchKeyword(
-      this.searchData,
-      formatText(str)
-    );
+  const launchSearchFromOutside = (keyword) => {
+    autoCompleteRef.current.setInputText(keyword);
+    search(keyword);
+  };
+
+  const search = (str) => {
+    props.setIsSearching(true);
+    const { result, errorMsg } = searchKeyword(searchData, formatText(str));
     if (!result || result.length === 0) {
-      this.props.setIsSearching(false);
-      this.props.onSearchResultUpdated([], []);
-      this.setState({
-        isSearchFinished: true,
-        hasError: true,
-        errorMsg,
-        suggestionList: [],
-      });
+      props.setIsSearching(false);
+      props.onSearchResultUpdated([], []);
+      setIsSearchFinished(true);
+      setHasError(true);
+      setErrorMsg(errorMsg);
+      setSuggestionList([]);
       return;
     }
     const summary = getSearchSummary(result);
-    this.setState({
-      isSearchFinished: true,
-      hasError: false,
-      searchResult: {
-        matchedNodes: result,
-        summary,
-      },
-      suggestionList: [],
+    setIsSearchFinished(true);
+    setHasError(false);
+    setSearchResult({
+      matchedNodes: result,
+      summary,
     });
-    this.props.setIsSearching(false);
-    this.props.onSearchResultUpdated(result, summary);
-    this.props.onSearchHistoryItemCreated({
+    setSuggestionList([]);
+    props.setIsSearching(false);
+    props.onSearchResultUpdated(result, summary);
+    props.onSearchHistoryItemCreated({
       keywordStr: str,
       matchedCount: summary.generalMatchedNodeIDs.length,
     });
-    this.props.onSaveCurrentSearchKeyword(str);
+    props.onSaveCurrentSearchKeyword(str);
   };
 
-  resetSearchResult = () => {
-    this.setState({
-      isSearchFinished: false,
-      searchResult: {
-        matchedNodes: [],
-        summary: {},
-      },
+  const resetSearchResult = () => {
+    setIsSearchFinished(false);
+    setSearchResult({
+      matchedNodes: [],
+      summary: {},
     });
-    this.props.onSearchResultCleared();
+    props.onSearchResultCleared();
   };
 
-  inputChangeFunc = (query) => {
-    this.props.onStartSearching();
-    this.resetSearchResult();
+  const inputChangeFunc = (query) => {
+    props.onStartSearching();
+    resetSearchResult();
     const inputText = formatText(query);
-    const { result } = searchKeyword(this.searchData, inputText);
+    const { result } = searchKeyword(searchData, inputText);
     const matchedStrings = {};
     result.forEach((resItem) => {
       resItem.matches.forEach((matchItem) => {
@@ -140,140 +130,119 @@ class DictionarySearcher extends React.Component {
         fullString: str,
         matchedPieceIndices: matchedStrings[str].matchedPieceIndices,
       }));
-    const text = query;
-    this.setState({
-      suggestionList,
-      text,
-    });
+    setSuggestionList(suggestionList);
   };
 
-  suggestionItemClickFunc = (suggestionItem) => {
-    this.autoCompleteRef.current.setInputText(suggestionItem.fullString);
-    this.search(suggestionItem.fullString);
+  const suggestionItemClickFunc = (suggestionItem) => {
+    autoCompleteRef.current.setInputText(suggestionItem.fullString);
+    search(suggestionItem.fullString);
   };
 
-  submitInputFunc = (inputText) => {
-    this.search(formatText(inputText));
+  const submitInputFunc = (inputText) => {
+    search(formatText(inputText));
   };
 
-  render() {
-    const {
-      classes,
-      activeFiltersCount,
-      onClearAllFilter,
-      onClickBlankSpace,
-      hidePropertyTable,
-    } = this.props;
-
-    const {
-      isSearchFinished,
-      searchResult,
-      hasError,
-      errorMsg,
-      suggestionList,
-    } = this.state;
-
-    const clearFilterHandler = () => {
-      onClickBlankSpace();
-      onClearAllFilter();
-      hidePropertyTable();
-    };
-
-    return (
-      <div className={classes.searcher}>
-        <SearchThemConfig>
-          <div className={classes.searchBarTitle}>
-            <span className={classes.searchBarTitleText}>Filter & Search</span>
-          </div>
-          <div className={classes.searchInput}>
-            <AutoComplete
-              className="hermo"
-              ref={this.autoCompleteRef}
-              suggestionList={suggestionList}
-              inputPlaceHolderText="Search in Dictionary"
-              onSuggestionItemClick={this.suggestionItemClickFunc}
-              onInputChange={this.inputChangeFunc}
-              onSubmitInput={this.submitInputFunc}
-            />
-
-            <br />
-
-            <Button
-              id="button_sidebar_clear_all_filters"
-              variant="outlined"
-              disabled={activeFiltersCount === 0}
-              className={classes.customButton}
-              classes={{ root: classes.clearAllButtonRoot }}
-              onClick={clearFilterHandler}
-              disableRipple
-              title="CLEAR ALL"
-            >
-              CLEAR ALL
-            </Button>
-          </div>
-        </SearchThemConfig>
-        <div className={classes.results}>
-          {isSearchFinished && (
-            <div>
-              {!hasError &&
-                (searchResult.matchedNodes.length > 0 ? (
-                  <>
-                    <div className={classes.searchResultText}>
-                      <span>Search Results</span>
-                    </div>
-                    <List className={classes.resultList} component="div" dense>
-                      <ListItem className={classes.resultItem}>
-                        <span className={classes.resultCountTitleDesc}>
-                          {
-                            searchResult.summary
-                              .matchedNodeNameAndDescriptionsCount
-                          }
-                        </span>
-                        &nbsp;
-                        <span>
-                          Match(es) in nodes <br /> (title and description)
-                        </span>
-                      </ListItem>
-                      <ListItem className={classes.resultItem}>
-                        <span className={classes.resultCountProps}>
-                          {searchResult.summary.matchedPropertiesCount}
-                        </span>
-                        &nbsp;
-                        <span>Match(es) in node properties</span>
-                      </ListItem>
-                    </List>
-                  </>
-                ) : (
-                  <p>{ZERO_RESULT_FOUND_MSG}</p>
-                ))}
-              {hasError && <p>{errorMsg}</p>}
-            </div>
-          )}
+  return (
+    <div className={props.classes.searcher}>
+      <SearchThemConfig>
+        <div className={props.classes.searchBarTitle}>
+          <span className={props.classes.searchBarTitleText}>
+            Filter & Search
+          </span>
         </div>
+        <div className={props.classes.searchInput}>
+          <AutoComplete
+            className="hermo"
+            ref={autoCompleteRef}
+            suggestionList={suggestionList}
+            inputPlaceHolderText="Search in Dictionary"
+            onSuggestionItemClick={suggestionItemClickFunc}
+            onInputChange={inputChangeFunc}
+            onSubmitInput={submitInputFunc}
+          />
+          <br />
+          <Button
+            id="button_sidebar_clear_all_filters"
+            variant="outlined"
+            disabled={props.activeFiltersCount === 0}
+            className={props.classes.customButton}
+            classes={{ root: props.classes.clearAllButtonRoot }}
+            onClick={clearFilterHandler}
+            disableRipple
+            title="CLEAR ALL"
+          >
+            CLEAR ALL
+          </Button>
+        </div>
+      </SearchThemConfig>
+      <div className={props.classes.results}>
+        {isSearchFinished && (
+          <div>
+            {!hasError &&
+              (searchResult.matchedNodes.length > 0 ? (
+                <>
+                  <div className={props.classes.searchResultText}>
+                    <span>Search Results</span>
+                  </div>
+                  <List
+                    className={props.classes.resultList}
+                    component="div"
+                    dense
+                  >
+                    <ListItem className={props.classes.resultItem}>
+                      <span className={props.classes.resultCountTitleDesc}>
+                        {
+                          searchResult.summary
+                            .matchedNodeNameAndDescriptionsCount
+                        }
+                      </span>
+                      &nbsp;
+                      <span>Match(es) in nodes (title and description)</span>
+                    </ListItem>
+                    <ListItem className={props.classes.resultItem}>
+                      <span className={props.classes.resultCountProps}>
+                        {searchResult.summary.matchedPropertiesCount}
+                      </span>
+                      &nbsp;
+                      <span>Match(es) in properties</span>
+                    </ListItem>
+                    <ListItem className={props.classes.resultItem}>
+                      <span className={props.classes.resultCountPapers}>
+                        {searchResult.summary.matchedPapersCount}
+                      </span>
+                      &nbsp;
+                      <span>Match(es) in papers</span>
+                    </ListItem>
+                  </List>
+                </>
+              ) : (
+                <div className={props.classes.noResults}>
+                  No results found for "
+                  <span>{props.currentSearchKeyword}</span>"
+                </div>
+              ))}
+          </div>
+        )}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 DictionarySearcher.propTypes = {
   dictionary: PropTypes.object.isRequired,
-  setIsSearching: PropTypes.func,
-  onSearchResultUpdated: PropTypes.func,
-  onSearchHistoryItemCreated: PropTypes.func,
-  onSearchResultCleared: PropTypes.func,
-  onSaveCurrentSearchKeyword: PropTypes.func,
   currentSearchKeyword: PropTypes.string,
-  onStartSearching: PropTypes.func,
+  setIsSearching: PropTypes.func.isRequired,
+  onSearchResultUpdated: PropTypes.func.isRequired,
+  onSearchResultCleared: PropTypes.func.isRequired,
+  onSearchHistoryItemCreated: PropTypes.func.isRequired,
+  onSaveCurrentSearchKeyword: PropTypes.func.isRequired,
+  onStartSearching: PropTypes.func.isRequired,
+  activeFiltersCount: PropTypes.number.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 DictionarySearcher.defaultProps = {
-  setIsSearching: () => {},
-  onSearchResultUpdated: () => {},
-  onSearchHistoryItemCreated: () => {},
-  onSearchResultCleared: () => {},
-  onSaveCurrentSearchKeyword: () => {},
   currentSearchKeyword: "",
-  onStartSearching: () => {},
 };
 
 export default withStyles(styles)(DictionarySearcher);
