@@ -250,10 +250,10 @@ const styles = () => ({
       wordWrap: "break-word",
     },
     "&:nth-child(odd)": {
-      background: "#f4f5f5",
+      background: "#fff",
     },
     "&:nth-child(even)": {
-      background: "#fff",
+      background: "#f4f5f5",
     },
   },
   required: {
