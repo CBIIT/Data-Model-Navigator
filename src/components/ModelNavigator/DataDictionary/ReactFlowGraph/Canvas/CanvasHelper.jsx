@@ -38,11 +38,13 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
                 if (distinctLinks[source] === target) {
                     node2Level[source] -= nextLevel;
                     node2Level[target] += nextLevel/intervel;
+                    // const level = node2Level[target] + nextLevel/intervel;
+                    // maxLevel = Math.max(maxLevel, level);
                 } else {
                     // assign order based on the level of hierarchy node
                     distinctLinks[target] = source;
                     const levels = [node2Level[target], node2Level[source] + nextLevel];
-                    const max = Math.max(...levels);
+                    let max = Math.max(...levels);
                     /**
                      * IF - hierarchy is other than root node (program)
                      * off_treatment, off_study, canine_ind to case
@@ -53,7 +55,9 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
                      */
                     if (index > 0 && node2Level[source] === 0) {
                         if (node2Level[target] === 0) {
-                            node2Level[target] += nextLevel/2;
+                            const level = node2Level[target] + nextLevel/2;
+                            node2Level[target] = level;
+                            max = Math.max(max, level);
                         } else {
                             // node2Level[source] = node2Level[target] - nextLevel/2;
                             /***
@@ -66,14 +70,16 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
                             const minLevel = node2Level[target];
                             nodes.forEach((node) => {
                               if (minLevel <= node2Level[node]) {
-                                node2Level[node] += nextLevel + 1;
+                                const level = node2Level[node] + nextLevel + 1;
+                                max = Math.max(max, level)
+                                node2Level[node] = level;
                               }
                             });
                         }
                     } else {
                         node2Level[target] = max;
-                        maxLevel = Math.max(max, maxLevel);
                     }
+                    maxLevel = Math.max(max, maxLevel);
                 }
                 exploredSoureNodes[source] = true;
             }
@@ -81,9 +87,9 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
     });
 
     /**
-     * assign max level to node with no edges
-     * move to bottom of the tree
-     */
+    * assign max level to node with no edges
+    * move to bottom of the tree
+    */
     const nodeWithoutEdges = _.cloneDeep(nodes).filter((node) => dictionary[node].links
         && dictionary[node].links.length == 0);
     nodeWithoutEdges.forEach((node) => {
@@ -91,9 +97,9 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
     });
 
     /**
-     * create a complete node tree
-     * calculate subtree and assign position to node
-     */
+    * create a complete node tree
+    * calculate subtree and assign position to node
+    */
     const nodeTree = {}
     for (const [key, value] of Object.entries(node2Level)) {
         if (nodeTree[value] === undefined) {
