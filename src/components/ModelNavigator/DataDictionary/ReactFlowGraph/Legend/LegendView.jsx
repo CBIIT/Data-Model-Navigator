@@ -17,8 +17,8 @@ const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden }) => {
    * adjusted by window.innerWidth and document.documentElement.clientWidth
    * (refrane from using hard coded value)
    */
-  const positionRight =
-    window.innerWidth - document.documentElement.clientWidth + 17;
+  const scrollBarWidth = document.documentElement.clientWidth;
+  const positionRight = window.innerWidth - scrollBarWidth;
   const position = { right: positionRight };
 
   const categoryListComponent = categoryItems.map((category) => {

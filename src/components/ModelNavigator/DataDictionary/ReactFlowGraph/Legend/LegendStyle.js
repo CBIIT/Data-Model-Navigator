@@ -64,7 +64,6 @@ export default () => ({
     borderRadius: "50%",
   },
   text: {
-    marginLeft: "15px",
     color: "#ffffff",
     fontFamily: "Lato",
     fontSize: "13px",
@@ -74,6 +73,7 @@ export default () => ({
     display: "block",
     margin: "auto",
     textTransform: "lowercase",
+    marginLeft: "11px",
   },
   item: {
     lineHeight: "20px",
