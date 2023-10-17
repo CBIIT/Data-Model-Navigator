@@ -1,23 +1,20 @@
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // import { PDFDownloadLink } from '@react-pdf/renderer';
 // eslint-disable-next-line no-unused-vars
-import {
-  withStyles,
-} from '@material-ui/core';
-// import Button from '@gen3/ui-component/dist/components/Button';
-import { downloadTemplate } from '../../Utils/utils';
-import { getCategoryColor } from '../../NodeCategories/helper';
-import DataDictionaryPropertyTable from '../DataDictionaryPropertyTable';
-import './DataDictionaryNode.css';
-import styles from './DataDictionaryNode.style';
+import { withStyles } from "@material-ui/core";
+import { downloadTemplate } from "../../Utils/utils";
+import { getCategoryColor } from "../../NodeCategories/helper";
+import DataDictionaryPropertyTable from "../DataDictionaryPropertyTable";
+import "./DataDictionaryNode.css";
+import styles from "./DataDictionaryNode.style";
 // import PdfDocument from '../../NodePDF';
-import NodeViewComponent from './components/NodeViewComponent';
+import NodeViewComponent from "./components/NodeViewComponent";
 
 const NODE_STATE = {
-  OPEN: 'open',
-  CLOSE: 'close',
+  OPEN: "open",
+  CLOSE: "close",
 };
 
 class DataDictionaryNode extends React.Component {
@@ -35,22 +32,17 @@ class DataDictionaryNode extends React.Component {
   handleCloseNode = () => {
     const { onExpandNode } = this.props;
     onExpandNode(null);
-  }
+  };
 
   handleDownloadTemplate = (e, format) => {
     const { node } = this.props;
     e.stopPropagation(); // no toggling
     downloadTemplate(format, node.id);
-  }
+  };
 
   render() {
-    const {
-      classes,
-      node,
-      pdfDownloadConfig,
-      description,
-      expanded,
-    } = this.props;
+    const { classes, node, pdfDownloadConfig, description, expanded } =
+      this.props;
     const propertyCount = Object.keys(node.properties).length;
     return (
       <>
@@ -70,31 +62,23 @@ class DataDictionaryNode extends React.Component {
             propertyCount={propertyCount}
           />
         </div>
-        {
-          expanded && (
-            <div className={classes.property}>
-              {
-                this.notHorizontal && (
-                  <div className={classes.propertySummary}>
-                    <i>
-                      <span>{node.title}</span>
-                      <span> has </span>
-                      <span>{propertyCount}</span>
-                      <span> properties. </span>
-                    </i>
-                  </div>
-                )
-              }
-              <DataDictionaryPropertyTable
-                title={node.title}
-                properties={node.properties}
-                requiredProperties={node.required}
-                preferredProperties={node.preferred}
-                // horizontal // supports horizontal orientation
-              />
-            </div>
-          )
-        }
+        {expanded && (
+          <div
+            className={classes.property}
+            style={{
+              borderLeft: `5px solid ${getCategoryColor(node.category)}`,
+              borderBottom: `1px solid #adbec4`,
+            }}
+          >
+            <DataDictionaryPropertyTable
+              title={node.title}
+              properties={node.properties}
+              requiredProperties={node.required}
+              preferredProperties={node.preferred}
+              // horizontal // supports horizontal orientation
+            />
+          </div>
+        )}
       </>
     );
   }
@@ -108,7 +92,7 @@ DataDictionaryNode.propTypes = {
 };
 
 DataDictionaryNode.defaultProps = {
-  description: '',
+  description: "",
   expanded: false,
   onExpandNode: () => {},
 };

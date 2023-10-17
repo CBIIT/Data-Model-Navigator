@@ -1,27 +1,26 @@
-import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core';
-import Styles from './DictionaryStyle';
-import Tab from './Tab/Tab';
-import TabPanel from './Tab/TabPanel';
-import TabThemeProvider from './Tab/TabThemeConfig';
-import ReduxDataDictionaryTable from '../Table/DataDictionaryTable';
-import CanvasView from '../ReactFlowGraph/Canvas/CanvasController';
-import { setCanvasWidth, setGraphView } from '../Store/actions/graph';
-import { dispatch } from 'd3-dispatch';
+import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core";
+import Styles from "./DictionaryStyle";
+import Tab from "./Tab/Tab";
+import TabPanel from "./Tab/TabPanel";
+import TabThemeProvider from "./Tab/TabThemeConfig";
+import ReduxDataDictionaryTable from "../Table/DataDictionaryTable";
+import CanvasView from "../ReactFlowGraph/Canvas/CanvasController";
+import { setCanvasWidth, setGraphView } from "../Store/actions/graph";
 
 const tabItems = [
   {
     index: 0,
-    label: 'Graph View',
-    value: 'graph_view',
+    label: "Graph View",
+    value: "graph_view",
   },
   {
     index: 1,
-    label: 'Table View',
-    value: 'table_view',
-  }
+    label: "Table View",
+    value: "table_view",
+  },
 ];
 
 const DictionaryView = ({
@@ -46,10 +45,10 @@ const DictionaryView = ({
 
   useEffect(() => {
     onWidthChange(ref.current.offsetWidth);
-    window.addEventListener('resize', setCanvasWidth);
+    window.addEventListener("resize", setCanvasWidth);
     return () => {
-      window.removeEventListener('resize', setCanvasWidth)
-    }
+      window.removeEventListener("resize", setCanvasWidth);
+    };
   }, []);
 
   useLayoutEffect(() => {
@@ -66,7 +65,7 @@ const DictionaryView = ({
 
   const handleTabChange = (event, value) => {
     setCurrentTab(value);
-    onSetGraphView(value === 0)
+    onSetGraphView(value === 0);
   };
 
   return (
@@ -94,7 +93,9 @@ const DictionaryView = ({
               </TabPanel>
               <TabPanel value={currentTab} index={1}>
                 <div className={classes.tableView}>
-                  <ReduxDataDictionaryTable pdfDownloadConfig={pdfDownloadConfig} />
+                  <ReduxDataDictionaryTable
+                    pdfDownloadConfig={pdfDownloadConfig}
+                  />
                 </div>
               </TabPanel>
             </div>
@@ -108,7 +109,7 @@ const DictionaryView = ({
 const mapStateToProps = (state) => {
   return {
     graphView: state.ddgraph.isGraphView,
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -116,5 +117,7 @@ const mapDispatchToProps = (dispatch) => ({
   onWidthChange: (canvasWidth) => dispatch(setCanvasWidth(canvasWidth)),
 });
 
-export default compose(connect(mapStateToProps, mapDispatchToProps),
-  withStyles(Styles))(DictionaryView);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(Styles)
+)(DictionaryView);
