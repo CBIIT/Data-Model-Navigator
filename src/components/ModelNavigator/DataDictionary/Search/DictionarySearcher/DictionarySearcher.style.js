@@ -1,7 +1,7 @@
 export default () => ({
   searcher: {
     paddingTop: "0px",
-    height: 168,
+    minHeight: 168,
   },
   result: {
     margin: "10px 0",
@@ -70,6 +70,7 @@ export default () => ({
   searchResultText: {
     // textAlign: 'center',
     paddingLeft: "20%",
+    paddingTop: "20px",
     height: "12px",
     color: "#323232",
     fontFamily: "Raleway",
@@ -78,8 +79,8 @@ export default () => ({
     lineHeight: "18px",
   },
   results: {
-    paddingTop: "20px",
-    minHeight: "40px",
+    //    paddingTop: "20px",
+    //   minHeight: "40px",
   },
   clearAllButtonRoot: {
     marginRight: "13px",
