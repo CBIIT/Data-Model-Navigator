@@ -12,10 +12,10 @@ const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden }) => {
   const toggleLegend = () => setDisplay(!display);
 
   /**
-   * set legend position
-   */
-  const positionRight =
-    window.innerWidth - document.documentElement.clientWidth + 45;
+  * set legend position
+  */
+  const scrollBarWidth = document.documentElement.clientWidth;
+  const positionRight = window.innerWidth - scrollBarWidth;
   const position = { right: positionRight };
 
   const categoryListComponent = categoryItems.map((category) => {
