@@ -143,6 +143,8 @@ export const graphViewConfig = {
       zoom: 0.7,
       minZoom: 0.7,
       maxZoom: 2,
+      xInterval: 250,
+      yInterval: 90,
     },
   },
 };
