@@ -31,8 +31,8 @@ const nihLogoImg = {
  */
 
 const version = { commit: '913161064b02bcef024d072873e77c8c79cc1a68', dictionary: { commit: '520a25999fd183f6c5b7ddef2980f3e839517da5', version: '0.2.1-9-g520a259' }, version: '4.0.0-44-g9131610' };
-const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml";
-const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
+// const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml";
+// const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
 
 const readMeConfig=  {
   readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
@@ -73,12 +73,17 @@ const graphViewConfig = {
     fit: {
       x: 0,
       y: 0,
-      zoom: 0.7,
-      minZoom: 0.7,
+      zoom: 0.5,
+      minZoom: 0.5,
       maxZoom: 2,
+      xInterval: 220,
+      yInterval: 200,
     },
   },
 }
+
+const DATA_MODEL = 'https://raw.githubusercontent.com/CBIIT/c3dc-model/main/model-desc/c3dc-model.yml';
+const DATA_MODEL_PROPS = 'https://raw.githubusercontent.com/CBIIT/c3dc-model/main/model-desc/c3dc-model-props.yml';
 
 // const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_file.yaml";
 // const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/ctdc-model/master/model-desc/ctdc_model_properties_file.yaml";
@@ -159,12 +164,12 @@ async function init() {
                   ? icdcMPData.PropDefinitions[propertyName].Tags.Labeled : undefined : undefined;
               propertiesItem.category = key;
               propertiesItem.description = icdcMPData.PropDefinitions[propertyName].Desc;
-              propertiesItem.type = icdcMPData.PropDefinitions[propertyName].Type
+              propertiesItem.type = icdcMPData?.PropDefinitions[propertyName]?.Type
                 || icdcMPData.PropDefinitions[propertyName].Enum;
-              propertiesItem.enum = icdcMPData.PropDefinitions[propertyName].Enum
-                || icdcMPData.PropDefinitions[propertyName].Type.Enum;
-              propertiesItem.src = icdcMPData.PropDefinitions[propertyName].Src;
-              propertiesItem.key = icdcMPData.PropDefinitions[propertyName].Key;
+              propertiesItem.enum = icdcMPData?.PropDefinitions[propertyName]?.Enum
+                || icdcMPData.PropDefinitions[propertyName]?.Type?.Enum;
+              propertiesItem.src = icdcMPData?.PropDefinitions[propertyName]?.Src;
+              propertiesItem.key = icdcMPData?.PropDefinitions[propertyName]?.Key;
               if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes') {
                 pRequired.push(nodeP);
                 propertiesItem['propertyType'] = 'required';

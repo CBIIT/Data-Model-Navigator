@@ -11,6 +11,7 @@ import { createNodesAndEdges } from '../GraphUtils/utils';
 import { getDistinctCategoryItems, setMatchingNodeTitle, getCategoryIconUrl } from './util';
 import { onNodeDragStart, onPanelViewClick, onViewChange, setReactFlowGraphData } from '../../Store/actions/graph';
 import { getNodePosition } from './CanvasHelper';
+import defaultIcon from './assets/graph_icon/study.svg';
 
 /**
  * Handles all canvas state
@@ -39,7 +40,6 @@ const CanvasController = ({
   onGraphPanelClick,
   assetConfig
 }) => {
-
     if (tabViewWidth === 0 || !graphViewConfig) {
       return <CircularProgress />;
     }
@@ -80,10 +80,18 @@ const CanvasController = ({
         /**
          * assign node position
          */
+        const { canvas } = graphViewConfig;
         if (dictionary && nodeTree) {
-          const nodePosition = getNodePosition(dictionary, nodeTree, tabViewWidth);
+          const nodePosition = getNodePosition({
+            dictionary,
+            nodeTree,
+            tabViewWidth,
+            ...canvas?.fit,
+          });
           nodes.forEach((node) => {
-            // node.data.icon = iconsURL[node.category];
+            if(!node.data.icon) {
+              node.data.icon = defaultIcon;
+            }
             const position = nodePosition[node.id];
             node.position = {
               x: position[0],

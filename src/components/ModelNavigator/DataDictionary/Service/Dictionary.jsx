@@ -73,16 +73,16 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
               keyMaps.add({ props: propertyName, node: key });
             }
             propertiesItem.labeled = icdcMPData.PropDefinitions[propertyName].Tags
-              ? icdcMPData.PropDefinitions[propertyName].Tags.Labeled
-                ? icdcMPData.PropDefinitions[propertyName].Tags.Labeled : undefined : undefined;
+              ? icdcMPData.PropDefinitions[propertyName]?.Tags?.Labeled
+                ? icdcMPData.PropDefinitions[propertyName]?.Tags?.Labeled : undefined : undefined;
             propertiesItem.category = key;
-            propertiesItem.description = icdcMPData.PropDefinitions[propertyName].Desc;
-            propertiesItem.type = icdcMPData.PropDefinitions[propertyName].Type
-              || icdcMPData.PropDefinitions[propertyName].Enum;
-            propertiesItem.enum = icdcMPData.PropDefinitions[propertyName].Enum
-              || icdcMPData.PropDefinitions[propertyName].Type.Enum;
-            propertiesItem.src = icdcMPData.PropDefinitions[propertyName].Src;
-            propertiesItem.key = icdcMPData.PropDefinitions[propertyName].Key;
+            propertiesItem.description = icdcMPData?.PropDefinitions[propertyName]?.Desc;
+            propertiesItem.type = icdcMPData?.PropDefinitions[propertyName]?.Type
+              || icdcMPData?.PropDefinitions[propertyName]?.Enum;
+            propertiesItem.enum = icdcMPData?.PropDefinitions[propertyName]?.Enum
+              || icdcMPData.PropDefinitions[propertyName]?.Type?.Enum;
+            propertiesItem.src = icdcMPData?.PropDefinitions[propertyName]?.Src;
+            propertiesItem.key = icdcMPData?.PropDefinitions[propertyName]?.Key;
             if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes') {
               pRequired.push(nodeP);
               propertiesItem['propertyType'] = 'required';
