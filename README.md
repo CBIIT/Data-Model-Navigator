@@ -119,6 +119,9 @@ export default ModelNavigator;
 ### 3. Configuration
 [reference - ICDC DMN Configuration]: https://github.com/CBIIT/bento-icdc-frontend/blob/Develop/src/bento/dataDictionaryData.js
 
+**xIntervel & yIntervel space between nodes**
+**nodeTree customize position of node to display in the tree (Please include all the nodes to be displayed)**
+
 ```
 
 export const pdfDownloadConfig = {
@@ -146,6 +149,15 @@ export const graphViewConfig = {
       xInterval: 250,
       yInterval: 90,
     },
+    nodeTree: [
+      ['program'],
+      ['project'],
+      ['study'],
+      ['principal_investigator', 'subject', 'image_collection', 'associated_link'],
+      ['targeted_therapy', 'non_targeted_therapy', 'surgery', 'radiotherapy', 'subject_status', 'specimen'],
+      ['diagnosis', 'specimen', 'demographic'],
+      ['node', 'data_file', 'exposure']
+    ]
   },
 };
 

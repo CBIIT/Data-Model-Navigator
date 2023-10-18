@@ -79,12 +79,15 @@ const CanvasController = ({
         }
         /**
          * assign node position
+         * canvas configuration
+         * 1. custom node tree
+         * 2. xIntervel & yIntervel
          */
         const { canvas } = graphViewConfig;
         if (dictionary && nodeTree) {
           const nodePosition = getNodePosition({
             dictionary,
-            nodeTree,
+            nodeTree: canvas?.nodeTree || nodeTree,
             tabViewWidth,
             ...canvas?.fit,
           });
