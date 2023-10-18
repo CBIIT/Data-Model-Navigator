@@ -79,9 +79,11 @@ const CanvasController = ({
         }
         /**
          * assign node position
+         * canvas configuration
+         * 1. custom node tree
+         * 2. xIntervel & yIntervel
          */
         const { canvas } = graphViewConfig;
-        console.log(canvas);
         if (dictionary && nodeTree) {
           const nodePosition = getNodePosition({
             dictionary,
