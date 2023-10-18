@@ -81,10 +81,11 @@ const CanvasController = ({
          * assign node position
          */
         const { canvas } = graphViewConfig;
+        console.log(canvas);
         if (dictionary && nodeTree) {
           const nodePosition = getNodePosition({
             dictionary,
-            nodeTree,
+            nodeTree: canvas?.nodeTree || nodeTree,
             tabViewWidth,
             ...canvas?.fit,
           });
