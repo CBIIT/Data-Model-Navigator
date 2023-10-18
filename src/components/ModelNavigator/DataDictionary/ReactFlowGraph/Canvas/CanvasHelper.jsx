@@ -38,8 +38,6 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
                 if (distinctLinks[source] === target) {
                     node2Level[source] -= nextLevel;
                     node2Level[target] += nextLevel/intervel;
-                    // const level = node2Level[target] + nextLevel/intervel;
-                    // maxLevel = Math.max(maxLevel, level);
                 } else {
                     // assign order based on the level of hierarchy node
                     distinctLinks[target] = source;
