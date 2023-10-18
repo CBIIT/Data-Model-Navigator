@@ -161,7 +161,6 @@ export const getNodePosition = ({
         if (length === 1){
             position[nodes[0]] = [x, y];
         } else {
-            
             let xMin = x - (xInterval * length)/2;
             let interval = xInterval;
             /**
@@ -171,19 +170,10 @@ export const getNodePosition = ({
                 xMin = x - (xInterval * (length + 1))
                 interval = 2 * xInterval
             }
-            if (length >= 8) {
-              nodes.forEach((node, index) => {
-                let xMin = x - (xInterval * length)/3;
-                const adjustedX = xMin + 2 * (interval/3 * index);
-                const yPos = index % 2 === 0 ? y - Number(yInterval) / 5 : y + Number(yInterval) / 5; 
-                position[node] = [adjustedX, yPos];
-              });
-            } else {
-              nodes.forEach((node, index) => {
-                const adjustedX = xMin + interval * (index + 1);
-                position[node] = [adjustedX, y];
-              });
-            }
+            nodes.forEach((node, index) => {
+              const adjustedX = xMin + interval * (index + 1);
+              position[node] = [adjustedX, y];
+            });
         }
     }
 
