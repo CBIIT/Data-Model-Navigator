@@ -63,16 +63,9 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
                              */
                             if (!exploredSoureNodes[source]) {
                               node2Level[source] = node2Level[target] - nextLevel/2;
+                            } else {
+                              node2Level[source] = node2Level[target];
                             }
-                            // node2Level[source] = node2Level[target];
-                            const minLevel = node2Level[target];
-                            nodes.forEach((node) => {
-                              if (minLevel <= node2Level[node]) {
-                                const level = node2Level[node] + nextLevel + 1;
-                                max = Math.max(max, level)
-                                node2Level[node] = level;
-                              }
-                            });
                         }
                     } else {
                         node2Level[target] = max;
