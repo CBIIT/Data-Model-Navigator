@@ -180,7 +180,7 @@ const DownloadFileTypeBtn = ({
   };
 
   const getMenuItem = (type) => (
-    <StyledMenuItem onClick={() => setFileType(type)}>
+    <StyledMenuItem key={type} onClick={() => setFileType(type)}>
       <ListItemText
         classes={{
           primary: classes.listItemText,
