@@ -19,6 +19,7 @@ const HeaderComponent = ({
 
   const config = useSelector((state) => (state.submission && state.submission.readMeConfig
     ? state.submission.readMeConfig : undefined));
+  const pageConfig = useSelector((state) => (state.submission && state.submission.pageConfig ? state.submission.pageConfig : undefined));
 
   useEffect(() => {
     if (config) {
@@ -46,13 +47,12 @@ const HeaderComponent = ({
             <img
               className={classes.dogIcon}
               alt="dog-icon"
-              src={dogIconSrc}
+              src={pageConfig?.iconSrc || dogIconSrc}
             />
             <h2
               className={classes.title}
             >
-              Data Model Navigator
-
+              {pageConfig?.title || "Data Model Navigator"}
             </h2>
           </div>
 

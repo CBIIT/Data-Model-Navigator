@@ -78,6 +78,10 @@ async function getData() {
         payload: {
           data: response.data,
           facetfilterConfig: filterConfig,
+          pageConfig: {
+            title: "DMN",
+            iconSrc: "https://api.placeholder.app/image/85x85",
+          },
           readMeConfig: {
             readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
             readMeTitle: 'Understanding the ICDC Data Model',
@@ -166,7 +170,7 @@ export const graphViewConfig = {
 # DMN development - Sorybook
 
 
-### 1. Clone Repo 
+### 1. Clone Repo
 ```
 1. git clone https://github.com/CBIIT/Data-Model-Navigator.git
 ```
@@ -174,7 +178,7 @@ export const graphViewConfig = {
 ### 2. Update react-pdf dependency (DO NOT COMMIT THIS CHANGE - KEEP IT LOCAL)
 (note: DMN project runs on webpack 5 it is compatible with react-pdf version 3.0.2 or newer version but Bento app runs on webpack 4 which is compatible with only react-pdf version 2.0.21 or older version)
 ```
-"@react-pdf/renderer": "^2.0.21"  -> "@react-pdf/renderer": "^3.0.2", 
+"@react-pdf/renderer": "^2.0.21"  -> "@react-pdf/renderer": "^3.0.2",
 ```
 (DO NOT COMMIT THIS CHANGE or pdf download will not work when DMN is deplyed with bento app)
 (Solution migrate bento app to webpack 5)
