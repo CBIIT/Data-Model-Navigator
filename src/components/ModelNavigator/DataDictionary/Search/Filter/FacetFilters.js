@@ -299,7 +299,7 @@ const FacetFilters = ({
         CLEAR ALL
       </Button> */}
       {sideBarSections.map((currentSection) => (
-        <FacetFilterThemeProvider>
+        <FacetFilterThemeProvider key={currentSection?.sectionName}>
           <Divider
             variant="middle"
             style={{
@@ -332,9 +332,6 @@ const FacetFilters = ({
               }
               aria-controls={currentSection.sectionName}
               id={currentSection.sectionName}
-              classes={{
-                expandIcon: classes.ExpansionPaneldropDownIcon,
-              }}
             >
               {/* <ListItemText primary={sideBarItem.groupName} /> */}
               <div className={classes.sectionSummaryText}>
@@ -350,7 +347,7 @@ const FacetFilters = ({
                   // eslint-disable-next-line arrow-body-style
                   currentSection.items.map((sideBarItem) => {
                     return (
-                      <>
+                      <React.Fragment key={sideBarItem?.groupName}>
                         <Accordion
                           square
                           expanded={groupsExpanded.includes(
@@ -453,7 +450,7 @@ const FacetFilters = ({
                           {!groupsExpanded.includes(sideBarItem.groupName) &&
                             showSelectedChecbox(sideBarItem, currentSection)}
                         </div>
-                      </>
+                      </React.Fragment>
                     );
                   })
                 }
