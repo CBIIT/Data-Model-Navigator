@@ -332,9 +332,6 @@ const FacetFilters = ({
               }
               aria-controls={currentSection.sectionName}
               id={currentSection.sectionName}
-              classes={{
-                expandIcon: classes.ExpansionPaneldropDownIcon,
-              }}
             >
               {/* <ListItemText primary={sideBarItem.groupName} /> */}
               <div className={classes.sectionSummaryText}>
