@@ -131,11 +131,14 @@ export default ModelNavigator;
 export const pdfDownloadConfig = {
   fileType: 'pdf',
   prefix: 'ICDC_Data_Model_',
+  dictionaryPrefix: 'ICDC_Data_Model', // Prefix for the dictionary download PDF
   landscape: 'true',
   catagoryIcon: {
     url: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/icdc/DMN/Pdf/',
     type: '.png',
   },
+  iconSrc: "", // PDF Header Icon SRC (.png only)
+  allowDownload: true, // Disable README PDF download button
 };
 
 see filter ICDC config (above link)

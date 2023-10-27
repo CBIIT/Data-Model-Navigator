@@ -126,7 +126,7 @@ const DownloadFileTypeBtn = ({
   };
 
   const downloadFullDictionaryPdf = () => {
-    const fileName = createFileName('ICDC_Data_Model', '');
+    const fileName = createFileName(config?.dictionaryPrefix || 'ICDC_Data_Model', '');
     setLoading(true);
     setTimeout(() => {
       generatePdfDocument(processedFullDictionary, config, setLoading, fileName);
@@ -165,7 +165,7 @@ const DownloadFileTypeBtn = ({
       case FILE_TYPE_FULL_DICTIONARY:
         return downloadFullDictionaryPdf();
       case FILE_TYPE_README:
-        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent);
+        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.prefix);
       case FILE_TYPE_TEMPLATES:
         return downloadAllTemplates();
       case FILE_TYPE_CONTROLLED_VOCAB_TSV:
@@ -190,7 +190,15 @@ const DownloadFileTypeBtn = ({
     </StyledMenuItem>
   );
 
-  const options = fileTypes.map((item) => getMenuItem(item));
+  const options = fileTypes
+    .filter((item) => {
+      if (item === FILE_TYPE_README && typeof(config?.allowDownload) === "boolean") {
+        return config?.allowDownload;
+      }
+
+      return true;
+    })
+    .map((item) => getMenuItem(item));
 
   return (
     <>
