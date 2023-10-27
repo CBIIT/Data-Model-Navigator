@@ -138,7 +138,7 @@ export const pdfDownloadConfig = {
     type: '.png',
   },
   iconSrc: "", // PDF Header Icon SRC (.png only)
-  allowDownload: true, // Disable README PDF download button
+  allowDownload: true, // Toggle README PDF downloads
 };
 
 see filter ICDC config (above link)

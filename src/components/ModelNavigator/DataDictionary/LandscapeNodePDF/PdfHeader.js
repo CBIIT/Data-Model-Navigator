@@ -4,6 +4,7 @@ import {
   Image,
 } from '@react-pdf/renderer';
 import logo from './assets/icdc_nih_logo.png';
+import store from '../../../../store';
 
 const styles = StyleSheet.create({
   logo: {
@@ -17,11 +18,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const PdfHeader = () => (
-  <>
-    <Image style={styles.logo} src={logo} />
-    <div style={styles.hr} />
-  </>
-);
+const PdfHeader = () => {
+  const { ddgraph } = store.getState() || {};
+  const { pdfDownloadConfig } = ddgraph || {};
+
+  return (
+    <>
+      <Image style={styles.logo} src={pdfDownloadConfig?.iconSrc || logo} />
+      <div style={styles.hr} />
+    </>
+  );
+};
 
 export default PdfHeader;
