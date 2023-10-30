@@ -34,7 +34,7 @@ const date = new Date().toLocaleString("en-us", {
  * 2. uses html2pdf library to convert html to pdf
  * all the html style from marked down file will be reflected on PDF
  */
-export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, filePrefix = "ICDC_Data_Model-") => {
+export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, filePrefix = "ICDC_Data_Model-", footnote = "") => {
   /** create html elment for pdf - convert marked object to html */
   const readMeContent = document.createElement("div");
   const body = document.createElement("div");
@@ -94,7 +94,7 @@ export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, fil
         pdf.text(
           pgWidth - 8,
           pgHeight - 0.5,
-          "CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL"
+          footnote || "CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL"
         );
         pdf.addImage(
           footerLine,
@@ -149,7 +149,7 @@ const ReadMeDialogComponent = ({
             {(typeof(pdfConfig?.allowDownload) !== "boolean" || pdfConfig?.allowDownload) && (
               <Button
                 className={classes.downloadBtn}
-                onClick={() => downloadMarkdownPdf(title, content, pdfConfig?.iconSrc, pdfConfig?.prefix)}
+                onClick={() => downloadMarkdownPdf(title, content, pdfConfig?.iconSrc, pdfConfig?.prefix, pdfConfig?.footnote)}
               >
                 <img
                   src={PdfDownloadIcon}

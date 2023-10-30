@@ -165,7 +165,7 @@ const DownloadFileTypeBtn = ({
       case FILE_TYPE_FULL_DICTIONARY:
         return downloadFullDictionaryPdf();
       case FILE_TYPE_README:
-        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix);
+        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix, config?.footnote);
       case FILE_TYPE_TEMPLATES:
         return downloadAllTemplates(config?.downloadPrefix);
       case FILE_TYPE_CONTROLLED_VOCAB_TSV:

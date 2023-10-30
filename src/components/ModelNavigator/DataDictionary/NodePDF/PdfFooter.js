@@ -4,6 +4,7 @@ import {
   Text,
 } from '@react-pdf/renderer';
 import { FontRegistry } from './util';
+import { useSelector } from 'react-redux';
 
 const styles = StyleSheet.create({
   hr: {
@@ -49,29 +50,33 @@ const styles = StyleSheet.create({
 
 const date = new Date().toLocaleString('en-us', { month: 'long', year: 'numeric', day: 'numeric' });
 
-const PdfFooter = () => (
-  <>
-    <Text
-      style={styles.hr}
-      fixed
-    />
-    <Text
-      style={styles.link}
-      fixed
-    >
-      caninecommons.cancer.gov/#/icdc-data-model
-    </Text>
-    <Text style={styles.date} fixed>
-      {`${date}    |  `}
-    </Text>
-    <Text
-      style={styles.pageNumber}
-      render={({ pageNumber }) => (
-        `${pageNumber}`
-      )}
-      fixed
-    />
-  </>
-);
+const PdfFooter = () => {
+  const pdfConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
+
+  return (
+    <>
+      <Text
+        style={styles.hr}
+        fixed
+      />
+      <Text
+        style={styles.link}
+        fixed
+      >
+        {pdfConfig?.footnote ? pdfConfig?.footnote : "caninecommons.cancer.gov/#/icdc-data-model"}
+      </Text>
+      <Text style={styles.date} fixed>
+        {`${date}    |  `}
+      </Text>
+      <Text
+        style={styles.pageNumber}
+        render={({ pageNumber }) => (
+          `${pageNumber}`
+        )}
+        fixed
+      />
+    </>
+  );
+};
 
 export default PdfFooter;

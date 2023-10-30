@@ -139,6 +139,7 @@ export const pdfDownloadConfig = {
   },
   iconSrc: "", // PDF Header Icon SRC (.png only)
   allowDownload: true, // Toggle README PDF downloads
+  footnote: "", // Override PDF Footer Text
 };
 
 see filter ICDC config (above link)
