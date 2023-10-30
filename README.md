@@ -131,7 +131,7 @@ export default ModelNavigator;
 export const pdfDownloadConfig = {
   fileType: 'pdf',
   prefix: 'ICDC_Data_Model_',
-  dictionaryPrefix: 'ICDC_Data_Model', // Prefix for the dictionary download PDF
+  downloadPrefix: "ICDC_", // File download prefix added to file name
   landscape: 'true',
   catagoryIcon: {
     url: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/icdc/DMN/Pdf/',

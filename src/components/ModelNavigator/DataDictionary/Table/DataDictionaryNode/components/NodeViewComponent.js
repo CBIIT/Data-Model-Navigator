@@ -29,7 +29,7 @@ const NodeViewComponent = ({
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
     fileType: "tsv",
-    prefix: "ICDC_Data_Loading_Template-",
+    prefix: pdfDownloadConfig?.downloadPrefix || "ICDC_Data_Loading_Template-",
   };
 
   const isFileManifest = node.id === "file";
@@ -139,7 +139,7 @@ const NodeViewComponent = ({
                       isFileManifest
                         ? createFileName(
                             "",
-                            fileManifestDownloadSettings.filename_prefix
+                            pdfDownloadConfig?.downloadPrefix || fileManifestDownloadSettings.filename_prefix
                           )
                         : createFileName(node.id, csvBtnDownloadConfig.prefix)
                     }

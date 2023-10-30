@@ -329,7 +329,7 @@ export const generateFileManifest = (node) => {
   return text;
 };
 
-export const generateVocabFullDownload = (fullDictionary, format) => {
+export const generateVocabFullDownload = (fullDictionary, format, prefix = "ICDC_") => {
   const c2nl = category2NodeList(fullDictionary);
   const enumArr = [];
   const zip = new JSZip();
@@ -347,8 +347,8 @@ export const generateVocabFullDownload = (fullDictionary, format) => {
     });
   });
 
-  const zipFileName = createFileName('ICDC_Controlled_Vocabularies', '');
-  const getFileName = (title, propertyKey, format) => `${createFileName(`${title}-${propertyKey}`, 'ICDC_Controlled_Vocabulary-')}.${format}`
+  const zipFileName = createFileName(prefix + 'Controlled_Vocabularies', '');
+  const getFileName = (title, propertyKey, format) => `${createFileName(`${title}-${propertyKey}`, prefix + 'Controlled_Vocabulary-')}.${format}`
   switch (format) {
     case 'TSV': {
       const vocabTSVArr = enumArr.map(({ enums, title, propertyKey }) => {

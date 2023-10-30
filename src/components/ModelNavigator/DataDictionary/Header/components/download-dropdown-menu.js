@@ -126,14 +126,14 @@ const DownloadFileTypeBtn = ({
   };
 
   const downloadFullDictionaryPdf = () => {
-    const fileName = createFileName(config?.dictionaryPrefix || 'ICDC_Data_Model', '');
+    const fileName = createFileName(config?.downloadPrefix || 'ICDC_Data_Model', '');
     setLoading(true);
     setTimeout(() => {
       generatePdfDocument(processedFullDictionary, config, setLoading, fileName);
     }, 50);
   };
 
-  const downloadAllTemplates = () => {
+  const downloadAllTemplates = (prefix = "ICDC_") => {
     // eslint-disable-next-line no-unused-vars
     const fullDictionaryTemplates = Object.fromEntries(Object.entries(fullDictionary).filter(([_key, value]) => value.template === 'Yes'));
     const nodesValueArray = Object.values(fullDictionaryTemplates);
@@ -151,12 +151,12 @@ const DownloadFileTypeBtn = ({
 
     const zip = new JSZip();
     const titlePrefix = (nodeTSV) => (nodeTSV.type === 'file-manifest'
-      ? 'ICDC_File_Transfer_Manifest' : 'ICDC_Data_Loading_Template-');
+      ? prefix + 'File_Transfer_Manifest' : prefix + 'Data_Loading_Template-');
     const nodeName = (name) => (name === 'file' ? '' : name);
     nodesTSV.forEach((nodeTSV, index) => zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV))}.tsv`, nodeTSV.content));
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
-      saveAs(thisContent, createFileName('', 'ICDC_Data_Loading_Templates'));
+      saveAs(thisContent, createFileName('', prefix + 'Data_Loading_Templates'));
     });
   };
 
@@ -165,13 +165,13 @@ const DownloadFileTypeBtn = ({
       case FILE_TYPE_FULL_DICTIONARY:
         return downloadFullDictionaryPdf();
       case FILE_TYPE_README:
-        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.prefix);
+        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix);
       case FILE_TYPE_TEMPLATES:
-        return downloadAllTemplates();
+        return downloadAllTemplates(config?.downloadPrefix);
       case FILE_TYPE_CONTROLLED_VOCAB_TSV:
-        return generateVocabFullDownload(fullDictionary, 'TSV');
+        return generateVocabFullDownload(fullDictionary, 'TSV', config?.downloadPrefix);
       case FILE_TYPE_CONTROLLED_VOCAB_JSON:
-        return generateVocabFullDownload(fullDictionary, 'JSON');
+        return generateVocabFullDownload(fullDictionary, 'JSON', config?.downloadPrefix);
       case FILE_TYPE_LOADING_EXAMPLE:
         return generateLoadingExample();
       default:

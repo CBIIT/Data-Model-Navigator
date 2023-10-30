@@ -14,6 +14,7 @@ import ForwardIcon from "@material-ui/icons/Forward";
 import { saveAs } from "file-saver";
 import { capitalizeFirstLetter, createFileName } from "../../../utils";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import { useSelector } from 'react-redux';
 
 const DOWNLOADS = "DOWNLOADS";
 const filePerfix = "ICDC_Controlled_Vocabulary-";
@@ -67,6 +68,7 @@ const StyledMenuItem = withStyles((theme) => ({
 const DownloadFileTypeBtn = ({ classes, data, node, propertyKey }) => {
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [label, setLabel] = useState("DOWNLOADS");
+  const pdfConfig = useSelector((state) => state?.ddgraph && state?.ddgraph?.pdfDownloadConfig ? state?.ddgraph?.pdfDownloadConfig : {});
 
   const clickHandler = (event) => {
     setLabel("DOWNLOADS");
@@ -85,7 +87,7 @@ const DownloadFileTypeBtn = ({ classes, data, node, propertyKey }) => {
   const download = (thisData, fileType, contentType) => {
     const exportData = new Blob([thisData], { type: contentType });
     const nodeTitle = capitalizeFirstLetter(node);
-    const fileName = createFileName(`${nodeTitle}-${propertyKey}`, filePerfix);
+    const fileName = createFileName(`${nodeTitle}-${propertyKey}`, pdfConfig?.downloadPrefix || filePerfix);
     saveAs(exportData, `${fileName}.${fileType.toLowerCase()}`);
   };
 
