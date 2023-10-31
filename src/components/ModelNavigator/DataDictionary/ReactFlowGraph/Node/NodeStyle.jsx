@@ -58,6 +58,10 @@ export default () => ({
     justifyContent: "center",
     alignItems: "center",
     padding: "0 8px",
+    "&:hover": {
+      backgroundColor: "#ef8523",
+      color: "#fff",
+    },
   },
   nodeButtonOuterWrapper: {
     borderRadius: "15px",
