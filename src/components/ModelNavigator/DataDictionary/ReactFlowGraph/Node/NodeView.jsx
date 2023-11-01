@@ -106,8 +106,12 @@ const NodeView = ({
               })}
             >
               <div
-                className={classes.nodeButtonOuterWrapper}
-                style={{ border: display ? "2px solid white" : "0px" }}
+                className={
+                  isSearchMode ? nodeClasses : classes.nodeButtonOuterWrapper
+                }
+                style={{
+                  border: display && "2px solid white",
+                }}
                 onClick={isSearchMode ? displayOverviewTable : expandNode}
               >
                 <div className={classes.nodeButtonInnerWrapper}>
