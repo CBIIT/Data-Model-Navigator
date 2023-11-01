@@ -58,21 +58,17 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
                             max = Math.max(max, level);
                         } else {
                             // node2Level[source] = node2Level[target] - nextLevel/2;
+                            // updated 10/18/2023 - AR
                             /***
+                             * incase of multiple root nodes (canine_ind, off_study)
+                             * node without any parent.
                              * assign level to unexplored parent nodes
                              */
                             if (!exploredSoureNodes[source]) {
+                              // assign level to parent in a tree
+                              // one above child node level
                               node2Level[source] = node2Level[target] - nextLevel/2;
-                            }
-                            // node2Level[source] = node2Level[target];
-                            const minLevel = node2Level[target];
-                            nodes.forEach((node) => {
-                              if (minLevel <= node2Level[node]) {
-                                const level = node2Level[node] + nextLevel + 1;
-                                max = Math.max(max, level)
-                                node2Level[node] = level;
-                              }
-                            });
+                            } 
                         }
                     } else {
                         node2Level[target] = max;

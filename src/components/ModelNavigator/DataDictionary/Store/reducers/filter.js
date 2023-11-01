@@ -142,6 +142,7 @@ const moduleReducers = (state = initialState, action) => {
         checkbox: {
           data: setSubjectCount(filterConfig.facetSearchData, filtered.subjectCounts),
         },
+        pageConfig: payload.pageConfig,
       });
     
     case actionTypes.FILTER_DATA_EXPLORER:
