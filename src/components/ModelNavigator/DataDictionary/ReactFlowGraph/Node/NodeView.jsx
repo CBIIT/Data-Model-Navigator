@@ -38,6 +38,7 @@ const NodeView = ({
   const {
     label,
     icon,
+    iconColor,
     category,
     matchedNodeNameQuery,
     nodeAssignment,
@@ -104,43 +105,38 @@ const NodeView = ({
                 [classes.btnPadding]: display,
               })}
             >
-              <button
-                className={
-                  isSearchMode
-                    ? nodeClasses
-                    : clsx(
-                        classes.nodeTitleBtn,
-                        classes.categoryIcon,
-                        classes[category],
-                        { [classes.nodeTitleBtnWrapper]: display }
-                      )
-                }
+              <div
+                className={classes.nodeButtonOuterWrapper}
+                style={{ border: display ? "2px solid white" : "0px" }}
                 onClick={isSearchMode ? displayOverviewTable : expandNode}
-                onFocus={nodeFocusEvent}
               >
-                <span
-                  className={classes.iconWrapper}
-                  style={{
-                    backgroundImage: `url(${icon})`,
-                    backgroundRepeat: "no-repeat",
-                  }}
-                >
-                  {/* <img className={classes.nodeIcon} src={icon} alt="category_icon" />  */}
-                </span>
-                <p className={classes.nodeName}>
-                  {isSearchMode && matchedNodeNameQuery ? (
-                    <>
-                      {highlightMatchingTitle(
-                        label,
-                        matchedNodeNameQuery,
-                        classes
-                      )}
-                    </>
-                  ) : (
-                    `${label}`.toLowerCase()
-                  )}
-                </p>
-              </button>
+                <div className={classes.nodeButtonInnerWrapper}>
+                  <div
+                    className={classes.iconWrapper}
+                    style={{ backgroundColor: iconColor }}
+                  >
+                    <img
+                      className={classes.icon}
+                      src={icon}
+                      alt="category icon"
+                    />
+                  </div>
+
+                  <div className={classes.labelWrapper}>
+                    {isSearchMode && matchedNodeNameQuery ? (
+                      <>
+                        {highlightMatchingTitle(
+                          label,
+                          matchedNodeNameQuery,
+                          classes
+                        )}
+                      </>
+                    ) : (
+                      `${label}`.toLowerCase()
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
             <div
               className={display ? classes.viewSection : classes.hideSection}
