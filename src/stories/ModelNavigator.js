@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
 // import { storiesOf } from '@storybook/react';
 import { Provider } from 'react-redux';
+import { Handle, useReactFlow, useStoreApi } from "reactflow";
 import axios from 'axios';
 import yaml from 'js-yaml';
 import _ from 'lodash';
@@ -13,6 +14,7 @@ import ReduxDataDictionary from '../components/ModelNavigator/DataDictionary/Red
 import { filterConfig } from '../components/ModelNavigator/bento/dataDictionaryData';
 
 import { CustomThemeProvider } from './ThemeContext';
+import { Button } from '@material-ui/core';
 
 const nihLogoImg = {
   height: '54px',
@@ -31,8 +33,8 @@ const nihLogoImg = {
  */
 
 const version = { commit: '913161064b02bcef024d072873e77c8c79cc1a68', dictionary: { commit: '520a25999fd183f6c5b7ddef2980f3e839517da5', version: '0.2.1-9-g520a259' }, version: '4.0.0-44-g9131610' };
-const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml";
-const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
+// const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml";
+// const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model-props.yml";
 
 const readMeConfig=  {
   readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
@@ -51,6 +53,29 @@ const customNodeTree = [
   ['demographic', 'diagnosis', 'specimen'],
   ['node', 'exposure', 'data_file']
 ]
+
+const CustomNode = (props) => {
+  const { data, handleId } = props;
+  const { label } = data;
+  return (
+    <div>
+      <Button style={{background: '#fff', color: '#000', border:'3px solid', fontSize: '18px'}}>
+        {label}
+      </Button>
+      <Handle type="target" position="top" style={{ top: "12px" }} />
+      <Handle
+        type="source"
+        position="bottom"
+        id={handleId}
+        style={{
+          background: "transparent",
+          border: "none",
+          top: "37px",
+        }}
+      />
+    </div>
+  );
+};
 // example set legend style (position)
 //set styling and configuration for autofit actions
 const graphViewConfig = {
@@ -84,18 +109,19 @@ const graphViewConfig = {
       zoom: 0.5,
       minZoom: 0.5,
       maxZoom: 2,
-      xInterval: 250,
+      xInterval: 300,
       yInterval: 90,
     },
-    // nodeTree: customNodeTree,
+    nodeTree: customNodeTree,
+    // customNode: (props) => <CustomNode {...props} />,
   }
 }
 
 // const DATA_MODEL = 'https://raw.githubusercontent.com/CBIIT/c3dc-model/main/model-desc/c3dc-model.yml';
 // const DATA_MODEL_PROPS = 'https://raw.githubusercontent.com/CBIIT/c3dc-model/main/model-desc/c3dc-model-props.yml';
 
-// const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/ctdc-model/initial_cmb_rebuild_of_ctdc_data_model/model-desc/ctdc_model_file.yaml";
-// const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/ctdc-model/initial_cmb_rebuild_of_ctdc_data_model/model-desc/ctdc_model_properties_file.yaml";
+const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/ctdc-model/initial_cmb_rebuild_of_ctdc_data_model/model-desc/ctdc_model_file.yaml";
+const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/ctdc-model/initial_cmb_rebuild_of_ctdc_data_model/model-desc/ctdc_model_properties_file.yaml";
 
 // const DATA_MODEL = "https://raw.githubusercontent.com/CBIIT/gmb-model/main/model-desc/000048_Model.yml";
 // const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/gmb-model/main/model-desc/000048_Model_Props.yml";

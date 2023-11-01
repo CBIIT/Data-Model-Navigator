@@ -6,22 +6,33 @@ import clsx from "clsx";
 import Styles from "./NodeStyle";
 import { highlightMatchingTitle, setMatchingNodeClasses } from "./util";
 
-const NodeView = ({
-  classes,
-  id,
-  handleId,
-  data,
-  onViewTable,
-  isSearchMode,
-  ddgraph,
-  currentSearchKeyword,
-  onClickNode,
-  expandNodeView,
-  onCollapseNodeView,
-  highlightingNode,
-  onNodeFocus,
-  focusedNodeId,
-}) => {
+const NodeView = (props) => {
+  const {
+    classes,
+    id,
+    handleId,
+    data,
+    onViewTable,
+    isSearchMode,
+    ddgraph,
+    currentSearchKeyword,
+    onClickNode,
+    expandNodeView,
+    onCollapseNodeView,
+    highlightingNode,
+    onNodeFocus,
+    focusedNodeId,
+    CustomNode,
+  } = props;
+
+  if (CustomNode) {
+    return (
+      <>
+        <CustomNode  {...props} />
+      </>
+    )
+  }
+
   const [display, setDisplay] = useState(false);
   /**
    * expand node in normal mode (when search mode is false)
@@ -38,7 +49,6 @@ const NodeView = ({
   const {
     label,
     icon,
-    iconColor,
     category,
     matchedNodeNameQuery,
     nodeAssignment,
@@ -105,38 +115,43 @@ const NodeView = ({
                 [classes.btnPadding]: display,
               })}
             >
-              <div
-                className={classes.nodeButtonOuterWrapper}
-                style={{ border: display ? "2px solid white" : "0px" }}
+              <button
+                className={
+                  isSearchMode
+                    ? nodeClasses
+                    : clsx(
+                        classes.nodeTitleBtn,
+                        classes.categoryIcon,
+                        classes[category],
+                        { [classes.nodeTitleBtnWrapper]: display }
+                      )
+                }
                 onClick={isSearchMode ? displayOverviewTable : expandNode}
+                onFocus={nodeFocusEvent}
               >
-                <div className={classes.nodeButtonInnerWrapper}>
-                  <div
-                    className={classes.iconWrapper}
-                    style={{ backgroundColor: iconColor }}
-                  >
-                    <img
-                      className={classes.icon}
-                      src={icon}
-                      alt="category icon"
-                    />
-                  </div>
-
-                  <div className={classes.labelWrapper}>
-                    {isSearchMode && matchedNodeNameQuery ? (
-                      <>
-                        {highlightMatchingTitle(
-                          label,
-                          matchedNodeNameQuery,
-                          classes
-                        )}
-                      </>
-                    ) : (
-                      `${label}`.toLowerCase()
-                    )}
-                  </div>
-                </div>
-              </div>
+                <span
+                  className={classes.iconWrapper}
+                  style={{
+                    backgroundImage: `url(${icon})`,
+                    backgroundRepeat: "no-repeat",
+                  }}
+                >
+                  {/* <img className={classes.nodeIcon} src={icon} alt="category_icon" />  */}
+                </span>
+                <p className={classes.nodeName}>
+                  {isSearchMode && matchedNodeNameQuery ? (
+                    <>
+                      {highlightMatchingTitle(
+                        label,
+                        matchedNodeNameQuery,
+                        classes
+                      )}
+                    </>
+                  ) : (
+                    `${label}`.toLowerCase()
+                  )}
+                </p>
+              </button>
             </div>
             <div
               className={display ? classes.viewSection : classes.hideSection}
