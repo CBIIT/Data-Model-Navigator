@@ -19,15 +19,15 @@ export default () => ({
     fontWeight: "500",
     color: "#0d71a3",
     float: "left",
-    fontFamily: "Nunito Light",
+    fontFamily: "Nunito",
   },
   closeBtn: {
-    padding: '5px',
-    textAlign: 'right',
-    fontSize: '30px',
+    padding: "5px",
+    textAlign: "right",
+    fontSize: "30px",
   },
   closBtnContainer: {
-    paddingTop: '8px',
+    paddingTop: "8px",
   },
   closeBtnIcon: {
     paddingTop: "10px",

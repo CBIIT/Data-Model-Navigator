@@ -58,7 +58,7 @@ export const downloadMarkdownPdf = async (title, content) => {
   const fileName = createFileName("read_me", "ICDC_Data_Model-");
   /** configure pdf increase pixel of the PDF */
   const options = {
-    margin: [0.5, 0.5, 0.8, 0.5],
+    margin: [0.5, 0.5, 0.6, 0.5],
     filename: fileName,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: {
@@ -69,7 +69,7 @@ export const downloadMarkdownPdf = async (title, content) => {
     },
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     pagebreak: {
-      mode: ["avoid-all", "css", "legacy"],
+      mode: ["avoid-all"],
     },
   };
 
@@ -91,7 +91,7 @@ export const downloadMarkdownPdf = async (title, content) => {
        */
       for (let i = 1; i <= totalPages; i++) {
         pdf.setPage(i);
-        pdf.setFont("Nunito Sans");
+        pdf.setFont("Helvetica");
         pdf.setFontSize(7);
         pdf.setTextColor("#606060");
         pdf.setCharSpace(0.015);

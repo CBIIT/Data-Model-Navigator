@@ -53,6 +53,7 @@ export default () => ({
     padding: "0px 0px 0px 15px",
     //lineHeight: "40px",
     //verticalAlign: "middle",
+    height: '44px',
     borderLeft: "5px solid",
     display: "flex",
     justifyContent: "space-between",
@@ -84,7 +85,7 @@ export default () => ({
     lineHeight: "1.6rem",
   },
   categoryIcon: {
-    maxWidth: "39px",
+    width: "32px",
   },
   property: {
     marginTop: "-5px",
