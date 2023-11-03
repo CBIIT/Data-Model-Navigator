@@ -22,11 +22,13 @@ import footerLine from "./assets/two-pixel-footer-line.png";
 import nihLogo from "./assets/icdc_nih_logo.png";
 import PdfDownloadIcon from "../Header/icons/icon_download_PDF.svg";
 
-const date = new Date().toLocaleString("en-us", {
-  month: "long",
-  year: "numeric",
-  day: "numeric",
-}).toUpperCase();
+const date = new Date()
+  .toLocaleString("en-us", {
+    month: "long",
+    year: "numeric",
+    day: "numeric",
+  })
+  .toUpperCase();
 
 /** download pdf of marked down file
  * 1.convert or generate html element of marked object
@@ -38,23 +40,25 @@ export const downloadMarkdownPdf = async (title, content) => {
   const readMeContent = document.createElement("div");
   const body = document.createElement("div");
   /** add header logo on first page */
-  const headerLogo = `<img src='${nihLogo}' width="50%" alt='logo' />
+  const headerLogo = `<img src='${nihLogo}' width="40%" alt='logo' />
   <br> <div style="height:1px; background-color: #173554;"/>`;
   readMeContent.innerHTML += headerLogo;
   const titleEl =
-    "<br><span style='color: #4D6787; font-size: 18px; font-family: Lato Bold'>".concat(
+    "<br><span style='color: #4d6787; font-size: 18px; font-family: Lato; font-weight: 700;'>".concat(
       title,
       "</span>"
     );
   readMeContent.innerHTML += titleEl;
-  body.innerHTML += `<div style="padding-left: 15px">${marked(content)}</div>`;
+  body.innerHTML += `<div style="padding-left: 25px; font-family: Nunito Sans">${marked(
+    content
+  )}</div>`;
   readMeContent.innerHTML += body.innerHTML;
 
   /** set pdf fileneam */
   const fileName = createFileName("read_me", "ICDC_Data_Model-");
   /** configure pdf increase pixel of the PDF */
   const options = {
-    margin: [0.5, 0.5, 0.8, 0.5],
+    margin: [0.5, 0.5, 0.6, 0.5],
     filename: fileName,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: {
@@ -65,7 +69,7 @@ export const downloadMarkdownPdf = async (title, content) => {
     },
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     pagebreak: {
-      mode: ["avoid-all", "css", "legacy"],
+      mode: ["avoid-all"],
     },
   };
 
@@ -87,9 +91,11 @@ export const downloadMarkdownPdf = async (title, content) => {
        */
       for (let i = 1; i <= totalPages; i++) {
         pdf.setPage(i);
-        pdf.setFont('Nunito Sans Regular');
-        pdf.setFontSize(7)
-        pdf.text(pgWidth - 1.4, pgHeight - 0.5, `${date} | ${i}`);
+        pdf.setFont("Helvetica");
+        pdf.setFontSize(7);
+        pdf.setTextColor("#606060");
+        pdf.setCharSpace(0.015);
+        pdf.text(pgWidth - 2.15, pgHeight - 0.5, `${date}     |      ${i}`);
         pdf.text(
           pgWidth - 8,
           pgHeight - 0.5,
@@ -153,7 +159,10 @@ const ReadMeDialogComponent = ({
                 className={classes.downloadIcon}
               />
             </Button>
-            <IconButton onClick={displayReadMeDialog} className={classes.closeBtnContainer}>
+            <IconButton
+              onClick={displayReadMeDialog}
+              className={classes.closeBtnContainer}
+            >
               <CloseIcon fontSize="small" className={classes.closeBtnIcon} />
             </IconButton>
           </div>

@@ -182,6 +182,7 @@ export default () => ({
   },
   matchedNodeIDsInProps: {
     border: "2.5px dashed #2E2E2E",
+    borderRadius: "15px",
   },
   excludeNode: {
     cursor: "not-allowed",

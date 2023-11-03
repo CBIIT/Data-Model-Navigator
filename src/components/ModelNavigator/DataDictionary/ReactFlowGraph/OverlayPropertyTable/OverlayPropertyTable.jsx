@@ -96,13 +96,14 @@ class OverlayPropertyTable extends React.Component {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "10px",
+                    gap: "8px",
+                    paddingLeft: '4px'
                   }}
                 >
                   <img
                     src={`${tableIconUrl}${node.category}.svg`}
                     alt="icon"
-                    className={`${classes.categoryIcon} ${node.category}`}
+                    className={classes.categoryIcon}
                   />
                   <h4
                     style={{ color: "#FFF" }}
