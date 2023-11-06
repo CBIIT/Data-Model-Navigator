@@ -141,6 +141,11 @@ export const pdfDownloadConfig = {
   footnote: "", // Override PDF Footer Text
 };
 
+export const loadingExampleConfig = {
+  type: 'dynamic', // static or dynamic
+  url: 'https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/main/config.json', // premade ZIP for static, config.json for dynamic
+}
+
 see filter ICDC config (above link)
 
 export const graphViewConfig = {

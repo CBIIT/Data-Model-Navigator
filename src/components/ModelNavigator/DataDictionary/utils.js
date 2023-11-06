@@ -380,11 +380,11 @@ export const generateVocabFullDownload = (fullDictionary, format, prefix = "ICDC
   }
 };
 
-export const generateLoadingExample = async () => {
+export const generateLoadingExample = async (configUrl = "https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/main/config.json") => {
   const zip = new JSZip();
 
   // fetch config
-  const {loadingExamples, title} = await (await Axios.get('https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/main/config.json')).data
+  const {loadingExamples, title} = await (await Axios.get(configUrl)).data
   try {
     const titleArr = Object.keys(loadingExamples);
     const res = await Promise.all(Object.values(loadingExamples).map((example) => Axios.get(example)));
@@ -403,3 +403,7 @@ export const generateLoadingExample = async () => {
     throw Error("Failed to fetch example files");
   }
 }
+
+export const downloadLoadingExample = async (zipUrl = "") => {
+  window.open(zipUrl, '_blank');
+};

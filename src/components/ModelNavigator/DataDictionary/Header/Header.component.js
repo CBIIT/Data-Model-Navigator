@@ -20,6 +20,7 @@ const HeaderComponent = ({
   const config = useSelector((state) => (state.submission && state.submission.readMeConfig
     ? state.submission.readMeConfig : undefined));
   const pageConfig = useSelector((state) => (state.submission && state.submission.pageConfig ? state.submission.pageConfig : undefined));
+  const loadingExampleConfig = useSelector((state) => (state.submission && state.submission.loadingExampleConfig ? state.submission.loadingExampleConfig : undefined));
 
   useEffect(() => {
     if (config && config.readMeUrl) {
@@ -88,6 +89,7 @@ const HeaderComponent = ({
               fullDictionary={fullDictionary}
               readMeContent={content}
               readMeConfig={config}
+              loadingExampleConfig={loadingExampleConfig}
             />
           </div>
           <ReadMeComponent

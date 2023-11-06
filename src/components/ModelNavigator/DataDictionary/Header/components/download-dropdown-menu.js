@@ -17,7 +17,8 @@ import { category2NodeList, sortByCategory } from '../../Utils/download-helper-f
 import { downloadMarkdownPdf } from '../../ReadMe/ReadMe.component';
 import {
   convertToTSV, createFileName, generateFileManifest, generateVocabFullDownload, isFileManifest,
-  generateLoadingExample
+  generateLoadingExample,
+  downloadLoadingExample
 } from '../../utils';
 
 const {
@@ -100,6 +101,7 @@ const DownloadFileTypeBtn = ({
   readMeContent,
   readMeConfig,
   fullDictionary,
+  loadingExampleConfig,
 }) => {
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [label, setLabel] = useState('Available Downloads');
@@ -173,7 +175,9 @@ const DownloadFileTypeBtn = ({
       case FILE_TYPE_CONTROLLED_VOCAB_JSON:
         return generateVocabFullDownload(fullDictionary, 'JSON', config?.downloadPrefix);
       case FILE_TYPE_LOADING_EXAMPLE:
-        return generateLoadingExample();
+        return loadingExampleConfig?.type === "static"
+          ? downloadLoadingExample(loadingExampleConfig?.url)
+          : generateLoadingExample(loadingExampleConfig?.url);
       default:
         return null;
     }
