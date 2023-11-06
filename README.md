@@ -138,7 +138,6 @@ export const pdfDownloadConfig = {
     type: '.png',
   },
   iconSrc: "", // PDF Header Icon SRC (.png only)
-  allowDownload: true, // Toggle README PDF downloads
   footnote: "", // Override PDF Footer Text
 };
 

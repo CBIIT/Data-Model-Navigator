@@ -121,6 +121,7 @@ const ReadMeDialogComponent = ({
   title,
 }) => {
   const pdfConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
+  const readMeConfig = useSelector(state => state.submission && state.submission.readMeConfig);
 
   if (!content) {
     return <></>;
@@ -146,7 +147,7 @@ const ReadMeDialogComponent = ({
             <span>{title}</span>
           </div>
           <div item xs={1} className={classes.closeBtn}>
-            {(typeof(pdfConfig?.allowDownload) !== "boolean" || pdfConfig?.allowDownload) && (
+            {(typeof(readMeConfig?.allowDownload) !== "boolean" || readMeConfig?.allowDownload) && (
               <Button
                 className={classes.downloadBtn}
                 onClick={() => downloadMarkdownPdf(title, content, pdfConfig?.iconSrc, pdfConfig?.prefix, pdfConfig?.footnote)}

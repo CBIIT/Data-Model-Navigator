@@ -195,8 +195,8 @@ const DownloadFileTypeBtn = ({
       if (item === FILE_TYPE_README && typeof(readMeConfig?.readMeUrl) !== "string") {
         return false;
       }
-      if (item === FILE_TYPE_README && typeof(config?.allowDownload) === "boolean") {
-        return config?.allowDownload;
+      if (item === FILE_TYPE_README && typeof(readMeConfig?.allowDownload) === "boolean") {
+        return readMeConfig?.allowDownload;
       }
 
       return true;
