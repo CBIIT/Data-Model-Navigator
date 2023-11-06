@@ -51,29 +51,39 @@ export default () => ({
     width: "20px",
     cursor: "pointer",
   },
-  nodeIcon: {
-    float: "left",
-    width: "33px",
-    // height: '30px',
-  },
-  iconWrapper: {
-    width: "44px",
-    float: "left",
-    height: "32px",
-  },
-  nodeName: {
-    float: "right",
-    display: "block",
-    padding: "0px 14px 0px 14px",
-    minWidth: "90px",
+  labelWrapper: {
     fontSize: "16px",
     fontWeight: "500",
-    height: "100%",
-    margin: "0",
-    background: "#fff",
-    borderTopRightRadius: "5px",
-    borderBottomRightRadius: "5px",
-    lineHeight: "27px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "0 8px",
+    "&:hover": {
+      backgroundColor: "#ef8523",
+      color: "#fff",
+    },
+  },
+  nodeButtonOuterWrapper: {
+    borderRadius: "15px",
+  },
+  nodeButtonInnerWrapper: {
+    border: "3px solid #2E2E2E",
+    display: "grid",
+    gridTemplateColumns: "60px 1fr",
+    zIndex: "1",
+    backgroundColor: "#fff",
+    cursor: "pointer",
+    borderRadius: "15px",
+  },
+  iconWrapper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomLeftRadius: "13px",
+    borderTopLeftRadius: "13px",
+  },
+  icon: {
+    height: "39px",
   },
   btnPadding: {
     paddingLeft: "20px",
@@ -81,28 +91,6 @@ export default () => ({
   },
   nodeTitleBtnWrapper: {
     outline: "0.5px solid #ffffff",
-  },
-  nodeTitleBtn: {
-    border: "2px solid #2E2E2E",
-    padding: "0",
-    minWidth: "115px",
-    height: "39px",
-    borderRadius: "6px",
-    cursor: "pointer",
-    backgroundColor: "#ffffff",
-    // '&:hover': {
-    //   backgroundColor: '#ef8523',
-    //   color: '#ffffff',
-    // },
-    "&:hover $nodeName": {
-      backgroundColor: "#ef8523",
-      color: "#ffffff",
-    },
-    "& img": {
-      borderTopLeftRadius: "2px",
-      borderBottomLeftRadius: "2px",
-      height: "32px",
-    },
   },
   sourceHandler: {
     background: "#2e2e2e",
@@ -194,78 +182,11 @@ export default () => ({
   },
   matchedNodeIDsInProps: {
     border: "2.5px dashed #2E2E2E",
+    borderRadius: "15px",
   },
   excludeNode: {
     cursor: "not-allowed",
     pointerEvents: "none",
     opacity: "0.4",
-  },
-  categoryIcon: {
-    "& img": {
-      borderTopLeftRadius: "5px",
-      borderBottomLeftRadius: "5px",
-      // marginTop: '-0.5px',
-      marginLeft: "-0.5px",
-      marginTop: "-0.5px",
-    },
-  },
-  administrative: {
-    background: "#9b2d20",
-    "& img": {
-      background: "#9b2d20",
-      // borderTop: '1px solid #9b2d20',
-    },
-  },
-  study: {
-    background: "#9875ff",
-    "& .iconWrapper": {
-      background: "#9875ff",
-    },
-    "& img": {
-      background: "#9875ff",
-      // borderTop: '1px solid #9875ff',
-    },
-  },
-  case: {
-    background: "#ff7f15",
-    "& img": {
-      background: "#ff7f15",
-      // borderTop: '1px solid #ff7f15',
-    },
-  },
-  clinical_trial: {
-    background: "#00A1BB",
-    "& img": {
-      background: "#00A1BB",
-      // borderTop: '1px solid #00A1BB',
-    },
-  },
-  biospecimen: {
-    background: "#00785a",
-    "& img": {
-      background: "#00785a",
-      // borderTop: '1px solid #00785a',
-    },
-  },
-  analysis: {
-    background: "#b533a9",
-    "& img": {
-      background: "#b533a9",
-      // borderTop: '1px solid #b533a9',
-    },
-  },
-  data_file: {
-    background: "#00ad0e",
-    "& img": {
-      background: "#00ad0e",
-      // borderTop: '1px solid #00ad0e',
-    },
-  },
-  clinical: {
-    background: "#1c75bc",
-    "& img": {
-      background: "#1c75bc",
-      // borderTop: '1px solid #1c75bc',
-    },
   },
 });
