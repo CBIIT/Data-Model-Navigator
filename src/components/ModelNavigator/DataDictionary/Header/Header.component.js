@@ -22,7 +22,7 @@ const HeaderComponent = ({
   const pageConfig = useSelector((state) => (state.submission && state.submission.pageConfig ? state.submission.pageConfig : undefined));
 
   useEffect(() => {
-    if (config) {
+    if (config && config.readMeUrl) {
       axios.get(config.readMeUrl).then((response) => response).then((resp) => {
         if (resp.data) {
           setContent(resp.data);
@@ -59,28 +59,29 @@ const HeaderComponent = ({
           <div
             className={classes.btnGroup}
           >
-            <Button
-              classes={{
-                root: classes.readMeBtnRoot,
-                label: classes.readMeBtnLabel,
-              }}
-              variant="contained"
-              color="primary"
-              onClick={displayReadMeHandler}
-              endIcon={(
-                <img
-                  style={{
-                    height: '20px',
-                    width: '20px',
-                  }}
-                  alt="readme btn icon"
-                  src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/icdc/images/svgs/DMN_readme_title-bar_icon.svg"
-                />
-)}
-            >
-              README
-            </Button>
-
+            {typeof(config?.readMeUrl) === "string" && (
+              <Button
+                classes={{
+                  root: classes.readMeBtnRoot,
+                  label: classes.readMeBtnLabel,
+                }}
+                variant="contained"
+                color="primary"
+                onClick={displayReadMeHandler}
+                endIcon={(
+                  <img
+                    style={{
+                      height: '20px',
+                      width: '20px',
+                    }}
+                    alt="readme btn icon"
+                    src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/icdc/images/svgs/DMN_readme_title-bar_icon.svg"
+                  />
+                )}
+              >
+                README
+              </Button>
+            )}
             <DownloadDropdownMenu
               config={{ ...pdfDownloadConfig, type: 'document' }}
               filteredDictionary={dictionary}
