@@ -21,6 +21,7 @@ import { createFileName } from "../utils";
 import footerLine from "./assets/two-pixel-footer-line.png";
 import nihLogo from "./assets/icdc_nih_logo.png";
 import PdfDownloadIcon from "../Header/icons/icon_download_PDF.svg";
+import { useSelector } from 'react-redux';
 
 const date = new Date()
   .toLocaleString("en-us", {
@@ -35,12 +36,12 @@ const date = new Date()
  * 2. uses html2pdf library to convert html to pdf
  * all the html style from marked down file will be reflected on PDF
  */
-export const downloadMarkdownPdf = async (title, content) => {
+export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, filePrefix = "ICDC_Data_Model-", footnote = "") => {
   /** create html elment for pdf - convert marked object to html */
   const readMeContent = document.createElement("div");
   const body = document.createElement("div");
   /** add header logo on first page */
-  const headerLogo = `<img src='${nihLogo}' width="40%" alt='logo' />
+  const headerLogo = `<img src='${iconSrc}' width="40%" alt='logo' />
   <br> <div style="height:1px; background-color: #173554;"/>`;
   readMeContent.innerHTML += headerLogo;
   const titleEl =
@@ -55,7 +56,7 @@ export const downloadMarkdownPdf = async (title, content) => {
   readMeContent.innerHTML += body.innerHTML;
 
   /** set pdf fileneam */
-  const fileName = createFileName("read_me", "ICDC_Data_Model-");
+  const fileName = createFileName("read_me", filePrefix);
   /** configure pdf increase pixel of the PDF */
   const options = {
     margin: [0.5, 0.5, 0.6, 0.5],
@@ -99,7 +100,7 @@ export const downloadMarkdownPdf = async (title, content) => {
         pdf.text(
           pgWidth - 8,
           pgHeight - 0.5,
-          "CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL"
+          footnote || "CANINECOMMONS.CANCER.GOV/#/ICDC-DATA-MODEL"
         );
         pdf.addImage(
           footerLine,
@@ -125,6 +126,9 @@ const ReadMeDialogComponent = ({
   content,
   title,
 }) => {
+  const pdfConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
+  const readMeConfig = useSelector(state => state.submission && state.submission.readMeConfig);
+
   if (!content) {
     return <></>;
   }
@@ -149,16 +153,18 @@ const ReadMeDialogComponent = ({
             <span>{title}</span>
           </div>
           <div item xs={1} className={classes.closeBtn}>
-            <Button
-              className={classes.downloadBtn}
-              onClick={() => downloadMarkdownPdf(title, content)}
-            >
-              <img
-                src={PdfDownloadIcon}
-                alt="pdf download icon"
-                className={classes.downloadIcon}
-              />
-            </Button>
+            {(typeof(readMeConfig?.allowDownload) !== "boolean" || readMeConfig?.allowDownload) && (
+              <Button
+                className={classes.downloadBtn}
+                onClick={() => downloadMarkdownPdf(title, content, pdfConfig?.iconSrc, pdfConfig?.prefix, pdfConfig?.footnote)}
+              >
+                <img
+                  src={PdfDownloadIcon}
+                  alt="pdf download icon"
+                  className={classes.downloadIcon}
+                />
+              </Button>
+            )}
             <IconButton
               onClick={displayReadMeDialog}
               className={classes.closeBtnContainer}

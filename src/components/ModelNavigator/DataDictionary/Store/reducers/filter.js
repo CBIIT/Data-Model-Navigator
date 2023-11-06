@@ -143,6 +143,7 @@ const moduleReducers = (state = initialState, action) => {
           data: setSubjectCount(filterConfig.facetSearchData, filtered.subjectCounts),
         },
         pageConfig: payload.pageConfig,
+        loadingExampleConfig: payload.loadingExampleConfig,
       });
     
     case actionTypes.FILTER_DATA_EXPLORER:

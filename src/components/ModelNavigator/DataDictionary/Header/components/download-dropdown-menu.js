@@ -17,7 +17,8 @@ import { category2NodeList, sortByCategory } from '../../Utils/download-helper-f
 import { downloadMarkdownPdf } from '../../ReadMe/ReadMe.component';
 import {
   convertToTSV, createFileName, generateFileManifest, generateVocabFullDownload, isFileManifest,
-  generateLoadingExample
+  generateLoadingExample,
+  downloadLoadingExample
 } from '../../utils';
 
 const {
@@ -100,6 +101,7 @@ const DownloadFileTypeBtn = ({
   readMeContent,
   readMeConfig,
   fullDictionary,
+  loadingExampleConfig,
 }) => {
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [label, setLabel] = useState('Available Downloads');
@@ -126,14 +128,14 @@ const DownloadFileTypeBtn = ({
   };
 
   const downloadFullDictionaryPdf = () => {
-    const fileName = createFileName('ICDC_Data_Model', '');
+    const fileName = createFileName(config?.downloadPrefix || 'ICDC_Data_Model', '');
     setLoading(true);
     setTimeout(() => {
       generatePdfDocument(processedFullDictionary, config, setLoading, fileName);
     }, 50);
   };
 
-  const downloadAllTemplates = () => {
+  const downloadAllTemplates = (prefix = "ICDC_") => {
     // eslint-disable-next-line no-unused-vars
     const fullDictionaryTemplates = Object.fromEntries(Object.entries(fullDictionary).filter(([_key, value]) => value.template === 'Yes'));
     const nodesValueArray = Object.values(fullDictionaryTemplates);
@@ -151,12 +153,12 @@ const DownloadFileTypeBtn = ({
 
     const zip = new JSZip();
     const titlePrefix = (nodeTSV) => (nodeTSV.type === 'file-manifest'
-      ? 'ICDC_File_Transfer_Manifest' : 'ICDC_Data_Loading_Template-');
+      ? prefix + 'File_Transfer_Manifest' : prefix + 'Data_Loading_Template-');
     const nodeName = (name) => (name === 'file' ? '' : name);
     nodesTSV.forEach((nodeTSV, index) => zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV))}.tsv`, nodeTSV.content));
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
-      saveAs(thisContent, createFileName('', 'ICDC_Data_Loading_Templates'));
+      saveAs(thisContent, createFileName('', prefix + 'Data_Loading_Templates'));
     });
   };
 
@@ -165,15 +167,17 @@ const DownloadFileTypeBtn = ({
       case FILE_TYPE_FULL_DICTIONARY:
         return downloadFullDictionaryPdf();
       case FILE_TYPE_README:
-        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent);
+        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix, config?.footnote);
       case FILE_TYPE_TEMPLATES:
-        return downloadAllTemplates();
+        return downloadAllTemplates(config?.downloadPrefix);
       case FILE_TYPE_CONTROLLED_VOCAB_TSV:
-        return generateVocabFullDownload(fullDictionary, 'TSV');
+        return generateVocabFullDownload(fullDictionary, 'TSV', config?.downloadPrefix);
       case FILE_TYPE_CONTROLLED_VOCAB_JSON:
-        return generateVocabFullDownload(fullDictionary, 'JSON');
+        return generateVocabFullDownload(fullDictionary, 'JSON', config?.downloadPrefix);
       case FILE_TYPE_LOADING_EXAMPLE:
-        return generateLoadingExample();
+        return loadingExampleConfig?.type === "static"
+          ? downloadLoadingExample(loadingExampleConfig?.url)
+          : generateLoadingExample(loadingExampleConfig?.url);
       default:
         return null;
     }
@@ -190,7 +194,18 @@ const DownloadFileTypeBtn = ({
     </StyledMenuItem>
   );
 
-  const options = fileTypes.map((item) => getMenuItem(item));
+  const options = fileTypes
+    .filter((item) => {
+      if (item === FILE_TYPE_README && typeof(readMeConfig?.readMeUrl) !== "string") {
+        return false;
+      }
+      if (item === FILE_TYPE_README && typeof(readMeConfig?.allowDownload) === "boolean") {
+        return readMeConfig?.allowDownload;
+      }
+
+      return true;
+    })
+    .map((item) => getMenuItem(item));
 
   return (
     <>

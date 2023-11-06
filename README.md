@@ -131,12 +131,20 @@ export default ModelNavigator;
 export const pdfDownloadConfig = {
   fileType: 'pdf',
   prefix: 'ICDC_Data_Model_',
+  downloadPrefix: "ICDC_", // File download prefix added to file name
   landscape: 'true',
   catagoryIcon: {
     url: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/icdc/DMN/Pdf/',
     type: '.png',
   },
+  iconSrc: "", // PDF Header Icon SRC (.png only)
+  footnote: "", // Override PDF Footer Text
 };
+
+export const loadingExampleConfig = {
+  type: 'dynamic', // static or dynamic
+  url: 'https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/main/config.json', // premade ZIP for static, config.json for dynamic
+}
 
 see filter ICDC config (above link)
 

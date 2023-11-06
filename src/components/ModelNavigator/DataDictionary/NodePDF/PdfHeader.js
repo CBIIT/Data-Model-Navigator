@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Image,
 } from '@react-pdf/renderer';
+import { useSelector } from 'react-redux';
 import logo from './assets/icdc_nih_logo.png';
 
 const styles = StyleSheet.create({
@@ -17,11 +18,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const PdfHeader = () => (
-  <>
-    <Image style={styles.logo} src={logo} />
-    <div style={styles.hr} />
-  </>
-);
+const PdfHeader = () => {
+  const pdfConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
+
+  return (
+    <>
+      <Image style={styles.logo} src={pdfConfig?.iconSrc || logo} />
+      <div style={styles.hr} />
+    </>
+  );
+};
 
 export default PdfHeader;
