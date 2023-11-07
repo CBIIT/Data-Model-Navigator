@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   withStyles,
 } from '@material-ui/core';
@@ -85,10 +86,10 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-const generatePdfDocument = async (object, config, setLoading, fileName) => {
+const generatePdfDocument = async (object, config, setLoading, fileName, pdfDownloadConfig) => {
   const document = (config.type === 'document') ? object : [object];
   const blob = await pdf((
-    config.landscape ? <LandscapePDFDoc nodes={document} icon={config.catagoryIcon} /> : <PdfDocument nodes={document} />
+    config.landscape ? <LandscapePDFDoc nodes={document} pdfDownloadConfig={pdfDownloadConfig} icon={config.catagoryIcon} /> : <PdfDocument nodes={document} />
   )).toBlob();
   setLoading(false);
   saveAs(blob, `${fileName}.pdf`);
@@ -113,6 +114,8 @@ const DownloadFileTypeBtn = ({
   const fullDictionaryC2nl = category2NodeList(fullDictionary);
   const processedFullDictionary = sortByCategory(fullDictionaryC2nl, fullDictionary);
 
+  const  pdfDownloadConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
+
   const clickHandler = (event) => {
     setLabel('Available Downloads');
     setAnchorElement(event.currentTarget);
@@ -127,11 +130,11 @@ const DownloadFileTypeBtn = ({
     setAnchorElement(null);
   };
 
-  const downloadFullDictionaryPdf = () => {
+  const downloadFullDictionaryPdf = (pdfDownloadConfig) => {
     const fileName = createFileName(config?.downloadPrefix || 'ICDC_Data_Model', '');
     setLoading(true);
     setTimeout(() => {
-      generatePdfDocument(processedFullDictionary, config, setLoading, fileName);
+      generatePdfDocument(processedFullDictionary, config, setLoading, fileName, pdfDownloadConfig);
     }, 50);
   };
 
@@ -165,7 +168,7 @@ const DownloadFileTypeBtn = ({
   const download = () => {
     switch (label) {
       case FILE_TYPE_FULL_DICTIONARY:
-        return downloadFullDictionaryPdf();
+        return downloadFullDictionaryPdf(pdfDownloadConfig);
       case FILE_TYPE_README:
         return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix, config?.footnote);
       case FILE_TYPE_TEMPLATES:
