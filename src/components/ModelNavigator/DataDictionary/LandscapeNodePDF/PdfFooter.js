@@ -4,7 +4,6 @@ import {
   Text,
 } from '@react-pdf/renderer';
 import { FontRegistry } from './util';
-import store from '../../../../store';
 
 const styles = StyleSheet.create({
   hr: {
@@ -50,9 +49,9 @@ const styles = StyleSheet.create({
 
 const date = new Date().toLocaleString('en-us', { month: 'long', year: 'numeric', day: 'numeric' });
 
-const PdfFooter = () => {
-  const { ddgraph } = store.getState() || {};
-  const { pdfDownloadConfig } = ddgraph || {};
+const PdfFooter = ({
+  pdfDownloadConfig
+}) => {
 
   return (
     <>
@@ -64,7 +63,7 @@ const PdfFooter = () => {
         style={styles.link}
         fixed
       >
-        {pdfDownloadConfig?.footnote ? pdfDownloadConfig?.footnote : "caninecommons.cancer.gov/#/icdc-data-model"}
+        {pdfDownloadConfig?.footnote ? pdfDownloadConfig.footnote : "caninecommons.cancer.gov/#/icdc-data-model"}
       </Text>
       <Text style={styles.date} fixed>
         {`${date}    |  `}

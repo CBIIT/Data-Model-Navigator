@@ -1,5 +1,6 @@
 import React from 'react';
 import { saveAs } from 'file-saver';
+import { useSelector } from 'react-redux';
 import {
   Button,
   withStyles,
@@ -19,6 +20,8 @@ const DownloadButton = ({
   fileName,
   isFileManifest,
 }) => {
+  const  pdfDownloadConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
+  
   const [isLoading, setLoading] = React.useState(false);
   const theme = createTheme({
     overrides: {
@@ -75,7 +78,8 @@ const DownloadButton = ({
   const generatePdfDocument = async (object) => {
     const document = (config.type === 'document') ? object : [object];
     const blob = await pdf((
-      config.landscape ? <LandscapePDFDoc nodes={document} icon={config.catagoryIcon} /> : <PdfDocument nodes={document} />
+      config.landscape ? <LandscapePDFDoc nodes={document} icon={config.catagoryIcon} 
+      pdfDownloadConfig={pdfDownloadConfig} /> : <PdfDocument nodes={document} />
     )).toBlob();
     setLoading(false);
     saveAs(blob, `${fileName}.pdf`);

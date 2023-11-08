@@ -310,6 +310,7 @@ async function init() {
       fileType: 'pdf',
       prefix: 'ICDC_Data_Model_',
       landscape: 'true',
+      footnote: 'test',
     };
   
   Promise.all(

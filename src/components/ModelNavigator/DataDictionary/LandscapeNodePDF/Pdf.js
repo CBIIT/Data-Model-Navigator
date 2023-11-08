@@ -30,12 +30,15 @@ const styles = StyleSheet.create({
 const PdfDocument = ({
   nodes,
   icon,
+  pdfDownloadConfig,
 }) => {
   // const {url, type} = icon;
   return (
     <Document style={styles.doc}>
       <Page style={styles.page} size="A4" orientation="landscape">
-        <PdfHeader />
+        <PdfHeader
+          pdfDownloadConfig={pdfDownloadConfig}
+        />
         <View style={styles.body}>
           {nodes.map((node) => (
             <View style={styles.tableContainer}>
@@ -50,7 +53,9 @@ const PdfDocument = ({
             </View>
           ))}
         </View>
-        <PdfFooter />
+        <PdfFooter
+          pdfDownloadConfig={pdfDownloadConfig}
+        />
       </Page>
     </Document>
   );

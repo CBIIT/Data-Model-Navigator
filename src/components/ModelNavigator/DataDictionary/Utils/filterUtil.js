@@ -357,7 +357,7 @@ export const generateSubjectCountsAndFilterData = (data, allActiveFilters = allF
 
   const { inclusion, uiDisplay } = allActiveFilters;
   //* * if any inclusion filter is active - inclusion behavior for both filter by inclusion and nodes */
-  if (inclusion.length > 0 || uiDisplay.length > 0) {
+  if (inclusion?.length > 0 || uiDisplay?.length > 0) {
     return inclusionFilterHelper(data, allActiveFilters, currentFilter);
   }
   //* * filter by only nodes - any search filter item that filters the node (this excludes inclusion) */
