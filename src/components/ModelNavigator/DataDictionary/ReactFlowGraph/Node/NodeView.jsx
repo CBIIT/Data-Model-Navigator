@@ -116,14 +116,21 @@ const NodeView = ({
               >
                 <div className={classes.nodeButtonInnerWrapper}>
                   <div
-                    className={classes.iconWrapper}
-                    style={{ backgroundColor: iconColor }}
+                    style={{
+                      borderRadius: "11px",
+                      backgroundColor: iconColor,
+                    }}
                   >
-                    <img
-                      className={classes.icon}
-                      src={icon}
-                      alt="category icon"
-                    />
+                    <div
+                      className={classes.iconWrapper}
+                      style={{ backgroundColor: iconColor }}
+                    >
+                      <img
+                        className={classes.icon}
+                        src={icon}
+                        alt="category icon"
+                      />
+                    </div>
                   </div>
 
                   <div className={classes.labelWrapper}>
