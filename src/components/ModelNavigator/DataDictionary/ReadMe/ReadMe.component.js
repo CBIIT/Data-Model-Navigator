@@ -21,7 +21,8 @@ import { createFileName } from "../utils";
 import footerLine from "./assets/two-pixel-footer-line.png";
 import nihLogo from "./assets/icdc_nih_logo.png";
 import PdfDownloadIcon from "../Header/icons/icon_download_PDF.svg";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import "./ReadMe.css";
 
 const date = new Date()
   .toLocaleString("en-us", {
@@ -31,12 +32,34 @@ const date = new Date()
   })
   .toUpperCase();
 
+const markdown = `# Section 1
+
+Content for section 1.
+
+<!-- PAGE BREAK -->
+
+# Section 2
+
+Content for section 2.`;
+
 /** download pdf of marked down file
  * 1.convert or generate html element of marked object
  * 2. uses html2pdf library to convert html to pdf
  * all the html style from marked down file will be reflected on PDF
  */
-export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, filePrefix = "ICDC_Data_Model-", footnote = "") => {
+export const downloadMarkdownPdf = async (
+  title,
+  content,
+  iconSrc = nihLogo,
+  filePrefix = "ICDC_Data_Model-",
+  footnote = ""
+) => {
+  const test = marked(markdown);
+  const testPB = test.replace(
+    /<!-- PAGE BREAK -->/g,
+    '<div class="page-break"></div>'
+  );
+  console.log("check --> ", testPB);
   /** create html elment for pdf - convert marked object to html */
   const readMeContent = document.createElement("div");
   const body = document.createElement("div");
@@ -50,16 +73,14 @@ export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, fil
       "</span>"
     );
   readMeContent.innerHTML += titleEl;
-  body.innerHTML += `<div style="padding-left: 25px; font-family: Nunito Sans">${marked(
-    content
-  )}</div>`;
+  body.innerHTML += `<div style="padding-left: 25px; font-family: Nunito Sans">${testPB}</div>`;
   readMeContent.innerHTML += body.innerHTML;
 
   /** set pdf fileneam */
   const fileName = createFileName("read_me", filePrefix);
   /** configure pdf increase pixel of the PDF */
   const options = {
-    margin: [0.5, 0.5, 0.6, 0.5],
+    margin: [0.5, 0.5, 0.5, 0.5],
     filename: fileName,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: {
@@ -70,7 +91,7 @@ export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, fil
     },
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     pagebreak: {
-      mode: ["avoid-all"],
+      mode: ["css"],
     },
   };
 
@@ -96,7 +117,7 @@ export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, fil
         pdf.setFontSize(7);
         pdf.setTextColor("#606060");
         pdf.setCharSpace(0.015);
-        pdf.text(pgWidth - 2.15, pgHeight - 0.5, `${date}     |      ${i}`);
+        pdf.text(pgWidth - 2.3, pgHeight - 0.5, `${date}     |      ${i}`);
         pdf.text(
           pgWidth - 8,
           pgHeight - 0.5,
@@ -126,8 +147,12 @@ const ReadMeDialogComponent = ({
   content,
   title,
 }) => {
-  const pdfConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
-  const readMeConfig = useSelector(state => state.submission && state.submission.readMeConfig);
+  const pdfConfig = useSelector(
+    (state) => state.ddgraph && state.ddgraph.pdfDownloadConfig
+  );
+  const readMeConfig = useSelector(
+    (state) => state.submission && state.submission.readMeConfig
+  );
 
   if (!content) {
     return <></>;
@@ -153,10 +178,19 @@ const ReadMeDialogComponent = ({
             <span>{title}</span>
           </div>
           <div item xs={1} className={classes.closeBtn}>
-            {(typeof(readMeConfig?.allowDownload) !== "boolean" || readMeConfig?.allowDownload) && (
+            {(typeof readMeConfig?.allowDownload !== "boolean" ||
+              readMeConfig?.allowDownload) && (
               <Button
                 className={classes.downloadBtn}
-                onClick={() => downloadMarkdownPdf(title, content, pdfConfig?.iconSrc, pdfConfig?.prefix, pdfConfig?.footnote)}
+                onClick={() =>
+                  downloadMarkdownPdf(
+                    title,
+                    content,
+                    pdfConfig?.iconSrc,
+                    pdfConfig?.prefix,
+                    pdfConfig?.footnote
+                  )
+                }
               >
                 <img
                   src={PdfDownloadIcon}
