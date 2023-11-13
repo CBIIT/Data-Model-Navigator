@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import './DataDictionaryTable.css';
-import styled from 'styled-components';
 import { parseDictionaryNodes } from '../../Utils/utils';
 import { createFileName } from '../../utils';
 import DataDictionaryCategory from '../DataDictionaryCategory';
@@ -13,11 +12,6 @@ import DataDictionaryCategory from '../DataDictionaryCategory';
 //   prefix: 'ICDC_Data_Model ',
 //   landscape: true,
 // };
-
-const DownloadLinkWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 
 /**
  * Just exported for testing
