@@ -32,16 +32,6 @@ const date = new Date()
   })
   .toUpperCase();
 
-const markdown = `# Section 1
-
-Content for section 1.
-
-<!-- PAGE BREAK -->
-
-# Section 2
-
-Content for section 2.`;
-
 /** download pdf of marked down file
  * 1.convert or generate html element of marked object
  * 2. uses html2pdf library to convert html to pdf
@@ -54,27 +44,22 @@ export const downloadMarkdownPdf = async (
   filePrefix = "ICDC_Data_Model-",
   footnote = ""
 ) => {
-  const test = marked(markdown);
-  const testPB = test.replace(
+  const html = marked(content);
+  const htmlWithPageBreaks = html.replace(
     /<!-- PAGE BREAK -->/g,
     '<div class="page-break"></div>'
   );
-  console.log("check --> ", testPB);
-  /** create html elment for pdf - convert marked object to html */
-  const readMeContent = document.createElement("div");
-  const body = document.createElement("div");
-  /** add header logo on first page */
-  const headerLogo = `<img src='${iconSrc}' width="40%" alt='logo' />
-  <br> <div style="height:1px; background-color: #173554;"/>`;
-  readMeContent.innerHTML += headerLogo;
-  const titleEl =
-    "<br><span style='color: #4d6787; font-size: 18px; font-family: Lato; font-weight: 700;'>".concat(
-      title,
-      "</span>"
-    );
-  readMeContent.innerHTML += titleEl;
-  body.innerHTML += `<div style="padding-left: 25px; font-family: Nunito Sans">${testPB}</div>`;
-  readMeContent.innerHTML += body.innerHTML;
+
+  const headerContent = `
+<div>
+<img src='${iconSrc}' width="40%" alt='logo' />
+  <br> <div style="height:1px; background-color: #173554;"/>
+<br><span style='color: #4d6787; font-size: 18px; font-family: Lato; font-weight: 700;'>${title}</span>
+</div>`;
+
+  const bodyContent = `<div style="padding-left: 25px; padding-top: 34px; font-family: Nunito Sans">${htmlWithPageBreaks}</div>`;
+
+  const readMeContent = headerContent + bodyContent;
 
   /** set pdf fileneam */
   const fileName = createFileName("read_me", filePrefix);
@@ -208,7 +193,9 @@ const ReadMeDialogComponent = ({
           </div>
         </div>
         <div className={classes.content} id="readMe_content">
-          <ReactMarkdown>{content}</ReactMarkdown>
+          <ReactMarkdown>
+            {content.replace(/<!-- PAGE BREAK -->/g, "")}
+          </ReactMarkdown>
         </div>
       </Dialog>
     </CustomTheme>
