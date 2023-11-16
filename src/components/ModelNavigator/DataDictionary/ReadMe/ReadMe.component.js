@@ -6,15 +6,10 @@ import {
   Dialog,
   Button,
 } from "@material-ui/core";
-// import { saveAs } from 'file-saver';
-import { ArrowDownward } from "@material-ui/icons";
-// import MarkdownPDF from "markdown-pdf";
 import CloseIcon from "@material-ui/icons/Close";
-// import { pdf } from '@react-pdf/renderer';
 import ReactMarkdown from "react-markdown";
 import { marked } from "marked";
 import html2pdf from "html2pdf.js";
-// import PdfTemplate from './ReadMePdf';
 import styles from "./ReadMe.style";
 import CustomTheme from "./ReadMe.theme.config";
 import { createFileName } from "../utils";
@@ -50,16 +45,18 @@ export const downloadMarkdownPdf = async (
     '<div class="page-break"></div>'
   );
 
-  const headerContent = `
-<div>
-<img src='${iconSrc}' width="40%" alt='logo' />
-  <br> <div style="height:1px; background-color: #173554;"/>
-<br><span style='color: #4d6787; font-size: 18px; font-family: Lato; font-weight: 700;'>${title}</span>
-</div>`;
-
-  const bodyContent = `<div style="padding-left: 25px; padding-top: 34px; font-family: Nunito Sans">${htmlWithPageBreaks}</div>`;
-
-  const readMeContent = headerContent + bodyContent;
+  const readMeContent = document.createElement("div");
+  /** add header logo on first page */
+  const headerLogo = `<img src='${iconSrc}' width="40%" alt='logo' />
+  <br> <hr style="height:1px" color="#173554" />`;
+  readMeContent.innerHTML += headerLogo;
+  const titleEl =
+    "<br><span style='color: #4D6787; font-size: 18px; font-family: Lato; font-weight: 700';>".concat(
+      title,
+      "</span>"
+    );
+  readMeContent.innerHTML += titleEl;
+  readMeContent.innerHTML += htmlWithPageBreaks;
 
   /** set pdf fileneam */
   const fileName = createFileName("read_me", filePrefix);
