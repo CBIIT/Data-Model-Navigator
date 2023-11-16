@@ -6,22 +6,18 @@ import {
   Dialog,
   Button,
 } from "@material-ui/core";
-// import { saveAs } from 'file-saver';
-import { ArrowDownward } from "@material-ui/icons";
-// import MarkdownPDF from "markdown-pdf";
 import CloseIcon from "@material-ui/icons/Close";
-// import { pdf } from '@react-pdf/renderer';
 import ReactMarkdown from "react-markdown";
 import { marked } from "marked";
 import html2pdf from "html2pdf.js";
-// import PdfTemplate from './ReadMePdf';
 import styles from "./ReadMe.style";
 import CustomTheme from "./ReadMe.theme.config";
 import { createFileName } from "../utils";
 import footerLine from "./assets/two-pixel-footer-line.png";
 import nihLogo from "./assets/icdc_nih_logo.png";
 import PdfDownloadIcon from "../Header/icons/icon_download_PDF.svg";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import "./ReadMe.css";
 
 const date = new Date()
   .toLocaleString("en-us", {
@@ -36,30 +32,37 @@ const date = new Date()
  * 2. uses html2pdf library to convert html to pdf
  * all the html style from marked down file will be reflected on PDF
  */
-export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, filePrefix = "ICDC_Data_Model-", footnote = "") => {
-  /** create html elment for pdf - convert marked object to html */
+export const downloadMarkdownPdf = async (
+  title,
+  content,
+  iconSrc = nihLogo,
+  filePrefix = "ICDC_Data_Model-",
+  footnote = ""
+) => {
+  const html = marked(content);
+  const htmlWithPageBreaks = html.replace(
+    /<!-- PAGE BREAK -->/g,
+    '<div class="page-break"></div>'
+  );
+
   const readMeContent = document.createElement("div");
-  const body = document.createElement("div");
   /** add header logo on first page */
   const headerLogo = `<img src='${iconSrc}' width="40%" alt='logo' />
-  <br> <div style="height:1px; background-color: #173554;"/>`;
+  <br> <hr style="height:1px" color="#173554" />`;
   readMeContent.innerHTML += headerLogo;
   const titleEl =
-    "<br><span style='color: #4d6787; font-size: 18px; font-family: Lato; font-weight: 700;'>".concat(
+    "<br><span style='color: #4D6787; font-size: 18px; font-family: Lato; font-weight: 700';>".concat(
       title,
       "</span>"
     );
   readMeContent.innerHTML += titleEl;
-  body.innerHTML += `<div style="padding-left: 25px; font-family: Nunito Sans">${marked(
-    content
-  )}</div>`;
-  readMeContent.innerHTML += body.innerHTML;
+  readMeContent.innerHTML += htmlWithPageBreaks;
 
   /** set pdf fileneam */
   const fileName = createFileName("read_me", filePrefix);
   /** configure pdf increase pixel of the PDF */
   const options = {
-    margin: [0.5, 0.5, 0.6, 0.5],
+    margin: [0.5, 0.5, 0.5, 0.5],
     filename: fileName,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: {
@@ -70,7 +73,7 @@ export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, fil
     },
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     pagebreak: {
-      mode: ["avoid-all"],
+      mode: ["css"],
     },
   };
 
@@ -96,7 +99,7 @@ export const downloadMarkdownPdf = async (title, content, iconSrc = nihLogo, fil
         pdf.setFontSize(7);
         pdf.setTextColor("#606060");
         pdf.setCharSpace(0.015);
-        pdf.text(pgWidth - 2.15, pgHeight - 0.5, `${date}     |      ${i}`);
+        pdf.text(pgWidth - 2.3, pgHeight - 0.5, `${date}     |      ${i}`);
         pdf.text(
           pgWidth - 8,
           pgHeight - 0.5,
@@ -126,8 +129,12 @@ const ReadMeDialogComponent = ({
   content,
   title,
 }) => {
-  const pdfConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
-  const readMeConfig = useSelector(state => state.submission && state.submission.readMeConfig);
+  const pdfConfig = useSelector(
+    (state) => state.ddgraph && state.ddgraph.pdfDownloadConfig
+  );
+  const readMeConfig = useSelector(
+    (state) => state.submission && state.submission.readMeConfig
+  );
 
   if (!content) {
     return <></>;
@@ -153,10 +160,19 @@ const ReadMeDialogComponent = ({
             <span>{title}</span>
           </div>
           <div item xs={1} className={classes.closeBtn}>
-            {(typeof(readMeConfig?.allowDownload) !== "boolean" || readMeConfig?.allowDownload) && (
+            {(typeof readMeConfig?.allowDownload !== "boolean" ||
+              readMeConfig?.allowDownload) && (
               <Button
                 className={classes.downloadBtn}
-                onClick={() => downloadMarkdownPdf(title, content, pdfConfig?.iconSrc, pdfConfig?.prefix, pdfConfig?.footnote)}
+                onClick={() =>
+                  downloadMarkdownPdf(
+                    title,
+                    content,
+                    pdfConfig?.iconSrc,
+                    pdfConfig?.prefix,
+                    pdfConfig?.footnote
+                  )
+                }
               >
                 <img
                   src={PdfDownloadIcon}
@@ -174,7 +190,9 @@ const ReadMeDialogComponent = ({
           </div>
         </div>
         <div className={classes.content} id="readMe_content">
-          <ReactMarkdown>{content}</ReactMarkdown>
+          <ReactMarkdown>
+            {content.replace(/<!-- PAGE BREAK -->/g, "")}
+          </ReactMarkdown>
         </div>
       </Dialog>
     </CustomTheme>
