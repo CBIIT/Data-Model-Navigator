@@ -12,13 +12,15 @@ const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden }) => {
   const toggleLegend = () => setDisplay(!display);
 
   /**
-   * set legend position - scroll bar width varies based on browser so
-   * legend position must be
-   * adjusted by window.innerWidth and document.documentElement.clientWidth
-   * (refrane from using hard coded value)
-   */
+  * set legend position - scroll bar width varies based on browser so
+  * legend position must be
+  * adjusted by window.innerWidth and document.documentElement.clientWidth
+  * (refrane from using hard coded value)
+  * latest version of browse will have scroll bar over browser
+  */
   const scrollBarWidth = document.documentElement.clientWidth;
-  const positionRight = window.innerWidth - scrollBarWidth;
+  const rightMargin =  window.innerWidth - scrollBarWidth;
+  const positionRight = rightMargin > 0 ? rightMargin : 17;
   const position = { right: positionRight };
 
   const categoryListComponent = categoryItems.map((category) => {
