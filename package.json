@@ -1,6 +1,6 @@
 {
-  "name": "data-model-navigator",
-  "version": "1.1.0",
+  "name": "crdc-datahub-model-navigator",
+  "version": "1.1.21",
   "description": "",
   "main": "lib/index.js",
   "private": false,
@@ -46,8 +46,6 @@
     "lodash.merge": "^4.6.2",
     "marked": "^4.2.3",
     "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "react-markdown": "^8.0.3",
     "react-redux": "^7.2.1",
     "reactflow": "^11.3.2",
