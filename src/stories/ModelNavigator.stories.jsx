@@ -13,9 +13,6 @@ export default {
 const Template = (args) => <ModelNavigator {...args} />;
 
 export const Navigator = Template.bind({});
-Navigator.args = {
-  user: {
-    name: 'Jane Doe 6767',
-  },
-};
+
+Navigator.args = {};
 
