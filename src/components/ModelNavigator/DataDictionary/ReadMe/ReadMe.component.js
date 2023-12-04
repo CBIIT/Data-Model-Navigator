@@ -42,7 +42,7 @@ export const downloadMarkdownPdf = async (
   const html = marked(content);
   const htmlWithPageBreaks = html.replace(
     /<!-- PAGE BREAK -->/g,
-    '<div class="beforeClass"></div>'
+    '<div class="page-break"></div>'
   );
 
   const readMeContent = document.createElement("div");
@@ -73,7 +73,7 @@ export const downloadMarkdownPdf = async (
     },
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     pagebreak: {
-      before: ".beforeClass",
+      mode: ["avoid-all", "css", "legacy"],
     },
   };
 
