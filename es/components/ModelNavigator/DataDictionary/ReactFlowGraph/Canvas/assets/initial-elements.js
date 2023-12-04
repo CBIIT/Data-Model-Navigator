@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.nodes = exports.edges = void 0;
 // const position = { x: 0, y: 0 };
 var edgeType = 'smoothstep';
-var nodes = [{
+var nodes = exports.nodes = [{
   id: '1',
   type: 'custom',
   data: {
@@ -76,8 +76,7 @@ var nodes = [{
   },
   position: position
 }];
-exports.nodes = nodes;
-var edges = [{
+var edges = exports.edges = [{
   id: 'e12',
   source: '1',
   target: '2',
@@ -132,4 +131,3 @@ var edges = [{
   type: edgeType,
   animated: true
 }];
-exports.edges = edges;

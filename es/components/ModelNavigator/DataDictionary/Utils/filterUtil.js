@@ -4,13 +4,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.allFilters = allFilters;
-exports.toggleCheckBoxAction = exports.setSubjectCount = exports.setNodeHierarchy = exports.setCheckboxItems = exports.newHandleExplorerFilter = exports.initializeFilterHashMap = exports.inclusionFilterHandler = exports.hashMapHelper = exports.getSubjectItemCount = exports.getState = exports.getNodeTypes = exports.getFileNodes = exports.getDictionaryWithExcludeSystemProperties = exports.getAllFilters = exports.generateSubjectCountsAndFilterData = exports.excludeSystemProperties = exports.createFilterVariables = void 0;
+exports.setNodeHierarchy = exports.setCheckboxItems = exports.newHandleExplorerFilter = exports.initializeFilterHashMap = exports.inclusionFilterHandler = exports.hashMapHelper = exports.getSubjectItemCount = exports.getState = exports.getNodeTypes = exports.getFileNodes = exports.getDictionaryWithExcludeSystemProperties = exports.getAllFilters = exports.generateSubjectCountsAndFilterData = exports.excludeSystemProperties = exports.createFilterVariables = void 0;
+exports.setSelectedFilterValues = setSelectedFilterValues;
+exports.setSelectedVlauesToTrue = setSelectedVlauesToTrue;
+exports.toggleCheckBoxAction = exports.setSubjectCount = void 0;
 var _lodash = _interopRequireDefault(require("lodash"));
 var _dataDictionaryData = require("../../bento/dataDictionaryData");
 var _filter = require("../Store/actions/filter");
 var _inclusionFilterHelper = require("./inclusionFilterHelper");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
@@ -19,10 +22,10 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -32,7 +35,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
  * @param {obj} store the application redux store
  * @return {obj}
  */
-var getState = function getState(storeKey, store) {
+var getState = exports.getState = function getState(storeKey, store) {
   return store.getState()[storeKey];
 };
 
@@ -41,14 +44,12 @@ var getState = function getState(storeKey, store) {
  * @param {object} data custodian data containing filter value information
  * @return {obj}
  */
-exports.getState = getState;
-var getAllFilters = function getAllFilters(data) {
+var getAllFilters = exports.getAllFilters = function getAllFilters(data) {
   var emptyFilters = data.reduce(function (acc, facet) {
     return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, facet.datafield, []));
   }, {});
   return emptyFilters;
 };
-exports.getAllFilters = getAllFilters;
 function allFilters() {
   var emptyFilters = _dataDictionaryData.facetSearchData.reduce(function (acc, facet) {
     return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, facet.datafield, []));
@@ -62,7 +63,7 @@ function allFilters() {
  * @param {object} data
  * @return {json}
  */
-var createFilterVariables = function createFilterVariables(data, currentAllActiveFilters) {
+var createFilterVariables = exports.createFilterVariables = function createFilterVariables(data, currentAllActiveFilters) {
   var filter = Object.entries(currentAllActiveFilters).reduce(function (acc, _ref) {
     var _ref2 = _slicedToArray(_ref, 1),
       key = _ref2[0];
@@ -75,8 +76,7 @@ var createFilterVariables = function createFilterVariables(data, currentAllActiv
   }, {});
   return filter;
 };
-exports.createFilterVariables = createFilterVariables;
-var hashMapHelper = function hashMapHelper(groupName, _ref3) {
+var hashMapHelper = exports.hashMapHelper = function hashMapHelper(groupName, _ref3) {
   var _ref4 = _slicedToArray(_ref3, 2),
     key = _ref4[0],
     value = _ref4[1];
@@ -106,7 +106,6 @@ var hashMapHelper = function hashMapHelper(groupName, _ref3) {
       break;
   }
 };
-exports.hashMapHelper = hashMapHelper;
 var includeMultiFilterValue = function includeMultiFilterValue(filteredDict, filters) {
   var filterValue = filteredDict.filter(function (_ref5) {
     var _ref6 = _slicedToArray(_ref5, 2),
@@ -121,7 +120,7 @@ var includeMultiFilterValue = function includeMultiFilterValue(filteredDict, fil
   });
   return filterValue;
 };
-var inclusionFilterHandler = function inclusionFilterHandler(selectedFilters, filterHashMap) {
+var inclusionFilterHandler = exports.inclusionFilterHandler = function inclusionFilterHandler(selectedFilters, filterHashMap) {
   var filteredDict = [];
   selectedFilters.forEach(function (_ref7, index) {
     var _ref8 = _slicedToArray(_ref7, 2),
@@ -133,7 +132,6 @@ var inclusionFilterHandler = function inclusionFilterHandler(selectedFilters, fi
   });
   return Object.fromEntries(filteredDict);
 };
-exports.inclusionFilterHandler = inclusionFilterHandler;
 var filterNodesByProperty = function filterNodesByProperty() {
   var property = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var inclusionFilter = arguments.length > 1 ? arguments[1] : undefined;
@@ -246,7 +244,7 @@ var getPropertySubjectCountAndFilterDictionary = function getPropertySubjectCoun
     dictionary: filterDictionary
   };
 };
-var newHandleExplorerFilter = function newHandleExplorerFilter(selectedFilters, filterHashMap) {
+var newHandleExplorerFilter = exports.newHandleExplorerFilter = function newHandleExplorerFilter(selectedFilters, filterHashMap) {
   var filteredDict = [];
   var alternateFilteredDict = [];
   selectedFilters.forEach(function (_ref15, index) {
@@ -323,8 +321,7 @@ var newHandleExplorerFilter = function newHandleExplorerFilter(selectedFilters, 
   });
   return Object.fromEntries(filteredDict);
 };
-exports.newHandleExplorerFilter = newHandleExplorerFilter;
-var initializeFilterHashMap = function initializeFilterHashMap(dictionary, filterSections) {
+var initializeFilterHashMap = exports.initializeFilterHashMap = function initializeFilterHashMap(dictionary, filterSections) {
   var map = new Map();
   _dataDictionaryData.filterOptions.forEach(function (option) {
     return map.set(option, []);
@@ -341,36 +338,31 @@ var initializeFilterHashMap = function initializeFilterHashMap(dictionary, filte
   });
   return map;
 };
-exports.initializeFilterHashMap = initializeFilterHashMap;
-var setCheckboxItems = function setCheckboxItems(checkboxItems, subjectCountObj) {
+var setCheckboxItems = exports.setCheckboxItems = function setCheckboxItems(checkboxItems, subjectCountObj) {
   return checkboxItems.map(function (elem) {
     return _objectSpread(_objectSpread({}, elem), {}, {
       subjects: subjectCountObj[elem.name.toLowerCase()]
     });
   });
 };
-exports.setCheckboxItems = setCheckboxItems;
-var setSubjectCount = function setSubjectCount(checkboxData, subjectCountObj) {
+var setSubjectCount = exports.setSubjectCount = function setSubjectCount(checkboxData, subjectCountObj) {
   return checkboxData.map(function (elem) {
     return _objectSpread(_objectSpread({}, elem), {}, {
       checkboxItems: setCheckboxItems(elem.checkboxItems, subjectCountObj)
     });
   });
 };
-exports.setSubjectCount = setSubjectCount;
-var getFileNodes = function getFileNodes(dictionary) {
+var getFileNodes = exports.getFileNodes = function getFileNodes(dictionary) {
   return Object.keys(dictionary).filter(function (node) {
     return dictionary[node].category === 'data_file';
   });
 };
-exports.getFileNodes = getFileNodes;
-var getNodeTypes = function getNodeTypes(dictionary) {
+var getNodeTypes = exports.getNodeTypes = function getNodeTypes(dictionary) {
   return Object.keys(dictionary).filter(function (node) {
     return node.charAt(0) !== '_';
   });
 };
-exports.getNodeTypes = getNodeTypes;
-var getDictionaryWithExcludeSystemProperties = function getDictionaryWithExcludeSystemProperties(dictionary) {
+var getDictionaryWithExcludeSystemProperties = exports.getDictionaryWithExcludeSystemProperties = function getDictionaryWithExcludeSystemProperties(dictionary) {
   var ret = Object.keys(dictionary).map(function (nodeID) {
     var node = dictionary[nodeID];
     if (!node.properties) return node;
@@ -383,8 +375,7 @@ var getDictionaryWithExcludeSystemProperties = function getDictionaryWithExclude
   }, {});
   return ret;
 };
-exports.getDictionaryWithExcludeSystemProperties = getDictionaryWithExcludeSystemProperties;
-var getSubjectItemCount = function getSubjectItemCount(dictionary) {
+var getSubjectItemCount = exports.getSubjectItemCount = function getSubjectItemCount(dictionary) {
   var filterBy = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _dataDictionaryData.facetSearchData;
   var activeFilters = arguments.length > 2 ? arguments[2] : undefined;
   var subjectCountItems = {};
@@ -407,8 +398,7 @@ var getSubjectItemCount = function getSubjectItemCount(dictionary) {
 
 //* * filter subject count and filter dictionary*/
 //* * uses case base appraoch for subject count and dictionary filter */
-exports.getSubjectItemCount = getSubjectItemCount;
-var generateSubjectCountsAndFilterData = function generateSubjectCountsAndFilterData(data) {
+var generateSubjectCountsAndFilterData = exports.generateSubjectCountsAndFilterData = function generateSubjectCountsAndFilterData(data) {
   var allActiveFilters = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : allFilters({});
   var currentFilter = arguments.length > 2 ? arguments[2] : undefined;
   var processedFilters = Object.entries(allActiveFilters).filter(function (_ref27) {
@@ -465,7 +455,6 @@ var generateSubjectCountsAndFilterData = function generateSubjectCountsAndFilter
     dictionary: filteredDictionary
   };
 };
-exports.generateSubjectCountsAndFilterData = generateSubjectCountsAndFilterData;
 var subjectCountBaseOnExclusionAndIncusionFilter = function subjectCountBaseOnExclusionAndIncusionFilter(processedFilters, filterHashMap, selectedSections, filteredDictionary, allActiveFilters, currentFilter) {
   var inclusionDictionary = inclusionFilterHandler(processedFilters, filterHashMap);
   var inclusionSectionCounts = getSubjectItemCount(inclusionDictionary, selectedSections);
@@ -475,7 +464,7 @@ var subjectCountBaseOnExclusionAndIncusionFilter = function subjectCountBaseOnEx
   // display all unselected filter items for category inclusive of the class or assignment filter.
   if (processedFilters.length === 2) {
     var _loop = function _loop() {
-      var _Object$entries$_i = _slicedToArray(_Object$entries[_i2], 2),
+      var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
         key = _Object$entries$_i[0],
         value = _Object$entries$_i[1];
       var categoryItem = allActiveFilters.category.filter(function (item) {
@@ -485,7 +474,7 @@ var subjectCountBaseOnExclusionAndIncusionFilter = function subjectCountBaseOnEx
         selectedSectionCounts[key] = inclusionSectionCounts[key];
       }
     };
-    for (var _i2 = 0, _Object$entries = Object.entries(selectedSectionCounts); _i2 < _Object$entries.length; _i2++) {
+    for (var _i = 0, _Object$entries = Object.entries(selectedSectionCounts); _i < _Object$entries.length; _i++) {
       _loop();
     }
     var combinedSubjectCounts = _objectSpread(_objectSpread({}, filteredDictCounts), selectedSectionCounts);
@@ -519,7 +508,7 @@ var subjectCountBaseOnExclusionAndIncusionFilter = function subjectCountBaseOnEx
   }
   return null;
 };
-var excludeSystemProperties = function excludeSystemProperties(node) {
+var excludeSystemProperties = exports.excludeSystemProperties = function excludeSystemProperties(node) {
   var properties = node.properties && Object.keys(node.properties).filter(function (key) {
     return node.systemProperties ? !node.systemProperties.includes(key) : true;
   }).reduce(function (acc, key) {
@@ -530,8 +519,7 @@ var excludeSystemProperties = function excludeSystemProperties(node) {
 };
 
 /** * toggle check box action */
-exports.excludeSystemProperties = excludeSystemProperties;
-var toggleCheckBoxAction = function toggleCheckBoxAction(payload, state) {
+var toggleCheckBoxAction = exports.toggleCheckBoxAction = function toggleCheckBoxAction(payload, state) {
   var currentAllFilterVariables = payload === {} ? allFilters() : createFilterVariables(payload, state.allActiveFilters);
   if (_lodash["default"].isEqual(currentAllFilterVariables, allFilters())) {
     (0, _filter.clearAllFilters)();
@@ -542,8 +530,7 @@ var toggleCheckBoxAction = function toggleCheckBoxAction(payload, state) {
 /**
  * sort hierarchy order of filter nodes
  */
-exports.toggleCheckBoxAction = toggleCheckBoxAction;
-var setNodeHierarchy = function setNodeHierarchy(dictionary, nodeHierarchy) {
+var setNodeHierarchy = exports.setNodeHierarchy = function setNodeHierarchy(dictionary, nodeHierarchy) {
   var nodes = nodeHierarchy.reduce(function (result, key) {
     if (dictionary[key]) {
       result[key] = _lodash["default"].cloneDeep(dictionary[key]);
@@ -552,4 +539,36 @@ var setNodeHierarchy = function setNodeHierarchy(dictionary, nodeHierarchy) {
   }, {});
   return nodes;
 };
-exports.setNodeHierarchy = setNodeHierarchy;
+
+/**
+ * Sets the active filters  group checkboxes  isChecked to true.
+ */
+function setSelectedVlauesToTrue(checkboxItems, filters) {
+  var result = checkboxItems.map(function (checkboxItem) {
+    if (filters.includes(checkboxItem.name)) return _objectSpread(_objectSpread({}, checkboxItem), {}, {
+      isChecked: true
+    });
+    return checkboxItem;
+  });
+  return result;
+}
+
+/**
+ * Sets the active filters checkboxes isChecked to true.
+ */
+function setSelectedFilterValues(checkboxData, Filters) {
+  var result = checkboxData.map(function (filterGroup) {
+    if (Array.isArray(Filters[filterGroup.datafield]) && Filters[filterGroup.datafield].length !== 0) {
+      return {
+        groupName: filterGroup.groupName,
+        checkboxItems: setSelectedVlauesToTrue(filterGroup.checkboxItems, Filters[filterGroup.datafield]),
+        datafield: filterGroup.datafield,
+        show: filterGroup.show,
+        section: filterGroup.section,
+        tooltip: filterGroup.tooltip
+      };
+    }
+    return filterGroup;
+  });
+  return result;
+}

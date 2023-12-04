@@ -1,7 +1,4 @@
 import _ from 'lodash';
-import {
-  setSelectedFilterValues,
-} from 'bento-components';
 import * as actionTypes from '../actions/actionTypes';
 import {
   initializeFilterHashMap,
@@ -13,6 +10,7 @@ import {
   getAllFilters,
   toggleCheckBoxAction,
   setNodeHierarchy,
+  setSelectedFilterValues,
 } from '../../Utils/filterUtil';
 import { generateNodeTree } from '../../ReactFlowGraph/Canvas/CanvasHelper';
 
@@ -62,7 +60,7 @@ const sortTypes = {
  * Sort checkboxes by Checked
  *
  * @param {array} checkboxData
- * @return {array} 
+ * @return {array}
  */
 
  const sortByCheckedItem = (checkboxData) => {
@@ -70,10 +68,10 @@ const sortTypes = {
  };
 
 /**
- * sort all the checkbox in facet search 
- * @param {array} checkboxData 
- * @param {object} sortByList 
- * @returns 
+ * sort all the checkbox in facet search
+ * @param {array} checkboxData
+ * @param {object} sortByList
+ * @returns
  */
 
 const sortFacetSections = (checkboxData, sortByList) => {
@@ -88,8 +86,8 @@ const sortFacetSections = (checkboxData, sortByList) => {
 
 /**
  * toggle check box action
- * @param {object} state 
- * @param {*} action 
+ * @param {object} state
+ * @param {*} action
  * @returns
  */
 const toggleCheckBox = (payload, state) => {
@@ -114,7 +112,7 @@ const toggleCheckBox = (payload, state) => {
 const moduleReducers = (state = initialState, action) => {
   const { payload } = action;
   let filtered;
-  
+
   switch (action.type) {
     case actionTypes.RECEIVE_DICTIONARY:
       const filterConfig = (payload && payload.facetfilterConfig)
@@ -145,7 +143,7 @@ const moduleReducers = (state = initialState, action) => {
         pageConfig: payload.pageConfig,
         loadingExampleConfig: payload.loadingExampleConfig,
       });
-    
+
     case actionTypes.FILTER_DATA_EXPLORER:
       return toggleCheckBox(payload, state);
 

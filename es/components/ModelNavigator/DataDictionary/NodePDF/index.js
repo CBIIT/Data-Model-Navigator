@@ -6,5 +6,4 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _Pdf = _interopRequireDefault(require("./Pdf"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var _default = _Pdf["default"];
-exports["default"] = _default;
+var _default = exports["default"] = _Pdf["default"];

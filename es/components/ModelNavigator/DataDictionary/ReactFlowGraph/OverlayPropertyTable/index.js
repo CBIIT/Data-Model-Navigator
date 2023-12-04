@@ -53,5 +53,4 @@ var ReduxOverlayPropertyTable = function () {
   };
   return (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_OverlayPropertyTable["default"]);
 }();
-var _default = ReduxOverlayPropertyTable;
-exports["default"] = _default;
+var _default = exports["default"] = ReduxOverlayPropertyTable;

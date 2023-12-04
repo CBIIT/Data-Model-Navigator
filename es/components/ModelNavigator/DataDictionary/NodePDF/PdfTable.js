@@ -38,5 +38,4 @@ var PdfTable = function PdfTable(_ref) {
     node: node
   }));
 };
-var _default = PdfTable;
-exports["default"] = _default;
+var _default = exports["default"] = PdfTable;

@@ -59,5 +59,4 @@ var PdfDocument = function PdfDocument(_ref) {
     pdfDownloadConfig: pdfDownloadConfig
   })));
 };
-var _default = PdfDocument;
-exports["default"] = _default;
+var _default = exports["default"] = PdfDocument;

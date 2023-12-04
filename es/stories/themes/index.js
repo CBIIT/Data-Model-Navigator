@@ -7,17 +7,15 @@ exports.typography = exports.overrides = exports["default"] = void 0;
 var _light = _interopRequireDefault(require("./light"));
 var _dark = _interopRequireDefault(require("./dark"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var _default = {
+var _default = exports["default"] = {
   light: _light["default"],
   dark: _dark["default"]
 };
-exports["default"] = _default;
-var typography = {
+var typography = exports.typography = {
   fontFamily: "'Lato Regular','Open Sans', 'sans-serif'",
   useNextVariants: true
 };
-exports.typography = typography;
-var overrides = {
+var overrides = exports.overrides = {
   typography: {
     h1: {
       fontSize: '3rem'
@@ -40,4 +38,3 @@ var overrides = {
     fontSize: 14
   }
 };
-exports.overrides = overrides;

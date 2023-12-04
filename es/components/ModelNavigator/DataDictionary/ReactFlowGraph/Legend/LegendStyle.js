@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var _default = function _default() {
+var _default = exports["default"] = function _default() {
   return {
     legendExpand: {
       position: "absolute",
@@ -107,4 +107,3 @@ var _default = function _default() {
     }
   };
 };
-exports["default"] = _default;

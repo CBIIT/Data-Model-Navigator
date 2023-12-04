@@ -25,5 +25,4 @@ var ReduxDataDictionaryTable = function () {
   };
   return (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_DataDictionaryTable["default"]);
 }();
-var _default = ReduxDataDictionaryTable;
-exports["default"] = _default;
+var _default = exports["default"] = ReduxDataDictionaryTable;

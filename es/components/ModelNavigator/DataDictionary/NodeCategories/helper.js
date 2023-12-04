@@ -43,12 +43,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
  */
 
 var iconUrl = 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/data_model_pdf_icons/icdc/DMN/';
-var graphIconUrl = iconUrl + 'graph/';
-exports.graphIconUrl = graphIconUrl;
-var legendIconUrl = iconUrl + 'legend/';
-exports.legendIconUrl = legendIconUrl;
-var tableIconUrl = iconUrl + 'table/';
-exports.tableIconUrl = tableIconUrl;
+var graphIconUrl = exports.graphIconUrl = iconUrl + 'graph/';
+var legendIconUrl = exports.legendIconUrl = iconUrl + 'legend/';
+var tableIconUrl = exports.tableIconUrl = iconUrl + 'table/';
 var nodeCategoryList = {
   administrative: {
     // icon: Administrative,
@@ -133,7 +130,7 @@ var graphNodeCategoryList = {
     color: '#1C75BC'
   }
 };
-var pdfNodeCategoryList = {
+var pdfNodeCategoryList = exports.pdfNodeCategoryList = {
   clinical: {
     icon: _clinical["default"],
     color: '#05B8EE'
@@ -167,8 +164,7 @@ var pdfNodeCategoryList = {
     color: '#1C75BC'
   }
 };
-exports.pdfNodeCategoryList = pdfNodeCategoryList;
-var tableNodeCategoryList = {
+var tableNodeCategoryList = exports.tableNodeCategoryList = {
   clinical: {
     icon: _clinical2["default"],
     color: '#05B8EE'
@@ -202,8 +198,7 @@ var tableNodeCategoryList = {
     color: '#1C75BC'
   }
 };
-exports.tableNodeCategoryList = tableNodeCategoryList;
-var legendNodeCategoryList = {
+var legendNodeCategoryList = exports.legendNodeCategoryList = {
   clinical: {
     icon: _lg_clinical["default"],
     color: '#05B8EE'
@@ -237,55 +232,46 @@ var legendNodeCategoryList = {
     color: '#1C75BC'
   }
 };
-exports.legendNodeCategoryList = legendNodeCategoryList;
-var defaultCategory = {
+var defaultCategory = exports.defaultCategory = {
   icon: _icon_default["default"],
   color: '#9B9B9B'
 };
-exports.defaultCategory = defaultCategory;
-var getCategoryIconSVG = function getCategoryIconSVG(category) {
+var getCategoryIconSVG = exports.getCategoryIconSVG = function getCategoryIconSVG(category) {
   if (nodeCategoryList[category]) {
     return table + category;
   }
   return defaultCategory.icon;
 };
-exports.getCategoryIconSVG = getCategoryIconSVG;
-var getCategoryColor = function getCategoryColor(category) {
+var getCategoryColor = exports.getCategoryColor = function getCategoryColor(category) {
   if (nodeCategoryList[category]) {
     return nodeCategoryList[category].color;
   }
   return defaultCategory.color;
 };
-exports.getCategoryColor = getCategoryColor;
-var getCategoryBackground = function getCategoryBackground(category) {
+var getCategoryBackground = exports.getCategoryBackground = function getCategoryBackground(category) {
   if (nodeCategoryList[category]) {
     return nodeCategoryList[category].background || nodeCategoryList[category].color;
   }
   return defaultCategory.color;
 };
-exports.getCategoryBackground = getCategoryBackground;
-var getCategoryStyle = function getCategoryStyle(category) {
+var getCategoryStyle = exports.getCategoryStyle = function getCategoryStyle(category) {
   if (nodeCategoryList[category]) {
     return nodeCategoryList[category];
   }
   return defaultCategory.color;
 };
-exports.getCategoryStyle = getCategoryStyle;
-var getGraphCategoryIconSVG = function getGraphCategoryIconSVG(category) {
+var getGraphCategoryIconSVG = exports.getGraphCategoryIconSVG = function getGraphCategoryIconSVG(category) {
   if (graphNodeCategoryList[category]) {
     return graph + category;
   }
   return table + 'default.svg';
 };
-exports.getGraphCategoryIconSVG = getGraphCategoryIconSVG;
-var getPdfCategoryIconSVG = function getPdfCategoryIconSVG(category) {
+var getPdfCategoryIconSVG = exports.getPdfCategoryIconSVG = function getPdfCategoryIconSVG(category) {
   return pdfNodeCategoryList[category];
 };
-exports.getPdfCategoryIconSVG = getPdfCategoryIconSVG;
-var getLegendCategoryIconSVG = function getLegendCategoryIconSVG(category) {
+var getLegendCategoryIconSVG = exports.getLegendCategoryIconSVG = function getLegendCategoryIconSVG(category) {
   if (graphNodeCategoryList[category]) {
     return legend + category;
   }
   return table + 'default.svg';
 };
-exports.getLegendCategoryIconSVG = getLegendCategoryIconSVG;

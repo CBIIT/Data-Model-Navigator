@@ -33,5 +33,4 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     }
   };
 };
-var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ReduxDataDictionary);
-exports["default"] = _default;
+var _default = exports["default"] = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ReduxDataDictionary);

@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var _default = function _default() {
+var _default = exports["default"] = function _default() {
   var _viewPropBtn;
   return {
     propDialog: {
@@ -50,7 +50,6 @@ var _default = function _default() {
       textAlign: "center"
       // backgroundColor: '#2d4455',
     },
-
     iconBar: {
       display: "flex",
       alignItems: "center",
@@ -134,7 +133,6 @@ var _default = function _default() {
       //flexDirection: "column",
       //paddingBottom: "5px",
     },
-
     listItem: {
       fontSize: "12px",
       lineHeight: "18px",
@@ -147,7 +145,6 @@ var _default = function _default() {
       //display: "grid",
       //gridTemplateColumns: "1fr 1fr",
     },
-
     content: {},
     listItemLabel: {
       color: "#FFFFFF",
@@ -170,7 +167,7 @@ var _default = function _default() {
       fontSize: "9px",
       width: "100%",
       height: "50px"
-    }, _defineProperty(_viewPropBtn, "height", "50px"), _defineProperty(_viewPropBtn, "marginTop", "15px"), _defineProperty(_viewPropBtn, "border", "1px solid #14212b"), _defineProperty(_viewPropBtn, "backgroundColor", "#14212b"), _defineProperty(_viewPropBtn, "color", "#ffffff"), _defineProperty(_viewPropBtn, "fontFamily", "Lato"), _defineProperty(_viewPropBtn, "fontSize", "16px"), _defineProperty(_viewPropBtn, "lineHeight", "13px"), _defineProperty(_viewPropBtn, "textAlign", "center"), _defineProperty(_viewPropBtn, "borderBottomLeftRadius", "5px"), _defineProperty(_viewPropBtn, "borderBottomRightRadius", "5px"), _viewPropBtn),
+    }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_viewPropBtn, "height", "50px"), "marginTop", "15px"), "border", "1px solid #14212b"), "backgroundColor", "#14212b"), "color", "#ffffff"), "fontFamily", "Lato"), "fontSize", "16px"), "lineHeight", "13px"), "textAlign", "center"), "borderBottomLeftRadius", "5px"), _defineProperty(_viewPropBtn, "borderBottomRightRadius", "5px")),
     divider: {
       margin: "0",
       height: "1px",
@@ -195,4 +192,3 @@ var _default = function _default() {
     }
   };
 };
-exports["default"] = _default;

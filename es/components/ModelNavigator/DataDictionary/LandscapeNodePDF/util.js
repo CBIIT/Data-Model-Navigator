@@ -12,7 +12,7 @@ var _NunitoExtraLightItalic = _interopRequireDefault(require("./assets/fonts/Nun
 var _NunitoMedium = _interopRequireDefault(require("./assets/fonts/Nunito-Medium.ttf"));
 var _NunitoLight = _interopRequireDefault(require("./assets/fonts/Nunito-Light.ttf"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var getFont = function getFont(path) {
+var getFont = exports.getFont = function getFont(path) {
   switch (path) {
     case 'NunitoExtraBold':
       return _NunitoExtraBold["default"];
@@ -30,8 +30,7 @@ var getFont = function getFont(path) {
       return _NunitoMedium["default"];
   }
 };
-exports.getFont = getFont;
-var FontRegistry = function FontRegistry(font) {
+var FontRegistry = exports.FontRegistry = function FontRegistry(font) {
   var fontConfig = {
     src: getFont(font),
     family: font
@@ -39,8 +38,7 @@ var FontRegistry = function FontRegistry(font) {
   _renderer.Font.register(fontConfig);
   return font;
 };
-exports.FontRegistry = FontRegistry;
-var formatEnumValues = function formatEnumValues(enums) {
+var formatEnumValues = exports.formatEnumValues = function formatEnumValues(enums) {
   if (Array.isArray(enums)) {
     var concatEnums = '';
     enums.forEach(function (value) {
@@ -50,4 +48,3 @@ var formatEnumValues = function formatEnumValues(enums) {
   }
   return JSON.stringify(enums);
 };
-exports.formatEnumValues = formatEnumValues;

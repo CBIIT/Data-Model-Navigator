@@ -49,5 +49,4 @@ var PdfDocument = function PdfDocument(_ref) {
     }));
   })), /*#__PURE__*/_react["default"].createElement(_PdfFooter["default"], null)));
 };
-var _default = PdfDocument;
-exports["default"] = _default;
+var _default = exports["default"] = PdfDocument;

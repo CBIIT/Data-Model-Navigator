@@ -17,7 +17,7 @@ var _DataDictionaryPropertyTable = _interopRequireDefault(require("../../Table/D
 var _OverlayPropertyTable = _interopRequireDefault(require("./OverlayPropertyTable.style"));
 var _NodeViewComponent = _interopRequireDefault(require("../../Table/DataDictionaryNode/components/NodeViewComponent"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -30,7 +30,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); } /* eslint-disable max-len */ /* eslint-disable react/forbid-prop-types */ // eslint-disable-next-line no-unused-vars
 var OverlayPropertyTable = /*#__PURE__*/function (_React$Component) {
   _inherits(OverlayPropertyTable, _React$Component);
   var _super = _createSuper(OverlayPropertyTable);
@@ -55,12 +55,21 @@ var OverlayPropertyTable = /*#__PURE__*/function (_React$Component) {
       }
       return _this.props.node.description;
     });
+    /**
+     * Close the whole overlay property table
+     */
     _defineProperty(_assertThisInitialized(_this), "handleClose", function () {
       _this.props.onCloseOverlayPropertyTable();
     });
+    /**
+     * Toggle the property tabl to display all properties
+     */
     _defineProperty(_assertThisInitialized(_this), "handleOpenAllProperties", function () {
       _this.props.onOpenMatchedProperties();
     });
+    /**
+     * Toggle the property table to display matched properties only
+     */
     _defineProperty(_assertThisInitialized(_this), "handleDisplayOnlyMatchedProperties", function () {
       _this.props.onCloseMatchedProperties();
     });
@@ -186,5 +195,4 @@ OverlayPropertyTable.defaultProps = {
   onCloseMatchedProperties: function onCloseMatchedProperties() {},
   isSearchResultNodeOpened: false
 };
-var _default = (0, _core.withStyles)(_OverlayPropertyTable["default"])(OverlayPropertyTable);
-exports["default"] = _default;
+var _default = exports["default"] = (0, _core.withStyles)(_OverlayPropertyTable["default"])(OverlayPropertyTable);

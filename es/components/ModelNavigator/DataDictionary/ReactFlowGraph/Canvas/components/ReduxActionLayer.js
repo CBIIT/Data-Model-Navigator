@@ -20,5 +20,4 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {};
 };
-var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ReduxActionLayer);
-exports["default"] = _default;
+var _default = exports["default"] = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ReduxActionLayer);

@@ -8,7 +8,7 @@ import {
   MuiThemeProvider,
 } from '@material-ui/core';
 import { pdf } from '@react-pdf/renderer';
-import { cn } from 'bento-components';
+import clsx from 'clsx';
 import PdfDocument from './Pdf';
 import LandscapePDFDoc from '../LandscapeNodePDF/Pdf';
 import { fileManifestDownload } from '../../../../config/file-manifest-config';
@@ -21,7 +21,7 @@ const DownloadButton = ({
   isFileManifest,
 }) => {
   const  pdfDownloadConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
-  
+
   const [isLoading, setLoading] = React.useState(false);
   const theme = createTheme({
     overrides: {
@@ -78,7 +78,7 @@ const DownloadButton = ({
   const generatePdfDocument = async (object) => {
     const document = (config.type === 'document') ? object : [object];
     const blob = await pdf((
-      config.landscape ? <LandscapePDFDoc nodes={document} icon={config.catagoryIcon} 
+      config.landscape ? <LandscapePDFDoc nodes={document} icon={config.catagoryIcon}
       pdfDownloadConfig={pdfDownloadConfig} /> : <PdfDocument nodes={document} />
     )).toBlob();
     setLoading(false);
@@ -107,8 +107,8 @@ const DownloadButton = ({
   };
 
   const btnClass = (config.type === 'document')
-    ? cn(classes.headerButton, classes.documentDownloadBtn)
-    : cn(classes.headerButton, classes.nodeDownloadBtn);
+    ? clsx(classes.headerButton, classes.documentDownloadBtn)
+    : clsx(classes.headerButton, classes.nodeDownloadBtn);
 
   return (
     <MuiThemeProvider theme={theme}>

@@ -31,5 +31,4 @@ var PdfHeader = function PdfHeader() {
     style: styles.hr
   }));
 };
-var _default = PdfHeader;
-exports["default"] = _default;
+var _default = exports["default"] = PdfHeader;

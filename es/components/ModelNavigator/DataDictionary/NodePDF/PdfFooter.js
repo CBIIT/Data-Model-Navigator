@@ -77,5 +77,4 @@ var PdfFooter = function PdfFooter() {
     fixed: true
   }));
 };
-var _default = PdfFooter;
-exports["default"] = _default;
+var _default = exports["default"] = PdfFooter;

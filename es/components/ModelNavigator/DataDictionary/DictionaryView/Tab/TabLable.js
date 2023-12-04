@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _react = _interopRequireDefault(require("react"));
 var _core = require("@material-ui/core");
-var _bentoComponents = require("bento-components");
+var _clsx = _interopRequireDefault(require("clsx"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var tabLabel = function tabLabel(_ref) {
   var classes = _ref.classes,
@@ -14,7 +14,7 @@ var tabLabel = function tabLabel(_ref) {
     primaryColorClass = _ref.primaryColorClass,
     icon = _ref.icon;
   return /*#__PURE__*/_react["default"].createElement("div", {
-    className: (0, _bentoComponents.cn)(classes.defaultStyle, primaryColorClass)
+    className: (0, _clsx["default"])(classes.defaultStyle, primaryColorClass)
   }, icon && /*#__PURE__*/_react["default"].createElement("img", {
     src: icon,
     alt: "icdc_carousel_tabs"
@@ -31,7 +31,6 @@ var styles = function styles() {
     }
   };
 };
-var _default = (0, _core.withStyles)(styles, {
+var _default = exports["default"] = (0, _core.withStyles)(styles, {
   withTheme: true
 })(tabLabel);
-exports["default"] = _default;

@@ -4,33 +4,28 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.types = exports.sortLabels = exports.showCheckboxCount = exports.resetIcon = exports.filterSections = exports.filterOptions = exports.filterConfig = exports.facetSectionVariables = exports.facetSearchData = exports.defaultFacetSectionVariables = exports.controlVocabConfig = exports.categories = exports.baseFilters = void 0;
-var categories = ['Admistrative', 'Study', 'Clinical Trial', 'Case', 'Biospecimen', 'Clinical', 'Analysis', 'Data File'];
-exports.categories = categories;
-var showCheckboxCount = 5;
-exports.showCheckboxCount = showCheckboxCount;
-var types = {
+var categories = exports.categories = ['Admistrative', 'Study', 'Clinical Trial', 'Case', 'Biospecimen', 'Clinical', 'Analysis', 'Data File'];
+var showCheckboxCount = exports.showCheckboxCount = 5;
+var types = exports.types = {
   CATEGORY: 'category',
   ASSIGNMENT: 'assignment',
   INCLUSION: 'inclusion',
   CLASS: 'class',
   MULTIPLICITY: 'multiplicity'
 };
-exports.types = types;
-var defaultFacetSectionVariables = {
+var defaultFacetSectionVariables = exports.defaultFacetSectionVariables = {
   color: '#000000',
   checkBoxColorsOne: '#0d71a3',
   checkBoxColorsTwo: '#0d71a3',
   height: '5px',
   isExpanded: false
 };
-exports.defaultFacetSectionVariables = defaultFacetSectionVariables;
-var sortLabels = {
+var sortLabels = exports.sortLabels = {
   sortAlphabetically: 'Sort alphabetically',
   sortByCount: 'Sort by counts',
   showMore: '...expand to see all selections'
 };
-exports.sortLabels = sortLabels;
-var facetSearchData = [{
+var facetSearchData = exports.facetSearchData = [{
   groupName: 'Category',
   datafield: 'category',
   section: 'Filter By Nodes',
@@ -148,8 +143,7 @@ var facetSearchData = [{
     group: 'yes'
   }]
 }];
-exports.facetSearchData = facetSearchData;
-var facetSectionVariables = {
+var facetSectionVariables = exports.facetSectionVariables = {
   'Filter By Nodes': {
     color: '#0D71A3',
     checkBoxColorsOne: '#E3F4FD',
@@ -174,14 +168,12 @@ var facetSectionVariables = {
     isExpanded: true
   }
 };
-exports.facetSectionVariables = facetSectionVariables;
-var resetIcon = {
+var resetIcon = exports.resetIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/Clear-icon.svg',
   alt: 'Reset icon',
   size: '12 px'
 };
-exports.resetIcon = resetIcon;
-var baseFilters = {
+var baseFilters = exports.baseFilters = {
   category: [],
   assignment: [],
   "class": [],
@@ -189,10 +181,8 @@ var baseFilters = {
   inclusion: [],
   uiDisplay: []
 };
-exports.baseFilters = baseFilters;
-var filterSections = ['category', 'assignment', 'class', 'inclusion', 'display', 'uiDisplay'];
-exports.filterSections = filterSections;
-var filterOptions = [
+var filterSections = exports.filterSections = ['category', 'assignment', 'class', 'inclusion', 'display', 'uiDisplay'];
+var filterOptions = exports.filterOptions = [
 // category
 'administrative', 'case', 'study', 'clinical', 'clinical_trial', 'biospecimen', 'analysis', 'data_file',
 // Assignment
@@ -201,13 +191,11 @@ var filterOptions = [
 'primary', 'secondary',
 // Inclusion
 'required', 'preferred', 'optional', 'uiDisplay', 'yes', 'no'];
-exports.filterOptions = filterOptions;
-var controlVocabConfig = {
+var controlVocabConfig = exports.controlVocabConfig = {
   maxNoOfItems: 10,
   maxNoOfItemDlgBox: 30
 };
-exports.controlVocabConfig = controlVocabConfig;
-var filterConfig = {
+var filterConfig = exports.filterConfig = {
   facetSearchData: facetSearchData,
   facetSectionVariables: facetSectionVariables,
   resetIcon: resetIcon,
@@ -216,4 +204,3 @@ var filterConfig = {
   filterOptions: filterOptions,
   showCheckboxCount: showCheckboxCount
 };
-exports.filterConfig = filterConfig;

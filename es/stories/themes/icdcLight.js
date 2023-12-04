@@ -24,7 +24,7 @@ var darkenRate = 15;
 var tableHeaderBorder = '#004c73 3px solid';
 var tableHeaderFontColor = '#194563';
 var tableFontFamily = "'Raleway', sans-serif";
-var _default = {
+var _default = exports["default"] = {
   custom: {
     maxContentWidth: '1440px',
     maxContent: 'white',
@@ -343,4 +343,3 @@ var _default = {
     }
   }
 };
-exports["default"] = _default;

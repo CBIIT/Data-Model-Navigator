@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var _default = function _default() {
+var _default = exports["default"] = function _default() {
   return {
     suggestionList: {
       paddingRight: "10px",
@@ -30,7 +30,6 @@ var _default = function _default() {
       //   color: '#ef8523',
       // },
     },
-
     highlight: {
       color: "#3283c8"
       // '&:hover': {
@@ -39,4 +38,3 @@ var _default = function _default() {
     }
   };
 };
-exports["default"] = _default;

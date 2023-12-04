@@ -4,13 +4,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var _default = function _default() {
-  var _downloadButton, _ref;
-  return _ref = {
+var _default = exports["default"] = function _default() {
+  return _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
     table: {
       position: "absolute",
       top: "0",
@@ -109,7 +108,7 @@ var _default = function _default() {
       borderLeftWidth: "5px",
       borderLeftStyle: "solid"
     },
-    downloadButton: (_downloadButton = {
+    downloadButton: _defineProperty(_defineProperty(_defineProperty(_defineProperty({
       minWidth: "unset" /* override .g3-button's 152px min-width */,
       height: "30px",
       margin: "0",
@@ -117,13 +116,13 @@ var _default = function _default() {
       "float": "right",
       fontWeight: "normal",
       border: "0"
-    }, _defineProperty(_downloadButton, "padding", "0px 6px 0px 6px"), _defineProperty(_downloadButton, "textAlign", "center"), _defineProperty(_downloadButton, "&:hover", {
+    }, "padding", "0px 6px 0px 6px"), "textAlign", "center"), "&:hover", {
       color: "white",
       backgroundColor: "transparent"
-    }), _defineProperty(_downloadButton, "&:active", {
+    }), "&:active", {
       color: "white",
       backgroundColor: "transparent"
-    }), _downloadButton),
+    }),
     downloadText: {
       marginBottom: "100px"
     },
@@ -157,7 +156,7 @@ var _default = function _default() {
       fontSize: "15px",
       lineHeight: "14px"
     }
-  }, _defineProperty(_ref, "node", {
+  }, "node", {
     backgroundColor: "#f4f5f5",
     borderRight: "1px solid #e7e7e7",
     display: "flex",
@@ -173,7 +172,7 @@ var _default = function _default() {
     "&:hover $nodeTitle": {
       color: "#3283c8"
     }
-  }), _defineProperty(_ref, "nodeLabel", {
+  }), "nodeLabel", {
     marginTop: "10px",
     "float": "left",
     color: "#8e8e8e",
@@ -185,26 +184,25 @@ var _default = function _default() {
     padding: "2px 12px",
     background: "#fff",
     fontSize: "12px"
-  }), _defineProperty(_ref, "nodeAssignmentGroup", {
+  }), "nodeAssignmentGroup", {
     textAlign: "right"
-  }), _defineProperty(_ref, "nodeClass", {
+  }), "nodeClass", {
     marginLeft: "5px",
     color: "#2982af",
     fontWeight: "500"
-  }), _defineProperty(_ref, "nodeAssignment", {
+  }), "nodeAssignment", {
     marginLeft: "5px",
     color: "#2982af",
     fontWeight: "500"
-  }), _defineProperty(_ref, "categoryDivider", {
+  }), "categoryDivider", {
     height: "4px",
     display: "block",
     backgroundColor: "#e7e5e5",
     borderLeft: "5px solid #ffffff"
-  }), _defineProperty(_ref, "propertySummary", {
+  }), "propertySummary", {
     /* margin: 5px 0', */
     color: "#7a7a7a",
     paddingLeft: "17px",
     marginBottom: "14px"
-  }), _ref;
+  });
 };
-exports["default"] = _default;

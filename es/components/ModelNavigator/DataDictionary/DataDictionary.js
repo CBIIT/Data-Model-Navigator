@@ -107,5 +107,4 @@ var styles = function styles() {
     }
   };
 };
-var _default = (0, _core.withStyles)(styles)(DataDictionary);
-exports["default"] = _default;
+var _default = exports["default"] = (0, _core.withStyles)(styles)(DataDictionary);

@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-var _default = function _default() {
+var _default = exports["default"] = function _default() {
   return {
     suggestions: {
       backgroundColor: "red"
@@ -24,4 +24,3 @@ var _default = function _default() {
     emptySuggestionList: {}
   };
 };
-exports["default"] = _default;

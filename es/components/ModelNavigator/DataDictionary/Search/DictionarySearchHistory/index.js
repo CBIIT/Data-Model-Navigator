@@ -23,5 +23,4 @@ var ReduxDictionarySearchHistory = function () {
   };
   return (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_DictionarySearchHistory["default"]);
 }();
-var _default = ReduxDictionarySearchHistory;
-exports["default"] = _default;
+var _default = exports["default"] = ReduxDictionarySearchHistory;

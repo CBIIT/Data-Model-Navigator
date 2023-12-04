@@ -8,25 +8,23 @@ var _lodash = _interopRequireDefault(require("lodash"));
 var _fuse = _interopRequireDefault(require("fuse.js"));
 var _utils = require("../../Utils/utils");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var ZERO_RESULT_FOUND_MSG = '0 results found. Please try another keyword.';
+var ZERO_RESULT_FOUND_MSG = exports.ZERO_RESULT_FOUND_MSG = '0 results found. Please try another keyword.';
 
 /**
  * Prepare search items for Fuse.io library
  * @params [Object] dictionary
  * @returns [Object] search data
  */
-exports.ZERO_RESULT_FOUND_MSG = ZERO_RESULT_FOUND_MSG;
-var formatText = function formatText(text) {
+var formatText = exports.formatText = function formatText(text) {
   return "".concat(text).toLowerCase();
 };
-exports.formatText = formatText;
-var prepareSearchData = function prepareSearchData(dictionary) {
+var prepareSearchData = exports.prepareSearchData = function prepareSearchData(dictionary) {
   var searchData = (0, _utils.parseDictionaryNodes)(dictionary).map(function (node) {
     var properties = Object.keys(node.properties).map(function (propertyKey) {
       var type = (0, _utils.getType)(node.properties[propertyKey]);
@@ -48,12 +46,9 @@ var prepareSearchData = function prepareSearchData(dictionary) {
   });
   return searchData;
 };
-exports.prepareSearchData = prepareSearchData;
-var ERR_KEYWORD_TOO_SHORT = 'Keyword too short, try longer keyword.';
-exports.ERR_KEYWORD_TOO_SHORT = ERR_KEYWORD_TOO_SHORT;
-var ERR_KEYWORD_TOO_LONG = 'Keyword too long (more than 32).';
-exports.ERR_KEYWORD_TOO_LONG = ERR_KEYWORD_TOO_LONG;
-var filterMatches = function filterMatches(results, keyword) {
+var ERR_KEYWORD_TOO_SHORT = exports.ERR_KEYWORD_TOO_SHORT = 'Keyword too short, try longer keyword.';
+var ERR_KEYWORD_TOO_LONG = exports.ERR_KEYWORD_TOO_LONG = 'Keyword too long (more than 32).';
+var filterMatches = exports.filterMatches = function filterMatches(results, keyword) {
   if (results && results.length > 0) {
     results.forEach(function (item) {
       var matches = item.matches;
@@ -93,8 +88,7 @@ var filterMatches = function filterMatches(results, keyword) {
  * @params [string] keyword
  * @returns [SearchResultItemShape[]] (see ../../utils).
  */
-exports.filterMatches = filterMatches;
-var searchKeyword = function searchKeyword(searchData, keyword) {
+var searchKeyword = exports.searchKeyword = function searchKeyword(searchData, keyword) {
   if (!keyword || keyword.length < 2) {
     return {
       result: [],
@@ -154,8 +148,7 @@ var searchKeyword = function searchKeyword(searchData, keyword) {
  * @params [SearchResultItemShape[]] search result (SearchResultItemShape from '../../utils')
  * @returns [Object] summary
  */
-exports.searchKeyword = searchKeyword;
-var getSearchSummary = function getSearchSummary(result) {
+var getSearchSummary = exports.getSearchSummary = function getSearchSummary(result) {
   var matchedNodeIDsInNameAndDescription = [];
   var matchedNodeIDsInProperties = [];
   var generalMatchedNodeIDs = [];
@@ -199,4 +192,3 @@ var getSearchSummary = function getSearchSummary(result) {
     generalMatchedNodeIDs: generalMatchedNodeIDs
   };
 };
-exports.getSearchSummary = getSearchSummary;

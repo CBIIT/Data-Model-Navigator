@@ -7,7 +7,7 @@ exports.setMatchingNodeTitle = exports.nodeColor = exports.getMinZoom = exports.
 var _classnames = _interopRequireDefault(require("classnames"));
 var _underscore = _interopRequireDefault(require("underscore"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var nodeColor = function nodeColor(node) {
+var nodeColor = exports.nodeColor = function nodeColor(node) {
   switch (node.category) {
     case 'administrative':
       return '#9B2D20';
@@ -35,8 +35,7 @@ var nodeColor = function nodeColor(node) {
  * @param {Node[]} nodes
  * @returns {string[]} array of type names(duplicating names removed) of given nodes
  */
-exports.nodeColor = nodeColor;
-var getDistinctCategoryItems = function getDistinctCategoryItems(nodes) {
+var getDistinctCategoryItems = exports.getDistinctCategoryItems = function getDistinctCategoryItems(nodes) {
   return _underscore["default"].uniq(nodes.map(function (node) {
     return node.category;
   }));
@@ -47,8 +46,7 @@ var getDistinctCategoryItems = function getDistinctCategoryItems(nodes) {
 * @param {categories[]} categories
 * @returns {string[]} array of type names(duplicating names removed) of given nodes
 */
-exports.getDistinctCategoryItems = getDistinctCategoryItems;
-var getCategoryIconUrl = function getCategoryIconUrl(categories, url) {
+var getCategoryIconUrl = exports.getCategoryIconUrl = function getCategoryIconUrl(categories, url) {
   var urls = {};
   categories.forEach(function (category) {
     urls[category] = "".concat(url, "graph/").concat(category, ".svg");
@@ -60,8 +58,7 @@ var getCategoryIconUrl = function getCategoryIconUrl(categories, url) {
  * Active Search Mode 
  * set node title for matching query 
  */
-exports.getCategoryIconUrl = getCategoryIconUrl;
-var setMatchingNodeTitle = function setMatchingNodeTitle() {
+var setMatchingNodeTitle = exports.setMatchingNodeTitle = function setMatchingNodeTitle() {
   var searchResult = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var matchedNodeNameIndices = {};
   searchResult.forEach(function (item) {
@@ -79,10 +76,8 @@ var setMatchingNodeTitle = function setMatchingNodeTitle() {
 /**
  * set zoom based on width
  */
-exports.setMatchingNodeTitle = setMatchingNodeTitle;
-var getMinZoom = function getMinZoom(_ref) {
+var getMinZoom = exports.getMinZoom = function getMinZoom(_ref) {
   var width = _ref.width,
     minZoom = _ref.minZoom;
   return width > 1450 ? 0.75 : minZoom;
 };
-exports.getMinZoom = getMinZoom;
