@@ -271,7 +271,7 @@ const styles = () => ({
     }
   },
   availableDownloadDropdownBtn: {
-    width: '258px',
+    minWidth: '258px',
     height: '38px',
     backgroundColor: '#F2F2F2'
   },
