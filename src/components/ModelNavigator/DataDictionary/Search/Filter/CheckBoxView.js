@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Checkbox, ListItem, ListItemText, Divider } from "@material-ui/core";
+import { Checkbox, ListItem, ListItemText, Divider, Tooltip } from "@material-ui/core";
 import {
   CheckBox as CheckBoxIcon,
   CheckBoxOutlineBlank as CheckBoxBlankIcon,
 } from "@material-ui/icons";
-import { ToolTip as Tooltip } from "bento-components";
 import _ from "lodash";
 
 const styles = {

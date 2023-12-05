@@ -7,7 +7,8 @@ module.exports = {
   mode: 'production',
   resolve: {
     fallback: {
-      zlib: false
+      zlib: false,
+      buffer: false,
     }
   },
   output: {

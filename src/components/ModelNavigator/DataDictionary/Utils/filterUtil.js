@@ -454,4 +454,39 @@ export const setNodeHierarchy = (dictionary, nodeHierarchy) => {
     return result;
   }, {});
   return nodes;
-} 
+}
+
+/**
+ * Sets the active filters  group checkboxes  isChecked to true.
+ */
+export function setSelectedVlauesToTrue(checkboxItems, filters) {
+  const result = checkboxItems.map((checkboxItem) => {
+    if (filters.includes(checkboxItem.name)) return { ...checkboxItem, isChecked: true };
+    return checkboxItem;
+  });
+  return result;
+}
+
+/**
+ * Sets the active filters checkboxes isChecked to true.
+ */
+export function setSelectedFilterValues(checkboxData, Filters) {
+  const result = checkboxData.map((filterGroup) => {
+    if (Array.isArray(Filters[filterGroup.datafield])
+     && Filters[filterGroup.datafield].length !== 0) {
+      return {
+        groupName: filterGroup.groupName,
+        checkboxItems: setSelectedVlauesToTrue(
+          filterGroup.checkboxItems,
+          Filters[filterGroup.datafield],
+        ),
+        datafield: filterGroup.datafield,
+        show: filterGroup.show,
+        section: filterGroup.section,
+        tooltip: filterGroup.tooltip,
+      };
+    }
+    return filterGroup;
+  });
+  return result;
+}
