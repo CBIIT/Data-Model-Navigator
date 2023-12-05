@@ -73,7 +73,7 @@ export const downloadMarkdownPdf = async (
     },
     jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     pagebreak: {
-      mode: ["css"],
+      mode: ["avoid-all", "css", "legacy"],
     },
   };
 
