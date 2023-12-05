@@ -85,7 +85,7 @@ var downloadMarkdownPdf = exports.downloadMarkdownPdf = /*#__PURE__*/function ()
               orientation: "portrait"
             },
             pagebreak: {
-              mode: ["css"]
+              mode: ["avoid-all", "css", "legacy"]
             }
           };
           (0, _html2pdf["default"])().set(options).from(readMeContent).toPdf().get("pdf").then(function (pdf) {
