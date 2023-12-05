@@ -1,5 +1,5 @@
 {
-  "name": "crdc-datahub-model-navigator",
+  "name": "data-model-navigator",
   "version": "1.1.22",
   "description": "",
   "main": "lib/index.js",
