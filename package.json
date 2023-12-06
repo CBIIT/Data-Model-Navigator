@@ -14,7 +14,8 @@
     "app-build": "webpack",
     "start": "webpack serve --mode production --port 9090",
     "storybook": "start-storybook -p 9006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepare": "npm run build"
   },
   "keywords": [],
   "author": "",
