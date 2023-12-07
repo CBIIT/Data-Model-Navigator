@@ -109,9 +109,10 @@ const DialogComponent = ({
             />
             <IconButton
               onClick={closeHandler}
+              aria-label="Close Dialog"
             >
               <CloseIcon
-                fontSize="small" 
+                fontSize="small"
               />
             </IconButton>
           </div>

@@ -330,8 +330,6 @@ const FacetFilters = ({
                   fontSize="large"
                 />
               }
-              aria-controls={currentSection.sectionName}
-              id={currentSection.sectionName}
             >
               {/* <ListItemText primary={sideBarItem.groupName} /> */}
               <div className={classes.sectionSummaryText}>
@@ -367,8 +365,6 @@ const FacetFilters = ({
                                 style={{ fontSize: 26 }}
                               />
                             }
-                            aria-controls={sideBarItem.groupName}
-                            id={sideBarItem.groupName}
                             className={classes.customExpansionPanelSummaryRoot}
                           >
                             {/* <ListItemText primary={sideBarItem.groupName} /> */}

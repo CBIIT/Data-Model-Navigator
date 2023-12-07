@@ -75,10 +75,11 @@ class AutoCompleteInput extends Component {
               <Button
                 onClick={() => this.handleClear()}
                 disableRipple
-                className={classes.closeBtn} 
+                className={classes.closeBtn}
+                aria-label="Clear search"
               >
                 <CloseIcon
-                  className={classes.closeIcon} 
+                  className={classes.closeIcon}
                 />
               </Button>
               {/* <i
@@ -96,13 +97,14 @@ class AutoCompleteInput extends Component {
         <Button
           onClick={() => this.handleSubmit()}
           disableRipple
-          className={classes.searchBtn} 
+          className={classes.searchBtn}
+          aria-label="Submit search"
         >
           <SearchIcon
             className={classes.searchIcon}
           />
         </Button>
-        
+
         {/* <i
           className={`g3-icon g3-icon--${icon} auto-complete-input__icon`}
           onClick={() => this.handleSubmit()}
