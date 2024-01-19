@@ -38,7 +38,7 @@ export default () => ({
     "&:hover": {},
   },
   searchBarTitle: {
-    backgroundColor: "#488ad4",
+    backgroundColor: "#2F75C6",
     paddingTop: "15px",
     paddingBottom: "13px",
     paddingLeft: "33px",

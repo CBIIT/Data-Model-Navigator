@@ -65,7 +65,7 @@ export default () => ({
   propertyCountBtn: {
     width: "150px",
     height: "26px",
-    backgroundColor: "#EEF5F7",
+    backgroundColor: "#F3F8FB",
     textTransform: "capitalize",
     color: "#000000",
     borderRadius: "0px",
@@ -85,12 +85,12 @@ export default () => ({
     gap: "5px",
   },
   nodeAssignment: {
-    color: "#009dc4",
+    color: "#036077",
     fontWeight: "600",
     fontFamily: "Nunito",
   },
   nodeClass: {
-    color: "#009dc4",
+    color: "#036077",
     fontWeight: "600",
     fontFamily: "Nunito",
   },
