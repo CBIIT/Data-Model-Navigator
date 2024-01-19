@@ -96,7 +96,7 @@ const NodeView = ({
         >
           {display && (
             <div className={classes.iconBar}>
-              <CloseIcon className={classes.closeIcon} onClick={expandNode} />
+              <CloseIcon className={classes.closeIcon} onClick={expandNode} aria-label="Close" />
             </div>
           )}
           <div className={classes.contentWrapper}>

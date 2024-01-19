@@ -257,7 +257,7 @@ const styles = () => ({
     },
   },
   required: {
-    color: "#ff5a20",
+    color: "#8D432A",
     fontSize: "13px",
     fontWeight: "900",
   },

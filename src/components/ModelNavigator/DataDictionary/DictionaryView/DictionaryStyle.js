@@ -41,7 +41,7 @@ export default () => ({
     fontFamily: "Lato",
   },
   tabHighlightColor: {
-    color: "#6d9eba",
+    color: "#467B95",
     fontWeight: "bold",
     fontSize: "18px",
     fontFamily: "Lato",

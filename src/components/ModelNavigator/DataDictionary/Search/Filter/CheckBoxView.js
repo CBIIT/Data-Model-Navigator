@@ -92,6 +92,7 @@ function CheckBoxView(props) {
           disableRipple
           color="secondary"
           classes={{ root: classes.checkboxRoot }}
+          inputProps={{ "aria-label": checkboxItem.name }}
         />
         {dataDictionary ? (
           checkboxItem.name ? (

@@ -184,6 +184,7 @@ const ReadMeDialogComponent = ({
             <IconButton
               onClick={displayReadMeDialog}
               className={classes.closeBtnContainer}
+              aria-label="Close Dialog"
             >
               <CloseIcon fontSize="small" className={classes.closeBtnIcon} />
             </IconButton>
