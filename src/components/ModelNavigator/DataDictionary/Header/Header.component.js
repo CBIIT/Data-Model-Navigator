@@ -21,6 +21,7 @@ const HeaderComponent = ({
     ? state.submission.readMeConfig : undefined));
   const pageConfig = useSelector((state) => (state.submission && state.submission.pageConfig ? state.submission.pageConfig : undefined));
   const loadingExampleConfig = useSelector((state) => (state.submission && state.submission.loadingExampleConfig ? state.submission.loadingExampleConfig : undefined));
+  const modelVersion = useSelector((state) => state.versionInfo && state.versionInfo.modelVersion ? state.versionInfo.modelVersion : undefined);
 
   useEffect(() => {
     if (config && config.readMeUrl) {
@@ -54,6 +55,10 @@ const HeaderComponent = ({
               className={classes.title}
             >
               {pageConfig?.title || "Data Model Navigator"}
+              {/* TODO: Style this */}
+              {modelVersion && (
+                <span>{modelVersion}</span>
+              )}
             </h2>
           </div>
 

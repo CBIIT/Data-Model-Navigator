@@ -206,7 +206,10 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
   const newDataList = dataList;
   return {
     data: newDataList,
-    version,
+    version: {
+      model: icdcMData.Version,
+      ...version,
+    },
   };
 }
 

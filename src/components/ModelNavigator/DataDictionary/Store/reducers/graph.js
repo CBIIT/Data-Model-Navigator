@@ -389,6 +389,7 @@ const versionInfo = (state = {}, action) => {
         ...state,
         dictionaryVersion: action.data.dictionary.version || 'unknown',
         apiVersion: action.data.version || 'unknown',
+        modelVersion: action.data.model || undefined,
       };
     default:
       return state;
