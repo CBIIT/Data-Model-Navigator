@@ -19,12 +19,24 @@ export default () => ({
     border: "0px",
     zIndex: "2",
   },
+  titleAndVersion: {
+    display: "flex",
+    flexDirection: "column",
+  },
   title: {
-    color: "#007FC6",
+    color: "#083A50",
     fontSize: "25px",
     fontWeight: "bold",
     letterSpacing: "1px",
-    fontFamily: "Raleway",
+    fontFamily: "Nunito, Lato, sans-serif",
+    marginBottom: "0px",
+  },
+  modelVersion: {
+    color: "rgba(87, 87, 87, 0.9)",
+    fontSize: "11px",
+    fontWeight: "400",
+    letterSpacing: "0.5px",
+    fontFamily: "Nunito Sans, Lato, sans-serif",
   },
   btnGroup: {
     display: "flex",

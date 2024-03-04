@@ -51,15 +51,14 @@ const HeaderComponent = ({
               alt="dog-icon"
               src={pageConfig?.iconSrc || dogIconSrc}
             />
-            <h2
-              className={classes.title}
-            >
-              {pageConfig?.title || "Data Model Navigator"}
-              {/* TODO: Style this */}
-              {modelVersion && (
-                <span>{modelVersion}</span>
-              )}
-            </h2>
+            <div className={classes.titleAndVersion}>
+              <h2
+                className={classes.title}
+              >
+                {pageConfig?.title || "Data Model Navigator"}
+              </h2>
+              {modelVersion && (<span className={classes.modelVersion}>{modelVersion}</span>)}
+            </div>
           </div>
 
           <div
