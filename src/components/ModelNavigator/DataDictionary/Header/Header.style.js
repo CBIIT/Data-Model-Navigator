@@ -31,6 +31,9 @@ export default () => ({
     fontFamily: "Nunito, Lato, sans-serif",
     marginBottom: "0px",
   },
+  titleWithVersion: {
+    marginTop: "12px",
+  },
   modelVersion: {
     color: "rgba(87, 87, 87, 0.9)",
     fontSize: "11px",

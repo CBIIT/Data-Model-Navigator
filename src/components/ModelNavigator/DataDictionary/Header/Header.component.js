@@ -5,6 +5,7 @@ import {
   Button,
   withStyles,
 } from '@material-ui/core';
+import clsx from 'clsx';
 import styles from './Header.style';
 import CustomTheme from './Header.theme.config';
 import ReadMeComponent from '../ReadMe/ReadMe.controller';
@@ -53,7 +54,7 @@ const HeaderComponent = ({
             />
             <div className={classes.titleAndVersion}>
               <h2
-                className={classes.title}
+                className={modelVersion ? clsx(classes.title, classes.titleWithVersion) : classes.title}
               >
                 {pageConfig?.title || "Data Model Navigator"}
               </h2>
