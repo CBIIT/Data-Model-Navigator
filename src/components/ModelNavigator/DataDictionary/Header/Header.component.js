@@ -57,7 +57,7 @@ const HeaderComponent = ({
               >
                 {pageConfig?.title || "Data Model Navigator"}
               </h2>
-              {modelVersion && (<span className={classes.modelVersion}>{modelVersion}</span>)}
+              {modelVersion && (<span className={classes.modelVersion}>Version {modelVersion}</span>)}
             </div>
           </div>
 
