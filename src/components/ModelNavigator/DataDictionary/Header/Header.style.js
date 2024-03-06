@@ -41,6 +41,7 @@ export default () => ({
     letterSpacing: "0.5px",
     fontFamily: "Nunito Sans, Lato, sans-serif",
     textTransform: "uppercase",
+    marginLeft: "2px",
   },
   btnGroup: {
     display: "flex",
