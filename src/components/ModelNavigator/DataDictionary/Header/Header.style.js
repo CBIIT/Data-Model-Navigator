@@ -36,10 +36,11 @@ export default () => ({
   },
   modelVersion: {
     color: "rgba(87, 87, 87, 0.9)",
-    fontSize: "11px",
+    fontSize: "12px",
     fontWeight: "400",
     letterSpacing: "0.5px",
     fontFamily: "Nunito Sans, Lato, sans-serif",
+    textTransform: "uppercase",
   },
   btnGroup: {
     display: "flex",
