@@ -375,6 +375,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
     case actionTypes.ON_REACT_FLOW_NODE_FOCUS:
       return {
         ...state,
+        expandNodeView: false,
         focusedNodeId: action?.nodeID
       }
     case actionTypes.CNAVAS_WIDTH_CHANGE:

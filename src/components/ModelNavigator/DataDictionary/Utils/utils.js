@@ -268,7 +268,7 @@ export const highlightParentNodes = (edges = [], childIds = []) => {
   const highLevelParentNodes = childEdges.map((node) => node.source);
   const remamingEdges = edges.filter((edge) => !childIds.includes(edge.target));
   childIds.push(...highLevelParentNodes);
-  if (remamingEdges.length < edges.length) {
+  if (highLevelParentNodes.length > 0) {
     highlightParentNodes(remamingEdges, childIds);
   }
   return childIds;
