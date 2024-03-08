@@ -19,7 +19,6 @@ import { nodeColor } from '../Canvas/util';
   isSearchMode) => {
     const id = `${node}`.trim().toLowerCase();
     const matchingNodes = isSearchMode ? matchedNodeIDs : highlightParentNodes;
-    console.log('matching nodes', matchingNodes);
     return clsx(classes.nodeTitleBtn, classes[category], {
       [classes.matchedNodeIDs]: (matchingNodes.indexOf(id) !== -1),
       [classes.matchedInNameAndDesc]: (matchedNodeIDsInNameAndDescription.indexOf(id) !== -1),

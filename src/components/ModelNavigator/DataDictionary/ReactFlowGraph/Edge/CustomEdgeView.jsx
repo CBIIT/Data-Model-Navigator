@@ -5,6 +5,8 @@ import Styles from './CustomEdgeStyle';
 
 const CustomEdgeView = ({
   id,
+  source,
+  target,
   sourceX,
   sourceY,
   targetX,
@@ -20,12 +22,10 @@ const CustomEdgeView = ({
 }) => {
 
   const [highlightEdge, setHighlightEdge] = useState(false);
-
   useEffect(() => {
     if (expandNodeView) {
-      const nodes = `${id}`.split('-');
-      const highlightEdge = highlightParentNodes.includes(nodes[0])
-        && highlightParentNodes.includes(nodes[1]);
+      const highlightEdge = highlightParentNodes.includes(source)
+        && highlightParentNodes.includes(target);
       if (highlightEdge) {
         setHighlightEdge(true);
       }
