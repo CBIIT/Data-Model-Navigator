@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import { withStyles } from '@material-ui/core';
 import { getStraightPath } from 'reactflow';
 import Styles from './CustomEdgeStyle';
@@ -18,19 +18,8 @@ const CustomEdgeView = ({
   markerEnd,
   isSearchMode,
   expandNodeView,
-  highlightParentNodes,
+  highlightParentNodes = [],
 }) => {
-
-  const [highlightEdge, setHighlightEdge] = useState(false);
-  useEffect(() => {
-    if (expandNodeView) {
-      const highlightEdge = highlightParentNodes.includes(source)
-        && highlightParentNodes.includes(target);
-      if (highlightEdge) {
-        setHighlightEdge(true);
-      }
-    }
-  }, [expandNodeView])
 
   const [edgePath] = getStraightPath({
     sourceX,
@@ -40,7 +29,8 @@ const CustomEdgeView = ({
     targetY,
     targetPosition,
   });
-
+  const highlightEdge = highlightParentNodes.includes(source)
+        && highlightParentNodes.includes(target);
   const stroke = isSearchMode ? '#b1b1b7' : (!expandNodeView)
     ? "#222" : (expandNodeView && highlightEdge) ? "#222" : '#b1b1b7';
 
