@@ -12,6 +12,7 @@ const mapStateToProps = (state) => ({
   expandNodeView: state.ddgraph.expandNodeView,
   highlightingNode : state.ddgraph.highlightingNode,
   focusedNodeId: state.ddgraph.focusedNodeId,
+  highlightParentNodes: state.ddgraph.highlightParentNodes
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -21,6 +21,7 @@ const NodeView = ({
   highlightingNode,
   onNodeFocus,
   focusedNodeId,
+  highlightParentNodes,
 }) => {
   const [display, setDisplay] = useState(false);
   /**
@@ -28,7 +29,6 @@ const NodeView = ({
    * use view option to adjust the fontSize on property dialog
    */
   const expandNode = () => {
-    const view = localStorage.getItem("reactflowGraphView");
     onClickNode(id);
     setDisplay(!display);
     if (display) {
@@ -78,7 +78,7 @@ const NodeView = ({
   /**
    * highlight nodes based on search query
    */
-  const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category);
+  const nodeClasses = setMatchingNodeClasses(ddgraph, label, classes, category, isSearchMode);
   /**
    * button on focus
    */
@@ -105,14 +105,18 @@ const NodeView = ({
                 [classes.btnPadding]: display,
               })}
             >
-              <div
+              <button
                 className={
-                  isSearchMode ? nodeClasses : classes.nodeButtonOuterWrapper
+                  clsx(
+                    {[nodeClasses]: (isSearchMode || expandNodeView)},
+                    {[classes.nodeButtonOuterWrapper]: (!isSearchMode || !expandNodeView)},
+                  )
                 }
                 style={{
                   border: display && "2px solid white",
                 }}
                 onClick={isSearchMode ? displayOverviewTable : expandNode}
+                onFocus={nodeFocusEvent}
               >
                 <div className={classes.nodeButtonInnerWrapper}>
                   <div
@@ -147,7 +151,7 @@ const NodeView = ({
                     )}
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
             <div
               className={display ? classes.viewSection : classes.hideSection}
@@ -197,7 +201,7 @@ const NodeView = ({
               style={{
                 background: "transparent",
                 border: "none",
-                top: "37px",
+                top: "47px",
               }}
             />
           </div>
