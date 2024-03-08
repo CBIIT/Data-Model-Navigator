@@ -60,6 +60,7 @@ const getSubgroupLinks = (link, nameToNode, sourceId) => {
 };
 
 const generateNodes = (nodes, edges, windowWidth) => {
+  console.log(edges);
   const generatedNodes = nodes.map((node, index) => {
     return {
       type: "custom",

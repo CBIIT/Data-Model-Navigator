@@ -38,7 +38,7 @@ const CanvasController = ({
   highlightedNodes,
   graphViewConfig,
   onGraphPanelClick,
-  assetConfig
+  assetConfig,
 }) => {
     if (tabViewWidth === 0 || !graphViewConfig) {
       return <CircularProgress />;
@@ -113,9 +113,10 @@ const CanvasController = ({
     useEffect(() => {
         const flowData = createNodesAndEdges({dictionary}, true, []);
         const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-            flowData.nodes,
-            flowData.edges,
+          flowData.nodes,
+          flowData.edges,
         );
+        setGraphData(flowData);
         setNodes(layoutedNodes);
         setEdges(layoutedEdges);
     }, [dictionary, currentSearchKeyword]);
