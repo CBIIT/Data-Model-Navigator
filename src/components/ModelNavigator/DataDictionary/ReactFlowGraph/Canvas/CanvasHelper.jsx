@@ -79,8 +79,6 @@ export const generateNodeTree = (dictionary, nextLevel = 2, intervel = 2) => {
             }
         });
     });
-    console.log('view links');
-    console.log(distinctLinks);
     /**
     * assign max level to node with no edges
     * move to bottom of the tree

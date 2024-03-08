@@ -163,10 +163,8 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         };
       }
       // if serach mode is false
-      console.log('clicked on node');
       const target = action.nodeID;
       const highlightNodes = highlightParentNodes(state.edges, [target]);
-      console.log(highlightNodes);
 
       return {
         ...state,
