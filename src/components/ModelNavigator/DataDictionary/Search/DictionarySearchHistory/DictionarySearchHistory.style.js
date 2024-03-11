@@ -54,7 +54,7 @@ export default () => ({
     display: "inline",
   },
   clear: {
-    color: "#3283c8",
+    color: "#036077",
     cursor: "pointer",
     fontFamily: "Open Sans",
     float: "right",

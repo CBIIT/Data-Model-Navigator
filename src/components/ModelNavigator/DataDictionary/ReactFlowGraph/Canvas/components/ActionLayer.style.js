@@ -13,11 +13,8 @@ export default () => ({
     height: '40px',
     padding: '1px 20px',
     textTransform: 'none',
-    color: ' #fff',
-    backgroundColor: '#ef8523',
-    '&:hover': {
-      backgroundColor: '#ff9635',
-    }
+    color: '#fff',
+    backgroundColor: '#B54717 !important',
   },
   zvalue: {
     zIndex: '0',

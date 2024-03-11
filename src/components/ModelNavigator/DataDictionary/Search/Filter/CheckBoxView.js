@@ -70,6 +70,7 @@ function CheckBoxView(props) {
           selected: classes.selected,
           gutters: classes.listItemGutters,
         }}
+        role="presentation"
       >
         <Checkbox
           id={`checkbox_${sideBarItem.groupName}_${checkboxItem.name}`}

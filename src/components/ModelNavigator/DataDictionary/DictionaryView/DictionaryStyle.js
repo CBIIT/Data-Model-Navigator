@@ -36,7 +36,7 @@ export default () => ({
   tabPrimaryColor: {
     fontWeight: "700",
     opacity: "1",
-    color: "#83a3b5",
+    color: "#6E6E6E",
     fontSize: "18px",
     fontFamily: "Lato",
   },
