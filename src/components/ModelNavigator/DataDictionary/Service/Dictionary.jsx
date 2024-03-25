@@ -39,7 +39,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
       item.category = value.Tags.Category;
     } else if ('Category' in value) {
       item.category = (value.Category && value.Category.length > 0)
-        ? value.Category : 'Undefined';   
+        ? value.Category : 'Undefined';
     } else {
       item.category = 'Undefined';
     }
@@ -83,7 +83,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
               || icdcMPData.PropDefinitions[propertyName]?.Type?.Enum;
             propertiesItem.src = icdcMPData?.PropDefinitions[propertyName]?.Src;
             propertiesItem.key = icdcMPData?.PropDefinitions[propertyName]?.Key;
-            if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes') {
+            if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes' || String(icdcMPData.PropDefinitions[propertyName].Req).toLowerCase() === 'true') {
               pRequired.push(nodeP);
               propertiesItem['propertyType'] = 'required';
             } else if (icdcMPData.PropDefinitions[propertyName].Req === 'Preferred') {
