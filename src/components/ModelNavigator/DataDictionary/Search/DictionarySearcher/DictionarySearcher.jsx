@@ -221,7 +221,7 @@ class DictionarySearcher extends React.Component {
                     <div className={classes.searchResultText}>
                       <span>Search Results</span>
                     </div>
-                    <List className={classes.resultList} component="div" dense>
+                    <List className={classes.resultList} dense>
                       <ListItem className={classes.resultItem}>
                         <span className={classes.resultCountTitleDesc}>
                           {
