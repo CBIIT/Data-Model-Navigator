@@ -206,6 +206,7 @@ const styles = () => ({
   listItemText: {
     fontWeight: '300',
     fontSize: '14px',
+    whiteSpace: 'pre-wrap',
   },
   longText: {
     fontSize: '13px',
