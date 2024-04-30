@@ -8,20 +8,23 @@ import { nodeColor } from '../Canvas/util';
  * set classes for matching nodes base on search query
  */
  export const setMatchingNodeClasses = ({
+    highlightParentNodes = [],
     matchedNodeIDs = [],
     matchedNodeIDsInNameAndDescription = [],
     matchedNodeIDsInProperties = [],
   },
   node,
   classes,
-  category) => {
+  category,
+  isSearchMode) => {
     const id = `${node}`.trim().toLowerCase();
+    const matchingNodes = isSearchMode ? matchedNodeIDs : highlightParentNodes;
     return clsx(classes.nodeTitleBtn, classes[category], {
-      [classes.matchedNodeIDs]: (matchedNodeIDs.indexOf(id) !== -1),
+      [classes.matchedNodeIDs]: (matchingNodes.indexOf(id) !== -1),
       [classes.matchedInNameAndDesc]: (matchedNodeIDsInNameAndDescription.indexOf(id) !== -1),
       [classes.matchedNodeIDsInProps]: (matchedNodeIDsInProperties.indexOf(id) !== -1)
         && (matchedNodeIDsInNameAndDescription.indexOf(id) === -1),
-      [classes.excludeNode]: (matchedNodeIDs.indexOf(id) === -1),
+      [classes.excludeNode]: (matchingNodes.indexOf(id) === -1),
     });
 }
 

@@ -6,6 +6,8 @@ const ReduxEdgeView = (props) => (<CustomEdgeView {...props} />);
 
 const mapStateToProps = (state) => ({
   isSearchMode: state.ddgraph.isSearchMode,
+  expandNodeView: state.ddgraph.expandNodeView,
+  highlightParentNodes: state.ddgraph.highlightParentNodes
 });
 
 const mapDispatchToProps = (dispatch) => ({
