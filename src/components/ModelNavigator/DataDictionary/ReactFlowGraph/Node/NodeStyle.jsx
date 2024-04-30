@@ -134,7 +134,6 @@ export default () => ({
     display: "flex",
     //justifyContent: "center",
     gap: "8px",
-
     //display: "grid",
     //gridTemplateColumns: "1fr 1fr",
   },
@@ -190,8 +189,6 @@ export default () => ({
     borderRadius: "15px",
   },
   excludeNode: {
-    cursor: "not-allowed",
-    pointerEvents: "none",
     opacity: "0.4",
   },
 });
