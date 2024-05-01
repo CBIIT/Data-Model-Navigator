@@ -138,7 +138,7 @@ const DownloadFileTypeBtn = ({
     }, 50);
   };
 
-  const downloadAllTemplates = (prefix = "ICDC_") => {
+  const downloadAllTemplates = (prefix = "ICDC_", fileTransferManifestName = "") => {
     // eslint-disable-next-line no-unused-vars
     const fullDictionaryTemplates = Object.fromEntries(Object.entries(fullDictionary).filter(([_key, value]) => value.template === 'Yes'));
     const nodesValueArray = Object.values(fullDictionaryTemplates);
@@ -156,7 +156,7 @@ const DownloadFileTypeBtn = ({
 
     const zip = new JSZip();
     const titlePrefix = (nodeTSV) => (nodeTSV.type === 'file-manifest'
-      ? (pdfDownloadConfig?.fileTransferManifestName || prefix + 'File_Transfer_Manifest') : prefix + 'Data_Loading_Template-');
+      ? (fileTransferManifestName || prefix + 'File_Transfer_Manifest') : prefix + 'Data_Loading_Template-');
     const nodeName = (name) => (name === 'file' ? '' : name);
     nodesTSV.forEach((nodeTSV, index) => zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV))}.tsv`, nodeTSV.content));
 
@@ -172,7 +172,7 @@ const DownloadFileTypeBtn = ({
       case FILE_TYPE_README:
         return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix, config?.footnote);
       case FILE_TYPE_TEMPLATES:
-        return downloadAllTemplates(config?.downloadPrefix);
+        return downloadAllTemplates(config?.downloadPrefix, config?.fileTransferManifestName);
       case FILE_TYPE_CONTROLLED_VOCAB_TSV:
         return generateVocabFullDownload(fullDictionary, 'TSV', config?.downloadPrefix);
       case FILE_TYPE_CONTROLLED_VOCAB_JSON:
