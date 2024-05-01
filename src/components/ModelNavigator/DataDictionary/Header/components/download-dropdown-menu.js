@@ -114,7 +114,7 @@ const DownloadFileTypeBtn = ({
   const fullDictionaryC2nl = category2NodeList(fullDictionary);
   const processedFullDictionary = sortByCategory(fullDictionaryC2nl, fullDictionary);
 
-  const  pdfDownloadConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
+  const pdfDownloadConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
 
   const clickHandler = (event) => {
     setLabel('Available Downloads');
@@ -156,7 +156,7 @@ const DownloadFileTypeBtn = ({
 
     const zip = new JSZip();
     const titlePrefix = (nodeTSV) => (nodeTSV.type === 'file-manifest'
-      ? prefix + 'File_Transfer_Manifest' : prefix + 'Data_Loading_Template-');
+      ? (pdfDownloadConfig?.fileTransferManifestName || prefix + 'File_Transfer_Manifest') : prefix + 'Data_Loading_Template-');
     const nodeName = (name) => (name === 'file' ? '' : name);
     nodesTSV.forEach((nodeTSV, index) => zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV))}.tsv`, nodeTSV.content));
 
