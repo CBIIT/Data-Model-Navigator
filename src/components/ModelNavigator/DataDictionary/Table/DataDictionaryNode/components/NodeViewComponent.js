@@ -139,7 +139,7 @@ const NodeViewComponent = ({
                       isFileManifest
                         ? createFileName(
                             "",
-                            pdfDownloadConfig?.downloadPrefix || fileManifestDownloadSettings.filename_prefix
+                            pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix
                           )
                         : createFileName(node.id, csvBtnDownloadConfig.prefix)
                     }
