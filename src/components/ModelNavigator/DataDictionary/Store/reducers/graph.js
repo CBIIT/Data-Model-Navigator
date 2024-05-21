@@ -4,6 +4,7 @@ import {
   addSearchHistoryItems,
   onViewChange,
   onCnavasWidthChange,
+  highlightParentNodes,
 } from '../../Utils/utils';
 import * as actionTypes from '../actions/actionTypes';
 
@@ -162,6 +163,9 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         };
       }
       // if serach mode is false
+      const target = action.nodeID;
+      const highlightNodes = highlightParentNodes(state.edges, [target]);
+
       return {
         ...state,
           highlightingMatchedNodeID: action.nodeID,
@@ -170,6 +174,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
           overlayPropertyHidden: true,
           expandNodeView: true,
           highlightedNodes: newArray,
+          highlightParentNodes: highlightNodes,
       }
     }
     case 'GRAPH_CLICK_NODE': {
@@ -370,6 +375,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
     case actionTypes.ON_REACT_FLOW_NODE_FOCUS:
       return {
         ...state,
+        expandNodeView: false,
         focusedNodeId: action?.nodeID
       }
     case actionTypes.CNAVAS_WIDTH_CHANGE:

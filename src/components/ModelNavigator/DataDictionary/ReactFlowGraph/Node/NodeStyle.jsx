@@ -58,6 +58,8 @@ export default () => ({
     justifyContent: "center",
     alignItems: "center",
     padding: "0 8px",
+    borderBottomRightRadius: '10px',
+    borderTopRightRadius: '10px',
     "&:hover": {
       backgroundColor: "#ef8523",
       color: "#fff",
@@ -65,6 +67,8 @@ export default () => ({
   },
   nodeButtonOuterWrapper: {
     borderRadius: "15px",
+    border: '0',
+    padding: '0',
   },
   nodeButtonInnerWrapper: {
     border: "3px solid #2E2E2E",
@@ -74,6 +78,7 @@ export default () => ({
     backgroundColor: "#fff",
     cursor: "pointer",
     borderRadius: "15px",
+
   },
   iconWrapper: {
     display: "flex",
@@ -129,7 +134,6 @@ export default () => ({
     display: "flex",
     //justifyContent: "center",
     gap: "8px",
-
     //display: "grid",
     //gridTemplateColumns: "1fr 1fr",
   },
@@ -185,8 +189,6 @@ export default () => ({
     borderRadius: "15px",
   },
   excludeNode: {
-    cursor: "not-allowed",
-    pointerEvents: "none",
     opacity: "0.4",
   },
 });
