@@ -132,6 +132,7 @@ const TableRow = ({
               {enums ? (
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <span>
+                    {typeof type?.value_type === "string" && type.value_type === "list" ? <p>"list" <br /><br /></p> : null}
                     <p className={classes.acceptValue}>Acceptable Values:</p>{" "}
                     {enums.length > config.maxNoOfItems ? (
                       <ListComponent
@@ -168,7 +169,7 @@ const TableRow = ({
                   {isSearchMode ? (
                     <>{propertyTypeFragment}</>
                   ) : (
-                    <>{JSON.stringify(type)}</>
+                    <>{JSON.stringify(type?.value_type === "list" ? "list" : type)}</>
                   )}
                 </>
               )}
