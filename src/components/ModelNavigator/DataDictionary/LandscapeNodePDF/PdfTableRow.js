@@ -174,6 +174,9 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
       return property;
     }
     const type = typeof property;
+    if (type === 'object' && typeof property.value_type === 'string' && property.value_type === 'list') {
+      return 'list';
+    }    
     if (type === 'object') {
       return textContent(JSON.stringify(property), ']');
     }
@@ -253,6 +256,7 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
         <>
           {propInfo.enum ? (
             <Text style={styles.tableCell}>
+              {typeof propInfo?.type?.value_type === "string" && propInfo?.type.value_type === "list" ? "list\n\n" : ""}
               {'Acceptable Values: '}
               {validateEnums(propInfo.enum)}
             </Text>
