@@ -60,10 +60,6 @@ export default () => ({
     padding: "0 8px",
     borderBottomRightRadius: '10px',
     borderTopRightRadius: '10px',
-    "&:hover": {
-      backgroundColor: "#ef8523",
-      color: "#fff",
-    },
   },
   nodeButtonOuterWrapper: {
     borderRadius: "15px",
@@ -78,7 +74,11 @@ export default () => ({
     backgroundColor: "#fff",
     cursor: "pointer",
     borderRadius: "15px",
-
+  },
+  nodeButtonInnerWrapperOnExpand: {
+    '&:hover': {
+      cursor: 'grab',
+    },
   },
   iconWrapper: {
     display: "flex",
@@ -190,5 +190,11 @@ export default () => ({
   },
   excludeNode: {
     opacity: "0.4",
+  },
+  labelWrapperCollapse: {
+    "&:hover": {
+      backgroundColor: "#ef8523",
+      color: "#fff",
+    },
   },
 });
