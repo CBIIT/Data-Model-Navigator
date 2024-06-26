@@ -12,6 +12,7 @@ import clsx from 'clsx';
 import PdfDocument from './Pdf';
 import LandscapePDFDoc from '../LandscapeNodePDF/Pdf';
 import { fileManifestDownload } from '../../../../config/file-manifest-config';
+import { filterProperties } from '../utils';
 
 const DownloadButton = ({
   classes,
@@ -69,7 +70,7 @@ const DownloadButton = ({
 
   const convertToTSV = (node) => {
     let line = tsvMiddleware(node);
-    Object.keys(node.properties).forEach((key) => {
+    Object.keys(filterProperties(node)).forEach((key) => {
       line += ('\t').concat(`${key}`);
     });
     const text = `${line}\r\n${node.title}`;
