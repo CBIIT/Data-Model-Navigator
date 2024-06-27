@@ -27,6 +27,7 @@ const NodeViewComponent = ({
   propertyCount,
   isExpanded,
   isOverlay,
+  modelVersion
 }) => {
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
@@ -143,7 +144,7 @@ const NodeViewComponent = ({
                             "",
                             pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix
                           )
-                        : createFileName(node.id, csvBtnDownloadConfig.prefix)
+                        : createFileName(node.id, csvBtnDownloadConfig.prefix, modelVersion, true)
                     }
                   />
                 )}
@@ -169,6 +170,7 @@ const mapStateToProps = (state) => {
   console.log('statey -->', state);
   return {
     graphView: state.ddgraph.isGraphView,
+    modelVersion: state.versionInfo.modelVersion
   };
 };
 
