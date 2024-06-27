@@ -9,6 +9,8 @@ import IconDownloadPDF from "../../icons/icon_download_PDF.svg";
 import IconDownloadPTSV from "../../icons/icon_download_TSV.svg";
 import DownloadButton from "../../../NodePDF/DownloadButton";
 import { fileManifestDownloadSettings as defaultConfig } from "../../../../../../config/file-manifest-config";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import {
   getNodeDescriptionFragment,
   getNodeTitleFragment,
@@ -163,4 +165,14 @@ const NodeViewComponent = ({
   );
 };
 
-export default withStyles(styles)(NodeViewComponent);
+const mapStateToProps = (state) => {
+  console.log('statey -->', state);
+  return {
+    graphView: state.ddgraph.isGraphView,
+  };
+};
+
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles)
+)(NodeViewComponent);
