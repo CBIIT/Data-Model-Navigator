@@ -24,6 +24,7 @@ const getData = async (url) => {
 async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS) {
   const icdcMData = await getData(modelUrl);
   const icdcMPData = await getData(modelPropsUrl);
+  ass
 
   // translate the json file here
   const dataList = {};
@@ -83,6 +84,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
               || icdcMPData.PropDefinitions[propertyName]?.Type?.Enum;
             propertiesItem.src = icdcMPData?.PropDefinitions[propertyName]?.Src;
             propertiesItem.key = icdcMPData?.PropDefinitions[propertyName]?.Key;
+            propertiesItem.isIncludedInTemplate = icdcMPData?.PropDefinitions[propertyName]?.Tags?.Template === 'Yes' || !icdcMPData?.PropDefinitions[propertyName]?.Tags?.Template;
             if (icdcMPData.PropDefinitions[propertyName].Req === 'Yes' || String(icdcMPData.PropDefinitions[propertyName].Req).toLowerCase() === 'true') {
               pRequired.push(nodeP);
               propertiesItem['propertyType'] = 'required';

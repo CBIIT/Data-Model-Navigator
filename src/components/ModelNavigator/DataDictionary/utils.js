@@ -288,6 +288,24 @@ export function createFileName(fileName, filePreFix) {
     : `${fileName} ${todaysDate} ${hours}-${minutes}-${seconds}`;
 }
 
+/**
+ * @param {Object} node DMN node object.
+ * @param {Object} node.properties Node properties Object
+ * @returns {Object} Property object with properties that should not be in the template removed.
+ */
+export const filterProperties = (node) => {
+  const { properties } = node;
+  const filteredProperties = {};
+
+
+  for (let key in properties) {
+    if (properties[key].isIncludedInTemplate) {
+      filteredProperties[key] = properties[key];
+    }
+  }
+  return filteredProperties;
+}
+
 export const tsvMiddleware = (node) => {
   let line = 'type';
   const { links } = node;
@@ -305,9 +323,11 @@ export const tsvMiddleware = (node) => {
 
 export const convertToTSV = (node) => {
   let line = tsvMiddleware(node);
-  Object.keys(node.properties).forEach((key) => {
+
+  Object.keys(filterProperties(node)).forEach((key) => {
     line += ('\t').concat(`${key}`);
   });
+
   const text = `${line}\r\n${node.title}`;
   return text;
 };
@@ -384,7 +404,7 @@ export const generateLoadingExample = async (configUrl = "https://raw.githubuser
   const zip = new JSZip();
 
   // fetch config
-  const {loadingExamples, title} = await (await Axios.get(configUrl)).data
+  const { loadingExamples, title } = await (await Axios.get(configUrl)).data
   try {
     const titleArr = Object.keys(loadingExamples);
     const res = await Promise.all(Object.values(loadingExamples).map((example) => Axios.get(example)));
