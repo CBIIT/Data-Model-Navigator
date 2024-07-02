@@ -142,10 +142,7 @@ const NodeViewComponent = ({
                       isFileManifest
                         ? createFileName(
                             "",
-                            pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix,
-                            modelVersion,
-                            true
-                          )
+                            pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix)
                         : createFileName(node.id, csvBtnDownloadConfig.prefix, modelVersion, true)
                     }
                   />
@@ -169,7 +166,6 @@ const NodeViewComponent = ({
 };
 
 const mapStateToProps = (state) => {
-  console.log('statey -->', state);
   return {
     graphView: state.ddgraph.isGraphView,
     modelVersion: state.versionInfo.modelVersion

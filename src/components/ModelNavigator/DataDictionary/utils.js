@@ -264,7 +264,6 @@ export const isFooterHidden = (pathname) => (!!((pathname
   ))));
 
 export function createFileName(fileName, filePreFix, modelVersion = undefined, isTSV = false) {
-  console.log('check -->', {fileName, filePreFix});
   const date = new Date();
   const yyyy = date.getFullYear();
   let dd = date.getDate();
