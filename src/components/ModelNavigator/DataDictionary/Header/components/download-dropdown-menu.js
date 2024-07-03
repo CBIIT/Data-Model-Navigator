@@ -107,7 +107,6 @@ const DownloadFileTypeBtn = ({
   loadingExampleConfig,
   modelVersion
 }) => {
-    console.log('this-model-version (222)------>>>>>>', modelVersion);
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [label, setLabel] = useState('Available Downloads');
   const [isLoading, setLoading] = React.useState(false);
