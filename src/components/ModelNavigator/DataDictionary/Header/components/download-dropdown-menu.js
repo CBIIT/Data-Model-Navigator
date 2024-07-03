@@ -168,7 +168,7 @@ const DownloadFileTypeBtn = ({
     const nodeName = (name) => (name === 'file' ? '' : name);
     nodesTSV.forEach((nodeTSV, index) => {
         const isFileManifestType = nodeTSV.type === 'file-manifest';
-        zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV), modelVersion, !isFileManifestType)}.tsv`, nodeTSV.content ));
+        zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV), modelVersion, !isFileManifestType)}.tsv`, nodeTSV.content );
     };
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
