@@ -285,7 +285,7 @@ export function createFileName(fileName, filePreFix, modelVersion = undefined, i
   if (seconds < 10) { seconds = `0${seconds}`; }
 
   if (isTemplate && modelVersion) {
-    return filePreFix ? `${filePreFix}_Data_Loading_Template_${fileName}_${modelVersion}`
+    return filePreFix ? `${filePreFix}Data_Loading_Template_${fileName}_${modelVersion}`
     : `${fileName}_${modelVersion}`
   }
 
