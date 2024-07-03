@@ -107,7 +107,7 @@ const DownloadFileTypeBtn = ({
   loadingExampleConfig,
   modelVersion
 }) => {
-    console.log('this-model-version (111)------>>>>>>', modelVersion);
+    console.log('this-model-version (222)------>>>>>>', modelVersion);
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [label, setLabel] = useState('Available Downloads');
   const [isLoading, setLoading] = React.useState(false);
@@ -159,11 +159,17 @@ const DownloadFileTypeBtn = ({
     );
 
     const zip = new JSZip();
-    const isFileManifestType = nodeTSV.type === 'file-manifest';
-    const titlePrefix = (nodeTSV) => (isFileManifestType
-      ? (fileTransferManifestName || prefix + 'File_Transfer_Manifest') : prefix);
+    
+    const titlePrefix = (nodeTSV) => {
+        const isFileManifestType = nodeTSV.type === 'file-manifest';
+        return (isFileManifestType
+            ? (fileTransferManifestName || prefix + 'File_Transfer_Manifest') : prefix)
+    };
     const nodeName = (name) => (name === 'file' ? '' : name);
-    nodesTSV.forEach((nodeTSV, index) => zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV), modelVersion, !isFileManifestType)}.tsv`, nodeTSV.content ));
+    nodesTSV.forEach((nodeTSV, index) => {
+        const isFileManifestType = nodeTSV.type === 'file-manifest';
+        zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV), modelVersion, !isFileManifestType)}.tsv`, nodeTSV.content ));
+    };
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
       saveAs(thisContent, createFileName('', prefix + 'Data_Loading_Templates'));
