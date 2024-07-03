@@ -263,7 +263,7 @@ export const isFooterHidden = (pathname) => (!!((pathname
     || pathname.toLowerCase().startsWith('/dd/')
   ))));
 
-export function createFileName(fileName, filePreFix) {
+export function createFileName(fileName, filePreFix, modelVersion = undefined, isTemplate = false) {
   const date = new Date();
   const yyyy = date.getFullYear();
   let dd = date.getDate();
@@ -283,6 +283,11 @@ export function createFileName(fileName, filePreFix) {
   if (minutes < 10) { minutes = `0${minutes}`; }
 
   if (seconds < 10) { seconds = `0${seconds}`; }
+
+  if (isTemplate && modelVersion) {
+    return filePreFix ? `${filePreFix}Data_Loading_Template_${fileName}_${modelVersion}`
+    : `${fileName}_${modelVersion}`
+  }
 
   return filePreFix ? `${filePreFix}${fileName} ${todaysDate} ${hours}-${minutes}-${seconds}`
     : `${fileName} ${todaysDate} ${hours}-${minutes}-${seconds}`;

@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import {
   withStyles,
 } from '@material-ui/core';
+import { compose } from "redux";
+import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -103,6 +105,7 @@ const DownloadFileTypeBtn = ({
   readMeConfig,
   fullDictionary,
   loadingExampleConfig,
+  modelVersion
 }) => {
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [label, setLabel] = useState('Available Downloads');
@@ -155,10 +158,17 @@ const DownloadFileTypeBtn = ({
     );
 
     const zip = new JSZip();
-    const titlePrefix = (nodeTSV) => (nodeTSV.type === 'file-manifest'
-      ? (fileTransferManifestName || prefix + 'File_Transfer_Manifest') : prefix + 'Data_Loading_Template-');
+    
+    const titlePrefix = (nodeTSV) => {
+        const isFileManifestType = nodeTSV.type === 'file-manifest';
+        return (isFileManifestType
+            ? (fileTransferManifestName || prefix + 'File_Transfer_Manifest') : prefix)
+    };
     const nodeName = (name) => (name === 'file' ? '' : name);
-    nodesTSV.forEach((nodeTSV, index) => zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV))}.tsv`, nodeTSV.content));
+    nodesTSV.forEach((nodeTSV, index) => {
+        const isFileManifestType = nodeTSV.type === 'file-manifest';
+        zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV), modelVersion, !isFileManifestType)}.tsv`, nodeTSV.content);
+    });
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
       saveAs(thisContent, createFileName('', prefix + 'Data_Loading_Templates'));
@@ -298,4 +308,15 @@ const styles = () => ({
 
 });
 
-export default withStyles(styles, { withTheme: true })(DownloadFileTypeBtn);
+const mapStateToProps = (state) => {
+    return {
+      modelVersion: state.versionInfo.modelVersion
+    };
+  };
+  
+  export default compose(
+    connect(mapStateToProps),
+    withStyles(styles, {withTheme: true})
+  )(DownloadFileTypeBtn);
+  
+

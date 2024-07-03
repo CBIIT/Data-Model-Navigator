@@ -9,6 +9,8 @@ import IconDownloadPDF from "../../icons/icon_download_PDF.svg";
 import IconDownloadPTSV from "../../icons/icon_download_TSV.svg";
 import DownloadButton from "../../../NodePDF/DownloadButton";
 import { fileManifestDownloadSettings as defaultConfig } from "../../../../../../config/file-manifest-config";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import {
   getNodeDescriptionFragment,
   getNodeTitleFragment,
@@ -25,6 +27,7 @@ const NodeViewComponent = ({
   propertyCount,
   isExpanded,
   isOverlay,
+  modelVersion
 }) => {
   const csvBtnDownloadConfig = {
     image: IconDownloadPTSV,
@@ -139,9 +142,8 @@ const NodeViewComponent = ({
                       isFileManifest
                         ? createFileName(
                             "",
-                            pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix
-                          )
-                        : createFileName(node.id, csvBtnDownloadConfig.prefix)
+                            pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix)
+                        : createFileName(node.id, csvBtnDownloadConfig.prefix, modelVersion, true)
                     }
                   />
                 )}
@@ -163,4 +165,14 @@ const NodeViewComponent = ({
   );
 };
 
-export default withStyles(styles)(NodeViewComponent);
+const mapStateToProps = (state) => {
+  return {
+    graphView: state.ddgraph.isGraphView,
+    modelVersion: state.versionInfo.modelVersion
+  };
+};
+
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles)
+)(NodeViewComponent);
