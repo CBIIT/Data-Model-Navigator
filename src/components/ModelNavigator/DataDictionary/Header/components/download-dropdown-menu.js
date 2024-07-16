@@ -171,7 +171,7 @@ const DownloadFileTypeBtn = ({
     });
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
-      saveAs(thisContent, createFileName('', prefix + 'Data_Loading_Templates'));
+      saveAs(thisContent, `${createFileName('', prefix + 'Data_Loading_Templates', modelVersion)}.zip`);
     });
   };
 

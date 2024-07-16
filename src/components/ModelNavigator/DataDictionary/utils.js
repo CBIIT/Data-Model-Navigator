@@ -287,10 +287,10 @@ export function createFileName(fileName, filePreFix, modelVersion = undefined, i
   if (isTemplate && modelVersion) {
     return filePreFix ? `${filePreFix}Data_Loading_Template_${fileName}_${modelVersion}`
     : `${fileName}_${modelVersion}`
-  }
+  } 
 
-  return filePreFix ? `${filePreFix}${fileName} ${todaysDate} ${hours}-${minutes}-${seconds}`
-    : `${fileName} ${todaysDate} ${hours}-${minutes}-${seconds}`;
+  return filePreFix ? `${filePreFix}${fileName}${modelVersion ? `_${modelVersion}` : `${todaysDate} ${hours}-${minutes}-${seconds}`}`
+    : `${fileName}${modelVersion ? `_${modelVersion}` : `${todaysDate} ${hours}-${minutes}-${seconds}`}`;
 }
 
 /**
