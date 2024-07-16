@@ -345,6 +345,7 @@ export const generateFileManifest = (node) => {
   const arr = Object.entries(node.properties);
   const mergedArr = arr.concat(fileManifestDownload);
   mergedArr.forEach(([key, value]) => {
+        console.log('check value', value);
     if (value.src !== 'Loader-derived') {
       line += ('\t').concat(`${key}`);
     }
