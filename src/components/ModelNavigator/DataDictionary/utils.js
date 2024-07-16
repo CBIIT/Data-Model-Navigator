@@ -289,8 +289,8 @@ export function createFileName(fileName, filePreFix, modelVersion = undefined, i
     : `${fileName}_${modelVersion}`
   }
 
-  return filePreFix ? `${filePreFix}${fileName}_${modelVersion}`
-    : `${fileName}_${modelVersion}`;
+  return filePreFix ? `${filePreFix}${fileName}${modelVersion && `_${modelVersion}`}`
+    : `${fileName}${modelVersion && `_${modelVersion}`}`;
 }
 
 /**
