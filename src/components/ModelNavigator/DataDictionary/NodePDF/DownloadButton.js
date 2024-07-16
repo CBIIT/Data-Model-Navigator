@@ -55,8 +55,9 @@ const DownloadButton = ({
 
   const generateFileManifest = (node) => {
     let line = tsvMiddleware(node);
+    const filteredNode = filterProperties(node)
 
-    const arr = Object.entries(node.properties);
+    const arr = Object.entries(filteredNode);
     const mergedArr = arr.concat(fileManifestDownload);
     mergedArr.forEach(([key, value]) => {
       if (value.src !== 'Loader-derived') {
