@@ -59,7 +59,6 @@ const DownloadButton = ({
     const arr = Object.entries(node.properties);
     const mergedArr = arr.concat(fileManifestDownload);
     mergedArr.forEach(([key, value]) => {
-        console.log('value', value);
       if (value.isIncludedInTemplate) {
         line += ('\t').concat(`${key}`);
       }
