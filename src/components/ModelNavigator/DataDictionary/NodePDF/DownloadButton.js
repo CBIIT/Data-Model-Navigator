@@ -60,7 +60,7 @@ const DownloadButton = ({
     const arr = Object.entries(filteredNode);
     const mergedArr = arr.concat(fileManifestDownload);
     mergedArr.forEach(([key, value]) => {
-      if (value.src !== 'Loader-derived') {
+      if (value.isIncludedInTemplate) {
         line += ('\t').concat(`${key}`);
       }
     });
