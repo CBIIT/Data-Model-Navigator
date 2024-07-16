@@ -56,7 +56,6 @@ const DownloadButton = ({
   const generateFileManifest = (node) => {
     let line = tsvMiddleware(node);
     const filteredNode = filterProperties(node)
-    console.log('node', node);
 
     const arr = Object.entries(filteredNode);
     const mergedArr = arr.concat(fileManifestDownload);
