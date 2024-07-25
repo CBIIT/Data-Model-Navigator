@@ -161,7 +161,6 @@ const DownloadFileTypeBtn = ({
     
 
     nodesTSV.forEach((nodeTSV, index) => {
-        const isFileManifestType = nodeTSV.type === 'file-manifest';
         zip.file(`${createFileName(nodesKeyArray[index], prefix, modelVersion, true)}.tsv`, nodeTSV.content);
     });
 
