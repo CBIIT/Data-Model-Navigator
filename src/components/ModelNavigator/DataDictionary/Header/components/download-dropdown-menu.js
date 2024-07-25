@@ -159,15 +159,9 @@ const DownloadFileTypeBtn = ({
 
     const zip = new JSZip();
     
-    const titlePrefix = (nodeTSV) => {
-        const isFileManifestType = nodeTSV.type === 'file-manifest';
-        return (isFileManifestType
-            ? (fileTransferManifestName || prefix + 'File_Transfer_Manifest') : prefix)
-    };
-    const nodeName = (name) => (name === 'file' ? '' : name);
+
     nodesTSV.forEach((nodeTSV, index) => {
-        const isFileManifestType = nodeTSV.type === 'file-manifest';
-        zip.file(`${createFileName(nodeName(nodesKeyArray[index]), titlePrefix(nodeTSV), modelVersion, !isFileManifestType)}.tsv`, nodeTSV.content);
+        zip.file(`${createFileName(nodesKeyArray[index], prefix, modelVersion, true)}.tsv`, nodeTSV.content);
     });
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
