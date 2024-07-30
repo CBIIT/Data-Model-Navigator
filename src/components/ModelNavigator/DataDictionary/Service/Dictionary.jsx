@@ -1,12 +1,3 @@
-/* eslint-disable block-scoped-var */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-unused-vars */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-var */
-/* eslint-disable vars-on-top */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable react/react-in-jsx-scope */
-// import React from 'react';
 import axios from 'axios';
 import yaml from 'js-yaml';
 import _ from 'lodash';
@@ -21,7 +12,7 @@ const getData = async (url) => {
   return data;
 };
 
-async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS) {
+export async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS) {
   const icdcMData = await getData(modelUrl);
   const icdcMPData = await getData(modelPropsUrl);
 
@@ -62,7 +53,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     const pOptional = [];
 
     const Yes = [];
-    const No  = [];
+    const No = [];
     if (icdcMData.Nodes[key].Props != null) {
       for (let i = 0; i < icdcMData.Nodes[key].Props.length; i++) {
         const nodeP = icdcMData.Nodes[key].Props[i];
@@ -97,11 +88,11 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
 
             if (icdcMPData.PropDefinitions[propertyName].Tags &&
               icdcMPData.PropDefinitions[propertyName].Tags.Labeled) {
-                Yes.push(nodeP);
-                propertiesItem['display'] = 'yes';
+              Yes.push(nodeP);
+              propertiesItem['display'] = 'yes';
             } else {
-                No.push(nodeP);
-                propertiesItem['display'] = 'no';
+              No.push(nodeP);
+              propertiesItem['display'] = 'no';
             }
           }
         }
@@ -213,5 +204,3 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     },
   };
 }
-
-module.exports.getModelExploreData = getModelExploreData;
