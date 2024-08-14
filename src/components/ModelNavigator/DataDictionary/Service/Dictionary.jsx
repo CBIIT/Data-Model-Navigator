@@ -186,7 +186,8 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
           dataList[el.name].links.push({
             Dst: el.name, Src: el.backref, multiplicity: el.multiplicity,
           });
-        } else {
+        // Only show the error message if the node is "undefined"
+        } else if (el.name) {
           console.error(`The node "${el?.name}" has a link to "${el?.backref}" but "${el?.name}" is not defined in the model`);
         }
       });
