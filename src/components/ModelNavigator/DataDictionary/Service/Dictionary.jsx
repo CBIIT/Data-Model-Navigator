@@ -182,10 +182,12 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
   for (const [key, value] of Object.entries(dataList)) {
     if (value.links.length > 0) {
       value.links.forEach((el) => {
-        if (el.name) {
+        if (el.name && el.name in dataList) {
           dataList[el.name].links.push({
             Dst: el.name, Src: el.backref, multiplicity: el.multiplicity,
           });
+        } else {
+          console.error(`The node "${el?.name}" has a link to "${el?.backref}" but "${el?.name}" is not defined in the model`);
         }
       });
     }
