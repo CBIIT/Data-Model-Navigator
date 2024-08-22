@@ -29,7 +29,8 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     icdcMData,
     icdcMPData
   });
-  callback?.();
+  const response = await callback?.();
+  console.log('response from DMN', response);
 
   // translate the json file here
   const dataList = {};
