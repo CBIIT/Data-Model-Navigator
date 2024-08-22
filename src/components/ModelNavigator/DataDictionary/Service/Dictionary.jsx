@@ -24,17 +24,11 @@ const getData = async (url) => {
 async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS, callback = undefined) {
   const icdcMData = await getData(modelUrl);
   const icdcMPData = await getData(modelPropsUrl);
-  console.log('in here');
-  console.log('check object', {
-    icdcMData,
-    icdcMPData
-  });
-  const response = await callback?.();
-  console.log('response from DMN', response);
 
   // translate the json file here
   const dataList = {};
   const keyMaps = new Set();
+  const cdeMap = new Map();
 
   // using the following code the convert MDF to Gen3 format
   for (const [key, value] of Object.entries(icdcMData.Nodes)) {
@@ -83,11 +77,11 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
               ? icdcMPData.PropDefinitions[propertyName]?.Tags?.Labeled
                 ? icdcMPData.PropDefinitions[propertyName]?.Tags?.Labeled : undefined : undefined;
             propertiesItem.category = key;
-            propertiesItem.cde = icdcMPData.PropDefinitions[propertyName].Term ? 
+            icdcMPData.PropDefinitions[propertyName].Term ? 
               icdcMPData.PropDefinitions[propertyName].Term.length > 0 
-                ? {code: icdcMPData.PropDefinitions[propertyName].Term[0].Code, version: icdcMPData.PropDefinitions[propertyName].Term[0].Version }
+                ? cdeMap.set(propertyName,{code: icdcMPData.PropDefinitions[propertyName].Term[0].Code, version: icdcMPData.PropDefinitions[propertyName].Term[0].Version } ) 
                 : undefined
-                : undefined 
+                : undefined;
             propertiesItem.description = icdcMPData?.PropDefinitions[propertyName]?.Desc;
             propertiesItem.type = icdcMPData?.PropDefinitions[propertyName]?.Type
               || icdcMPData?.PropDefinitions[propertyName]?.Enum;
@@ -220,6 +214,10 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     }
   }
   const newDataList = dataList;
+  console.log('cdeMap', cdeMap);
+  console.log('newDataList', newDataList);
+  const response = await callback?.();
+  console.log('response from DMN', response);
   return {
     data: newDataList,
     version: {
