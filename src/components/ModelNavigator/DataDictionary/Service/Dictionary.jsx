@@ -24,6 +24,7 @@ const getData = async (url) => {
 async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS) {
   const icdcMData = await getData(modelUrl);
   const icdcMPData = await getData(modelPropsUrl);
+  console.log('in here');
   console.log('check object', {
     icdcMData,
     icdcMPData
