@@ -21,7 +21,7 @@ const getData = async (url) => {
   return data;
 };
 
-async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS) {
+async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS, callback = undefined) {
   const icdcMData = await getData(modelUrl);
   const icdcMPData = await getData(modelPropsUrl);
   console.log('in here');
@@ -29,6 +29,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     icdcMData,
     icdcMPData
   });
+  callback?.();
 
   // translate the json file here
   const dataList = {};
