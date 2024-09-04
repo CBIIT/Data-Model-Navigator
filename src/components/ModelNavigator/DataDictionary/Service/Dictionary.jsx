@@ -22,9 +22,6 @@ const getData = async (url) => {
 };
 
 async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS, getPermissableValues, replaceEnums) {
-  const data = await getPermissableValues?.();
-  console.log('deets --->', data);
-  
   const icdcMData = await getData(modelUrl);
   const icdcMPData = await getData(modelPropsUrl);
 
@@ -217,11 +214,13 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     }
   }
   const newDataList = dataList;
-  const processedDataList = replaceEnums?.(cdeMap, newDataList);
-  console.log('res --->', processedDataList);
-  console.log('check -->()', {
-    flag: replaceEnums && getPermissableValues 
-  })
+  /*const permissableValues = await getPermissableValues?.({
+    variables: {
+        payload: Array.from(cdeMap.values())
+    }
+  });*/ // call retrieveCde with an array of cdeInput types
+  const permissableValues = await getPermissableValues?.();
+  const processedDataList = replaceEnums?.(cdeMap, newDataList, permissableValues);
   return {
     data: (replaceEnums && getPermissableValues) ? processedDataList : newDataList,
     version: {
