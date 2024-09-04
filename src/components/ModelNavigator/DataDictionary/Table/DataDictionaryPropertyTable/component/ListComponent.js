@@ -134,24 +134,18 @@ const theme = {
   },
 };
 
+const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 function containsEmail(str) {
-    const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
     return emailPattern.test(str);
   }
 
   const wrapEmailInLink = (inputString) => {
-    // Regular expression to match an email pattern
-    const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/;
-  
-    // Check if the string contains an email
-    const match = inputString.match(emailRegex);
+    const match = inputString.match(emailPattern);
   
     if (match) {
       const email = match[0];
-      // Find the index of the email in the string
       const emailIndex = inputString.indexOf(email);
       
-      // Surround the email with the link and return the JSX with the other parts of the string
       return (
         <>
           {inputString.substring(0, emailIndex)}
@@ -161,7 +155,6 @@ function containsEmail(str) {
       );
     }
   
-    // Return the original string if no email found
     return <>{inputString}</>;
   };
   
