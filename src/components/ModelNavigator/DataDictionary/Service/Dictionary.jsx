@@ -9,7 +9,7 @@
 // import React from 'react';
 import axios from 'axios';
 import yaml from 'js-yaml';
-import _ from 'lodash';
+import { startCase } from 'lodash';
 
 const version = { commit: '913161064b02bcef024d072873e77c8c79cc1a68', dictionary: { commit: '520a25999fd183f6c5b7ddef2980f3e839517da5', version: '0.2.1-9-g520a259' }, version: '4.0.0-44-g9131610' };
 const DATA_MODEL = 'https://raw.githubusercontent.com/CBIIT/icdc-model-tool/develop/model-desc/icdc-model.yml';
@@ -28,6 +28,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
   // translate the json file here
   const dataList = {};
   const keyMaps = new Set();
+  const cdeMap = new Map();
 
   // using the following code the convert MDF to Gen3 format
   for (const [key, value] of Object.entries(icdcMData.Nodes)) {
@@ -76,6 +77,11 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
               ? icdcMPData.PropDefinitions[propertyName]?.Tags?.Labeled
                 ? icdcMPData.PropDefinitions[propertyName]?.Tags?.Labeled : undefined : undefined;
             propertiesItem.category = key;
+            icdcMPData.PropDefinitions[propertyName].Term ? 
+              icdcMPData.PropDefinitions[propertyName].Term.length > 0 
+                ? cdeMap.set(`${key}.${propertyName};${icdcMPData.PropDefinitions[propertyName].Term[0].Code}.${icdcMPData.PropDefinitions[propertyName].Term[0].Version}`,{CDECode: icdcMPData.PropDefinitions[propertyName].Term[0].Code, CDEVersion: icdcMPData.PropDefinitions[propertyName].Term[0].Version } ) 
+                : undefined
+                : undefined;
             propertiesItem.description = icdcMPData?.PropDefinitions[propertyName]?.Desc;
             propertiesItem.type = icdcMPData?.PropDefinitions[propertyName]?.Type
               || icdcMPData?.PropDefinitions[propertyName]?.Enum;
@@ -149,7 +155,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     }
 
     for (const property in icdcMData.Relationships) {
-      item.multiplicity = _.startCase(icdcMData.Relationships[property].Mul);
+      item.multiplicity = startCase(icdcMData.Relationships[property].Mul);
       const label = propertyName;
       // const multiplicity = icdcMData.Relationships[propertyName].Mul;
       const required = false;
@@ -210,6 +216,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
   const newDataList = dataList;
   return {
     data: newDataList,
+    cdeMap: cdeMap,
     version: {
       model: icdcMData.Version,
       ...version,
