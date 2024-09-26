@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, withStyles } from '@material-ui/core';
+import { IconButton, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import './AutoCompleteInput.css';
 import styles from './AutoCompleteInputStyle';
@@ -72,15 +72,16 @@ class AutoCompleteInput extends Component {
         {
           !this.state.closeIconHidden && (
             <>
-              <Button
+              <IconButton
                 onClick={() => this.handleClear()}
                 disableRipple
                 className={classes.closeBtn} 
+                aria-label='close icon'
               >
                 <CloseIcon
                   className={classes.closeIcon} 
                 />
-              </Button>
+              </IconButton>
               {/* <i
                 className='g3-icon g3-icon--cross auto-complete-input__close'
                 onClick={() => { this.handleClear(); }}
@@ -93,15 +94,16 @@ class AutoCompleteInput extends Component {
             </>
           )
         }
-        <Button
+        <IconButton
           onClick={() => this.handleSubmit()}
           disableRipple
-          className={classes.searchBtn} 
+          className={classes.searchBtn}
+          aria-label='search-icon'
         >
           <SearchIcon
             className={classes.searchIcon}
           />
-        </Button>
+        </IconButton>
         
         {/* <i
           className={`g3-icon g3-icon--${icon} auto-complete-input__icon`}
