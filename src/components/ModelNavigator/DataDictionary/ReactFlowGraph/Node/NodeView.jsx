@@ -115,10 +115,13 @@ const NodeView = ({
                 style={{
                   border: display && "2px solid white",
                 }}
-                onClick={isSearchMode ? displayOverviewTable : expandNode}
+                onClick={isSearchMode ? displayOverviewTable : !display ? expandNode : null}
                 onFocus={nodeFocusEvent}
               >
-                <div className={classes.nodeButtonInnerWrapper}>
+                <div className={clsx(
+                  classes.nodeButtonInnerWrapper,
+                  { [classes.nodeButtonInnerWrapperOnExpand]: expandNodeView }
+                  )}>
                   <div
                     style={{
                       borderRadius: "11px",
@@ -137,7 +140,10 @@ const NodeView = ({
                     </div>
                   </div>
 
-                  <div className={classes.labelWrapper}>
+                  <div className={clsx(
+                    classes.labelWrapper, {
+                    [classes.labelWrapperCollapse]: !expandNodeView},
+                    )}>
                     {isSearchMode && matchedNodeNameQuery ? (
                       <>
                         {highlightMatchingTitle(
