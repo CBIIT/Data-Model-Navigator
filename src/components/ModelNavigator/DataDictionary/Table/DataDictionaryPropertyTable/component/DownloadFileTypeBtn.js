@@ -98,15 +98,16 @@ const DownloadFileTypeBtn = ({ classes, data, node, propertyKey }) => {
       download(jsonData, FILE_TYPE_JSON, CONTENT_TYPE_JSON);
     }
     if (label === FILE_TYPE_TSV) {
-      let content = "";
-      if (data && data.length) {
-        data.forEach((item, index) => {
-          content += index === 0 ? item : `${"\n"}${item}`;
-        });
+        if (data && data.length) {
+          const content = data.join('\n');
+          
+          console.log('check fileTypeTSV', data);
+          
+          download(content, FILE_TYPE_TSV, CONTENT_TYPE_TSV);
+        } else {
+          console.error('No data available to create the TSV file');
+        }
       }
-      console.log('check fileTypeTSV', data);
-      download(content, FILE_TYPE_TSV, CONTENT_TYPE_TSV);
-    }
   };
 
   const menuItem = (type) => (
