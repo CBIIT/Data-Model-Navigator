@@ -92,6 +92,7 @@ const DownloadFileTypeBtn = ({ classes, data, node, propertyKey }) => {
   };
 
   const downladFile = () => {
+    console.log('check running download');
     if (label === FILE_TYPE_JSON) {
       const jsonData = JSON.stringify(data);
       download(jsonData, FILE_TYPE_JSON, CONTENT_TYPE_JSON);
@@ -103,6 +104,7 @@ const DownloadFileTypeBtn = ({ classes, data, node, propertyKey }) => {
           content += index === 0 ? item : `${"\n"}${item}`;
         });
       }
+      console.log('check fileTypeTSV', data);
       download(content, FILE_TYPE_TSV, CONTENT_TYPE_TSV);
     }
   };
