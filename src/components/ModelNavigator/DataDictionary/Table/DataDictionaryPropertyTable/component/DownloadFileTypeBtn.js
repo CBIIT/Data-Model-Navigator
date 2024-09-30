@@ -98,6 +98,7 @@ const DownloadFileTypeBtn = ({ classes, data, node, propertyKey }) => {
       download(jsonData, FILE_TYPE_JSON, CONTENT_TYPE_JSON);
     }
     if (label === FILE_TYPE_TSV) {
+        console.log('new changes --->')
         if (data && data.length) {
           const content = data.join('\n');
           
