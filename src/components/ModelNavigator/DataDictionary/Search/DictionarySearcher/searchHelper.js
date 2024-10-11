@@ -28,10 +28,18 @@ export const prepareSearchData = (dictionary) => {
         console.log("res inSearchData-->", node.properties[propertyKey]);
         const propertyDescription = getPropertyDescription(node.properties[propertyKey]);
         const splitText = propertyDescription ? propertyDescription.split('<br>')[0] : propertyDescription;
+        const cdeFullName = node.properties[propertyKey].cdeFullName;
+        const cdePublicId = node.properties[propertyKey].publicId;
+        const cdeVersion = node.properties[propertyKey].version;
+        const cdeOrigin = node.properties[propertyKey].origin;
         return {
           name: formatText(propertyKey),
           description: formatText(splitText),
           type,
+          cdeFullName,
+          cdePublicId,
+          cdeVersion,
+          cdeOrigin,
         };
       });
       console.log('check porperties', {properties})
@@ -113,6 +121,10 @@ export const searchKeyword = (searchData, keyword) => {
       'properties.name',
       'properties.description',
       'properties.type',
+      'properties.cdeFullName',
+      'properties.cdePublicId',
+      'properties.cdeVersion',
+      'properties.cdeOrigin'
     ],
     includeMatches: true,
     threshold: 0,
