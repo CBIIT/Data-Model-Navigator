@@ -12,6 +12,7 @@ import KeyIconSvg from "../../../../assets/key_icon.svg";
 import { controlVocabConfig as ctrlConfig } from "../../../../bento/dataDictionaryData";
 import "../DataDictionaryPropertyTable.css";
 import DownloadFileTypeBtn from "./DownloadFileTypeBtn";
+import CDEListComponent from "./CDEListComponent";
 
 const TableRow = ({
   classes,
@@ -96,6 +97,7 @@ const TableRow = ({
         let termID = "";
         let category = "";
         let termLink = "";
+        let cdeInfo = [];
         let type = "";
         let enums = "";
         let key = false;
@@ -126,6 +128,34 @@ const TableRow = ({
             category = property.category
         }
 
+        if ("cdeFullName" in property) {
+            cdeInfo.push({
+                label: 'Name',
+                value: property.cdeFullName
+            })
+        }
+
+        if ("version" in property) {
+            cdeInfo.push({
+                label: 'Version',
+                value: property.version
+            })
+        }
+
+        if ("publicId" in property) {
+            cdeInfo.push({
+                label: 'Link',
+                value: property.publicId
+            })
+        }
+
+        if ('origin' in property) {
+            cdeInfo.push({
+                label: 'Origin',
+                value: property.origin
+            }) 
+        }
+
         const propertyDescriptionFragment = getPropertyDescriptionFragment(
           property,
           descriptionMatch,
@@ -147,9 +177,6 @@ const TableRow = ({
               {key
                 ? displayKeyProperty(propertyNameFragment)
                 : propertyNameFragment}
-            </td>
-            <td>
-                testing
             </td>
             <td className={classes.rowItem}>
               {enums ? (
@@ -196,6 +223,14 @@ const TableRow = ({
                   )}
                 </>
               )}
+            </td>
+            <td className={classes.rowItem}>
+                {
+                    cdeInfo && <CDEListComponent items={cdeInfo}
+                    isSearchMode={isSearchMode}
+                    typeMatchList={typeMatchList}
+                    property={property} />
+                }
             </td>
             {!hideIsRequired && (
               <td className={classes.rowItem}>
