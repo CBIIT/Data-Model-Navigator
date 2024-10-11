@@ -16,6 +16,10 @@ export const ZERO_RESULT_FOUND_MSG = '0 results found. Please try another keywor
 export const formatText = (text) => `${text}`.toLowerCase();
 
 export const prepareSearchData = (dictionary) => {
+    console.log('check before & after parsing', {
+        dictionary,
+        parsedDictionary: parseDictionaryNodes(dictionary)
+    });
   const searchData = parseDictionaryNodes(dictionary)
     .map((node) => {
       const properties = Object.keys(node.properties).map((propertyKey) => {
@@ -29,6 +33,7 @@ export const prepareSearchData = (dictionary) => {
           type,
         };
       });
+      console.log('check porperties', {properties})
       return {
         id: node.id,
         title: formatText(node.title),
@@ -36,6 +41,9 @@ export const prepareSearchData = (dictionary) => {
         properties,
       };
     });
+    console.log('check searchData', {
+        searchData
+    })
   return searchData;
 };
 

@@ -7,6 +7,9 @@ const TableHeader = ({ classes, hideIsRequired }) => (
       <th className={classes.item}>
         Property
       </th>
+      <th>
+        CDE Info
+      </th>
       <th className={classes.item}>
         Type
       </th>

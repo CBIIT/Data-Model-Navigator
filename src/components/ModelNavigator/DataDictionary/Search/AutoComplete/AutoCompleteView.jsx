@@ -45,7 +45,7 @@ class AutoComplete extends Component {
         <div className={classes.inputWrapper}>
           <AutoCompleteInput
             ref={this.inputRef}
-            placeHolderText={inputPlaceHolderText}
+            placeHolderText={'placeholder'}
             icon={inputIcon}
             inputTitle={inputTitle}
             onInputChange={onInputChange}

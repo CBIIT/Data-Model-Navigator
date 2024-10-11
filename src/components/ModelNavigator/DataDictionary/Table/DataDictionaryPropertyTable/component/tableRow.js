@@ -27,6 +27,19 @@ const TableRow = ({
   isSearchMode,
   title,
 }) => {
+    console.log("TableRow props", {
+        propertyKeysList,
+        requiredProperties,
+        onlyShowMatchedProperties,
+        matchedPropertiesSummary,
+        preferredProperties,
+        properties,
+        needHighlightSearchResult,
+        hideIsRequired,
+        openBoxHandler,
+        isSearchMode,
+        title, 
+    })
   const config = useSelector((state) =>
     state.submission && state.submission.ctrlVocabConfig
       ? state.submission.ctrlVocabConfig
@@ -80,6 +93,7 @@ const TableRow = ({
           }
         }
         let termID = "";
+        let category = "";
         let termLink = "";
         let type = "";
         let enums = "";
@@ -107,11 +121,16 @@ const TableRow = ({
           key = property.key;
         }
 
+        if ("category" in property) {
+            category = property.category
+        }
+
         const propertyDescriptionFragment = getPropertyDescriptionFragment(
           property,
           descriptionMatch,
           "data-dictionary-property-table__span"
         );
+
 
         const propertyTypeFragment = getPropertyTypeFragment(
           property,
@@ -127,6 +146,9 @@ const TableRow = ({
               {key
                 ? displayKeyProperty(propertyNameFragment)
                 : propertyNameFragment}
+            </td>
+            <td>
+                testing
             </td>
             <td className={classes.rowItem}>
               {enums ? (

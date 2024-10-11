@@ -58,14 +58,19 @@ export const truncateLines = (str, maxCharInRow = 10, breakwordMinLength = 12) =
 export const getType = (property) => {
   let type = 'UNDEFINED';
   if ('type' in property) {
+    console.log('here 1');
     if (typeof property.type === 'string') {
+        console.log('here 1.1');
       type = property.type;
     } else {
+        console.log('here 1.2');
       type = property.type;
     }
   } else if ('enum' in property) {
+    console.log('here 2');
     type = property.enum;
   } else if ('oneOf' in property) {
+    console.log('here 3');
     // oneOf has nested type list - we want to flatten nested enums out here ...
     type = property.oneOf
       .map((item) => getType(item))
@@ -79,6 +84,7 @@ export const getType = (property) => {
         }, [],
       );
   } else if ('anyOf' in property) {
+    console.log('here 4');
     // anyOf has nested type list
     type = property.anyOf
       .map((item) => getType(item))
@@ -92,6 +98,7 @@ export const getType = (property) => {
         }, [],
       );
   } else {
+    console.log('here 5');
     type = 'UNDEFINED';
   }
 
