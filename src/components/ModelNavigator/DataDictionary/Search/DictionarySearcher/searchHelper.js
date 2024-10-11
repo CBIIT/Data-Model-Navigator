@@ -25,6 +25,7 @@ export const prepareSearchData = (dictionary) => {
       const properties = Object.keys(node.properties).map((propertyKey) => {
         let type = getType(node.properties[propertyKey]);
         if (type === 'UNDEFINED') type = undefined;
+        console.log("res inSearchData-->", node.properties[propertyKey]);
         const propertyDescription = getPropertyDescription(node.properties[propertyKey]);
         const splitText = propertyDescription ? propertyDescription.split('<br>')[0] : propertyDescription;
         return {
