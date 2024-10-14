@@ -49,12 +49,16 @@ const ListComponent = ({
 }) => {
     const highlightMatchingProperties = (item) => {
         if (isSearchMode && typeMatchList && typeMatchList.length > 0) {
+            console.log('check-high 1', {
+                isSearchMode,
+                typeMatchList
+            })
             const matchItem = typeMatchList.map((prop) => {
                 if (prop.value === item) {
                     return prop;
                 }
             }).filter((c) => c);
-            if (matchItem.length == 1) {
+            if (matchItem.length == 1) {  
                 return (
                     <ListItemText>
                         <span className={classes.listItemText}>
