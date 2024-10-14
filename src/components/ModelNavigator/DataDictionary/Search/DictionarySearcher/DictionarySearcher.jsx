@@ -71,6 +71,10 @@ class DictionarySearcher extends React.Component {
       this.searchData,
       formatText(str)
     );
+    console.log('check-search', {
+        result,
+        str
+    });
     if (!result || result.length === 0) {
       this.props.setIsSearching(false);
       this.props.onSearchResultUpdated([], []);
