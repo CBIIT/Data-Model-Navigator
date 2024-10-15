@@ -44,17 +44,17 @@ const CDEListComponent = ({
     maxNoOfItems,
     maxNoOfItemDlgBox,
     expand,
-    cdeInfoMatchList,
+    CDEInfoMatchList,
     isSearchMode,
 }) => {
-    console.log('check cdeInfoMatchList', {cdeInfoMatchList});
+    console.log('check CDEInfoMatchList', {CDEInfoMatchList});
     const highlightMatchingProperties = (item) => {
-        if (isSearchMode && cdeInfoMatchList && cdeInfoMatchList.length > 0) {
+        if (isSearchMode && CDEInfoMatchList && CDEInfoMatchList.length > 0) {
             console.log('check-high 1', {
                 isSearchMode,
-                cdeInfoMatchList
+                CDEInfoMatchList
             })
-            const matchItem = cdeInfoMatchList.map((prop) => {
+            const matchItem = CDEInfoMatchList.map((prop) => {
                 if (prop.value === item) {
                     return prop;
                 }

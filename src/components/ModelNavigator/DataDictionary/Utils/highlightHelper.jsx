@@ -234,7 +234,7 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
   let nameMatch = null;
   let descriptionMatch = null;
   const typeMatchList = [];
-  const cdeInfoMatchList = []
+  const CDEInfoMatchList = []
   if (allMatches) {
     allMatches.forEach((item) => {
       if (item.key === 'properties.name' && item.value === propertyKey) {
@@ -245,10 +245,25 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
         if (item.value === splitText) {
           descriptionMatch = item;
         }
-      } else if (item.key === 'properties.cdeFullName') {
-        const cdeFullName = property.cdeFullName
-        if (cdeFullName === item.value) {
-            cdeInfoMatchList.push(item)
+      } else if (item.key === 'properties.CDEFullName') {
+        const CDEFullName = property.CDEFullName
+        if (CDEFullName === item.value) {
+            CDEInfoMatchList.push(item)
+        }
+      } else if (item.key === 'properties.CDEVersion') {
+        const CDEVersion = property.CDEVersion
+        if (CDEVersion === item.value) {
+            CDEInfoMatchList.push(item)
+        }
+      } else if (item.key === 'properties.CDEOrigin') {
+        const CDEOrigin = property.CDEOrigin
+        if (CDEOrigin === item.value) {
+            CDEInfoMatchList.push(item)
+        }
+      } else if (item.key === 'properties.CDEPublicID') {
+        const CDEPublicID = property.CDEPublicID
+        if (CDEPublicID === item.value) {
+            CDEInfoMatchList.push(item)
         }
       } else if (item.key === 'properties.type') {
         const type = getType(property);
@@ -270,15 +285,11 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
     nameMatch,
     descriptionMatch,
     typeMatchList,
-    cdeInfoMatchList,
+    CDEInfoMatchList,
   };
 };
 
 export const getMatchesSummaryForProperties = (allProperties, allMatches) => {
-    console.log('check getMatchesSummaryForProperties', {
-        allProperties,
-        allMatches
-    })
   const matchedPropertiesSummary = [];
   Object.keys(allProperties).forEach((propertyKey, propertyIndex) => {
     const property = allProperties[propertyKey];
@@ -286,7 +297,7 @@ export const getMatchesSummaryForProperties = (allProperties, allMatches) => {
       nameMatch,
       descriptionMatch,
       typeMatchList,
-      cdeInfoMatchList
+      CDEInfoMatchList
     } = getMatchInsideProperty(propertyIndex, propertyKey, property, allMatches);
     const summaryItem = {
       propertyKey,
@@ -294,9 +305,9 @@ export const getMatchesSummaryForProperties = (allProperties, allMatches) => {
       nameMatch,
       descriptionMatch,
       typeMatchList,
-      cdeInfoMatchList
+      CDEInfoMatchList
     };
-    if (nameMatch || descriptionMatch || typeMatchList.length > 0 || cdeInfoMatchList.length > 0) {
+    if (nameMatch || descriptionMatch || typeMatchList.length > 0 || CDEInfoMatchList.length > 0) {
       matchedPropertiesSummary.push(summaryItem);
     }
   });

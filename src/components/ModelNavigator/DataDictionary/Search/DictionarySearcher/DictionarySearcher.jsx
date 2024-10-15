@@ -71,10 +71,6 @@ class DictionarySearcher extends React.Component {
       this.searchData,
       formatText(str)
     );
-    console.log('check-search', {
-        result,
-        str
-    });
     if (!result || result.length === 0) {
       this.props.setIsSearching(false);
       this.props.onSearchResultUpdated([], []);
@@ -120,9 +116,7 @@ class DictionarySearcher extends React.Component {
     this.props.onStartSearching();
     this.resetSearchResult();
     const inputText = formatText(query);
-    console.log('dheck inputText', {inputText});
     const { result } = searchKeyword(this.searchData, inputText);
-    console.log('dheck result', {result})
     const matchedStrings = {};
     result.forEach((resItem) => {
       resItem.matches.forEach((matchItem) => {
@@ -159,7 +153,6 @@ class DictionarySearcher extends React.Component {
   };
 
   submitInputFunc = (inputText) => {
-    console.log('running')
     this.search(formatText(inputText));
   };
 

@@ -82,7 +82,7 @@ const TableRow = ({
         let nameMatch = null;
         let descriptionMatch = null;
         let typeMatchList = null;
-        let cdeInfoMatchList = null;
+        let CDEInfoMatchList = null;
         if (needHighlightSearchResult && matchedPropertiesSummary.length > 0) {
           const matchedSummaryItem = matchedPropertiesSummary.find(
             (item) => item.propertyKey === propertyKey
@@ -91,7 +91,7 @@ const TableRow = ({
             nameMatch = matchedSummaryItem.nameMatch;
             descriptionMatch = matchedSummaryItem.descriptionMatch;
             typeMatchList = matchedSummaryItem.typeMatchList;
-            cdeInfoMatchList = matchedSummaryItem.cdeInfoMatchList
+            CDEInfoMatchList = matchedSummaryItem.CDEInfoMatchList
           } else if (onlyShowMatchedProperties) {
             return null;
           }
@@ -130,31 +130,31 @@ const TableRow = ({
             category = property.category
         }
 
-        if ("cdeFullName" in property) {
+        if ("CDEFullName" in property) {
             cdeInfo.push({
                 label: 'Name',
-                value: property.cdeFullName
+                value: property.CDEFullName
             })
         }
 
-        if ("version" in property) {
+        if ("CDEVersion" in property) {
             cdeInfo.push({
                 label: 'Version',
-                value: property.version
+                value: property.CDEVersion
             })
         }
 
-        if ("publicId" in property) {
+        if ("CDEPublicId" in property) {
             cdeInfo.push({
                 label: 'Link',
-                value: property.publicId
+                value: property.CDEPublicId
             })
         }
 
-        if ('origin' in property) {
+        if ('CDEOrigin' in property) {
             cdeInfo.push({
                 label: 'Origin',
-                value: property.origin
+                value: property.CDEOrigin
             }) 
         }
 
@@ -230,7 +230,7 @@ const TableRow = ({
                 {
                     cdeInfo && <CDEListComponent items={cdeInfo}
                     isSearchMode={isSearchMode}
-                    cdeInfoMatchList={cdeInfoMatchList}
+                    CDEInfoMatchList={CDEInfoMatchList}
                     property={property} />
                 }
             </td>

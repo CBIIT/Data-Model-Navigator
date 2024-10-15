@@ -28,18 +28,18 @@ export const prepareSearchData = (dictionary) => {
         console.log("res inSearchData-->", node.properties[propertyKey]);
         const propertyDescription = getPropertyDescription(node.properties[propertyKey]);
         const splitText = propertyDescription ? propertyDescription.split('<br>')[0] : propertyDescription;
-        const cdeFullName = node.properties[propertyKey].cdeFullName;
-        const cdePublicId = node.properties[propertyKey].publicId;
-        const cdeVersion = node.properties[propertyKey].version;
-        const cdeOrigin = node.properties[propertyKey].origin;
+        const CDEFullName = node.properties[propertyKey].CDEFullName;
+        const CDEPublicID = node.properties[propertyKey].CDEPublicID;
+        const CDEVersion = node.properties[propertyKey].CDEVersion;
+        const CDEOrigin = node.properties[propertyKey].CDEOrigin;
         return {
           name: formatText(propertyKey),
           description: formatText(splitText),
           type,
-          cdeFullName,
-          cdePublicId,
-          cdeVersion,
-          cdeOrigin,
+          CDEFullName,
+          CDEOrigin,
+          CDEPublicID,
+          CDEVersion
         };
       });
       console.log('check porperties', {properties})
@@ -121,10 +121,10 @@ export const searchKeyword = (searchData, keyword) => {
       'properties.name',
       'properties.description',
       'properties.type',
-      'properties.cdeFullName',
-      'properties.cdePublicId',
-      'properties.cdeVersion',
-      'properties.cdeOrigin'
+      'properties.CDEFullName',
+      'properties.CDEPublicID',
+      'properties.CDEVersion',
+      'properties.CDEOrigin'
     ],
     includeMatches: true,
     threshold: 0,
@@ -186,7 +186,10 @@ export const getSearchSummary = (result) => {
       switch (matchedItem.key) {
       case 'properties.type':
       case 'properties.name':
-      case 'properties.cdeFullName':
+      case 'properties.CDEFullName':
+      case 'properties.CDEVersion':
+      case 'properties.CDEOrigin':
+      case 'properties.CDEPublicID':
       case 'properties.description':
         matchedPropertiesCount += matchedItem.indices && matchedItem.indices.length;
         if (!matchedNodeIDsInProperties.includes(nodeID)) {
