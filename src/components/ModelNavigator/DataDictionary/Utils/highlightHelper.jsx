@@ -68,11 +68,6 @@ const displayKeyPropsDescription = (description) => {
 };
 
 export const addHighlightingSpans = (str, indices, spanClassName) => {
-    console.log('highlight', {
-        str,
-        indices,
-        spanClassName
-    })
   let cursor = 0;
   let currentIndices = 0;
   const resultFragments = [];
@@ -226,11 +221,6 @@ export const getNodeDescriptionFragment = (allMatches, description, spanClassNam
 };
 
 export const getMatchInsideProperty = (propertyIndex, propertyKey, property, allMatches) => {
-    console.log('check getMatchInsideProperty', {
-        propertyKey,
-        property,
-        allMatches
-    })
   let nameMatch = null;
   let descriptionMatch = null;
   const typeMatchList = [];

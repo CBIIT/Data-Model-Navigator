@@ -16,16 +16,11 @@ export const ZERO_RESULT_FOUND_MSG = '0 results found. Please try another keywor
 export const formatText = (text) => `${text}`.toLowerCase();
 
 export const prepareSearchData = (dictionary) => {
-    console.log('check before & after parsing', {
-        dictionary,
-        parsedDictionary: parseDictionaryNodes(dictionary)
-    });
   const searchData = parseDictionaryNodes(dictionary)
     .map((node) => {
       const properties = Object.keys(node.properties).map((propertyKey) => {
         let type = getType(node.properties[propertyKey]);
         if (type === 'UNDEFINED') type = undefined;
-        console.log("res inSearchData-->", node.properties[propertyKey]);
         const propertyDescription = getPropertyDescription(node.properties[propertyKey]);
         const splitText = propertyDescription ? propertyDescription.split('<br>')[0] : propertyDescription;
         const CDEFullName = node.properties[propertyKey].CDEFullName;
@@ -42,7 +37,6 @@ export const prepareSearchData = (dictionary) => {
           CDEVersion
         };
       });
-      console.log('check porperties', {properties})
       return {
         id: node.id,
         title: formatText(node.title),
@@ -50,9 +44,6 @@ export const prepareSearchData = (dictionary) => {
         properties,
       };
     });
-    console.log('check searchData', {
-        searchData
-    })
   return searchData;
 };
 
@@ -137,9 +128,6 @@ export const searchKeyword = (searchData, keyword) => {
   const result = handler.search(keyword)
     .map((resItem) => {
       // A bug in Fuse sometimes returns wrong indices that end < start
-      console.log('check in-search', {
-        resItem
-      })
       const matches = resItem.matches
         .filter(matchItem => matchItem.indices[0][1] >= matchItem.indices[0][0]);
       return {

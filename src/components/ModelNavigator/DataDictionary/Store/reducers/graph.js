@@ -294,7 +294,6 @@ const ddgraph = (state = ddgraphInitialState, action) => {
       };
     }
     case 'SEARCH_RESULT_UPDATED': {
-        console.log('check reduction', {searchResult: action.searchResult});
       return {
         ...state,
         searchResult: action.searchResult,

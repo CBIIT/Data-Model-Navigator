@@ -28,7 +28,6 @@ const DataDictionaryPropertyTable = ({
   isSearchMode,
   title,
 }) => {
-    console.log('check dataDictionaryPropTable')
   const [display, setDisplay] = useState(false);
   const [items, setItems] = useState([]);
   const [matchedItem, setMatchedItems] = useState([]);

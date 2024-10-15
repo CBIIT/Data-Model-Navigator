@@ -28,19 +28,6 @@ const TableRow = ({
   isSearchMode,
   title,
 }) => {
-    console.log("TableRow props", {
-        propertyKeysList,
-        requiredProperties,
-        onlyShowMatchedProperties,
-        matchedPropertiesSummary,
-        preferredProperties,
-        properties,
-        needHighlightSearchResult,
-        hideIsRequired,
-        openBoxHandler,
-        isSearchMode,
-        title, 
-    })
   const config = useSelector((state) =>
     state.submission && state.submission.ctrlVocabConfig
       ? state.submission.ctrlVocabConfig
@@ -78,7 +65,6 @@ const TableRow = ({
     <>
       {propertyKeysList.map((propertyKey) => {
         const property = properties[propertyKey];
-        console.log('prop-log property', property);
         let nameMatch = null;
         let descriptionMatch = null;
         let typeMatchList = null;

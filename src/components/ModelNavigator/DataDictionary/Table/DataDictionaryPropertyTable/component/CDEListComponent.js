@@ -47,23 +47,14 @@ const CDEListComponent = ({
     CDEInfoMatchList,
     isSearchMode,
 }) => {
-    console.log('check CDEInfoMatchList', { CDEInfoMatchList });
     const highlightMatchingProperties = (item) => {
         if (isSearchMode && CDEInfoMatchList && CDEInfoMatchList.length > 0) {
-            console.log('check-high 1', {
-                isSearchMode,
-                CDEInfoMatchList,
-                item
-            })
             const matchItem = CDEInfoMatchList.map((prop) => {
                 if (prop.value === item) {
                     return prop;
                 }
             }).filter((c) => c);
             if (matchItem.length) {
-                console.log('check-high 2', {
-                    matchItem
-                });
                 return (
                     <ListItemText>
                         <span className={classes.listItemText}>
