@@ -144,10 +144,10 @@ const TableRow = ({
             })
         }
 
-        if ("CDEPublicId" in property) {
+        if ("CDEPublicID" in property) {
             cdeInfo.push({
                 label: 'Link',
-                value: property.CDEPublicId
+                value: property.CDEPublicID
             })
         }
 
