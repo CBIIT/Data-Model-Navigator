@@ -38,7 +38,7 @@ const wrapLinkInLink = (inputString) => {
     return <>{inputString}</>;
 };
 
-const ListComponent = ({
+const CDEListComponent = ({
     classes,
     items,
     maxNoOfItems,
@@ -47,6 +47,7 @@ const ListComponent = ({
     typeMatchList,
     isSearchMode,
 }) => {
+    console.log('check typeMatchList', {typeMatchList});
     const highlightMatchingProperties = (item) => {
         if (isSearchMode && typeMatchList && typeMatchList.length > 0) {
             console.log('check-high 1', {
@@ -147,4 +148,4 @@ const styles = () => ({
     },
 });
 
-export default withStyles(styles)(ListComponent);
+export default withStyles(styles)(CDEListComponent);

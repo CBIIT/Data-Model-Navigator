@@ -226,6 +226,11 @@ export const getNodeDescriptionFragment = (allMatches, description, spanClassNam
 };
 
 export const getMatchInsideProperty = (propertyIndex, propertyKey, property, allMatches) => {
+    console.log('check getMatchInsideProperty', {
+        propertyKey,
+        property,
+        allMatches
+    })
   let nameMatch = null;
   let descriptionMatch = null;
   const typeMatchList = [];
@@ -263,6 +268,10 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
 };
 
 export const getMatchesSummaryForProperties = (allProperties, allMatches) => {
+    console.log('check getMatchesSummaryForProperties', {
+        allProperties,
+        allMatches
+    })
   const matchedPropertiesSummary = [];
   Object.keys(allProperties).forEach((propertyKey, propertyIndex) => {
     const property = allProperties[propertyKey];

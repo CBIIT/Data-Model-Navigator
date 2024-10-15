@@ -82,6 +82,7 @@ const TableRow = ({
         let nameMatch = null;
         let descriptionMatch = null;
         let typeMatchList = null;
+        let cdeMatchList = null;
         if (needHighlightSearchResult && matchedPropertiesSummary.length > 0) {
           const matchedSummaryItem = matchedPropertiesSummary.find(
             (item) => item.propertyKey === propertyKey
