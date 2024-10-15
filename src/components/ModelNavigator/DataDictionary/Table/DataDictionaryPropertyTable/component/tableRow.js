@@ -82,7 +82,7 @@ const TableRow = ({
         let nameMatch = null;
         let descriptionMatch = null;
         let typeMatchList = null;
-        let cdeMatchList = null;
+        let cdeInfoMatchList = null;
         if (needHighlightSearchResult && matchedPropertiesSummary.length > 0) {
           const matchedSummaryItem = matchedPropertiesSummary.find(
             (item) => item.propertyKey === propertyKey
@@ -91,6 +91,7 @@ const TableRow = ({
             nameMatch = matchedSummaryItem.nameMatch;
             descriptionMatch = matchedSummaryItem.descriptionMatch;
             typeMatchList = matchedSummaryItem.typeMatchList;
+            cdeInfoMatchList = matchedSummaryItem.cdeInfoMatchList
           } else if (onlyShowMatchedProperties) {
             return null;
           }
@@ -229,7 +230,7 @@ const TableRow = ({
                 {
                     cdeInfo && <CDEListComponent items={cdeInfo}
                     isSearchMode={isSearchMode}
-                    typeMatchList={typeMatchList}
+                    cdeInfoMatchList={cdeInfoMatchList}
                     property={property} />
                 }
             </td>
