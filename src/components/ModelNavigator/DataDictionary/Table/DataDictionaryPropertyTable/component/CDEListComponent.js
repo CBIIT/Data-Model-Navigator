@@ -52,7 +52,8 @@ const CDEListComponent = ({
         if (isSearchMode && CDEInfoMatchList && CDEInfoMatchList.length > 0) {
             console.log('check-high 1', {
                 isSearchMode,
-                CDEInfoMatchList
+                CDEInfoMatchList,
+                item
             })
             const matchItem = CDEInfoMatchList.map((prop) => {
                 if (prop.value === item) {
