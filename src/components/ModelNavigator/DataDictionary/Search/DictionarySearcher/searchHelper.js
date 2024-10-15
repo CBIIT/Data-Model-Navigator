@@ -29,7 +29,7 @@ export const prepareSearchData = (dictionary) => {
         const propertyDescription = getPropertyDescription(node.properties[propertyKey]);
         const splitText = propertyDescription ? propertyDescription.split('<br>')[0] : propertyDescription;
         const CDEFullName = node.properties[propertyKey].CDEFullName;
-        const CDEPublicID = node.properties[propertyKey].CDEPublicID;
+        // const CDEPublicID = node.properties[propertyKey].CDEPublicID;
         const CDEVersion = node.properties[propertyKey].CDEVersion;
         const CDEOrigin = node.properties[propertyKey].CDEOrigin;
         return {
@@ -38,7 +38,7 @@ export const prepareSearchData = (dictionary) => {
           type,
           CDEFullName,
           CDEOrigin,
-          CDEPublicID,
+          // CDEPublicID,
           CDEVersion
         };
       });
@@ -122,7 +122,7 @@ export const searchKeyword = (searchData, keyword) => {
       'properties.description',
       'properties.type',
       'properties.CDEFullName',
-      'properties.CDEPublicID',
+      // 'properties.CDEPublicID',
       'properties.CDEVersion',
       'properties.CDEOrigin'
     ],
@@ -189,7 +189,7 @@ export const getSearchSummary = (result) => {
       case 'properties.CDEFullName':
       case 'properties.CDEVersion':
       case 'properties.CDEOrigin':
-      case 'properties.CDEPublicID':
+      // case 'properties.CDEPublicID':
       case 'properties.description':
         matchedPropertiesCount += matchedItem.indices && matchedItem.indices.length;
         if (!matchedNodeIDsInProperties.includes(nodeID)) {

@@ -260,12 +260,12 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
         if (CDEOrigin === item.value) {
             CDEInfoMatchList.push(item)
         }
-      } else if (item.key === 'properties.CDEPublicID') {
+      } /*else if (item.key === 'properties.CDEPublicID') {
         const CDEPublicID = property.CDEPublicID
         if (CDEPublicID === item.value) {
             CDEInfoMatchList.push(item)
         }
-      } else if (item.key === 'properties.type') {
+      }*/ else if (item.key === 'properties.type') {
         const type = getType(property);
         if (typeof type === 'string') {
           if (type === item.value) {
