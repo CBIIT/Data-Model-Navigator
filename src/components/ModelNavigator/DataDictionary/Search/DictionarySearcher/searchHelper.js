@@ -183,6 +183,7 @@ export const getSearchSummary = (result) => {
       switch (matchedItem.key) {
       case 'properties.type':
       case 'properties.name':
+      case 'properties.cdeFullName':
       case 'properties.description':
         matchedPropertiesCount += matchedItem.indices && matchedItem.indices.length;
         if (!matchedNodeIDsInProperties.includes(nodeID)) {
