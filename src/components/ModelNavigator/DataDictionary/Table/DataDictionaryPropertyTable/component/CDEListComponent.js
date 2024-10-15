@@ -47,7 +47,7 @@ const CDEListComponent = ({
     CDEInfoMatchList,
     isSearchMode,
 }) => {
-    console.log('check CDEInfoMatchList', {CDEInfoMatchList});
+    console.log('check CDEInfoMatchList', { CDEInfoMatchList });
     const highlightMatchingProperties = (item) => {
         if (isSearchMode && CDEInfoMatchList && CDEInfoMatchList.length > 0) {
             console.log('check-high 1', {
@@ -60,22 +60,20 @@ const CDEListComponent = ({
                     return prop;
                 }
             }).filter((c) => c);
-            if (matchItem.length == 1) {  
-                return (
-                    <ListItemText>
-                        <span className={classes.listItemText}>
-                            {item.substring}
-                            {
-                                addHighlightingSpans(
-                                    item,
-                                    matchItem[0].indices,
-                                    'data-dictionary-property-table__span',
-                                )
-                            }
-                        </span>
-                    </ListItemText>
-                );
-            }
+            return (
+                <ListItemText>
+                    <span className={classes.listItemText}>
+                        {item.substring}
+                        {
+                            addHighlightingSpans(
+                                item,
+                                matchItem[0].indices,
+                                'data-dictionary-property-table__span',
+                            )
+                        }
+                    </span>
+                </ListItemText>
+            );
         }
         return (
             <ListItemText
