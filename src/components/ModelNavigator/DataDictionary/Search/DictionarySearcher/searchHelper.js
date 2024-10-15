@@ -137,6 +137,9 @@ export const searchKeyword = (searchData, keyword) => {
   const result = handler.search(keyword)
     .map((resItem) => {
       // A bug in Fuse sometimes returns wrong indices that end < start
+      console.log('check in-search', {
+        resItem
+      })
       const matches = resItem.matches
         .filter(matchItem => matchItem.indices[0][1] >= matchItem.indices[0][0]);
       return {
