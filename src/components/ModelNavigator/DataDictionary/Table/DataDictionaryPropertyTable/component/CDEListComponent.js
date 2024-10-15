@@ -60,20 +60,25 @@ const CDEListComponent = ({
                     return prop;
                 }
             }).filter((c) => c);
-            return (
-                <ListItemText>
-                    <span className={classes.listItemText}>
-                        {item.substring}
-                        {
-                            addHighlightingSpans(
-                                item,
-                                matchItem[0].indices,
-                                'data-dictionary-property-table__span',
-                            )
-                        }
-                    </span>
-                </ListItemText>
-            );
+            if (matchItem.length) {
+                console.log('check-high 2', {
+                    matchItem
+                });
+                return (
+                    <ListItemText>
+                        <span className={classes.listItemText}>
+                            {item.substring}
+                            {
+                                addHighlightingSpans(
+                                    item,
+                                    matchItem[0].indices,
+                                    'data-dictionary-property-table__span',
+                                )
+                            }
+                        </span>
+                    </ListItemText>
+                );
+            }
         }
         return (
             <ListItemText
