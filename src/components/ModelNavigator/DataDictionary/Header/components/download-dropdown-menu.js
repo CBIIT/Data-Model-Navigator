@@ -34,10 +34,10 @@ const {
 } = {
   FILE_TYPE_FULL_DICTIONARY: 'Data Dictionary (PDF)',
   FILE_TYPE_README: 'Data Model README (PDF)',
-  FILE_TYPE_TEMPLATES: 'All Data Templates (TSV)',
+  FILE_TYPE_TEMPLATES: 'Submission Templates (TSV)',
   FILE_TYPE_CONTROLLED_VOCAB_TSV: 'All Vocabularies (TSV)',
   FILE_TYPE_CONTROLLED_VOCAB_JSON: 'All Vocabularies (JSON)',
-  FILE_TYPE_LOADING_EXAMPLE: 'Loading File Examples'
+  FILE_TYPE_LOADING_EXAMPLE: 'Example Templates'
 
 }
 const DOWNLOADS = 'Available Downloads';

@@ -224,6 +224,7 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
   let nameMatch = null;
   let descriptionMatch = null;
   const typeMatchList = [];
+  const CDEInfoMatchList = []
   if (allMatches) {
     allMatches.forEach((item) => {
       if (item.key === 'properties.name' && item.value === propertyKey) {
@@ -234,7 +235,27 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
         if (item.value === splitText) {
           descriptionMatch = item;
         }
-      } else if (item.key === 'properties.type') {
+      } else if (item.key === 'properties.CDEFullName') {
+        const CDEFullName = property.CDEFullName
+        if (CDEFullName === item.value) {
+            CDEInfoMatchList.push(item)
+        }
+      } else if (item.key === 'properties.CDEVersion') {
+        const CDEVersion = property.CDEVersion
+        if (CDEVersion === item.value) {
+            CDEInfoMatchList.push(item)
+        }
+      } else if (item.key === 'properties.CDEOrigin') {
+        const CDEOrigin = property.CDEOrigin
+        if (CDEOrigin === item.value) {
+            CDEInfoMatchList.push(item)
+        }
+      } /*else if (item.key === 'properties.CDEPublicID') {
+        const CDEPublicID = property.CDEPublicID
+        if (CDEPublicID === item.value) {
+            CDEInfoMatchList.push(item)
+        }
+      }*/ else if (item.key === 'properties.type') {
         const type = getType(property);
         if (typeof type === 'string') {
           if (type === item.value) {
@@ -254,6 +275,7 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
     nameMatch,
     descriptionMatch,
     typeMatchList,
+    CDEInfoMatchList,
   };
 };
 
@@ -265,6 +287,7 @@ export const getMatchesSummaryForProperties = (allProperties, allMatches) => {
       nameMatch,
       descriptionMatch,
       typeMatchList,
+      CDEInfoMatchList
     } = getMatchInsideProperty(propertyIndex, propertyKey, property, allMatches);
     const summaryItem = {
       propertyKey,
@@ -272,8 +295,9 @@ export const getMatchesSummaryForProperties = (allProperties, allMatches) => {
       nameMatch,
       descriptionMatch,
       typeMatchList,
+      CDEInfoMatchList
     };
-    if (nameMatch || descriptionMatch || typeMatchList.length > 0) {
+    if (nameMatch || descriptionMatch || typeMatchList.length > 0 || CDEInfoMatchList.length > 0) {
       matchedPropertiesSummary.push(summaryItem);
     }
   });

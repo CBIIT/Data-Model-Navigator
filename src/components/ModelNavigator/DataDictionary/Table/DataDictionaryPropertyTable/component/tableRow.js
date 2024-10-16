@@ -12,6 +12,7 @@ import KeyIconSvg from "../../../../assets/key_icon.svg";
 import { controlVocabConfig as ctrlConfig } from "../../../../bento/dataDictionaryData";
 import "../DataDictionaryPropertyTable.css";
 import DownloadFileTypeBtn from "./DownloadFileTypeBtn";
+import CDEListComponent from "./CDEListComponent";
 
 const TableRow = ({
   classes,
@@ -67,6 +68,7 @@ const TableRow = ({
         let nameMatch = null;
         let descriptionMatch = null;
         let typeMatchList = null;
+        let CDEInfoMatchList = null;
         if (needHighlightSearchResult && matchedPropertiesSummary.length > 0) {
           const matchedSummaryItem = matchedPropertiesSummary.find(
             (item) => item.propertyKey === propertyKey
@@ -75,12 +77,15 @@ const TableRow = ({
             nameMatch = matchedSummaryItem.nameMatch;
             descriptionMatch = matchedSummaryItem.descriptionMatch;
             typeMatchList = matchedSummaryItem.typeMatchList;
+            CDEInfoMatchList = matchedSummaryItem.CDEInfoMatchList
           } else if (onlyShowMatchedProperties) {
             return null;
           }
         }
         let termID = "";
+        let category = "";
         let termLink = "";
+        let cdeInfo = [];
         let type = "";
         let enums = "";
         let key = false;
@@ -107,11 +112,47 @@ const TableRow = ({
           key = property.key;
         }
 
+        if ("category" in property) {
+            category = property.category
+        }
+
+        if ("CDEFullName" in property) {
+            cdeInfo.push({
+                label: 'CDE Full Name',
+                value: property.CDEFullName
+            })
+        }
+
+        if ("CDEVersion" in property) {
+            cdeInfo.push({
+                label: 'Version',
+                value: property.CDEVersion
+            })
+        }
+
+        if ("CDEPublicID" in property) {
+            cdeInfo.push({
+                label: 'Public ID',
+                value: {
+                    CDELink: property.CDEPublicID,
+                    CDECode: property.CDECode
+                } 
+            })
+        }
+
+        if ('CDEOrigin' in property) {
+            cdeInfo.push({
+                label: 'Origin',
+                value: property.CDEOrigin
+            }) 
+        }
+
         const propertyDescriptionFragment = getPropertyDescriptionFragment(
           property,
           descriptionMatch,
           "data-dictionary-property-table__span"
         );
+
 
         const propertyTypeFragment = getPropertyTypeFragment(
           property,
@@ -173,6 +214,14 @@ const TableRow = ({
                   )}
                 </>
               )}
+            </td>
+            <td className={classes.rowItem}>
+                {
+                    cdeInfo && <CDEListComponent items={cdeInfo}
+                    isSearchMode={isSearchMode}
+                    CDEInfoMatchList={CDEInfoMatchList}
+                    property={property} />
+                }
             </td>
             {!hideIsRequired && (
               <td className={classes.rowItem}>
