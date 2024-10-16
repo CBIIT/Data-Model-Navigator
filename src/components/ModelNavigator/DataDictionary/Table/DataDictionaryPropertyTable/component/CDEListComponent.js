@@ -15,27 +15,11 @@ import {
 } from '../../../Utils/highlightHelper';
 
 const linkPattern = /\b(?:https?|ftp):\/\/(?:www\.)?[^\s/$.?#].[^\s]*\b/;
-function isLink(str) {
-    return linkPattern.test(str);
+function isLink(value) {
+    return !!value.link;
 }
-
-const wrapLinkInLink = (inputString) => {
-    const match = inputString.match(linkPattern); 3
-
-    if (match) {
-        const link = match[0];
-        const linkIndex = inputString.indexOf(link);
-
-        return (
-            <>
-                {inputString.substring(0, linkIndex)}
-                <a href={`mailto:${link}`}>{link}</a>
-                {inputString.substring(linkIndex + link.length)}
-            </>
-        );
-    }
-
-    return <>{inputString}</>;
+const wrapLinkInLink = ({link, code}) => {
+    return <a href={link}>{code}</a>;
 };
 
 const CDEListComponent = ({
