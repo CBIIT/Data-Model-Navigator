@@ -48,7 +48,6 @@ const CDEListComponent = ({
     isSearchMode,
 }) => {
     const highlightMatchingProperties = (item) => {
-        console.log('check inHighlightMatchingProps', {item, CDEInfoMatchList});
         if (isSearchMode && CDEInfoMatchList && CDEInfoMatchList.length > 0) {
             const matchItem = CDEInfoMatchList.map((prop) => {
                 if (prop.value === item) {
@@ -83,7 +82,6 @@ const CDEListComponent = ({
         );
     };
 
-    console.log('check items', { items })
     return (
         <div style={{
             // paddingLeft: '380px',
@@ -93,9 +91,6 @@ const CDEListComponent = ({
         }}>
             {
                 items.map(({ label, value }) => {
-                    console.log(
-                        "check label-value", { label, value }
-                    )
                     return (
                         <div style={{
                             display: 'flex',
@@ -103,10 +98,7 @@ const CDEListComponent = ({
                         }}>
                             <div style={{
                             }}>{label}</div>
-                            <div>{value && value.link && value.link.trim() !== ""
-                                ? <a href={value.link}>{value.code}</a>
-                                : highlightMatchingProperties(value)
-                            }</div>
+                            <div>{!isLink(value) ? highlightMatchingProperties(value) : <div>{wrapLinkInLink(value)}</div>}</div>
                         </div>
                     )
                 })
