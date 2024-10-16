@@ -20,7 +20,7 @@ function isLink(str) {
 }
 
 const wrapLinkInLink = (inputString) => {
-    const match = inputString.match(linkPattern);
+    const match = inputString.match(linkPattern); 3
 
     if (match) {
         const link = match[0];
@@ -91,20 +91,6 @@ const CDEListComponent = ({
         }}>
             {
                 items.map(({ label, value }) => {
-                    if (value.link) {
-                        return (
-                            <div style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}>
-                                <div style={{
-                                }}>{label}</div>
-                                <div>
-                                    <a href={value.link}>{value.code}</a>
-                                </div>
-                            </div> 
-                        )
-                    }
                     return (
                         <div style={{
                             display: 'flex',
@@ -112,7 +98,11 @@ const CDEListComponent = ({
                         }}>
                             <div style={{
                             }}>{label}</div>
-                            <div>{highlightMatchingProperties(value)}</div>
+                            <div>{value.link
+                                ? <a href={value.link}>{value.code}</a>
+                                : !isLink(value)
+                                    ? highlightMatchingProperties(value)
+                                    : <div>{wrapLinkInLink(value)}</div>}</div>
                         </div>
                     )
                 })
