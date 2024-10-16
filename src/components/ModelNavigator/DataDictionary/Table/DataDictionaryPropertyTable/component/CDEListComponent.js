@@ -1,35 +1,24 @@
 import React from 'react';
 import {
-    List,
-    ListItem,
     ListItemText,
-    ListItemIcon,
     withStyles,
     Typography,
-    createTheme,
-    MuiThemeProvider,
 } from '@material-ui/core';
-import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import {
     addHighlightingSpans,
 } from '../../../Utils/highlightHelper';
 
-const linkPattern = /\b(?:https?|ftp):\/\/(?:www\.)?[^\s/$.?#].[^\s]*\b/;
 function isLink(value) {
-    console.log('check isLink', {flag: !!value.CDELink, value, link: value.CDELink})
     return !!value.CDELink;
 }
 
-const wrapLinkInLink = ({CDELink, CDECode}) => {
-    return <a href={CDELink}>{CDECode}</a>;
+const wrapLinkInLink = ({ CDELink, CDECode }) => {
+    return <a target='_blank' href={CDELink}>{CDECode}</a>;
 };
 
 const CDEListComponent = ({
     classes,
     items,
-    maxNoOfItems,
-    maxNoOfItemDlgBox,
-    expand,
     CDEInfoMatchList,
     isSearchMode,
 }) => {
@@ -69,19 +58,11 @@ const CDEListComponent = ({
     };
 
     return (
-        <div style={{
-            // paddingLeft: '380px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px'
-        }}>
+        <div className={classes.listWrapper}>
             {
                 items.map(({ label, value }) => {
                     return (
-                        <div style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }}>
+                        <div className={classes.listItem}>
                             <div style={{
                             }}>{label}</div>
                             <div>{!isLink(value) ? highlightMatchingProperties(value) : <div>{wrapLinkInLink(value)}</div>}</div>
@@ -98,6 +79,16 @@ const styles = () => ({
         fontWeight: '300',
         fontSize: '14px',
         whiteSpace: 'pre-wrap',
+    },
+    listWrapper: {
+        // paddingLeft: '380px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px'
+    },
+    listItem: {
+        display: 'flex',
+        flexDirection: 'column',
     },
     longText: {
         fontSize: '13px',
