@@ -103,7 +103,7 @@ const CDEListComponent = ({
                         }}>
                             <div style={{
                             }}>{label}</div>
-                            <div>{!!value.link
+                            <div>{value && value.link && value.link.trim() !== ""
                                 ? <a href={value.link}>{value.code}</a>
                                 : highlightMatchingProperties(value)
                             }</div>
