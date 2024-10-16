@@ -82,6 +82,7 @@ const CDEListComponent = ({
         );
     };
 
+    console.log('check items', { items })
     return (
         <div style={{
             // paddingLeft: '380px',
@@ -91,6 +92,9 @@ const CDEListComponent = ({
         }}>
             {
                 items.map(({ label, value }) => {
+                    console.log(
+                        "check label-value", {label, value}
+                    )
                     return (
                         <div style={{
                             display: 'flex',
