@@ -65,6 +65,7 @@ const TableRow = ({
     <>
       {propertyKeysList.map((propertyKey) => {
         const property = properties[propertyKey];
+        console.log('check property -->', {property})
         let nameMatch = null;
         let descriptionMatch = null;
         let typeMatchList = null;
@@ -118,7 +119,7 @@ const TableRow = ({
 
         if ("CDEFullName" in property) {
             cdeInfo.push({
-                label: 'Name',
+                label: 'CDE Full Name',
                 value: property.CDEFullName
             })
         }
@@ -132,8 +133,11 @@ const TableRow = ({
 
         if ("CDEPublicID" in property) {
             cdeInfo.push({
-                label: 'Link',
-                value: property.CDEPublicID
+                label: 'Public ID',
+                value: {
+                    link: property.CDEPublicID,
+                    code: property.CDECode
+                } 
             })
         }
 

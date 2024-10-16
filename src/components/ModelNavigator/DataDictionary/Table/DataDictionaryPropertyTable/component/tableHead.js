@@ -10,7 +10,7 @@ const TableHeader = ({ classes, hideIsRequired }) => (
       <th className={classes.item}>
         Type
       </th>
-      <th>
+      <th className={classes.item}>
         CDE Info
       </th>
       {
