@@ -16,11 +16,12 @@ import {
 
 const linkPattern = /\b(?:https?|ftp):\/\/(?:www\.)?[^\s/$.?#].[^\s]*\b/;
 function isLink(value) {
-    console.log('check isLink', {flag: !!value.link, value, link: value.link})
+    console.log('check isLink', {flag: !!value.CDELink, value, link: value.CDELink})
     return !!value.link;
 }
-const wrapLinkInLink = ({link, code}) => {
-    return <a href={link}>{code}</a>;
+
+const wrapLinkInLink = ({CDELink, CDECode}) => {
+    return <a href={CDELink}>{CDECode}</a>;
 };
 
 const CDEListComponent = ({

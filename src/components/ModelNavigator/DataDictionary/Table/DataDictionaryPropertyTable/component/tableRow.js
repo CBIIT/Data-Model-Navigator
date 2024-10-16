@@ -134,8 +134,8 @@ const TableRow = ({
             cdeInfo.push({
                 label: 'Public ID',
                 value: {
-                    link: property.CDEPublicID,
-                    code: property.CDECode
+                    CDELink: property.CDEPublicID,
+                    CDECode: property.CDECode
                 } 
             })
         }
