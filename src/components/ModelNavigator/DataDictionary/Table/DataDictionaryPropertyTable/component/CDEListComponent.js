@@ -17,7 +17,7 @@ import {
 const linkPattern = /\b(?:https?|ftp):\/\/(?:www\.)?[^\s/$.?#].[^\s]*\b/;
 function isLink(value) {
     console.log('check isLink', {flag: !!value.CDELink, value, link: value.CDELink})
-    return !!value.link;
+    return !!value.CDELink;
 }
 
 const wrapLinkInLink = ({CDELink, CDECode}) => {
