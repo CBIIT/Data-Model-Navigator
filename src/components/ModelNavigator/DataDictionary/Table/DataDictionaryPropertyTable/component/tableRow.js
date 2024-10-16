@@ -65,7 +65,6 @@ const TableRow = ({
     <>
       {propertyKeysList.map((propertyKey) => {
         const property = properties[propertyKey];
-        console.log('check property -->', {property})
         let nameMatch = null;
         let descriptionMatch = null;
         let typeMatchList = null;
