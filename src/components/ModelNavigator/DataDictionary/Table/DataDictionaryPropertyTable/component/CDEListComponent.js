@@ -16,7 +16,7 @@ import {
 
 const linkPattern = /\b(?:https?|ftp):\/\/(?:www\.)?[^\s/$.?#].[^\s]*\b/;
 function isLink(value) {
-    console.log('check isLink', {flag: !!value.link, value})
+    console.log('check isLink', {flag: !!value.link, value, link: value.link})
     return !!value.link;
 }
 const wrapLinkInLink = ({link, code}) => {
