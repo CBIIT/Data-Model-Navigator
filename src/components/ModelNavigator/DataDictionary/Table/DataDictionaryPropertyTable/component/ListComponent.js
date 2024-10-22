@@ -134,6 +134,32 @@ const theme = {
   },
 };
 
+const emailPattern = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+function containsEmail(str) {
+    return emailPattern.test(str);
+  }
+
+  const wrapEmailInLink = (inputString) => {
+    const match = inputString.match(emailPattern);
+  
+    if (match) {
+      const email = match[0];
+      const emailIndex = inputString.indexOf(email);
+      
+      return (
+        <>
+          {inputString.substring(0, emailIndex)}
+          <a href={`mailto:${email}`}>{email}</a>
+          {inputString.substring(emailIndex + email.length)}
+        </>
+      );
+    }
+  
+    return <>{inputString}</>;
+  };
+  
+  
+
 const ListComponent = ({
   classes,
   items,
@@ -187,16 +213,26 @@ const ListComponent = ({
   return (
     <MuiThemeProvider theme={createTheme(customTheme)}>
       <List>
-        {items.map((item, index) => (
-          <>
-            <ListItem key={`${index}`}>
-              <ListItemIcon>
-                <FiberManualRecord style={{ fontSize: 8 }} />
-              </ListItemIcon>
-              {highlightMatchingProperties(item)}
-            </ListItem>
-          </>
-        ))}
+        {items.map((item, index) => {
+            let payload;
+            if (containsEmail(item)) {
+
+            }
+            return (
+                <>
+                  <ListItem key={`${index}`}>
+                    <ListItemIcon>
+                      <FiberManualRecord style={{ fontSize: 8 }} />
+                    </ListItemIcon>
+                    {!containsEmail(item) ? highlightMatchingProperties(item) : <ListItemText primary={(
+                        <Typography className={classes.listItemText}>
+                            {wrapEmailInLink(item)}
+                        </Typography>
+                    )}/>}
+                  </ListItem>
+                </>
+              )
+        })}
       </List>
     </MuiThemeProvider>
   );
