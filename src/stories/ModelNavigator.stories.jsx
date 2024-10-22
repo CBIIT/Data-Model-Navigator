@@ -45,7 +45,7 @@ export const Navigator = Template.bind({});
 // const DATA_MODEL_PROPS = "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/ICDC/1.0.0/icdc-model-props.yml";
 
 Navigator.args = {
-  modelUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/CDS/4.0.0/cds-model.yml",
-  propsUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/CDS/4.0.0/cds-model-props.yml",
+  modelUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/4.0.0/cds-model.yml",
+  propsUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/4.0.0/cds-model-props.yml",
 };
 
