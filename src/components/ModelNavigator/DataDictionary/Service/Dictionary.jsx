@@ -16,7 +16,6 @@ export async function getModelExploreData(...urls) {
     .then((result) => result.map((r) => r.value));
 
   const modelData = merge(yamlData[0], ...yamlData.slice(1));
-  console.log(modelData);
 
   // translate the json file here
   const dataList = {};
