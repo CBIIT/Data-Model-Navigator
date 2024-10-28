@@ -140,7 +140,7 @@ export default () => ({
   },
   property: {
     backgroundColor: "#fff",
-    padding: "10px 18px 18px 23px",
+    paddingTop: "10px",
     position: "relative",
     margin: "0",
   },

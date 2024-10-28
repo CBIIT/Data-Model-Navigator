@@ -263,7 +263,7 @@ const TableRow = ({
 
 const styles = () => ({
   rowItem: {
-    padding: "10px 10px 10px 19px",
+    padding: "10px 10px 10px 15px",
     "& p": {
       margin: "auto",
     },
@@ -286,7 +286,7 @@ const styles = () => ({
     marginTop: "2em",
   },
   row: {
-    padding: "10px 10px 10px 19px",
+    padding: "10px 10px 10px 15px",
     border: "0",
     textAlign: "left",
     fontFamily: "raleway",
