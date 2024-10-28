@@ -144,11 +144,6 @@ const styles = StyleSheet.create({
 });
 
 const PdfTableRow = ({ propInfo, node, thisProperty }) => {
-  console.log("prop-check", {
-    propInfo,
-    node,
-    thisProperty,
-  });
   const textContent = (text, symbol) => {
     if (String(text).length > 20) {
       return String(text).replace(symbol, `${symbol}\n`);
@@ -157,6 +152,9 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
   };
 
   const getTableCell = (str) => {
+    if (!str) {
+      return "-";
+    }
     return (
       typeof str === "string" && <Text style={styles.tableCell}>{str}</Text>
     );
@@ -284,30 +282,28 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
           </>
         )}
       </View>
-      {true && (
+      {propInfo.CDECode && (
         <>
           <View style={styles.horizontalCells}>
             <Text style={styles.cellHorizontalHeader}>CDE FULL NAME</Text>
             <Text style={styles.horizontalTableCell}>
-              {getTableCell(
-                "Subject Legal Adult Or Pediatric Participant Type"
-              )}
+              {getTableCell(propInfo.CDEFullName)}
             </Text>
 
             <Text style={styles.cellHeader}>VERSION</Text>
             <Text style={styles.horizontalTableCell}>
-              {getTableCell("1.00")}
+              {getTableCell(propInfo.CDEVersion)}
             </Text>
 
             <Text style={styles.cellHeader}>PUBLIC ID</Text>
             <Text style={styles.horizontalTableCell}>
-              {getTableCell("11524549")}
+              {getTableCell(propInfo.CDEPublicID)}
             </Text>
           </View>
           <View style={styles.horizontalCells}>
             <Text style={styles.cellHorizontalHeader}>ORIGIN</Text>
             <Text style={styles.horizontalTableCell}>
-              {getTableCell("caSDR")}
+              {getTableCell(propInfo.CDEOrigin)}
             </Text>
           </View>
         </>
