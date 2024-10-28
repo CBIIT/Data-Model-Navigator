@@ -297,7 +297,7 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
 
             <Text style={styles.cellHeader}>PUBLIC ID</Text>
             <Text style={styles.horizontalTableCell}>
-              {getTableCell(propInfo.CDEPublicID)}
+              {getTableCell(propInfo.CDECode)}
             </Text>
           </View>
           <View style={styles.horizontalCells}>
