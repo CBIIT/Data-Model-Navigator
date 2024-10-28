@@ -14,6 +14,12 @@ const styles = StyleSheet.create({
   tableCol: {
     width: "24%",
   },
+  tableCol2: {
+    width: "24%",
+  },
+  tableColKey: {
+    width: "4%",
+  },
   tableColType: {
     width: "18%",
   },
@@ -45,18 +51,30 @@ const styles = StyleSheet.create({
     paddingBottom: "5px",
     lineHeight: 1.2,
     width: "90%",
+    // justifyContent: 'left',
     fontFamily: FontRegistry("NunitoSemiBold"),
+  },
+  tableColKey1: {
+    width: "90%",
+    justifyContent: "center",
+  },
+  tableColKey2: {
+    width: "114%",
+  },
+  keyText: {
+    marginRight: "10px",
   },
   keyIcon: {
     width: "12px",
-    alignItems: "center",
+    marginLeft: "20px",
+  },
+  keyIconView: {
+    position: "absolute",
+    left: "20px",
   },
   required: {
     color: "#ff5a20",
     fontFamily: FontRegistry("NunitoExtraBold"),
-  },
-  preferred: {
-    fontFamily: FontRegistry("NunitoNormal"),
   },
   boldLabeled: {
     fontSize: 8,
@@ -68,28 +86,10 @@ const styles = StyleSheet.create({
   labeledContainer: {
     marginTop: "16px",
   },
-  cdeInfoContainer: {
-    marginTop: "10px",
-    padding: "5px",
-    backgroundColor: "#e8f0fe",
-  },
-  cdeInfoTitle: {
-    fontSize: 10,
-    fontFamily: FontRegistry("NunitoExtraBold"),
-    marginBottom: "4px",
-  },
-  cdeInfoRow: {
-    fontSize: 8,
-    fontFamily: FontRegistry("NunitoNormal"),
-    paddingLeft: "2px",
-    paddingTop: "3px",
-    paddingBottom: "3px",
-  },
 });
 
 const PdfTableRow = ({ node }) => {
   const keys = Object.keys(node.properties);
-
   const textContent = (text, symbol) => {
     if (String(text).length > 20) {
       return String(text).replace(symbol, `${symbol}\n`);
@@ -99,21 +99,27 @@ const PdfTableRow = ({ node }) => {
 
   const validateEnums = (enums) => {
     if (Array.isArray(enums)) {
-      return enums.map((value) => `'${value}'`).join(", ");
+      let concatEnums = "";
+      enums.forEach((value) => {
+        concatEnums += textContent(`'${value}'; `, "/");
+      });
+      return concatEnums;
     }
     return JSON.stringify(enums);
   };
 
   const validateType = (property) => {
     if (Array.isArray(property)) {
-      return property.length > 10
-        ? textContent(`${property.join(", ")}`, "_")
-        : property.join(", ");
+      if (property.length > 10) {
+        return textContent(`${property}`, "_");
+      }
+      return property;
     }
     const type = typeof property;
-    return type === "object"
-      ? textContent(JSON.stringify(property), "]")
-      : property;
+    if (type === "object") {
+      return textContent(JSON.stringify(property), "]");
+    }
+    return property;
   };
 
   const required = (key) => {
@@ -125,17 +131,14 @@ const PdfTableRow = ({ node }) => {
       );
     }
     if (node.preferred.includes(key)) {
-      return (
-        <Text style={{ ...styles.tableCell, ...styles.preferred }}>
-          Preferred
-        </Text>
-      );
+      return <Text style={styles.tableCell}>Preferred</Text>;
     }
     return <Text style={styles.tableCell}>Optional</Text>;
   };
 
-  const displayKeyPropsDescription = (description) => {
-    return description.split("\n").map((line, index) => (
+  const displayKeyPropsDiscription = (description) => {
+    const lines = description.split("<br>");
+    return lines.map((line, index) => (
       <Text key={index} style={styles.tableCell}>
         {line}
       </Text>
@@ -144,23 +147,24 @@ const PdfTableRow = ({ node }) => {
 
   const getStyles = (classes, index) =>
     index % 2 === 0 ? { ...classes, ...styles.evenRow } : { ...classes };
-
   const rows = keys.map((key, index) => (
     <View style={getStyles(styles.row, index)} key={key}>
       <View style={styles.tableCol}>
         {node.properties[key].key ? (
-          <View
-            style={
-              String(key).length > 20
-                ? styles.tableColKey2
-                : styles.tableColKey1
-            }
-          >
-            <Text style={styles.key}>
-              {key}{" "}
-              <Image style={styles.keyIcon} src={keyIcon} alt="key icon" />
-            </Text>
-          </View>
+          <>
+            <View
+              style={
+                String(key).length > 20
+                  ? styles.tableColKey2
+                  : styles.tableColKey1
+              }
+            >
+              <Text style={styles.key}>
+                {key}{" "}
+                <Image style={styles.keyIcon} src={keyIcon} alt="key icon" />
+              </Text>
+            </View>
+          </>
         ) : (
           <Text style={styles.tableCell}>{textContent(key, "_")}</Text>
         )}
@@ -182,7 +186,7 @@ const PdfTableRow = ({ node }) => {
         {node.properties[key].key ? (
           <>
             <Text>
-              {displayKeyPropsDescription(node.properties[key].description)}
+              {displayKeyPropsDiscription(node.properties[key].description)}
             </Text>
             {node.properties[key].labeled && (
               <Text style={styles.labeledContainer}>
@@ -217,23 +221,7 @@ const PdfTableRow = ({ node }) => {
     </View>
   ));
 
-  return (
-    <>
-      {rows}
-      {true && (
-        <View style={styles.cdeInfoContainer}>
-          <Text style={styles.cdeInfoTitle}>CDE Info</Text>
-          <Text style={styles.cdeInfoRow}>CDE Full Name</Text>
-          <Text style={styles.cdeInfoRow}>
-            Subject Legal Adult Or Pediatric Participant Type
-          </Text>
-          <Text style={styles.cdeInfoRow}>Version: 1.00</Text>
-          <Text style={styles.cdeInfoRow}>Public ID: 11524549</Text>
-          <Text style={styles.cdeInfoRow}>Origin: caDSR</Text>
-        </View>
-      )}
-    </>
-  );
+  return <>{rows}</>;
 };
 
 export default PdfTableRow;
