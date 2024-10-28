@@ -91,15 +91,15 @@ const NodeViewComponent = ({
               >
                 {propertyCount === 1 ? (
                   <p
-                    style={{ fontSize: "11px" }}
+                    style={{ fontSize: "14px" }}
                   >{<span 
-                    style={{ fontSize: "14px", fontWeight: "700", color: "#42779a", fontFamily: "Open Sans"}}>
+                    style={{ fontWeight: "700", color: "#42779a" }}>
                       {propertyCount}</span>
                     } property</p>
                 ) : (
-                  <p style={{ fontSize: "11px" }}>
+                  <p style={{ fontSize: "14px" }}>
                     {<span 
-                    style={{ fontSize: "14px", fontWeight: "700", color: "#42779a", fontFamily: "Open Sans"}}>
+                    style={{ fontWeight: "700", color: "#42779a" }}>
                       {propertyCount}</span>
                     } properties
                   </p>

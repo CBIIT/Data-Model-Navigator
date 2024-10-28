@@ -5,6 +5,7 @@ export default () => ({
     paddingRight: "0px",
     width: "100%",
     marginTop: "-22px",
+    paddingBottom: "22px",
   },
   viewGraphContainer: {
     height: "90%",

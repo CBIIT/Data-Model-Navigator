@@ -81,7 +81,7 @@ const DataDictionaryTable = ({
       {/* <DownloadLinkWrapper> */}
       <p className={classes.tableInfo}>
         <span>{dictionaryName}</span>
-        <span> dictionary has </span>
+        <span> has </span>
         <span>{nodesCount}</span>
         <span> nodes and </span>
         <span>{propertiesCount}</span>
@@ -119,7 +119,7 @@ DataDictionaryTable.propTypes = {
 DataDictionaryTable.defaultProps = {
   dictionary: {},
   highlightingNodeID: null,
-  onExpandNode: () => {},
+  onExpandNode: () => { },
   dictionaryName: '',
 };
 
@@ -132,7 +132,7 @@ const styles = () => ({
     marginLeft: '15px',
     color: '#32495A',
     fontFamily: 'Lato',
-    fontSize: '14px',
+    fontSize: '16px',
     letterSpacing: '0',
     lineHeight: '26.06px',
   },
