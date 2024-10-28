@@ -62,7 +62,7 @@ export default () => ({
     margin: "0px",
   },
   propertyCountBtn: {
-    width: "150px",
+    width: "155px",
     height: "26px",
     backgroundColor: "#F3F8FB",
     textTransform: "capitalize",
