@@ -33,7 +33,7 @@ const TableHeader = ({ classes, hideIsRequired }) => (
 const styles = () => ({
   tableHead: {
     color: '#606060',
-    fontSize: '13px',
+    fontSize: '15px',
     background: '#eef5f7',
     borderTop: '3px solid #adbec4',
     borderBottom: '3px solid #adbec4',
@@ -46,7 +46,6 @@ const styles = () => ({
     border: '0',
     textAlign: 'left',
     fontFamily: 'raleway',
-    verticalAlign: 'top',
     '& p': {
       margin: 'auto',
     },
