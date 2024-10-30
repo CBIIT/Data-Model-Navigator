@@ -77,11 +77,12 @@ export default () => ({
     background: "#fff",
     fontSize: "14px",
     height: "22px",
-    width: "136px",
+    maxWidth: "160px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     gap: "5px",
+    whiteSpace: "nowrap",
   },
   nodeAssignment: {
     color: "#036077",
