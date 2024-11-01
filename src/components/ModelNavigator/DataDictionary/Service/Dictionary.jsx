@@ -69,11 +69,10 @@ export async function getModelExploreData(...urls) {
               ? modelData.PropDefinitions[propertyName]?.Tags?.Labeled
                 ? modelData.PropDefinitions[propertyName]?.Tags?.Labeled : undefined : undefined;
             propertiesItem.category = key;
-            modelData.PropDefinitions[propertyName].Term ?
-              modelData.PropDefinitions[propertyName].Term.length > 0
-                ? cdeMap.set(`${key}.${propertyName};${modelData.PropDefinitions[propertyName].Term[0].Code}.${modelData.PropDefinitions[propertyName].Term[0].Version}`, { CDECode: modelData.PropDefinitions[propertyName].Term[0].Code, CDEVersion: modelData.PropDefinitions[propertyName].Term[0].Version })
-                : undefined
-              : undefined;
+            const caDSRTerm = modelData.PropDefinitions[propertyName]?.Term?.find((term) => term?.Origin?.toLowerCase()?.indexOf("cadsr") !== -1);
+            if (caDSRTerm?.Code) {
+              cdeMap.set(`${key}.${propertyName};${caDSRTerm.Code}.${caDSRTerm.Version}`, { CDECode: caDSRTerm.Code, CDEVersion: caDSRTerm.Version });
+            }
             propertiesItem.description = modelData?.PropDefinitions[propertyName]?.Desc;
             propertiesItem.type = modelData?.PropDefinitions[propertyName]?.Type
               || modelData?.PropDefinitions[propertyName]?.Enum;

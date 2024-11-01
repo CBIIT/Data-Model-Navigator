@@ -90,7 +90,7 @@ function buildStore() {
 }
 
 async function populateStore(store, modelUrl = "", propsUrl = "") {
-  const response = await getModelExploreData(modelUrl, propsUrl)?.catch(() => null);
+  const response = await getModelExploreData(modelUrl, propsUrl)?.catch((e) => { console.log(e); return null; });
   if (!response?.data || !response?.version) {
     throw new Error('Failed to fetch data');
   }
