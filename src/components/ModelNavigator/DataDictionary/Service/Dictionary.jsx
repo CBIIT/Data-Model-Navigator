@@ -71,7 +71,7 @@ export async function getModelExploreData(...urls) {
             propertiesItem.category = key;
             const caDSRTerm = modelData.PropDefinitions[propertyName]?.Term?.find((term) => term?.Origin?.toLowerCase()?.indexOf("cadsr") !== -1);
             if (caDSRTerm?.Code) {
-              cdeMap.set(`${key}.${propertyName};${caDSRTerm.Code}.${caDSRTerm.Version}`, { CDECode: caDSRTerm.Code, CDEVersion: caDSRTerm.Version });
+              cdeMap.set(`${key}.${propertyName};${caDSRTerm.Code}.${caDSRTerm.Version}`, { CDECode: caDSRTerm?.Code, CDEVersion: caDSRTerm?.Version, CDEOrigin: caDSRTerm?.Origin });
             }
             propertiesItem.description = modelData?.PropDefinitions[propertyName]?.Desc;
             propertiesItem.type = modelData?.PropDefinitions[propertyName]?.Type
