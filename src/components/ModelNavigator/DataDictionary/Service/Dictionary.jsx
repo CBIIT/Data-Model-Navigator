@@ -45,7 +45,7 @@ export async function getModelExploreData(...urls) {
     item.assignment = value.Tags?.Assignment ? value.Tags?.Assignment : '';
     item.class = value.Tags?.Class ? value.Tags?.Class : '';
     item.desc = value?.Desc ? value?.Desc : '';
-    item.description = item.desc;
+    item.description = item.desc || "N/A";
     item.template = value.Tags?.Template ? value.Tags?.Template : '';
 
     const link = [];
@@ -73,7 +73,7 @@ export async function getModelExploreData(...urls) {
             if (caDSRTerm?.Code) {
               cdeMap.set(`${key}.${propertyName};${caDSRTerm.Code}.${caDSRTerm.Version}`, { CDECode: caDSRTerm?.Code, CDEVersion: caDSRTerm?.Version, CDEOrigin: caDSRTerm?.Origin });
             }
-            propertiesItem.description = modelData?.PropDefinitions[propertyName]?.Desc;
+            propertiesItem.description = modelData?.PropDefinitions[propertyName]?.Desc || "N/A";
             propertiesItem.type = modelData?.PropDefinitions[propertyName]?.Type
               || modelData?.PropDefinitions[propertyName]?.Enum;
             propertiesItem.enum = modelData?.PropDefinitions[propertyName]?.Enum
