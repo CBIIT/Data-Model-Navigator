@@ -128,6 +128,7 @@ const DictionaryButton = ({
 
   const handleClose = () => {
     setAnchorEl(null);
+    setToggledMenus([]);
   };
 
   const handleMenuClick = (name) => {
