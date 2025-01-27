@@ -41,7 +41,7 @@ const DownloadButton = ({
         type="button"
         disableRipple
         className={classes.button}
-        onClick={() => download()}
+        onClick={download}
       >
         <img className={classes.icon} src={GenericDownloadIcon} alt="Download" />
         Template

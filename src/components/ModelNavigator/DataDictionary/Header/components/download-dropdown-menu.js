@@ -106,9 +106,9 @@ const StyledListItemIcon = withStyles({
   root: {
     color: "#0A4A6D",
     minWidth: "28px",
-    paddingLeft: (props) => props.indent > 0 ? `${props.indent * 20}px` : "6px",
+    paddingLeft: "4px",
   }
-})((({ indent, ...props }) => <ListItemIcon {...props} />));
+})(ListItemIcon);
 
 const StyledMenuItem = withStyles({
   root: {
@@ -119,7 +119,7 @@ const StyledMenuItem = withStyles({
 const StyledListItemText = withStyles({
   root: {
     padding: "10px",
-    paddingLeft: (props) => props.indent > 0 ? `${props.indent * 25}px` : "10px",
+    paddingLeft: "6px",
   },
   primary: {
     fontFamily: "Nunito",
@@ -128,7 +128,7 @@ const StyledListItemText = withStyles({
     color: "#0A4A6D",
     lineHeight: 0,
   },
-})(({ indent, ...props }) => <ListItemText {...props} />);;
+})(ListItemText);
 
 const generatePdfDocument = async (object, config, setLoading, fileName, pdfDownloadConfig, onlyRequired) => {
   let fullDictionary = cloneDeep(object);
@@ -331,40 +331,48 @@ const DownloadFileTypeBtn = ({
         <Collapse in={toggledMenus.includes("data_dictionary")} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <StyledMenuItem onClick={() => handleMenuClick("all_dictionary")}>
-              <StyledListItemIcon indent={1}>
+              <div className={classes.indent} />
+              <StyledListItemIcon>
                 {toggledMenus.includes("all_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </StyledListItemIcon>
-              <StyledListItemText primary="All Properties" indent={0.01} />
+              <StyledListItemText primary="All Properties" />
             </StyledMenuItem>
             <Collapse in={toggledMenus.includes("all_dictionary")} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY)}>
-                  <StyledListItemText primary="PDF" indent={2} />
+                  <div className={classes.doubleIndent} />
+                  <StyledListItemText primary="PDF" />
                 </StyledMenuItem>
                 <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY_JSON)}>
-                  <StyledListItemText primary="JSON" indent={2} />
+                  <div className={classes.doubleIndent} />
+                  <StyledListItemText primary="JSON" />
                 </StyledMenuItem>
                 <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY_TSV)}>
-                  <StyledListItemText primary="TSV" indent={2} />
+                  <div className={classes.doubleIndent} />
+                  <StyledListItemText primary="TSV" />
                 </StyledMenuItem>
               </List>
             </Collapse>
             <StyledMenuItem onClick={() => handleMenuClick("required_dictionary")}>
-              <StyledListItemIcon indent={1}>
+              <div className={classes.indent} />
+              <StyledListItemIcon>
                 {toggledMenus.includes("required_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </StyledListItemIcon>
-              <StyledListItemText primary="Required Properties" indent={0.01} />
+              <StyledListItemText primary="Required Properties" />
             </StyledMenuItem>
             <Collapse in={toggledMenus.includes("required_dictionary")} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY)}>
-                  <StyledListItemText primary="PDF" indent={2} />
+                  <div className={classes.doubleIndent} />
+                  <StyledListItemText primary="PDF" />
                 </StyledMenuItem>
                 <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY_JSON)}>
-                  <StyledListItemText primary="JSON" indent={2} />
+                  <div className={classes.doubleIndent} />
+                  <StyledListItemText primary="JSON" />
                 </StyledMenuItem>
                 <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY_TSV)}>
-                  <StyledListItemText primary="TSV" indent={2} />
+                  <div className={classes.doubleIndent} />
+                  <StyledListItemText primary="TSV" />
                 </StyledMenuItem>
               </List>
             </Collapse>
@@ -392,6 +400,16 @@ const styles = () => ({
     textTransform: 'none',
     color: '#004A80',
     padding: "0 5px",
+  },
+  indent: {
+    width: "25px",
+    height: "1px",
+    background: "transparent",
+  },
+  doubleIndent: {
+    width: "60px",
+    height: "1px",
+    background: "transparent",
   },
 });
 

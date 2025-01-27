@@ -165,6 +165,7 @@ const DictionaryButton = ({
       const exportData = new Blob([JSON.stringify(json, null, 2)], { type: 'data:application/json' });
       saveAs(exportData, `${fileName}.json`);
     }
+    setToggledMenus([]);
   };
 
   return (
