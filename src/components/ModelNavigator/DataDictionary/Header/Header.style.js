@@ -58,11 +58,12 @@ export default () => ({
   readMeBtnRoot: {
     height: "38px",
     width: "137px",
-    background: "#0F4C91",
-    borderRadius: "5px",
+    background: "#transparent !important",
+    border: "1px solid #0A4A6D",
+    borderRadius: "8px",
   },
   readMeBtnLabel: {
-    color: "#FFF",
+    color: "#0A4A6D",
     fontFamily: "Lato",
     fontSize: "16px",
     lineHeight: "22px",

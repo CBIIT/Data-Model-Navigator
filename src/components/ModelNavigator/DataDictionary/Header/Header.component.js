@@ -10,6 +10,7 @@ import styles from './Header.style';
 import CustomTheme from './Header.theme.config';
 import ReadMeComponent from '../ReadMe/ReadMe.controller';
 import DownloadDropdownMenu from './components/download-dropdown-menu';
+import IconQuestionDark from "./icons/icon_question_dark.svg";
 
 const dogIconSrc = 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/4a3fb8e201e6ba2a858d7ec1226d2fd6ea2b5298/icdc/images/svgs/Icon-DMNav.85x85.svg';
 const HeaderComponent = ({
@@ -65,13 +66,13 @@ const HeaderComponent = ({
           <div
             className={classes.btnGroup}
           >
-            {typeof(config?.readMeUrl) === "string" && (
+            {typeof (config?.readMeUrl) === "string" && (
               <Button
                 classes={{
                   root: classes.readMeBtnRoot,
                   label: classes.readMeBtnLabel,
                 }}
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 onClick={displayReadMeHandler}
                 endIcon={(
@@ -79,11 +80,13 @@ const HeaderComponent = ({
                     style={{
                       height: '20px',
                       width: '20px',
+                      color: "#0F4C91"
                     }}
                     alt="readme btn icon"
-                    src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/icdc/images/svgs/DMN_readme_title-bar_icon.svg"
+                    src={IconQuestionDark}
                   />
                 )}
+                disableRipple
               >
                 README
               </Button>

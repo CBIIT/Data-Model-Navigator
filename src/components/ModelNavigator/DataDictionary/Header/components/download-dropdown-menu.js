@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
+  Collapse,
+  List,
+  ListItemIcon,
   withStyles,
 } from '@material-ui/core';
 import { compose } from "redux";
@@ -11,6 +14,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { pdf } from '@react-pdf/renderer';
@@ -21,11 +27,21 @@ import { downloadMarkdownPdf } from '../../ReadMe/ReadMe.component';
 import {
   convertToTSV, createFileName, generateFileManifest, generateVocabFullDownload, isFileManifest,
   generateLoadingExample,
-  downloadLoadingExample
+  downloadLoadingExample,
+  generateNodeTSV,
+  generateNodeJSON,
+  getDictionaryFilename
 } from '../../utils';
+import { cloneDeep } from 'lodash';
+import GenericDownloadIconDark from "../../Table/icons/icon_download_dark.svg";
 
 const {
   FILE_TYPE_FULL_DICTIONARY,
+  FILE_TYPE_REQUIRED_DICTIONARY,
+  FILE_TYPE_FULL_DICTIONARY_TSV,
+  FILE_TYPE_REQUIRED_DICTIONARY_TSV,
+  FILE_TYPE_FULL_DICTIONARY_JSON,
+  FILE_TYPE_REQUIRED_DICTIONARY_JSON,
   FILE_TYPE_README,
   FILE_TYPE_TEMPLATES,
   FILE_TYPE_CONTROLLED_VOCAB_TSV,
@@ -33,18 +49,26 @@ const {
   FILE_TYPE_LOADING_EXAMPLE,
 } = {
   FILE_TYPE_FULL_DICTIONARY: 'Data Dictionary (PDF)',
+  FILE_TYPE_REQUIRED_DICTIONARY: 'Data Dictionary (PDF) (Required)',
+  FILE_TYPE_FULL_DICTIONARY_TSV: 'Data Dictionary (TSV)',
+  FILE_TYPE_REQUIRED_DICTIONARY_TSV: 'Data Dictionary (TSV) (Required)',
+  FILE_TYPE_FULL_DICTIONARY_JSON: 'Data Dictionary (JSON)',
+  FILE_TYPE_REQUIRED_DICTIONARY_JSON: 'Data Dictionary (JSON) (Required)',
   FILE_TYPE_README: 'Data Model README (PDF)',
   FILE_TYPE_TEMPLATES: 'Submission Templates (TSV)',
   FILE_TYPE_CONTROLLED_VOCAB_TSV: 'All Vocabularies (TSV)',
   FILE_TYPE_CONTROLLED_VOCAB_JSON: 'All Vocabularies (JSON)',
   FILE_TYPE_LOADING_EXAMPLE: 'Example Templates'
-
 }
-const DOWNLOADS = 'Available Downloads';
 
-const fileTypes = [
+const FILE_TYPES = [
   FILE_TYPE_README,
-  FILE_TYPE_FULL_DICTIONARY,
+  // FILE_TYPE_FULL_DICTIONARY,
+  // FILE_TYPE_REQUIRED_DICTIONARY,
+  // FILE_TYPE_FULL_DICTIONARY_TSV,
+  // FILE_TYPE_REQUIRED_DICTIONARY_TSV,
+  // FILE_TYPE_FULL_DICTIONARY_JSON,
+  // FILE_TYPE_REQUIRED_DICTIONARY_JSON,
   FILE_TYPE_TEMPLATES,
   FILE_TYPE_CONTROLLED_VOCAB_TSV,
   FILE_TYPE_CONTROLLED_VOCAB_JSON,
@@ -53,10 +77,14 @@ const fileTypes = [
 
 const StyledMenu = withStyles({
   paper: {
-    border: '1px solid #d3d4d5',
+    border: '1px solid #0A4A6D',
     width: '257px',
-    borderTopRightRadius: '0px',
-    borderTopLeftRadius: '0px',
+    borderRadius: "8px",
+    marginLeft: "-10px",
+  },
+  list: {
+    paddingTop: "0 !important",
+    paddingBottom: "0 !important",
   },
 })((props) => (
   <Menu
@@ -74,28 +102,58 @@ const StyledMenu = withStyles({
   />
 ));
 
-const StyledMenuItem = withStyles((theme) => ({
+const StyledListItemIcon = withStyles({
   root: {
-    padding: '10px',
-    color: '#095c85',
-    '&:focus': {
-      backgroundColor: '#0d71a3',
-      color: 'white',
-      '& .MuiListItemText-primary': {
-        color: theme.palette.common.white,
-      },
-    },
-  },
-}))(MenuItem);
+    color: "#0A4A6D",
+    minWidth: "28px",
+    paddingLeft: (props) => props.indent > 0 ? `${props.indent * 20}px` : "6px",
+  }
+})((({ indent, ...props }) => <ListItemIcon {...props} />));
 
-const generatePdfDocument = async (object, config, setLoading, fileName, pdfDownloadConfig) => {
-  const document = (config.type === 'document') ? object : [object];
+const StyledMenuItem = withStyles({
+  root: {
+    padding: "10px",
+  },
+})(MenuItem);
+
+const StyledListItemText = withStyles({
+  root: {
+    padding: "10px",
+    paddingLeft: (props) => props.indent > 0 ? `${props.indent * 25}px` : "10px",
+  },
+  primary: {
+    fontFamily: "Nunito",
+    fontSize: "16px",
+    fontWeight: 500,
+    color: "#0A4A6D",
+    lineHeight: 0,
+  },
+})(({ indent, ...props }) => <ListItemText {...props} />);;
+
+const generatePdfDocument = async (object, config, setLoading, fileName, pdfDownloadConfig, onlyRequired) => {
+  let fullDictionary = cloneDeep(object);
+  fullDictionary.forEach((node) => {
+    for (let key in node.properties) {
+      if (onlyRequired && !node?.required?.includes(key)) {
+        delete node.properties[key];
+      }
+    }
+  })
+  fullDictionary = fullDictionary.filter((node) => Object.keys(node.properties).length > 0);
+
+  const document = (config.type === 'document') ? fullDictionary : [fullDictionary];
   const blob = await pdf((
     config.landscape ? <LandscapePDFDoc nodes={document} pdfDownloadConfig={pdfDownloadConfig} icon={config.catagoryIcon} /> : <PdfDocument nodes={document} />
   )).toBlob();
   setLoading(false);
   saveAs(blob, `${fileName}.pdf`);
 };
+
+const getMenuItem = (type, onClick) => (
+  <StyledMenuItem key={type} onClick={onClick}>
+    <StyledListItemText primary={type} />
+  </StyledMenuItem>
+);
 
 const DownloadFileTypeBtn = ({
   classes,
@@ -108,41 +166,39 @@ const DownloadFileTypeBtn = ({
   modelVersion
 }) => {
   const [anchorElement, setAnchorElement] = React.useState(null);
-  const [label, setLabel] = useState('Available Downloads');
   const [isLoading, setLoading] = React.useState(false);
+  const [toggledMenus, setToggledMenus] = React.useState([]);
 
-  const filteredDictionaryC2nl = category2NodeList(filteredDictionary);
-  // eslint-disable-next-line no-unused-vars
-  const processedFilteredDictionary = sortByCategory(filteredDictionaryC2nl, filteredDictionary);
   const fullDictionaryC2nl = category2NodeList(fullDictionary);
   const processedFullDictionary = sortByCategory(fullDictionaryC2nl, fullDictionary);
-
   const pdfDownloadConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
 
   const clickHandler = (event) => {
-    setLabel('Available Downloads');
     setAnchorElement(event.currentTarget);
   };
 
   const closeHandler = () => {
     setAnchorElement(null);
+    setToggledMenus([]);
   };
 
-  const setFileType = (value) => {
-    setLabel(value);
-    setAnchorElement(null);
+  const handleMenuClick = (name) => {
+    if (toggledMenus.includes(name)) {
+      setToggledMenus(toggledMenus.filter(menu => menu !== name));
+    } else {
+      setToggledMenus([...toggledMenus, name]);
+    }
   };
 
-  const downloadFullDictionaryPdf = (pdfDownloadConfig) => {
-    const fileName = createFileName(config?.downloadPrefix || 'ICDC_Data_Model', '');
+  const downloadFullDictionaryPdf = (pdfDownloadConfig, onlyRequired) => {
+    const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion);
     setLoading(true);
     setTimeout(() => {
-      generatePdfDocument(processedFullDictionary, config, setLoading, fileName, pdfDownloadConfig);
+      generatePdfDocument(processedFullDictionary, config, setLoading, fileName, pdfDownloadConfig, onlyRequired);
     }, 50);
   };
 
   const downloadAllTemplates = (prefix = "ICDC_", fileTransferManifestName = "") => {
-    // eslint-disable-next-line no-unused-vars
     const fullDictionaryTemplates = Object.fromEntries(Object.entries(fullDictionary).filter(([_key, value]) => value.template === 'Yes'));
     const nodesValueArray = Object.values(fullDictionaryTemplates);
     const nodesKeyArray = Object.keys(fullDictionaryTemplates);
@@ -158,10 +214,9 @@ const DownloadFileTypeBtn = ({
     );
 
     const zip = new JSZip();
-    
 
     nodesTSV.forEach((nodeTSV, index) => {
-        zip.file(`${createFileName(nodesKeyArray[index], prefix, modelVersion, true)}.tsv`, nodeTSV.content);
+      zip.file(`${createFileName(nodesKeyArray[index], prefix, modelVersion, true)}.tsv`, nodeTSV.content);
     });
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
@@ -169,10 +224,48 @@ const DownloadFileTypeBtn = ({
     });
   };
 
-  const download = () => {
+  const downloadAllJSON = (onlyRequired) => {
+    const nodeJson = {};
+    Object.keys(fullDictionary).forEach((nodeName) => {
+      const node = fullDictionary[nodeName];
+      nodeJson[nodeName] = generateNodeJSON(node, onlyRequired);
+    });
+
+    const exportData = new Blob([JSON.stringify(nodeJson, null, 2)], { type: 'data:application/json' });
+    const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion);
+    saveAs(exportData, `${fileName}.json`);
+  };
+
+  const downloadFullDictionaryTSV = (onlyRequired) => {
+    let tsv = "";
+
+    Object.keys(fullDictionary).forEach((nodeName, index) => {
+      const node = fullDictionary[nodeName];
+      tsv += generateNodeTSV(node, index === 0, onlyRequired);
+    });
+
+    const exportData = new Blob([tsv], { type: 'data:text/tab-separated-values' });
+    const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion);
+    saveAs(exportData, `${fileName}.tsv`);
+  };
+
+  const handleDownloadClick = (label) => {
+    setAnchorElement(null);
+    setToggledMenus([]);
+
     switch (label) {
       case FILE_TYPE_FULL_DICTIONARY:
         return downloadFullDictionaryPdf(pdfDownloadConfig);
+      case FILE_TYPE_REQUIRED_DICTIONARY:
+        return downloadFullDictionaryPdf(pdfDownloadConfig, true);
+      case FILE_TYPE_FULL_DICTIONARY_TSV:
+        return downloadFullDictionaryTSV(false);
+      case FILE_TYPE_REQUIRED_DICTIONARY_TSV:
+        return downloadFullDictionaryTSV(true);
+      case FILE_TYPE_FULL_DICTIONARY_JSON:
+        return downloadAllJSON(false);
+      case FILE_TYPE_REQUIRED_DICTIONARY_JSON:
+        return downloadAllJSON(true);
       case FILE_TYPE_README:
         return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix, config?.footnote);
       case FILE_TYPE_TEMPLATES:
@@ -190,62 +283,37 @@ const DownloadFileTypeBtn = ({
     }
   };
 
-  const getMenuItem = (type) => (
-    <StyledMenuItem key={type} onClick={() => setFileType(type)}>
-      <ListItemText
-        classes={{
-          primary: classes.listItemText,
-        }}
-        primary={type}
-      />
-    </StyledMenuItem>
-  );
+  const options = useMemo(() => {
+    return FILE_TYPES
+      .filter((item) => {
+        if (item === FILE_TYPE_README && typeof (readMeConfig?.readMeUrl) !== "string") {
+          return false;
+        }
+        if (item === FILE_TYPE_README && typeof (readMeConfig?.allowDownload) === "boolean") {
+          return readMeConfig?.allowDownload;
+        }
 
-  const options = fileTypes
-    .filter((item) => {
-      if (item === FILE_TYPE_README && typeof(readMeConfig?.readMeUrl) !== "string") {
-        return false;
-      }
-      if (item === FILE_TYPE_README && typeof(readMeConfig?.allowDownload) === "boolean") {
-        return readMeConfig?.allowDownload;
-      }
-
-      return true;
-    })
-    .map((item) => getMenuItem(item));
+        return true;
+      })
+      .map((item) => getMenuItem(item, () => handleDownloadClick(item)));
+  }, [FILE_TYPES, readMeConfig]);
 
   return (
     <>
-      <ButtonGroup variant="contained" classes={{ root: classes.btnGrpRoot, contained: classes.btnGrpContained }}>
-        <Button
-          classes={{
-            root: classes.availableDownloadDropdownBtn,
-            label: classes.availableDownloadDropdownBtnLabel,
-            contained: classes.availableDownloadBtnContained
-          }}
-          startIcon={<KeyboardArrowDownIcon />}
-          onClick={clickHandler}
-        >
-          {isLoading ? (<p>Loading...</p>) : (
-            <>
-              {label}
-            </>
-          )}
-        </Button>
-        <Button
-          disabled={DOWNLOADS === label}
-          onClick={download}
-          classes={{
-            root: classes.availableDownloadBtn,
-          }}
-        >
-          <img
-            style={{ height: '19px', width: '19px' }}
-            alt="download icon"
-            src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/icdc/images/svgs/DMN_title_bar_download_icon.svg"
-          />
-        </Button>
-      </ButtonGroup>
+      <Button
+        classes={{
+          root: classes.downloadButton,
+          label: classes.downloadButtonLabel,
+        }}
+        startIcon={<img src={GenericDownloadIconDark} className={classes.startIcon} alt="Download" />}
+        endIcon={Boolean(anchorElement) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+        onClick={clickHandler}
+        disableRipple
+        disableElevation
+        disabled={isLoading}
+      >
+        {isLoading ? "Loading..." : "Available Downloads"}
+      </Button>
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorElement}
@@ -253,6 +321,56 @@ const DownloadFileTypeBtn = ({
         open={Boolean(anchorElement)}
         onClose={closeHandler}
       >
+        {/* Data Dictionary Items */}
+        <StyledMenuItem onClick={() => handleMenuClick("data_dictionary")}>
+          <StyledListItemIcon>
+            {toggledMenus.includes("data_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          </StyledListItemIcon>
+          <StyledListItemText primary="Data Dictionary" />
+        </StyledMenuItem>
+        <Collapse in={toggledMenus.includes("data_dictionary")} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <StyledMenuItem onClick={() => handleMenuClick("all_dictionary")}>
+              <StyledListItemIcon indent={1}>
+                {toggledMenus.includes("all_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+              </StyledListItemIcon>
+              <StyledListItemText primary="All Properties" indent={0.01} />
+            </StyledMenuItem>
+            <Collapse in={toggledMenus.includes("all_dictionary")} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY)}>
+                  <StyledListItemText primary="PDF" indent={2} />
+                </StyledMenuItem>
+                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY_JSON)}>
+                  <StyledListItemText primary="JSON" indent={2} />
+                </StyledMenuItem>
+                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY_TSV)}>
+                  <StyledListItemText primary="TSV" indent={2} />
+                </StyledMenuItem>
+              </List>
+            </Collapse>
+            <StyledMenuItem onClick={() => handleMenuClick("required_dictionary")}>
+              <StyledListItemIcon indent={1}>
+                {toggledMenus.includes("required_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+              </StyledListItemIcon>
+              <StyledListItemText primary="Required Properties" indent={0.01} />
+            </StyledMenuItem>
+            <Collapse in={toggledMenus.includes("required_dictionary")} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY)}>
+                  <StyledListItemText primary="PDF" indent={2} />
+                </StyledMenuItem>
+                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY_JSON)}>
+                  <StyledListItemText primary="JSON" indent={2} />
+                </StyledMenuItem>
+                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY_TSV)}>
+                  <StyledListItemText primary="TSV" indent={2} />
+                </StyledMenuItem>
+              </List>
+            </Collapse>
+          </List>
+        </Collapse>
+        {/* Standard items */}
         {options}
       </StyledMenu>
     </>
@@ -260,57 +378,32 @@ const DownloadFileTypeBtn = ({
 };
 
 const styles = () => ({
-  btnGrpRoot: {
-    borderRadius: '10px',
+  startIcon: {
+    width: '20px',
   },
-  btnGrpContained: {
-    boxShadow: 'none',
+  downloadButton: {
+    border: "1px solid #004A80",
+    borderRadius: "8px",
+    padding: "5px 10px",
   },
-  availableDownloadBtnContained: {
-    '&:focus': {
-      boxShadow: 'none'
-    },
-    '&:hover': {
-      boxShadow: 'none'
-    }
-  },
-  availableDownloadDropdownBtn: {
-    minWidth: '258px',
-    height: '38px',
-    backgroundColor: '#F2F2F2'
-  },
-  availableDownloadBtn: {
-    width: '44px',
-    backgroundColor: '#0F4C91',
-    '&:hover': {
-      backgroundColor: '#0F4C91',
-    },
-    '&:disabled': {
-      backgroundColor: '#A2ABBF',
-    },
-  },
-  availableDownloadDropdownBtnLabel: {
+  downloadButtonLabel: {
+    fontFamily: "Nunito",
     fontSize: '16px',
-    color: '#0D71A3',
+    textTransform: 'none',
+    color: '#004A80',
+    padding: "0 5px",
   },
-  listItemText: {
-    fontSize: '15px',
-    paddingLeft: '29px',
-    fontFamily: 'Lato',
-    fontWeight: '500'
-  },
-
 });
 
 const mapStateToProps = (state) => {
-    return {
-      modelVersion: state.versionInfo.modelVersion
-    };
+  return {
+    modelVersion: state.versionInfo.modelVersion
   };
-  
-  export default compose(
-    connect(mapStateToProps),
-    withStyles(styles, {withTheme: true})
-  )(DownloadFileTypeBtn);
-  
+};
+
+export default compose(
+  connect(mapStateToProps),
+  withStyles(styles, { withTheme: true })
+)(DownloadFileTypeBtn);
+
 

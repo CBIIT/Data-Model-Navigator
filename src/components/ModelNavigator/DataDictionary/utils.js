@@ -286,31 +286,39 @@ export function createFileName(fileName, filePreFix, modelVersion = undefined, i
 
   if (isTemplate && modelVersion) {
     return filePreFix ? `${filePreFix}Data_Loading_Template_${fileName}_${modelVersion}`
-    : `${fileName}_${modelVersion}`
-  } 
+      : `${fileName}_${modelVersion}`
+  }
 
   return filePreFix ? `${filePreFix}${fileName}${modelVersion ? `_${modelVersion}` : `${todaysDate} ${hours}-${minutes}-${seconds}`}`
     : `${fileName}${modelVersion ? `_${modelVersion}` : `${todaysDate} ${hours}-${minutes}-${seconds}`}`;
 }
 
 /**
+ * Filters out properties that should not be included in the template.
+ * 
  * @param {Object} node DMN node object.
- * @param {Object} node.properties Node properties Object
  * @returns {Object} Property object with properties that should not be in the template removed.
  */
 export const filterProperties = (node) => {
   const { properties } = node;
   const filteredProperties = {};
 
-
   for (let key in properties) {
-    if (properties[key].isIncludedInTemplate) {
-      filteredProperties[key] = properties[key];
+    if (!properties[key].isIncludedInTemplate) {
+      continue;
     }
+    filteredProperties[key] = properties[key];
   }
+
   return filteredProperties;
 }
 
+/**
+ * Generates the TSV header line for links between nodes.
+ * 
+ * @param {*} node The node to generate the TSV header line for.
+ * @returns {string} The TSV header line.
+ */
 export const tsvMiddleware = (node) => {
   let line = 'type';
   const { links } = node;
@@ -326,6 +334,12 @@ export const tsvMiddleware = (node) => {
   return line;
 };
 
+/**
+ * Convert a node to a TSV data loading template.
+ * 
+ * @param {*} node The node to convert to a TSV template.
+ * @returns {string} The TSV template.
+ */
 export const convertToTSV = (node) => {
   let line = tsvMiddleware(node);
 
@@ -339,6 +353,155 @@ export const convertToTSV = (node) => {
 
 export const isFileManifest = (node) => node.id === 'file';
 
+/**
+ * Creates a TSV of properties for a node.
+ * 
+ * The properties it will extract are:
+ * - title (Label: Node)
+ * - property
+ * - $.type
+ * - $.CDEFullName
+ * - $.CDEVersion
+ * - $.CDECode
+ * - $.CDEOrigin
+ * - $.enum (Label: Acceptable Values)
+ * - $.propertyType (Label: required)
+ * - $.description
+ * - $.src
+ * - $.key (Label: Key Property)
+ * 
+ * @param {*} node The node to generate a TSV for.
+ * @param {boolean} headerLine Whether to include the header line.
+ * @param {boolean} onlyRequired Whether to only include required properties.
+ * @returns {string} The TSV for the node.
+ */
+export const generateNodeTSV = (node, headerLine = true, onlyRequired = false) => {
+  let tsv = "";
+
+  if (headerLine) {
+    tsv += "Node\tProperty\tType\tCDEFullName\tCDEVersion\tCDECode\tCDEOrigin\tAcceptable Values\tRequired\tDescription\tSrc\tKey Property\n";
+  }
+
+  Object.keys(node.properties).forEach((key) => {
+    const property = node.properties[key];
+    if (onlyRequired && !node?.required?.includes(key)) {
+      return;
+    }
+
+    tsv += `${node.title || ''}\t`;
+    tsv += `${key}\t`;
+    tsv += `${formatPropertyType(property)}\t`;
+    tsv += `${property.CDEFullName || ''}\t`;
+    tsv += `${property.CDEVersion || ''}\t`;
+    tsv += `${property.CDECode || ''}\t`;
+    tsv += `${property.CDEOrigin || ''}\t`;
+    tsv += `${property.enum ? JSON.stringify(property?.enum?.map((v) => escapeForTSV(v))) : ''}\t`;
+    tsv += `${property.propertyType || ''}\t`;
+    tsv += `${escapeForTSV(property.description) || ''}\t`;
+    tsv += `${property.src || ''}\t`;
+    tsv += `${property.key || 'FALSE'}\n`;
+  });
+
+  return tsv;
+};
+
+/**
+ * Generates a JSON object for a node.
+ * 
+ * @see generateNodeTSV For the TSV variant of this utility.
+ * @param {*} node The node to generate a TSV for.
+ * @param {boolean} onlyRequired Whether to only include required properties.
+ * @returns {Array<Object>} An array of JSON objects for the node, where each object represents a property.
+ */
+export const generateNodeJSON = (node, onlyRequired = false) => {
+  const properties = [];
+
+  Object.keys(node.properties).forEach((key) => {
+    const property = node.properties[key];
+    if (onlyRequired && !node?.required?.includes(key)) {
+      return;
+    }
+
+    properties.push({
+      Node: node.title || '',
+      Property: key,
+      Type: formatPropertyType(property),
+      CDEFullName: property.CDEFullName || '',
+      CDEVersion: property.CDEVersion || '',
+      CDECode: property.CDECode || '',
+      CDEOrigin: property.CDEOrigin || '',
+      "Acceptable Values": property.enum ? property.enum : '',
+      Required: property.propertyType || '',
+      Description: escapeForTSV(property.description) || '',
+      Src: property.src || '',
+      "Key Property": property.key || false,
+    });
+  });
+
+  return properties;
+};
+
+/**
+ * Formats the node's property type for visual display.
+ * 
+ * @param {*} property 
+ * @returns {string} The formatted property type.
+ */
+export const formatPropertyType = (property) => {
+  const { type } = property || {};
+
+  if (!type) {
+    return 'Unknown';
+  }
+
+  if (typeof type === "string") {
+    return type;
+  }
+
+  if (Array.isArray(type)) {
+    return "string";
+  }
+
+  if (
+    typeof type === "object" &&
+    typeof type.value_type === "string" &&
+    type.value_type === "list"
+  ) {
+    return "list";
+  }
+
+  if (typeof type === "object") {
+    return JSON.stringify(type);
+  }
+
+  return "Unknown";
+}
+
+/**
+ * Escapes problematic characters for TSV.
+ * 
+ * @param {string} text The text to escape.
+ * @returns {string} The escaped text.
+ */
+export const escapeForTSV = (text) => {
+  if (typeof text !== 'string' || !text) {
+    return "";
+  }
+
+  return text
+    .replace(/\t/g, '')
+    .replace(/\r\n/g, '')
+    .replace(/\n/g, '')
+    .replace(/\r/g, '')
+    .replace(/"/g, '""');
+};
+
+/**
+ * Convert a File node to a TSV data loading template.
+ * 
+ * @param {*} node The node to convert to a TSV template.
+ * @returns {string} The TSV template for the `file` node type.
+ */
 export const generateFileManifest = (node) => {
   let line = tsvMiddleware(node);
   const filteredNode = filterProperties(node);
@@ -432,4 +595,29 @@ export const generateLoadingExample = async (configUrl = "https://raw.githubuser
 
 export const downloadLoadingExample = async (zipUrl = "") => {
   window.open(zipUrl, '_blank');
+};
+
+/**
+ * Generates a Data Dictionary file name.
+ * 
+ * @param {string} prefix The prefix for the file name. Usually a Model name. (e.g. "ICDC_")
+ * @param {string|null} nodeName The name of the node to generate the file name for. If null, it's omitted
+ * @param {boolean} onlyRequired Whether the download included only required properties.
+ * @param {string|number|undefined} modelVersion The version of the model to include in the file name. If undefined, it's omitted.
+ */
+export const getDictionaryFilename = (prefix, nodeName, onlyRequired, modelVersion) => {
+  let filename = `${prefix || ""}Dictionary`;
+  if (nodeName) {
+    filename += `_${nodeName}`;
+  }
+  if (onlyRequired) {
+    filename += "_Required";
+  } else {
+    filename += "_All";
+  }
+  if (modelVersion) {
+    filename += `_${modelVersion}`;
+  }
+
+  return filename;
 };

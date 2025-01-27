@@ -94,4 +94,7 @@ export default () => ({
     fontWeight: "600",
     fontFamily: "Nunito",
   },
+  exportButtonGroup: {
+    height: "32px",
+  }
 });
