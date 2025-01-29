@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { Provider } from 'react-redux';
 import _ from 'lodash';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import { ddgraph, versionInfo } from '../components/ModelNavigator/DataDictionary/Store/reducers/graph';
+import { ddgraph, versionInfo, changelogInfo } from '../components/ModelNavigator/DataDictionary/Store/reducers/graph';
 import { moduleReducers as submission } from '../components/ModelNavigator/DataDictionary/Store/reducers/filter';
 // import store from './store';
 import ReduxDataDictionary from '../components/ModelNavigator/DataDictionary/ReduxDataDictionary';
@@ -71,6 +72,7 @@ function buildStore() {
   const reducers = {
     ddgraph,
     versionInfo,
+    changelogInfo,
     submission,
   };
 
@@ -89,49 +91,69 @@ function buildStore() {
   return store;
 }
 
-async function populateStore(store, modelUrl = "", propsUrl = "") {
+async function populateStore(store, modelUrl = "", propsUrl = "", changelogUrl = "") {
   const response = await getModelExploreData(modelUrl, propsUrl)?.catch((e) => { console.log(e); return null; });
+  
+  let changelogDataResponse = null;
+  if (changelogUrl?.trim()?.length > 0) {
+    changelogDataResponse = await axios.get(changelogUrl)?.catch((e) => { console.log(e); return null; });
+  }
+  
   if (!response?.data || !response?.version) {
     throw new Error('Failed to fetch data');
   }
 
-  Promise.all(
-    [
-      store.dispatch({
-        type: 'RECEIVE_DICTIONARY',
-        payload: {
-          data: response.data,
-          facetfilterConfig: filterConfig,
-          readMeConfig: readMeConfig,
-          graphViewConfig: graphViewConfig,
-          pdfDownloadConfig: pdfDownloadConfig,
-          assetConfig: assetConfig,
-        },
-      }),
-      store.dispatch({
-        type: 'REACT_FLOW_GRAPH_DICTIONARY',
-        dictionary: response.data,
+  if (!changelogDataResponse?.data) {
+    // Shouldn't be a blocker
+    console.error('Failed to fetch changelog data');
+  }
+
+  const dispatches = [
+    store.dispatch({
+      type: 'RECEIVE_DICTIONARY',
+      payload: {
+        data: response.data,
+        facetfilterConfig: filterConfig,
+        readMeConfig: readMeConfig,
+        graphViewConfig: graphViewConfig,
         pdfDownloadConfig: pdfDownloadConfig,
         assetConfig: assetConfig,
-        graphViewConfig: graphViewConfig,
-      }),
+      },
+    }),
+    store.dispatch({
+      type: 'REACT_FLOW_GRAPH_DICTIONARY',
+      dictionary: response.data,
+      pdfDownloadConfig: pdfDownloadConfig,
+      assetConfig: assetConfig,
+      graphViewConfig: graphViewConfig,
+    }),
+    store.dispatch({
+      type: 'RECEIVE_VERSION_INFO',
+      data: response.version,
+    }),
+  ];
+
+  if (changelogDataResponse?.data) {
+    dispatches.push(
       store.dispatch({
-        type: 'RECEIVE_VERSION_INFO',
-        data: response.version,
-      }),
-    ],
-  );
+        type: 'RECEIVE_CHANGELOG_INFO',
+        data: changelogDataResponse.data,
+      })
+    );
+  }
+
+  await Promise.all(dispatches);
 }
 
-const ModelNavigator = ({ modelUrl, propsUrl }) => {
+const ModelNavigator = ({ modelUrl, propsUrl, changelogUrl }) => {
   const [store, setStore] = React.useState(buildStore());
 
   useEffect(() => {
     const newStore = buildStore();
 
     setStore(newStore);
-    populateStore(newStore, modelUrl, propsUrl);
-  }, [modelUrl, propsUrl]);
+    populateStore(newStore, modelUrl, propsUrl, changelogUrl);
+  }, [modelUrl, propsUrl, changelogUrl]);
 
   return (
     <Provider store={store}>

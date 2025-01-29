@@ -16,6 +16,11 @@ export default {
         type: 'text',
       },
     },
+    changelogUrl: {
+      control: {
+        type: 'text',
+      },
+    },
   },
 };
 
@@ -47,5 +52,6 @@ export const Navigator = Template.bind({});
 Navigator.args = {
   modelUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/5.0.4/cds-model.yml",
   propsUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/5.0.4/cds-model-props.yml",
+  changelogUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/5.0.4/release-notes.md",
 };
 
