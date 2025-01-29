@@ -10,7 +10,7 @@ import { moduleReducers as submission } from '../components/ModelNavigator/DataD
 // import store from './store';
 import ReduxDataDictionary from '../components/ModelNavigator/DataDictionary/ReduxDataDictionary';
 import { filterConfig } from '../components/ModelNavigator/bento/dataDictionaryData';
-import { getModelExploreData } from '../components/ModelNavigator/DataDictionary/Service/Dictionary';
+import { getChangelog, getModelExploreData } from '../components/ModelNavigator/DataDictionary/Service/Dictionary';
 
 const pdfDownloadConfig = {
   fileType: 'pdf',
@@ -93,17 +93,13 @@ function buildStore() {
 
 async function populateStore(store, modelUrl = "", propsUrl = "", changelogUrl = "") {
   const response = await getModelExploreData(modelUrl, propsUrl)?.catch((e) => { console.log(e); return null; });
-  
-  let changelogDataResponse = null;
-  if (changelogUrl?.trim()?.length > 0) {
-    changelogDataResponse = await axios.get(changelogUrl)?.catch((e) => { console.log(e); return null; });
-  }
+  const changelogMD = await getChangelog(changelogUrl)?.catch((e) => { console.log(e); return null; });
   
   if (!response?.data || !response?.version) {
     throw new Error('Failed to fetch data');
   }
 
-  if (!changelogDataResponse?.data) {
+  if (!changelogMD) {
     // Shouldn't be a blocker
     console.error('Failed to fetch changelog data');
   }
@@ -133,11 +129,11 @@ async function populateStore(store, modelUrl = "", propsUrl = "", changelogUrl =
     }),
   ];
 
-  if (changelogDataResponse?.data) {
+  if (changelogMD?.length > 0) {
     dispatches.push(
       store.dispatch({
         type: 'RECEIVE_CHANGELOG_INFO',
-        data: changelogDataResponse.data,
+        data: changelogMD,
       })
     );
   }
