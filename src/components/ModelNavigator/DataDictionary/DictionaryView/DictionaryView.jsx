@@ -2,12 +2,14 @@ import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
+import { useSelector } from "react-redux";
 import Styles from "./DictionaryStyle";
 import Tab from "./Tab/Tab";
 import TabPanel from "./Tab/TabPanel";
 import TabThemeProvider from "./Tab/TabThemeConfig";
 import ReduxDataDictionaryTable from "../Table/DataDictionaryTable";
 import CanvasView from "../ReactFlowGraph/Canvas/CanvasController";
+import ChangelogView from "../Changelog/Changelog.controller";
 import { setCanvasWidth, setGraphView } from "../Store/actions/graph";
 
 const tabItems = [
@@ -29,6 +31,7 @@ const DictionaryView = ({
   handleClearSearchResult,
   dictionary,
   graphView,
+  changelogMD,
   onSetGraphView,
   onWidthChange,
 }) => {
@@ -42,6 +45,12 @@ const DictionaryView = ({
     setTabViewWidth(ref.current.offsetWidth);
     onWidthChange(ref.current.offsetWidth);
   };
+
+  const dynamicTabItems = changelogMD ? [...tabItems, {
+    index: 2,
+    label: "Release Notes",
+    value: "release_notes_view",
+  }] : tabItems;
 
   useEffect(() => {
     onWidthChange(ref.current.offsetWidth);
@@ -75,7 +84,7 @@ const DictionaryView = ({
           <div className={classes.tabItems}>
             <Tab
               styleClasses={classes}
-              tabItems={tabItems}
+              tabItems={dynamicTabItems}
               currentTab={currentTab}
               handleTabChange={handleTabChange}
             />
@@ -98,6 +107,11 @@ const DictionaryView = ({
                   />
                 </div>
               </TabPanel>
+              <TabPanel value={currentTab} index={tabItems?.length || 0}>
+                <div className={classes.changelogView}>
+                  <ChangelogView />
+                </div>
+              </TabPanel>
             </div>
           </div>
         </div>
@@ -109,6 +123,7 @@ const DictionaryView = ({
 const mapStateToProps = (state) => {
   return {
     graphView: state.ddgraph.isGraphView,
+    changelogMD: state.changelogInfo.mdData
   };
 };
 
