@@ -123,7 +123,7 @@ const DictionaryView = ({
 const mapStateToProps = (state) => {
   return {
     graphView: state.ddgraph.isGraphView,
-    changelogMD: state.changelogInfo.mdData
+    changelogMD: state.changelogInfo?.mdData
   };
 };
 
