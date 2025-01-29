@@ -3,4 +3,4 @@ export { default as ReduxDataDictionary } from './components/ModelNavigator/Data
 // export { default as ModelExplorer } from './components/DataDictionaryComponent/dictionaryController';
 export { ddgraph as ddgraph, versionInfo as versionInfo, changelogInfo as changelogInfo } from './components/ModelNavigator/DataDictionary/Store/reducers/graph';
 export { moduleReducers as moduleReducers} from './components/ModelNavigator/DataDictionary/Store/reducers/filter';
-export { getModelExploreData } from './components/ModelNavigator/DataDictionary/Service/Dictionary';
+export { getModelExploreData, getChangelog } from './components/ModelNavigator/DataDictionary/Service/Dictionary';
