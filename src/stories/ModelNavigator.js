@@ -21,11 +21,6 @@ const pdfDownloadConfig = {
   footnote: 'test',
 };
 
-const readMeConfig = {
-  readMeUrl: 'https://raw.githubusercontent.com/rana22/category_partition/main/README.md',
-  readMeTitle: 'Understanding the ICDC Data Model',
-};
-
 const assetConfig = {
   iconUrl: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/data_model_pdf_icons/icdc/DMN/'
 }
@@ -91,7 +86,7 @@ function buildStore() {
   return store;
 }
 
-async function populateStore(store, modelUrl = "", propsUrl = "", changelogUrl = "") {
+async function populateStore(store, modelUrl = "", propsUrl = "", readMeUrl = "", changelogUrl = "") {
   const response = await getModelExploreData(modelUrl, propsUrl)?.catch((e) => { console.log(e); return null; });
   const changelogMD = await getChangelog(changelogUrl)?.catch((e) => { console.log(e); return null; });
   
@@ -110,7 +105,10 @@ async function populateStore(store, modelUrl = "", propsUrl = "", changelogUrl =
       payload: {
         data: response.data,
         facetfilterConfig: filterConfig,
-        readMeConfig: readMeConfig,
+        readMeConfig: {
+          readMeUrl,
+          readMeTitle: "Understanding the Data Model",
+        },
         graphViewConfig: graphViewConfig,
         pdfDownloadConfig: pdfDownloadConfig,
         assetConfig: assetConfig,
@@ -133,7 +131,10 @@ async function populateStore(store, modelUrl = "", propsUrl = "", changelogUrl =
     dispatches.push(
       store.dispatch({
         type: 'RECEIVE_CHANGELOG_INFO',
-        data: changelogMD,
+        data: {
+          changelogMD,
+          changelogTabName: "Version History"
+        },
       })
     );
   }
@@ -141,15 +142,15 @@ async function populateStore(store, modelUrl = "", propsUrl = "", changelogUrl =
   await Promise.all(dispatches);
 }
 
-const ModelNavigator = ({ modelUrl, propsUrl, changelogUrl }) => {
+const ModelNavigator = ({ modelUrl, propsUrl, readMeUrl, changelogUrl }) => {
   const [store, setStore] = React.useState(buildStore());
 
   useEffect(() => {
     const newStore = buildStore();
 
     setStore(newStore);
-    populateStore(newStore, modelUrl, propsUrl, changelogUrl);
-  }, [modelUrl, propsUrl, changelogUrl]);
+    populateStore(newStore, modelUrl, propsUrl, readMeUrl, changelogUrl);
+  }, [modelUrl, propsUrl, changelogUrl, readMeUrl]);
 
   return (
     <Provider store={store}>
