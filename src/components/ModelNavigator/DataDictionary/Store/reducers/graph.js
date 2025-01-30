@@ -396,4 +396,17 @@ const versionInfo = (state = {}, action) => {
   }
 };
 
-export { ddgraph, versionInfo };
+const changelogInfo = (state = {}, action) => {
+  switch (action.type) {
+    case 'RECEIVE_CHANGELOG_INFO':
+      return {
+        ...state,
+        mdData: action.data.changelogMD || undefined,
+        tabName: action.data.changelogTabName || "Version History",
+      };
+    default:
+      return state;
+  }
+};
+
+export { ddgraph, versionInfo, changelogInfo };
