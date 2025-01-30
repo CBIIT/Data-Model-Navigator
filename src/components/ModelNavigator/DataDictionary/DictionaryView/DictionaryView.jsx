@@ -31,7 +31,7 @@ const DictionaryView = ({
   handleClearSearchResult,
   dictionary,
   graphView,
-  changelogMD,
+  changelogInfo,
   onSetGraphView,
   onWidthChange,
 }) => {
@@ -46,9 +46,9 @@ const DictionaryView = ({
     onWidthChange(ref.current.offsetWidth);
   };
 
-  const dynamicTabItems = changelogMD ? [...tabItems, {
+  const dynamicTabItems = changelogInfo?.mdData ? [...tabItems, {
     index: 2,
-    label: "Release Notes",
+    label: changelogInfo.tabName,
     value: "release_notes_view",
   }] : tabItems;
 
@@ -123,7 +123,7 @@ const DictionaryView = ({
 const mapStateToProps = (state) => {
   return {
     graphView: state.ddgraph.isGraphView,
-    changelogMD: state.changelogInfo?.mdData
+    changelogInfo: state.changelogInfo,
   };
 };
 

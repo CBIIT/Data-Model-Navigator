@@ -401,7 +401,8 @@ const changelogInfo = (state = {}, action) => {
     case 'RECEIVE_CHANGELOG_INFO':
       return {
         ...state,
-        mdData: action.data || undefined,
+        mdData: action.data.changelogMD || undefined,
+        tabName: action.data.changelogTabName || "Version History",
       };
     default:
       return state;
