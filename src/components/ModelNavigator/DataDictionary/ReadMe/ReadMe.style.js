@@ -1,9 +1,12 @@
 export default () => ({
   dialogBox: {
-    minWidth: "750px",
     overflowY: "scroll",
   },
   dialogPaper: {
+    width: "1500px",
+    height: "750px",
+    maxWidth: "80%",
+    maxHeight: "85%",
     paddingBottom: "10px",
   },
   titleContent: {
