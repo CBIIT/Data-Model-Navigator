@@ -48,17 +48,17 @@ const {
   FILE_TYPE_CONTROLLED_VOCAB_JSON,
   FILE_TYPE_LOADING_EXAMPLE,
 } = {
-  FILE_TYPE_FULL_DICTIONARY: 'Data Dictionary (PDF)',
-  FILE_TYPE_REQUIRED_DICTIONARY: 'Data Dictionary (PDF) (Required)',
-  FILE_TYPE_FULL_DICTIONARY_TSV: 'Data Dictionary (TSV)',
-  FILE_TYPE_REQUIRED_DICTIONARY_TSV: 'Data Dictionary (TSV) (Required)',
-  FILE_TYPE_FULL_DICTIONARY_JSON: 'Data Dictionary (JSON)',
-  FILE_TYPE_REQUIRED_DICTIONARY_JSON: 'Data Dictionary (JSON) (Required)',
-  FILE_TYPE_README: 'Data Model README (PDF)',
-  FILE_TYPE_TEMPLATES: 'Submission Templates (TSV)',
-  FILE_TYPE_CONTROLLED_VOCAB_TSV: 'All Vocabularies (TSV)',
-  FILE_TYPE_CONTROLLED_VOCAB_JSON: 'All Vocabularies (JSON)',
-  FILE_TYPE_LOADING_EXAMPLE: 'Example Templates'
+  FILE_TYPE_FULL_DICTIONARY: { label: 'Data Dictionary', type: "(PDF)" },
+  FILE_TYPE_REQUIRED_DICTIONARY: { label: 'Data Dictionary (Required)', type: "(PDF)" },
+  FILE_TYPE_FULL_DICTIONARY_TSV: { label: 'Data Dictionary', type: "(TSV)" },
+  FILE_TYPE_REQUIRED_DICTIONARY_TSV: { label: 'Data Dictionary (Required)', type: "(TSV)" },
+  FILE_TYPE_FULL_DICTIONARY_JSON: { label: 'Data Dictionary', type: "(JSON)" },
+  FILE_TYPE_REQUIRED_DICTIONARY_JSON: { label: 'Data Dictionary (Required)', type: "(JSON)" },
+  FILE_TYPE_README: { label: 'Data Model README', type: "(PDF)" },
+  FILE_TYPE_TEMPLATES: { label: 'Submission Templates', type: "(TSV)" },
+  FILE_TYPE_CONTROLLED_VOCAB_TSV: { label: 'All Vocabularies', type: "(TSV)" },
+  FILE_TYPE_CONTROLLED_VOCAB_JSON: { label: 'All Vocabularies', type: "(JSON)" },
+  FILE_TYPE_LOADING_EXAMPLE: { label: 'Example Templates', type: "" },
 }
 
 const FILE_TYPES = [
@@ -121,6 +121,9 @@ const StyledListItemText = withStyles({
   root: {
     padding: "10px",
     paddingLeft: "6px",
+    display: 'flex',
+    alignItems: 'center',
+    gap: "6px",
   },
   primary: {
     fontFamily: "Nunito",
@@ -129,6 +132,13 @@ const StyledListItemText = withStyles({
     color: "#0A4A6D",
     lineHeight: 0,
   },
+  secondary: {
+    fontFamily: "Nunito",
+    color: "#0A4A6D",
+    fontSize: "13px",
+    fontWeight: 400,
+    lineHeight: 0,
+  }
 })(ListItemText);
 
 const generatePdfDocument = async (object, config, setLoading, fileName, pdfDownloadConfig, onlyRequired) => {
@@ -150,9 +160,9 @@ const generatePdfDocument = async (object, config, setLoading, fileName, pdfDown
   saveAs(blob, `${fileName}.pdf`);
 };
 
-const getMenuItem = (type, onClick) => (
-  <StyledMenuItem key={type} onClick={onClick}>
-    <StyledListItemText primary={type} />
+const getMenuItem = (item, onClick) => (
+  <StyledMenuItem key={`${item.label}_${item.type}`} onClick={onClick}>
+    <StyledListItemText primary={item.label} secondary={item?.type} />
   </StyledMenuItem>
 );
 
@@ -305,8 +315,8 @@ const DownloadFileTypeBtn = ({
           root: classes.downloadButton,
           label: classes.downloadButtonLabel,
         }}
-        startIcon={<img src={GenericDownloadIconDark} className={classes.startIcon} alt="Download" />}
-        endIcon={!Boolean(anchorElement) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+        endIcon={<img src={GenericDownloadIconDark} className={classes.startIcon} alt="Download" />}
+        startIcon={!Boolean(anchorElement) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
         onClick={clickHandler}
         disableRipple
         disableElevation
@@ -329,52 +339,30 @@ const DownloadFileTypeBtn = ({
         </StyledMenuItem>
         <Collapse in={toggledMenus.includes("data_dictionary")} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <StyledMenuItem onClick={() => handleMenuClick("all_dictionary")}>
+            <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY)}>
               <div className={classes.indent} />
-              <StyledListItemIcon>
-                {!toggledMenus.includes("all_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-              </StyledListItemIcon>
-              <StyledListItemText primary="All Properties" />
+              <StyledListItemText primary="All Properties" secondary="(PDF)" />
             </StyledMenuItem>
-            <Collapse in={toggledMenus.includes("all_dictionary")} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY)}>
-                  <div className={classes.doubleIndent} />
-                  <StyledListItemText primary="PDF" />
-                </StyledMenuItem>
-                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY_JSON)}>
-                  <div className={classes.doubleIndent} />
-                  <StyledListItemText primary="JSON" />
-                </StyledMenuItem>
-                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY_TSV)}>
-                  <div className={classes.doubleIndent} />
-                  <StyledListItemText primary="TSV" />
-                </StyledMenuItem>
-              </List>
-            </Collapse>
-            <StyledMenuItem onClick={() => handleMenuClick("required_dictionary")}>
+            <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY_JSON)}>
               <div className={classes.indent} />
-              <StyledListItemIcon>
-                {!toggledMenus.includes("required_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-              </StyledListItemIcon>
-              <StyledListItemText primary="Required Properties" />
+              <StyledListItemText primary="All Properties" secondary="(JSON)" />
             </StyledMenuItem>
-            <Collapse in={toggledMenus.includes("required_dictionary")} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY)}>
-                  <div className={classes.doubleIndent} />
-                  <StyledListItemText primary="PDF" />
-                </StyledMenuItem>
-                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY_JSON)}>
-                  <div className={classes.doubleIndent} />
-                  <StyledListItemText primary="JSON" />
-                </StyledMenuItem>
-                <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY_TSV)}>
-                  <div className={classes.doubleIndent} />
-                  <StyledListItemText primary="TSV" />
-                </StyledMenuItem>
-              </List>
-            </Collapse>
+            <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_FULL_DICTIONARY_TSV)}>
+              <div className={classes.indent} />
+              <StyledListItemText primary="All Properties" secondary="(TSV)" />
+            </StyledMenuItem>
+            <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY)}>
+              <div className={classes.indent} />
+              <StyledListItemText primary="Required Properties" secondary="(PDF)" />
+            </StyledMenuItem>
+            <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY_JSON)}>
+              <div className={classes.indent} />
+              <StyledListItemText primary="Required Properties" secondary="(JSON)" />
+            </StyledMenuItem>
+            <StyledMenuItem onClick={() => handleDownloadClick(FILE_TYPE_REQUIRED_DICTIONARY_TSV)}>
+              <div className={classes.indent} />
+              <StyledListItemText primary="Required Properties" secondary="(TSV)" />
+            </StyledMenuItem>
           </List>
         </Collapse>
         {/* Standard items */}
