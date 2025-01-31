@@ -43,7 +43,7 @@ const StyledButton = withStyles({
     padding: "8px",
     color: "#fff",
     fontFamily: "Nunito",
-    fontSize: "15px",
+    fontSize: "13px",
     fontWeight: 500,
     borderRadius: "6px",
     textTransform: "none",
