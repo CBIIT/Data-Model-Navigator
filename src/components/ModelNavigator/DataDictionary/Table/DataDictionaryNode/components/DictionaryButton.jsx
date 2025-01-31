@@ -166,7 +166,7 @@ const DictionaryButton = ({
       const exportData = new Blob([JSON.stringify(json, null, 2)], { type: 'data:application/json' });
       saveAs(exportData, `${fileName}.json`);
     }
-    setToggledMenus([]);
+    handleClose();
   };
 
   return (
@@ -241,7 +241,7 @@ const styles = () => ({
   menuIcon: {
     width: "24px",
     color: "#0A4A6D",
-    paddingLeft: "28px",
+    marginLeft: "28px",
   }
 });
 
