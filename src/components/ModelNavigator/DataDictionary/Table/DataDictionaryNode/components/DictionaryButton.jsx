@@ -191,7 +191,7 @@ const DictionaryButton = ({
       >
         <StyledMenuItem onClick={() => handleMenuClick("all")}>
           <StyledListItemIcon>
-            {toggledMenus.includes("all") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+            {!toggledMenus.includes("all") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           </StyledListItemIcon>
           <StyledListItemText primary="All Properties" />
         </StyledMenuItem>
@@ -211,7 +211,7 @@ const DictionaryButton = ({
         </Collapse>
         <StyledMenuItem onClick={() => handleMenuClick("required")}>
           <StyledListItemIcon>
-            {toggledMenus.includes("required") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+            {!toggledMenus.includes("required") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           </StyledListItemIcon>
           <StyledListItemText primary="Required Properties" />
         </StyledMenuItem>

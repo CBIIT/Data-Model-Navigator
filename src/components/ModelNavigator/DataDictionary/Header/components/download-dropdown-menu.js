@@ -250,8 +250,7 @@ const DownloadFileTypeBtn = ({
   };
 
   const handleDownloadClick = (label) => {
-    setAnchorElement(null);
-    setToggledMenus([]);
+    closeHandler();
 
     switch (label) {
       case FILE_TYPE_FULL_DICTIONARY:
@@ -306,7 +305,7 @@ const DownloadFileTypeBtn = ({
           label: classes.downloadButtonLabel,
         }}
         startIcon={<img src={GenericDownloadIconDark} className={classes.startIcon} alt="Download" />}
-        endIcon={Boolean(anchorElement) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+        endIcon={!Boolean(anchorElement) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
         onClick={clickHandler}
         disableRipple
         disableElevation
@@ -317,14 +316,13 @@ const DownloadFileTypeBtn = ({
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorElement}
-        keepMounted
         open={Boolean(anchorElement)}
         onClose={closeHandler}
       >
         {/* Data Dictionary Items */}
         <StyledMenuItem onClick={() => handleMenuClick("data_dictionary")}>
           <StyledListItemIcon>
-            {toggledMenus.includes("data_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+            {!toggledMenus.includes("data_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           </StyledListItemIcon>
           <StyledListItemText primary="Data Dictionary" />
         </StyledMenuItem>
@@ -333,7 +331,7 @@ const DownloadFileTypeBtn = ({
             <StyledMenuItem onClick={() => handleMenuClick("all_dictionary")}>
               <div className={classes.indent} />
               <StyledListItemIcon>
-                {toggledMenus.includes("all_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                {!toggledMenus.includes("all_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </StyledListItemIcon>
               <StyledListItemText primary="All Properties" />
             </StyledMenuItem>
@@ -356,7 +354,7 @@ const DownloadFileTypeBtn = ({
             <StyledMenuItem onClick={() => handleMenuClick("required_dictionary")}>
               <div className={classes.indent} />
               <StyledListItemIcon>
-                {toggledMenus.includes("required_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+                {!toggledMenus.includes("required_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </StyledListItemIcon>
               <StyledListItemText primary="Required Properties" />
             </StyledMenuItem>
