@@ -81,6 +81,7 @@ const StyledMenu = withStyles({
     width: '257px',
     borderRadius: "8px",
     marginLeft: "-10px",
+    maxHeight: "288px",
   },
   list: {
     paddingTop: "0 !important",
