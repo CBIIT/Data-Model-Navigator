@@ -9,17 +9,12 @@ import {
   Menu,
   MenuItem,
   ListItemText,
-  Collapse,
   List,
-  ListItemIcon,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { pdf } from '@react-pdf/renderer';
 import { cloneDeep } from 'lodash';
 import LandscapePDFDoc from '../../../LandscapeNodePDF/Pdf';
 import GenericDownloadIcon from "../../icons/icon_download.svg";
-import GenericDownloadIconDark from "../../icons/icon_download_dark.svg";
 import { generateNodeJSON, generateNodeTSV, getDictionaryFilename } from '../../../utils';
 
 const theme = createTheme({
@@ -84,31 +79,27 @@ const StyledMenuItem = withStyles({
   },
 })(MenuItem);
 
-const StyledListItemIcon = withStyles({
-  root: {
-    minWidth: "28px",
-  }
-})(ListItemIcon);
-
 const StyledListItemText = withStyles({
   root: {
+    padding: "10px",
+    paddingLeft: "6px",
     display: 'flex',
     alignItems: 'center',
     gap: "6px",
   },
   primary: {
     fontFamily: "Nunito",
-    fontSize: "16px",
+    fontSize: "13px",
     fontWeight: 500,
     color: "#0A4A6D",
     lineHeight: 0,
   },
   secondary: {
     fontFamily: "Nunito",
-    fontSize: "14px",
-    textTransform: "uppercase",
-    fontWeight: 400,
     color: "#0A4A6D",
+    fontSize: "11px",
+    fontWeight: 400,
+    lineHeight: 0,
   },
 })(ListItemText);
 
@@ -189,45 +180,26 @@ const DictionaryButton = ({
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem onClick={() => handleMenuClick("all")}>
-          <StyledListItemIcon>
-            {!toggledMenus.includes("all") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-          </StyledListItemIcon>
-          <StyledListItemText primary="All Properties" />
-        </StyledMenuItem>
-        <Collapse in={toggledMenus.includes("all")} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <StyledMenuItem onClick={() => download('pdf', false)}>
-              <StyledListItemText primary={<img className={classes.menuIcon} src={GenericDownloadIconDark} alt="Download PDF" />} secondary="PDF" />
-            </StyledMenuItem>
-            <StyledMenuItem onClick={() => download('json', false)}>
-              <StyledListItemText primary={<img className={classes.menuIcon} src={GenericDownloadIconDark} alt="Download JSON" />} secondary="JSON" />
-
-            </StyledMenuItem>
-            <StyledMenuItem onClick={() => download('tsv', false)}>
-              <StyledListItemText primary={<img className={classes.menuIcon} src={GenericDownloadIconDark} alt="Download TSV" />} secondary="TSV" />
-            </StyledMenuItem>
-          </List>
-        </Collapse>
-        <StyledMenuItem onClick={() => handleMenuClick("required")}>
-          <StyledListItemIcon>
-            {!toggledMenus.includes("required") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-          </StyledListItemIcon>
-          <StyledListItemText primary="Required Properties" />
-        </StyledMenuItem>
-        <Collapse in={toggledMenus.includes("required")} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <StyledMenuItem onClick={() => download('pdf', true)}>
-              <StyledListItemText primary={<img className={classes.menuIcon} src={GenericDownloadIconDark} alt="Download PDF" />} secondary="PDF" />
-            </StyledMenuItem>
-            <StyledMenuItem onClick={() => download('json', true)}>
-              <StyledListItemText primary={<img className={classes.menuIcon} src={GenericDownloadIconDark} alt="Download JSON" />} secondary="JSON" />
-            </StyledMenuItem>
-            <StyledMenuItem onClick={() => download('tsv', true)}>
-              <StyledListItemText primary={<img className={classes.menuIcon} src={GenericDownloadIconDark} alt="Download TSV" />} secondary="TSV" />
-            </StyledMenuItem>
-          </List>
-        </Collapse>
+        <List component="div" disablePadding>
+          <StyledMenuItem onClick={() => download('pdf', false)}>
+            <StyledListItemText primary="All Properties" secondary="(PDF)" />
+          </StyledMenuItem>
+          <StyledMenuItem onClick={() => download('json', false)}>
+            <StyledListItemText primary="All Properties" secondary="(JSON)" />
+          </StyledMenuItem>
+          <StyledMenuItem onClick={() => download('tsv', false)}>
+            <StyledListItemText primary="All Properties" secondary="(TSV)" />
+          </StyledMenuItem>
+          <StyledMenuItem onClick={() => download('pdf', true)}>
+            <StyledListItemText primary="Required Properties" secondary="(PDF)" />
+          </StyledMenuItem>
+          <StyledMenuItem onClick={() => download('json', true)}>
+            <StyledListItemText primary="Required Properties" secondary="(JSON)" />
+          </StyledMenuItem>
+          <StyledMenuItem onClick={() => download('tsv', true)}>
+            <StyledListItemText primary="Required Properties" secondary="(TSV)" />
+          </StyledMenuItem>
+        </List>
       </StyledMenu>
     </MuiThemeProvider>
   );
