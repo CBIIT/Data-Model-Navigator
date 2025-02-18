@@ -41,9 +41,9 @@ const DownloadButton = ({
         type="button"
         disableRipple
         className={classes.button}
+        endIcon={<img className={classes.icon} src={GenericDownloadIcon} alt="Download" />}
         onClick={download}
       >
-        <img className={classes.icon} src={GenericDownloadIcon} alt="Download" />
         Template
       </Button>
     </MuiThemeProvider>

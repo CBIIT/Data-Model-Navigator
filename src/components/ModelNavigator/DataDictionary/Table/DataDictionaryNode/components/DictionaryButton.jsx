@@ -111,7 +111,6 @@ const DictionaryButton = ({
   const modelVersion = useSelector(state => state.versionInfo && state.versionInfo.modelVersion);
   const pdfDownloadConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [toggledMenus, setToggledMenus] = React.useState([]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -119,15 +118,6 @@ const DictionaryButton = ({
 
   const handleClose = () => {
     setAnchorEl(null);
-    setToggledMenus([]);
-  };
-
-  const handleMenuClick = (name) => {
-    if (toggledMenus.includes(name)) {
-      setToggledMenus(toggledMenus.filter(menu => menu !== name));
-    } else {
-      setToggledMenus([...toggledMenus, name]);
-    }
   };
 
   const generatePdfDocument = async (object, onlyRequired, fileName) => {
@@ -168,10 +158,10 @@ const DictionaryButton = ({
         aria-haspopup="true"
         variant="contained"
         color="primary"
+        endIcon={<img className={classes.icon} src={GenericDownloadIcon} alt="Download" />}
         onClick={handleClick}
         disableElevation
       >
-        <img className={classes.icon} src={GenericDownloadIcon} alt="Download" />
         Data Dictionary
       </StyledButton>
       <StyledMenu
@@ -210,11 +200,6 @@ const styles = () => ({
     width: "24px",
     paddingRight: "7px",
   },
-  menuIcon: {
-    width: "24px",
-    color: "#0A4A6D",
-    marginLeft: "28px",
-  }
 });
 
 export default withStyles(styles)(DictionaryButton);
