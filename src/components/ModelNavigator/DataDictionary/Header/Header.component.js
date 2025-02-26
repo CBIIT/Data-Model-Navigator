@@ -11,8 +11,8 @@ import CustomTheme from './Header.theme.config';
 import ReadMeComponent from '../ReadMe/ReadMe.controller';
 import DownloadDropdownMenu from './components/download-dropdown-menu';
 import IconQuestionDark from "./icons/icon_question_dark.svg";
+import GenericIcon from "./icons/generic_icon.png";
 
-const dogIconSrc = 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/4a3fb8e201e6ba2a858d7ec1226d2fd6ea2b5298/icdc/images/svgs/Icon-DMNav.85x85.svg';
 const HeaderComponent = ({
   pdfDownloadConfig, dictionary, fullDictionary, classes,
 }) => {
@@ -50,8 +50,12 @@ const HeaderComponent = ({
           >
             <img
               className={classes.dogIcon}
-              alt="dog-icon"
-              src={pageConfig?.iconSrc || dogIconSrc}
+              alt="Model Icon"
+              src={pageConfig?.iconSrc || GenericIcon}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null;
+                currentTarget.src = GenericIcon;
+              }}
             />
             <div className={classes.titleAndVersion}>
               <h2
