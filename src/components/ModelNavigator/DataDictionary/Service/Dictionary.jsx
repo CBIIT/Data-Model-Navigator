@@ -1,6 +1,6 @@
 import axios from 'axios';
 import yaml from 'js-yaml';
-import { startCase, merge } from 'lodash';
+import { startCase, merge, some } from 'lodash';
 
 const version = { commit: '913161064b02bcef024d072873e77c8c79cc1a68', dictionary: { commit: '520a25999fd183f6c5b7ddef2980f3e839517da5', version: '0.2.1-9-g520a259' }, version: '4.0.0-44-g9131610' };
 
@@ -166,7 +166,12 @@ export async function getModelExploreData(...urls) {
             linkItem.target_type = target;
             linkItem.required = required;
             linkItem.multiplicity = multiplicity;
-            link.push(linkItem);
+
+            if (!some(link, linkItem)) {
+              link.push(linkItem);
+            } else {
+              console.warn(`Omitting a duplicate link from ${key} to ${name}`, linkItem);
+            }
           }
         }
       }
@@ -185,7 +190,7 @@ export async function getModelExploreData(...urls) {
           });
           // Only show the error message if the node is "undefined"
         } else if (el.name) {
-          console.error(`The node "${el?.name}" has a link to "${el?.backref}" but "${el?.name}" is not defined in the model`);
+          console.warn(`Omitting the link for node "${el?.name}" which is not defined in the model`);
         }
       });
     }
@@ -204,6 +209,7 @@ export async function getModelExploreData(...urls) {
       });
     }
   }
+
   const newDataList = dataList;
   return {
     data: newDataList,
