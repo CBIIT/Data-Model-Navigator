@@ -191,7 +191,7 @@ const ReadMeDialogComponent = ({
           </div>
         </div>
         <div className={classes.content} id="readMe_content">
-          <ReactMarkdown>
+          <ReactMarkdown components={{ a: LinkRenderer}}>
             {content.replace(/<!-- PAGE BREAK -->/g, "")}
           </ReactMarkdown>
         </div>
