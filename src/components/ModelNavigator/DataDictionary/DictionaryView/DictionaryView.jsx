@@ -90,7 +90,7 @@ const DictionaryView = ({
             />
           </div>
           <div className={classes.viewTableOuterContainer}>
-            <div className={classes.viewTableContainer}>
+            <div className={classes.viewTableContainer} tabIndex={0}>
               <TabPanel value={currentTab} index={0}>
                 <div className={classes.graphView}>
                   <CanvasView

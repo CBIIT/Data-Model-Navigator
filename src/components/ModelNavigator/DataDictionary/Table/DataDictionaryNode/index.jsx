@@ -51,8 +51,6 @@ class DataDictionaryNode extends React.Component {
           style={{ borderLeftColor: getCategoryColor(node.category) }}
           onClick={() => this.handleClickNode(node.id)}
           onKeyPress={() => this.handleClickNode(node.id)}
-          role="button"
-          tabIndex={0}
         >
           <NodeViewComponent
             node={node}
