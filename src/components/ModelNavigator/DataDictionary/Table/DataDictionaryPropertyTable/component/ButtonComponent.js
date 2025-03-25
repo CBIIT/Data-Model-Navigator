@@ -6,15 +6,14 @@ const theme = {
   overrides: {
     MuiButton: {
       root: {
-        fontSize: "13px",
+        fontSize: "14px",
         textTransform: "none",
-        color: "#1D79A8",
+        color: "#0d71a3",
         fontFamily: FontRegistry("Nunito Sans"),
         float: "right",
         background: "none",
         marginTop: "-20px",
         marginRight: "20px",
-        fontStyle: "italic",
         "&:hover": {
           backgroundColor: "transparent",
           cursor: "pointer",

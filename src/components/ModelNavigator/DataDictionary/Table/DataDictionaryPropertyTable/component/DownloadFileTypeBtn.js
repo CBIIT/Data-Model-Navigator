@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import {
   withStyles,
-  createTheme,
-  MuiThemeProvider,
-  Box,
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import MenuItem from "@material-ui/core/MenuItem";
-import ForwardIcon from "@material-ui/icons/Forward";
 import { saveAs } from "file-saver";
 import { capitalizeFirstLetter, createFileName } from "../../../utils";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -127,6 +123,7 @@ const DownloadFileTypeBtn = ({ classes, data, node, propertyKey }) => {
             label: classes.downloadDropdownBtnLabel,
           }}
           onClick={clickHandler}
+          aria-label="download type"
         >
           <div className={classes.downloadDropdownIconLabelContainer}>
             <KeyboardArrowDownIcon />
@@ -140,6 +137,7 @@ const DownloadFileTypeBtn = ({ classes, data, node, propertyKey }) => {
           classes={{
             root: classes.downloadBtn,
           }}
+          aria-label="download file"
         >
           <ArrowDownwardIcon
             classes={{

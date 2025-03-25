@@ -67,6 +67,7 @@ class AutoCompleteInput extends Component {
             onChange={() => { this.handleChange(); }}
             placeholder={placeHolderText}
             ref={this.inputElem}
+            aria-label={this.props.inputTitle}
           />
         </form>
         {
