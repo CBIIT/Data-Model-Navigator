@@ -19,6 +19,7 @@ const pdfDownloadConfig = {
   fileTransferManifestName: "CDS_Data_Loading_Template-file-manifest",
   landscape: 'true',
   footnote: 'test',
+  enabled: false,
 };
 
 const assetConfig = {
@@ -86,7 +87,7 @@ function buildStore() {
   return store;
 }
 
-async function populateStore(store, modelUrl = "", propsUrl = "", readMeUrl = "", changelogUrl = "") {
+async function populateStore(store, modelUrl = "", propsUrl = "", readMeUrl = "", changelogUrl = "", pdfDownloadEnabled = true) {
   const response = await getModelExploreData(modelUrl, propsUrl)?.catch((e) => { console.log(e); return null; });
   const changelogMD = await getChangelog(changelogUrl)?.catch((e) => { console.log(e); return null; });
   
@@ -110,14 +111,14 @@ async function populateStore(store, modelUrl = "", propsUrl = "", readMeUrl = ""
           readMeTitle: "Understanding the Data Model",
         },
         graphViewConfig: graphViewConfig,
-        pdfDownloadConfig: pdfDownloadConfig,
+        pdfDownloadConfig: { ...pdfDownloadConfig, enabled: pdfDownloadEnabled },
         assetConfig: assetConfig,
       },
     }),
     store.dispatch({
       type: 'REACT_FLOW_GRAPH_DICTIONARY',
       dictionary: response.data,
-      pdfDownloadConfig: pdfDownloadConfig,
+      pdfDownloadConfig: { ...pdfDownloadConfig, enabled: pdfDownloadEnabled },
       assetConfig: assetConfig,
       graphViewConfig: graphViewConfig,
     }),
@@ -142,19 +143,19 @@ async function populateStore(store, modelUrl = "", propsUrl = "", readMeUrl = ""
   await Promise.all(dispatches);
 }
 
-const ModelNavigator = ({ modelUrl, propsUrl, readMeUrl, changelogUrl }) => {
+const ModelNavigator = ({ modelUrl, propsUrl, readMeUrl, changelogUrl, pdfDownloadEnabled }) => {
   const [store, setStore] = React.useState(buildStore());
 
   useEffect(() => {
     const newStore = buildStore();
 
     setStore(newStore);
-    populateStore(newStore, modelUrl, propsUrl, readMeUrl, changelogUrl);
-  }, [modelUrl, propsUrl, changelogUrl, readMeUrl]);
+    populateStore(newStore, modelUrl, propsUrl, readMeUrl, changelogUrl, pdfDownloadEnabled);
+  }, [modelUrl, propsUrl, changelogUrl, readMeUrl, pdfDownloadEnabled]);
 
   return (
     <Provider store={store}>
-      <ReduxDataDictionary pdfDownloadConfig={pdfDownloadConfig} />
+      <ReduxDataDictionary />
     </Provider >
   );
 };
