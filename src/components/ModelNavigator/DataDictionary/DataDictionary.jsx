@@ -72,7 +72,7 @@ const styles = () => ({
   },
   dataDictionary: {
     display: "flex",
-    height: "calc(100vh)",
+    height: "calc(100vh - 110px)",
   },
   container: {
     paddingTop: "60px",
