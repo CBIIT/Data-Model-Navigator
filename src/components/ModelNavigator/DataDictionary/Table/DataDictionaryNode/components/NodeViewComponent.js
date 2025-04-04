@@ -127,23 +127,25 @@ const NodeViewComponent = ({
                 )}
               </div>
             </div>
-            <div style={{ paddingRight: "10px" }} onClick={(e) => e.stopPropagation()}>
-              <ButtonGroup className={classes.exportButtonGroup}>
-                {(isTemplate || (isManifest && isTemplate)) && (
-                  <TemplateButton
-                    documentData={node}
-                    isFileManifest={isManifest}
-                    fileName={
-                      isManifest
-                        ? createFileName(
-                          node.id,
-                          pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix, modelVersion, true)
-                        : createFileName(node.id, csvBtnDownloadConfig.prefix, modelVersion, true)
-                    }
-                  />
-                )}
-                <DictionaryButton config={{ pdfDownloadConfig }} documentData={node} />
-              </ButtonGroup>
+            <div style={{ paddingRight: "10px", minWidth: "264px" }} onClick={(e) => e.stopPropagation()}>
+              {pdfDownloadConfig.enabled && (
+                <ButtonGroup className={classes.exportButtonGroup}>
+                  {(isTemplate || (isManifest && isTemplate)) && (
+                    <TemplateButton
+                      documentData={node}
+                      isFileManifest={isManifest}
+                      fileName={
+                        isManifest
+                          ? createFileName(
+                            node.id,
+                            pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix, modelVersion, true)
+                          : createFileName(node.id, csvBtnDownloadConfig.prefix, modelVersion, true)
+                      }
+                    />
+                  )}
+                  <DictionaryButton config={{ pdfDownloadConfig }} documentData={node} />
+                </ButtonGroup>
+              )}
             </div>
           </div>
         </div>

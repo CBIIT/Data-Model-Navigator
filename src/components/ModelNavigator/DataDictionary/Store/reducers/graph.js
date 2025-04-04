@@ -1,3 +1,4 @@
+import { merge } from 'lodash';
 import {
   getSearchHistoryItems,
   clearSearchHistoryItems,
@@ -35,7 +36,7 @@ const ddgraphInitialState = {
   highlightingMatchedNodeID: null,
   highlightingMatchedNodeOpened: false,
   dictionary: {},
-  pdfDownloadConfig: {},
+  pdfDownloadConfig: { enabled: true },
 };
 
 const ddgraph = (state = ddgraphInitialState, action) => {
@@ -125,7 +126,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
       return {
         ...state,
         dictionary: action.dictionary,
-        pdfDownloadConfig: action.pdfDownloadConfig,
+        pdfDownloadConfig: merge({}, state.pdfDownloadConfig, action.pdfDownloadConfig),
         graphConfig: action.graphConfig,
         assetConfig: action.assetConfig,
         graphViewConfig: {...action.graphViewConfig, ...state.graphViewConfig},

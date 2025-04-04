@@ -17,6 +17,7 @@ const ReduxDataDictionary = (props) => {
 const mapStateToProps = (state) => ({
   isGraphView: state.ddgraph.isGraphView,
   dictionary: state.submission.dictionary,
+  pdfDownloadConfig: state.ddgraph.pdfDownloadConfig,
 });
 
 const mapDispatchToProps = (dispatch) => ({

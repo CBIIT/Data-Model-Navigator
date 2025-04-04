@@ -6,6 +6,11 @@ export default {
   component: ModelNavigator,
   parameters: {},
   argTypes: {
+    pdfDownloadEnabled: {
+      control: {
+        type: 'boolean',
+      },
+    },
     modelUrl: {
       control: {
         type: 'text',
@@ -34,6 +39,7 @@ const Template = (args) => <ModelNavigator {...args} />;
 export const Navigator = Template.bind({});
 
 Navigator.args = {
+  pdfDownloadEnabled: true,
   modelUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/6.0.2/cds-model.yml",
   propsUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/6.0.2/cds-model-props.yml",
   readMeUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/6.0.2/README.md",
