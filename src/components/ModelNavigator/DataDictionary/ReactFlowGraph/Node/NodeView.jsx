@@ -159,19 +159,16 @@ const NodeView = ({
                     {nodeAssignment}
                   </span>
                 </li>
-                <hr className={classes.divider} />
                 <li className={classes.listItem}>
                   <span className={classes.listItemLabel}>{"Class: "}</span>
                   <span className={classes.listItemValue}>{nodeClass}</span>
                 </li>
-                <hr className={classes.divider} />
                 <li className={classes.listItem}>
                   <span className={classes.listItemLabel}>
                     {"Required Properties: "}
                   </span>
                   <span className={classes.listItemValue}>{reqPropsCount}</span>
                 </li>
-                <hr className={classes.divider} />
                 <li className={classes.listItem}>
                   <span className={classes.listItemLabel}>
                     {"Preferred Properties: "}
@@ -180,7 +177,6 @@ const NodeView = ({
                     {prefPropsCount}
                   </span>
                 </li>
-                <hr className={classes.divider} />
                 <li className={classes.listItem}>
                   <span className={classes.listItemLabel}>
                     {"Optional Properties: "}

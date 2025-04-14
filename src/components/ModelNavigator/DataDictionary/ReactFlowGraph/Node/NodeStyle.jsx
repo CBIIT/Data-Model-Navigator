@@ -132,6 +132,7 @@ export default () => ({
 
     //display: "grid",
     //gridTemplateColumns: "1fr 1fr",
+    borderBottom: "1px solid #5f86a4",
   },
   content: {},
   listItemLabel: {
@@ -166,15 +167,6 @@ export default () => ({
     textAlign: "center",
     borderBottomLeftRadius: "5px",
     borderBottomRightRadius: "5px",
-  },
-  divider: {
-    margin: "0",
-    height: "1px",
-    background: "#5f86a4",
-    border: "0",
-    opacity: "0.85",
-    //width: "100%",
-    flexGrow: "1",
   },
   matchedNodeIDs: {},
   matchedInNameAndDesc: {
