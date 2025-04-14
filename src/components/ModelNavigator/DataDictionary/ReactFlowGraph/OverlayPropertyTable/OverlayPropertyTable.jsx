@@ -116,6 +116,7 @@ class OverlayPropertyTable extends React.Component {
                   <IconButton
                     className={classes.iconCloseRounded}
                     onClick={this.handleClose}
+                    aria-label="close overlay button"
                   >
                     <CloseRoundedIcon
                       style={{ color: "#FFF", fontSize: "20px" }}
