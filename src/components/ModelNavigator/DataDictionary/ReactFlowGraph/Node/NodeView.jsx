@@ -199,12 +199,12 @@ const NodeView = ({
           </div>
         </div>
         {display && (
-          <button
+          <div
             className={classes.viewPropBtn}
             onClick={displayOverviewTable}
           >
             View Properties
-          </button>
+          </div>
         )}
       </div>
     </>
