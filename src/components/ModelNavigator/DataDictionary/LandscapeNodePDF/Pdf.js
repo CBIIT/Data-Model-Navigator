@@ -9,7 +9,7 @@ import PdfTitle from './PdfTitle';
 import PdfTable from './PdfTable';
 import PdfHeader from './PdfHeader';
 import PdfFooter from './PdfFooter';
-import { getCategoryColor } from '../NodeCategories/helper';
+import { getIconDetails } from '../../../../utils/iconUtils';
 
 const styles = StyleSheet.create({
   page: {
@@ -31,6 +31,7 @@ const PdfDocument = ({
   nodes,
   icon,
   pdfDownloadConfig,
+  iconMapInfo,
 }) => {
   // const {url, type} = icon;
   return (
@@ -47,9 +48,11 @@ const PdfDocument = ({
                 nodeClass={node.class}
                 assignment={node.assignment}
                 desc={node.desc}
-                category={node.category} />
+                category={node.category}
+                iconMapInfo={iconMapInfo}
+              />
               {/* <div style={styles.spacer} /> */}
-              <PdfTable node={node} categoryColor={getCategoryColor(node.category)} />
+              <PdfTable node={node} categoryColor={getIconDetails(node.category, iconMapInfo?.map).color} />
             </View>
           ))}
         </View>

@@ -1,48 +1,56 @@
 import React from 'react';
-import ModelNavigator from './ModelNavigator';
+import DMN from './ModelNavigator';
 
 export default {
   title: 'Model Navigator',
-  component: ModelNavigator,
+  component: DMN,
   parameters: {},
   argTypes: {
-    pdfDownloadEnabled: {
-      control: {
-        type: 'boolean',
-      },
-    },
-    modelUrl: {
-      control: {
-        type: 'text',
-      },
-    },
-    propsUrl: {
+    mdf: {
+      name: 'Model Definition Files (MDF)',
       control: {
         type: 'text',
       },
     },
     readMeUrl: {
+      name: 'ReadMe Markdown URL',
       control: {
         type: 'text',
       }
     },
     changelogUrl: {
+      name: 'Version History Markdown URL',
       control: {
         type: 'text',
+      },
+    },
+    pdfDownloadEnabled: {
+      name: 'Enable Downloads',
+      control: {
+        type: 'boolean',
+      },
+    },
+    iconMap: {
+      name: 'Icon Map',
+      control: {
+        type: 'object',
       },
     },
   },
 };
 
-const Template = (args) => <ModelNavigator {...args} />;
+const Template = (args) => <DMN {...args} />;
 
-export const Navigator = Template.bind({});
+export const ModelNavigator = Template.bind({});
 
-Navigator.args = {
+ModelNavigator.args = {
+  mdf: [
+    "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/refs/heads/dev2/cache/CDS/7.0.0/cds-model.yml",
+    "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/refs/heads/dev2/cache/CDS/7.0.0/cds-model-props.yml",
+  ].join("\n"),
+  readMeUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/7.0.0/README.md",
+  changelogUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/7.0.0/version-history.md",
   pdfDownloadEnabled: true,
-  modelUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/6.0.2/cds-model.yml",
-  propsUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/6.0.2/cds-model-props.yml",
-  readMeUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/6.0.2/README.md",
-  changelogUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/6.0.2/version-history.md",
+  iconMap: null,
 };
 

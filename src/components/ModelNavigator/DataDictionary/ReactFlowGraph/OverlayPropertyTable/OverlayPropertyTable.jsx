@@ -13,14 +13,11 @@ import {
 
 import { SearchResultItemShape } from "../../Utils/utils";
 import { capitalizeFirstLetter, createFileName } from "../../utils";
-import {
-  getCategoryBackground,
-  getCategoryColor,
-  tableIconUrl,
-} from "../../NodeCategories/helper";
 import DataDictionaryPropertyTable from "../../Table/DataDictionaryPropertyTable";
 import styles from "./OverlayPropertyTable.style";
 import NodeViewComponent from "../../Table/DataDictionaryNode/components/NodeViewComponent";
+import { getIconDetails } from "../../../../../utils/iconUtils";
+import { DefaultIcon } from "../../../../../config/IconMap";
 
 class OverlayPropertyTable extends React.Component {
   getTitle = () => {
@@ -71,14 +68,11 @@ class OverlayPropertyTable extends React.Component {
   };
 
   render() {
-    const { classes, isSearchMode, node, hidden } = this.props;
+    const { classes, isSearchMode, node, hidden, iconMapInfo } = this.props;
     if (!node || hidden) return <></>;
-    // const IconSVG = getCategoryIconSVG(node.category);
-    // eslint-disable-next-line no-console
-    // const searchedNodeNotOpened = isSearchMode && !this.props.isSearchResultNodeOpened;
+
     const needHighlightSearchResult = isSearchMode;
-    // const expanded = true;
-    const categoryColor = getCategoryColor(node.category);
+    const iconDetails = getIconDetails(node.category, iconMapInfo?.map);
     return (
       <div className={classes.table}>
         <div className={classes.background} />
@@ -88,8 +82,8 @@ class OverlayPropertyTable extends React.Component {
               <div
                 className={classes.category}
                 style={{
-                  borderLeftColor: categoryColor,
-                  backgroundColor: getCategoryBackground(node.category),
+                  borderLeftColor: iconDetails.color,
+                  backgroundColor: iconDetails.background,
                 }}
               >
                 <div
@@ -101,9 +95,13 @@ class OverlayPropertyTable extends React.Component {
                   }}
                 >
                   <img
-                    src={`${tableIconUrl}${node.category}.svg`}
+                    src={iconDetails.svg}
                     alt="icon"
                     className={classes.categoryIcon}
+                    onError={({ currentTarget }) => {
+                      currentTarget.onerror = null;
+                      currentTarget.src = DefaultIcon.svg;
+                    }}
                   />
                   <h4
                     style={{ color: "#FFF" }}
@@ -127,12 +125,12 @@ class OverlayPropertyTable extends React.Component {
             </div>
             <div
               className={classes.categoryDivider}
-              style={{ borderLeftColor: getCategoryColor(node.category) }}
+              style={{ borderLeftColor: iconDetails.color }}
             />
             <div
               className={classes.node}
               style={{
-                borderLeftColor: getCategoryColor(node.category),
+                borderLeftColor: iconDetails.color,
                 marginBottom: "0px",
                 borderRight: "1px solid #ADBEC4",
                 backgroundColor: "white",
@@ -151,7 +149,7 @@ class OverlayPropertyTable extends React.Component {
 
             <div
               className={classes.propertyTable}
-              style={{ borderLeftColor: categoryColor }}
+              style={{ borderLeftColor: iconDetails.color }}
             >
               <div className={classes.property}>
                 <DataDictionaryPropertyTable
@@ -189,11 +187,11 @@ OverlayPropertyTable.propTypes = {
 OverlayPropertyTable.defaultProps = {
   hidden: true,
   node: null,
-  onCloseOverlayPropertyTable: () => {},
+  onCloseOverlayPropertyTable: () => { },
   isSearchMode: false,
   matchedResult: {},
-  onOpenMatchedProperties: () => {},
-  onCloseMatchedProperties: () => {},
+  onOpenMatchedProperties: () => { },
+  onCloseMatchedProperties: () => { },
   isSearchResultNodeOpened: false,
 };
 

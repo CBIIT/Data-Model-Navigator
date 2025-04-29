@@ -1,34 +1,5 @@
 import _ from "lodash";
-import studyIcon from "../../../DataDictionary/ReactFlowGraph/Canvas/assets/graph_icon/study.svg";
-import caseIcon from "../../../DataDictionary/ReactFlowGraph/Canvas/assets/graph_icon/case.svg";
-import clinicalTrialIcon from "../../../DataDictionary/ReactFlowGraph/Canvas/assets/graph_icon/clinical_trial.svg";
-import adminIcon from "../../../DataDictionary/ReactFlowGraph/Canvas/assets/graph_icon/administrative.svg";
-import biospecimenIcon from "../../../DataDictionary/ReactFlowGraph/Canvas/assets/graph_icon/biospecimen.svg";
-import analysisIcon from "../../../DataDictionary/ReactFlowGraph/Canvas/assets/graph_icon/analysis.svg";
-import dataFileIcon from "../../../DataDictionary/ReactFlowGraph/Canvas/assets/graph_icon/data_file.svg";
-import clinicalIcon from "../../../DataDictionary/ReactFlowGraph/Canvas/assets/graph_icon/clinical.svg";
 
-const graphIcons = {
-  administrative: adminIcon,
-  study: studyIcon,
-  case: caseIcon,
-  clinical_trial: clinicalTrialIcon,
-  biospecimen: biospecimenIcon,
-  analysis: analysisIcon,
-  data_file: dataFileIcon,
-  clinical: clinicalIcon,
-};
-
-const graphIconColors = {
-  administrative: "#9b2e20",
-  study: "#9875ff",
-  case: "#ff7f16",
-  clinical_trial: "#02a1bb",
-  biospecimen: "#00785a",
-  analysis: "#b533a9",
-  data_file: "#00ad0c",
-  clinical: "#1b75bc",
-};
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /**
@@ -68,8 +39,6 @@ const generateNodes = (nodes, edges, windowWidth) => {
       category: `${node.category}`,
       data: {
         label: _.capitalize(node.name),
-        icon: graphIcons[node.category],
-        iconColor: graphIconColors[node.category],
         category: `${node.category}`,
         nodeAssignment: _.capitalize(`${node.assignment}`),
         nodeClass: _.capitalize(`${node.class}`),

@@ -1,7 +1,4 @@
-## 1. Webpack Configuration
-Refer to [WEBPACK_CONFIG.md](https://github.com/CBIIT/Data-Model-Navigator/blob/documentation/WEBPACK_CONFIG.md)
-
-## Installation
+# Installation
 
 Use the package manager [npm](https://www.npmjs.com/) to install Bento UI Building Blocks.
 
@@ -9,10 +6,11 @@ Use the package manager [npm](https://www.npmjs.com/) to install Bento UI Buildi
 npm install data-model-navigator
 ```
 
-## Usage
+# Usage
 
-### 1. redux configuration (Bento app)
-``` store
+## Redux configuration (Bento app)
+
+``` javascript
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
@@ -42,9 +40,10 @@ store.injectReducer = (key, reducer) => {
 
 export default store;
 ```
-### 2. Create ModelNavigator component (Bento app)
-[reference - ICDC Navigator Component] (https://github.com/CBIIT/bento-icdc-frontend/blob/Develop/src/components/Layout/utils.js)
-```react
+
+## Create ModelNavigator component (Bento app)
+
+```javascript
 import React from 'react';
 import _ from 'lodash';
 import { ReduxDataDictionary, getModelExploreData } from 'data-model-navigator';
@@ -98,7 +97,6 @@ async function getData() {
   );
 }
 
-
 const ModelNavigator = () => {
   if (!DATA_MODEL || !DATA_MODEL_PROPS || !DATA_MODEL_README) {
     return (
@@ -118,25 +116,18 @@ const ModelNavigator = () => {
 
 export default ModelNavigator;
 ```
-(Note: DATA_MODEL_README )
 
-### 3. Configuration
-[reference - ICDC DMN Configuration]: https://github.com/CBIIT/bento-icdc-frontend/blob/Develop/src/bento/dataDictionaryData.js
+## Configuration
 
 **xIntervel & yIntervel space between nodes**
 **nodeTree customize position of node to display in the tree (Please include all the nodes to be displayed)**
 
-```
-
+```javascript
 export const pdfDownloadConfig = {
   fileType: 'pdf',
   prefix: 'ICDC_Data_Model_',
   downloadPrefix: "ICDC_", // File download prefix added to file name
   landscape: 'true',
-  catagoryIcon: {
-    url: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/icdc/DMN/Pdf/',
-    type: '.png',
-  },
   iconSrc: "", // PDF Header Icon SRC (.png only)
   footnote: "", // Override PDF Footer Text
 };
@@ -172,30 +163,36 @@ export const graphViewConfig = {
     ]
   },
 };
-
 ```
 
-# DMN development - Sorybook
+## Supported Icons
 
+Data Model Navigator can map MDF node categories to predefined icons. Refer to the table
+below to see the available icons and their corresponding names.
 
-### 1. Clone Repo
-```
-1. git clone https://github.com/CBIIT/Data-Model-Navigator.git
-```
+| Icon Preview | Icon Name |
+|------|----------|
+|![image](src/assets/icons/administrative.svg)|`administrative`|
+|![image](src/assets/icons/analysis.svg)|`analysis`|
+|![image](src/assets/icons/biospecimen.svg)|`biospecimen`|
+|![image](src/assets/icons/case.svg)|`case`|
+|![image](src/assets/icons/clinical_trial.svg)|`clinical_trial`|
+|![image](src/assets/icons/clinical.svg)|`clinical`|
+|![image](src/assets/icons/data_file.svg)|`data_file`|
+|![image](src/assets/icons/imaging.svg)|`imaging`|
+|![image](src/assets/icons/notation.svg)|`notation`|
+|![image](src/assets/icons/participant.svg)|`participant`|
+|![image](src/assets/icons/study.svg)|`study`|
 
-### 2. Update react-pdf dependency (DO NOT COMMIT THIS CHANGE - KEEP IT LOCAL)
-(note: DMN project runs on webpack 5 it is compatible with react-pdf version 3.0.2 or newer version but Bento app runs on webpack 4 which is compatible with only react-pdf version 2.0.21 or older version)
-```
-"@react-pdf/renderer": "^2.0.21"  -> "@react-pdf/renderer": "^3.0.2",
-```
-(DO NOT COMMIT THIS CHANGE or pdf download will not work when DMN is deplyed with bento app)
-(Solution migrate bento app to webpack 5)
+> [!NOTE]
+> By default, Model Navigator will map the MDF node `Category` tag to the corresponding `Icon Name` if no Icon Map is provided.
 
-### 3 .NPM INSTALL
+# Development
 
-### 4 .Start standalone DMN app
-```
+## Storybook
+
+Start the standalone storybook server to interact with the Model Navigator component and its configurations.
+
+```bash
 npm run storybook
 ```
-### 5 Configuration
-#### All the configuration are here (https://github.com/CBIIT/Data-Model-Navigator/blob/develop/src/stories/ModelNavigator.js)

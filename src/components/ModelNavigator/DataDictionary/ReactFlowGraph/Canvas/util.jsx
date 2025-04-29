@@ -32,19 +32,6 @@ export const nodeColor = (node) => {
  export const getDistinctCategoryItems = (nodes) => _.uniq(nodes.map((node) => node.category));
 
  /**
- * Get a set of types from an array of nodes
- * @param {categories[]} categories
- * @returns {string[]} array of type names(duplicating names removed) of given nodes
- */
- export const getCategoryIconUrl = (categories, url) => {
-  const urls = {};
-  categories.forEach((category) => {
-    urls[category] = `${url}graph/${category}.svg`;
-  });
-  return urls;
- };
-
- /**
   * Active Search Mode 
   * set node title for matching query 
   */

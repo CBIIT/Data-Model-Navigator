@@ -1,9 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import { getCategoryColor, pdfNodeCategoryList } from '../NodeCategories/helper';
 import { FontRegistry } from './util';
 import { capitalizeFirstLetter } from '../utils';
-// import logo from '../NodeCategories/icons/Pdf/administrative.png';
+import { getIconDetails } from '../../../../utils/iconUtils';
 
 const styles = StyleSheet.create({
   row: {
@@ -134,23 +133,23 @@ const styles = StyleSheet.create({
 
 const createStyle = (classes, categoryColor) => ({ ...classes, ...{ borderLeft: `5px solid ${categoryColor}` } });
 const PdfTitle = (node) => {
-  const { category, desc, title, assignment, nodeClass } = node;
-  const categoryColor = getCategoryColor(category);
+  const { category, desc, title, assignment, nodeClass, iconMapInfo } = node;
+  const iconDetails = getIconDetails(category, iconMapInfo?.map);
   return (
     <View>
-      <View style={createStyle(styles.categoryStyle, categoryColor)}>
+      <View style={createStyle(styles.categoryStyle, iconDetails.color)}>
         {/* {SvgIcon} */}
-        <Image style={styles.icon} src={pdfNodeCategoryList[category]?.icon} />
-        <Text style={{ color: categoryColor, ...styles.categoryHeader }}>
+        <Image style={styles.icon} src={iconDetails.png} />
+        <Text style={{ color: iconDetails.color, ...styles.categoryHeader }}>
           {capitalizeFirstLetter(category)}
         </Text>
       </View>
-      <View style={createStyle(styles.hr, categoryColor)} />
+      <View style={createStyle(styles.hr, iconDetails.color)} />
       <View style={{
         display: "flex",
         flexDirection: "row",
         padding: '6px 15px 5px 15px',
-        borderLeft: `5px solid ${categoryColor}`,
+        borderLeft: `5px solid ${iconDetails.color}`,
         backgroundColor: '#f4f5f5',
       }}>
         <Text style={styles.nodeTitle}>{capitalizeFirstLetter(title)}</Text>
@@ -160,7 +159,7 @@ const PdfTitle = (node) => {
         display: "flex",
         flexDirection: "row",
         // marginBottom: 1,
-        borderLeft: `5px solid ${categoryColor}`,
+        borderLeft: `5px solid ${iconDetails.color}`,
         backgroundColor: '#f4f5f5',
         paddingBottom: '10px',
       }}> 

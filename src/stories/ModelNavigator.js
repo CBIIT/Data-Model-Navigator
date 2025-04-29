@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useMemo } from 'react';
 import { Provider } from 'react-redux';
 import _ from 'lodash';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import { ddgraph, versionInfo, changelogInfo } from '../components/ModelNavigator/DataDictionary/Store/reducers/graph';
+import { ddgraph, versionInfo, changelogInfo, iconMapInfo } from '../components/ModelNavigator/DataDictionary/Store/reducers/graph';
 import { moduleReducers as submission } from '../components/ModelNavigator/DataDictionary/Store/reducers/filter';
-// import store from './store';
 import ReduxDataDictionary from '../components/ModelNavigator/DataDictionary/ReduxDataDictionary';
 import { filterConfig } from '../components/ModelNavigator/bento/dataDictionaryData';
 import { getChangelog, getModelExploreData } from '../components/ModelNavigator/DataDictionary/Service/Dictionary';
@@ -21,10 +19,6 @@ const pdfDownloadConfig = {
   footnote: 'test',
   enabled: false,
 };
-
-const assetConfig = {
-  iconUrl: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/data_model_pdf_icons/icdc/DMN/'
-}
 
 const graphViewConfig = {
   legend: {
@@ -69,6 +63,7 @@ function buildStore() {
     ddgraph,
     versionInfo,
     changelogInfo,
+    iconMapInfo,
     submission,
   };
 
@@ -87,17 +82,12 @@ function buildStore() {
   return store;
 }
 
-async function populateStore(store, modelUrl = "", propsUrl = "", readMeUrl = "", changelogUrl = "", pdfDownloadEnabled = true) {
-  const response = await getModelExploreData(modelUrl, propsUrl)?.catch((e) => { console.log(e); return null; });
+async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "", pdfDownloadEnabled = true, iconMap = {}) {
+  const response = await getModelExploreData(...mdf.split("\n"))?.catch((e) => { console.log(e); return null; });
   const changelogMD = await getChangelog(changelogUrl)?.catch((e) => { console.log(e); return null; });
-  
+
   if (!response?.data || !response?.version) {
     throw new Error('Failed to fetch data');
-  }
-
-  if (!changelogMD) {
-    // Shouldn't be a blocker
-    console.error('Failed to fetch changelog data');
   }
 
   const dispatches = [
@@ -112,14 +102,12 @@ async function populateStore(store, modelUrl = "", propsUrl = "", readMeUrl = ""
         },
         graphViewConfig: graphViewConfig,
         pdfDownloadConfig: { ...pdfDownloadConfig, enabled: pdfDownloadEnabled },
-        assetConfig: assetConfig,
       },
     }),
     store.dispatch({
       type: 'REACT_FLOW_GRAPH_DICTIONARY',
       dictionary: response.data,
       pdfDownloadConfig: { ...pdfDownloadConfig, enabled: pdfDownloadEnabled },
-      assetConfig: assetConfig,
       graphViewConfig: graphViewConfig,
     }),
     store.dispatch({
@@ -128,7 +116,7 @@ async function populateStore(store, modelUrl = "", propsUrl = "", readMeUrl = ""
     }),
   ];
 
-  if (changelogMD?.length > 0) {
+  if (changelogMD?.length) {
     dispatches.push(
       store.dispatch({
         type: 'RECEIVE_CHANGELOG_INFO',
@@ -140,18 +128,27 @@ async function populateStore(store, modelUrl = "", propsUrl = "", readMeUrl = ""
     );
   }
 
+  if (Object.keys(iconMap).length > 0) {
+    dispatches.push(
+      store.dispatch({
+        type: 'RECEIVE_ICON_MAP',
+        data: iconMap,
+      })
+    );
+  }
+
   await Promise.all(dispatches);
 }
 
-const ModelNavigator = ({ modelUrl, propsUrl, readMeUrl, changelogUrl, pdfDownloadEnabled }) => {
+const ModelNavigator = ({ mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap }) => {
   const [store, setStore] = React.useState(buildStore());
 
   useEffect(() => {
     const newStore = buildStore();
 
     setStore(newStore);
-    populateStore(newStore, modelUrl, propsUrl, readMeUrl, changelogUrl, pdfDownloadEnabled);
-  }, [modelUrl, propsUrl, changelogUrl, readMeUrl, pdfDownloadEnabled]);
+    populateStore(newStore, mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap);
+  }, [mdf, changelogUrl, readMeUrl, pdfDownloadEnabled, iconMap]);
 
   return (
     <Provider store={store}>

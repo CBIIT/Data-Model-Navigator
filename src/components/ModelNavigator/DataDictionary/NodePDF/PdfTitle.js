@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, View, StyleSheet } from '@react-pdf/renderer';
 import renderSvgElement from './RenderSvg';
-import { getCategoryColor } from '../NodeCategories/helper';
 import { capitalizeFirstLetter } from '../utils';
 import { FontRegistry } from './util';
+import { getIconDetails } from '../../../../utils/iconUtils';
 
 const styles = StyleSheet.create({
   row: {
@@ -119,7 +119,7 @@ const PdfTitle = ({
 }) => {
   const svgNode = document.querySelector(`svg.${category}`);
   const SvgIcon = renderSvgElement(svgNode);
-  const categoryColor = getCategoryColor(category);
+  const categoryColor = getIconDetails(category).color;
   return (
     <View>
       <View style={createStyle(styles.categoryStyle, categoryColor)}>

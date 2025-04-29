@@ -141,7 +141,7 @@ const StyledListItemText = withStyles({
   }
 })(ListItemText);
 
-const generatePdfDocument = async (object, config, setLoading, fileName, pdfDownloadConfig, onlyRequired) => {
+const generatePdfDocument = async (object, config, setLoading, fileName, pdfDownloadConfig, onlyRequired, iconMapInfo) => {
   let fullDictionary = cloneDeep(object);
   fullDictionary.forEach((node) => {
     for (let key in node.properties) {
@@ -154,7 +154,7 @@ const generatePdfDocument = async (object, config, setLoading, fileName, pdfDown
 
   const document = (config.type === 'document') ? fullDictionary : [fullDictionary];
   const blob = await pdf((
-    config.landscape ? <LandscapePDFDoc nodes={document} pdfDownloadConfig={pdfDownloadConfig} icon={config.catagoryIcon} /> : <PdfDocument nodes={document} />
+    config.landscape ? <LandscapePDFDoc nodes={document} pdfDownloadConfig={pdfDownloadConfig} icon={config.catagoryIcon} iconMapInfo={iconMapInfo} /> : <PdfDocument nodes={document} />
   )).toBlob();
   setLoading(false);
   saveAs(blob, `${fileName}.pdf`);
@@ -183,6 +183,7 @@ const DownloadFileTypeBtn = ({
   const fullDictionaryC2nl = category2NodeList(fullDictionary);
   const processedFullDictionary = sortByCategory(fullDictionaryC2nl, fullDictionary);
   const pdfDownloadConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
+  const iconMapInfo = useSelector(state => state.iconMapInfo && state.iconMapInfo);
 
   const clickHandler = (event) => {
     setAnchorElement(event.currentTarget);
@@ -205,7 +206,7 @@ const DownloadFileTypeBtn = ({
     const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion);
     setLoading(true);
     setTimeout(() => {
-      generatePdfDocument(processedFullDictionary, config, setLoading, fileName, pdfDownloadConfig, onlyRequired);
+      generatePdfDocument(processedFullDictionary, config, setLoading, fileName, pdfDownloadConfig, onlyRequired, iconMapInfo);
     }, 50);
   };
 

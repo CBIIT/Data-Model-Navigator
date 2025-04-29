@@ -3,14 +3,11 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import {
-  defaultCategory,
-  getCategoryStyle,
-  tableNodeCategoryList,
-} from "../../NodeCategories/helper";
 import { capitalizeFirstLetter } from "../../utils";
 import DataDictionaryNode from "../DataDictionaryNode";
 import styles from "./DataDictionaryCategory.style";
+import { getIconDetails } from "../../../../../utils/iconUtils";
+import { DefaultIcon } from "../../../../../config/IconMap";
 
 const DataDictionaryCategory = ({
   classes,
@@ -19,40 +16,39 @@ const DataDictionaryCategory = ({
   pdfDownloadConfig,
   onExpandNode,
   nodes,
-  assetConfig,
+  iconMapInfo,
 }) => {
-  const categoryStyles = getCategoryStyle(category);
-  const categoryColor = categoryStyles.color;
-  const background = categoryStyles.background
-    ? categoryStyles.background
-    : categoryStyles.color;
-  const iconURL = tableNodeCategoryList[category]
-    ? tableNodeCategoryList[category].icon
-    : defaultCategory.icon;
+  const iconDetails = getIconDetails(category, iconMapInfo?.map);
   return (
     <div>
       <div
         style={{
-          borderLeftColor: categoryColor,
-            minHeight: '44px',
-          background,
-            display: 'flex',
-            alignItems: 'center',
+          borderLeftColor: iconDetails.color,
+          background: iconDetails.background,
+          minHeight: '44px',
+          display: 'flex',
+          alignItems: 'center',
           color: "#ffffff",
-            paddingLeft: '20px',
-            gap: '8px'
+          paddingLeft: '20px',
+          gap: '8px'
         }}
       >
-        <img src={iconURL} alt="icon"  style={{
-        width: '32px'}
-        }/>
+        <img
+          src={iconDetails.svg}
+          alt="icon"
+          style={{ width: '32px' }}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null;
+            currentTarget.src = DefaultIcon.svg;
+          }}
+        />
         <div className={classes.title}>
           <span>{capitalizeFirstLetter(category)} </span>
         </div>
       </div>
       <div
 
-        style={{ borderLeftColor: categoryColor }}
+        style={{ borderLeftColor: iconDetails.color }}
       />
       {nodes.map((node) => (
         <DataDictionaryNode
@@ -62,6 +58,7 @@ const DataDictionaryCategory = ({
           pdfDownloadConfig={pdfDownloadConfig}
           expanded={highlightingNodeID && highlightingNodeID.includes(node.id)}
           onExpandNode={onExpandNode}
+          iconMapInfo={iconMapInfo}
         />
       ))}
     </div>
@@ -82,11 +79,11 @@ DataDictionaryCategory.propTypes = {
 
 DataDictionaryCategory.defaultProps = {
   highlightingNodeID: null,
-  onExpandNode: () => {},
+  onExpandNode: () => { },
 };
 
 const mapStateToProps = (state) => ({
-  assetConfig: state.ddgraph.assetConfig,
+  iconMapInfo: state.iconMapInfo,
 });
 
 export default withStyles(styles)(

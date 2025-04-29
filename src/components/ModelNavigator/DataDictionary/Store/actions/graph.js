@@ -143,7 +143,7 @@ export const setHighlightingMatchedNodeOpened = (opened) => ({
 });
 
 export const onViewChange = (view) => ({
-  type: actionTypes.ON_GRAPH_VIEW_CHANGE,
+  type: actionTypes.ON_REACT_FLOW_GRAPH_VIEW_CHANGE,
   view
 })
 

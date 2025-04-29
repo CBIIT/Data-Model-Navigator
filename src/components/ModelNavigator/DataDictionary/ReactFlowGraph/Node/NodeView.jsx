@@ -5,6 +5,8 @@ import { Handle, useReactFlow, useStoreApi } from "reactflow";
 import clsx from "clsx";
 import Styles from "./NodeStyle";
 import { highlightMatchingTitle, setMatchingNodeClasses } from "./util";
+import { DefaultIcon } from "../../../../../config/IconMap";
+import { getIconDetails } from "../../../../../utils/iconUtils";
 
 const NodeView = ({
   classes,
@@ -21,6 +23,7 @@ const NodeView = ({
   highlightingNode,
   onNodeFocus,
   focusedNodeId,
+  iconMapInfo,
 }) => {
   const [display, setDisplay] = useState(false);
   /**
@@ -37,8 +40,6 @@ const NodeView = ({
   };
   const {
     label,
-    icon,
-    iconColor,
     category,
     matchedNodeNameQuery,
     nodeAssignment,
@@ -47,6 +48,7 @@ const NodeView = ({
     prefPropsCount,
     optPropsCount,
   } = data;
+  const iconDetails = getIconDetails(category, iconMapInfo?.map);
 
   //dispatch event - on table view
   const displayOverviewTable = () => {
@@ -118,16 +120,20 @@ const NodeView = ({
                   <div
                     style={{
                       borderRadius: "11px",
-                      backgroundColor: iconColor,
+                      backgroundColor: iconDetails.color,
                     }}
                   >
                     <div
                       className={classes.iconWrapper}
-                      style={{ backgroundColor: iconColor }}
+                      style={{ backgroundColor: iconDetails.color }}
                     >
                       <img
                         className={classes.icon}
-                        src={icon}
+                        src={iconDetails.svg_rounded}
+                        onError={({ currentTarget }) => {
+                          currentTarget.onerror = null;
+                          currentTarget.src = DefaultIcon.svg_rounded;
+                        }}
                         alt="category icon"
                       />
                     </div>

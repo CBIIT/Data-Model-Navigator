@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Icon, withStyles } from "@material-ui/core";
-import { legendIconUrl } from "../../NodeCategories/helper";
+import { withStyles } from "@material-ui/core";
 import relationshipSvg from "../../NodeCategories/icons/Legend/lg_relationship_links.svg";
 import toggleSvg from "../../NodeCategories/icons/Legend/lg_link.svg";
 import Styles from "./LegendStyle";
 import { capitalizeFirstLetter } from "../../utils";
 import clsx from "clsx";
+import { getIconDetails } from "../../../../../utils/iconUtils";
+import { DefaultIcon } from "../../../../../config/IconMap";
 
-const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden }) => {
+const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden, iconMapInfo }) => {
   const [display, setDisplay] = useState(true);
   const toggleLegend = () => setDisplay(!display);
 
@@ -19,21 +20,27 @@ const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden }) => {
   * latest version of browse will have scroll bar over browser
   */
   const scrollBarWidth = document.documentElement.clientWidth;
-  const rightMargin =  window.innerWidth - scrollBarWidth;
+  const rightMargin = window.innerWidth - scrollBarWidth;
   const positionRight = rightMargin > 0 ? rightMargin : 17;
   const position = { right: positionRight };
 
-  const categoryListComponent = categoryItems.map((category) => {
-    const imgUrl = `${legendIconUrl}${category}.svg`;
-    return (
-      <div key={category} className={classes.category}>
-        <div className={classes.categoryIcon}>
-          <img src={imgUrl} alt="icon" />
-        </div>
-        <span className={classes.text}>{capitalizeFirstLetter(category)}</span>
+  const categoryListComponent = categoryItems.map((category) => (
+    <div key={category} className={classes.category}>
+      <div className={classes.categoryIcon}>
+        <img
+          src={getIconDetails(category, iconMapInfo?.map).svg}
+          alt="icon"
+          style={{ width: '32px' }}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null;
+            currentTarget.src = DefaultIcon.svg;
+          }}
+        />
       </div>
-    );
-  });
+      <span className={classes.text}>{capitalizeFirstLetter(category)}</span>
+    </div>
+  )
+  );
 
   const ToggleBtn = () => (
     <div className={display ? classes.headerExpand : classes.headerCollapse}>

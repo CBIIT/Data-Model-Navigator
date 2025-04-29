@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 // eslint-disable-next-line no-unused-vars
 import { withStyles } from "@material-ui/core";
 import { downloadTemplate } from "../../Utils/utils";
-import { getCategoryColor } from "../../NodeCategories/helper";
 import DataDictionaryPropertyTable from "../DataDictionaryPropertyTable";
 import "./DataDictionaryNode.css";
 import styles from "./DataDictionaryNode.style";
 // import PdfDocument from '../../NodePDF';
 import NodeViewComponent from "./components/NodeViewComponent";
+import { getIconDetails } from "../../../../../utils/iconUtils";
 
 const NODE_STATE = {
   OPEN: "open",
@@ -41,14 +41,14 @@ class DataDictionaryNode extends React.Component {
   };
 
   render() {
-    const { classes, node, pdfDownloadConfig, description, expanded } =
+    const { classes, node, pdfDownloadConfig, description, expanded, iconMapInfo } =
       this.props;
     const propertyCount = Object.keys(node.properties).length;
     return (
       <>
         <div
           className={classes.node}
-          style={{ borderLeftColor: getCategoryColor(node.category) }}
+          style={{ borderLeftColor: getIconDetails(node.category, iconMapInfo?.map).color }}
           onClick={() => this.handleClickNode(node.id)}
           onKeyPress={() => this.handleClickNode(node.id)}
         >
@@ -64,7 +64,7 @@ class DataDictionaryNode extends React.Component {
           <div
             className={classes.property}
             style={{
-              borderLeft: `5px solid ${getCategoryColor(node.category)}`,
+              borderLeft: `5px solid ${getIconDetails(node.category, iconMapInfo?.map).color}`,
               borderBottom: `1px solid #adbec4`,
             }}
           >

@@ -8,10 +8,10 @@ import {
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CanvasView from './CanvasView';
 import { createNodesAndEdges } from '../GraphUtils/utils';
-import { getDistinctCategoryItems, setMatchingNodeTitle, getCategoryIconUrl } from './util';
+import { getDistinctCategoryItems, setMatchingNodeTitle } from './util';
 import { onNodeDragStart, onPanelViewClick, onViewChange, setReactFlowGraphData } from '../../Store/actions/graph';
 import { getNodePosition } from './CanvasHelper';
-import defaultIcon from './assets/graph_icon/study.svg';
+import { DefaultIcon } from '../../../../../config/IconMap';
 
 /**
  * Handles all canvas state
@@ -47,7 +47,6 @@ const CanvasController = ({
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [categories, setCategories] = useState([]);
-    const [iconsURL, setIconsURL] = useState({});
 
     /**
      * initalize category item for Legend
@@ -55,8 +54,6 @@ const CanvasController = ({
     useEffect(() => {
         const categories = getDistinctCategoryItems(Object.values(unfilteredDictionary));
         setCategories(categories);
-        const urls = getCategoryIconUrl(categories, `${assetConfig?.iconUrl}`);
-        setIconsURL(urls);
     }, []);
 
     /** node
@@ -93,7 +90,7 @@ const CanvasController = ({
           });
           nodes.forEach((node) => {
             if(!node.data.icon) {
-              node.data.icon = defaultIcon;
+              node.data.icon = DefaultIcon.svg;
             }
             const position = nodePosition[node.id];
             node.position = {

@@ -7,6 +7,7 @@ const ReduxLegendView = (props) => (<LegendView {...props} />);
 const mapStateToProps = (state) => ({
     styles: state.submission.graphViewConfig?.legend?.styles,
     overlayPropertyHidden: state.ddgraph.overlayPropertyHidden,
+    iconMapInfo: state.iconMapInfo,
 });
 
 const mapDispatchToProps = (dispatch) => ({

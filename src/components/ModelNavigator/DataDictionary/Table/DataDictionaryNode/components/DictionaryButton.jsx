@@ -110,6 +110,7 @@ const DictionaryButton = ({
 }) => {
   const modelVersion = useSelector(state => state.versionInfo && state.versionInfo.modelVersion);
   const pdfDownloadConfig = useSelector(state => state.ddgraph && state.ddgraph.pdfDownloadConfig);
+  const iconMapInfo = useSelector(state => state.iconMapInfo && state.iconMapInfo);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -128,9 +129,12 @@ const DictionaryButton = ({
       }
     }
 
-    const blob = await pdf((<LandscapePDFDoc nodes={[node]} icon={config.catagoryIcon}
-      pdfDownloadConfig={pdfDownloadConfig} />
-    )).toBlob();
+    const blob = await pdf((<LandscapePDFDoc
+      nodes={[node]}
+      icon={config.catagoryIcon}
+      pdfDownloadConfig={pdfDownloadConfig} 
+      iconMapInfo={iconMapInfo}
+      />)).toBlob();
     saveAs(blob, `${fileName}.pdf`)
   };
 

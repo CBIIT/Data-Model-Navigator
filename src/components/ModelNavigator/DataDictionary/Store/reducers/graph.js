@@ -410,4 +410,16 @@ const changelogInfo = (state = {}, action) => {
   }
 };
 
-export { ddgraph, versionInfo, changelogInfo };
+const iconMapInfo = (state = {}, action) => {
+  switch (action.type) {
+    case 'RECEIVE_ICON_MAP':
+      return {
+        ...state,
+        map: action.data || {},
+      };
+    default:
+      return state;
+  }
+};
+
+export { ddgraph, versionInfo, changelogInfo, iconMapInfo };
