@@ -20,7 +20,7 @@ const pdfDownloadConfig = {
   enabled: false,
 };
 
-const graphViewConfig = {
+const graphConfig = {
   legend: {
     styles: {
       legendExpand: {
@@ -82,7 +82,7 @@ function buildStore() {
   return store;
 }
 
-async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "", pdfDownloadEnabled = true, iconMap = {}) {
+async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "", pdfDownloadEnabled = true, iconMap = {}, graphViewConfig = graphConfig) {
   const response = await getModelExploreData(...mdf.split("\n"))?.catch((e) => { console.log(e); return null; });
   const changelogMD = await getChangelog(changelogUrl)?.catch((e) => { console.log(e); return null; });
 
@@ -140,14 +140,14 @@ async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "",
   await Promise.all(dispatches);
 }
 
-const ModelNavigator = ({ mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap }) => {
+const ModelNavigator = ({ mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap, graphViewConfig}) => {
   const [store, setStore] = React.useState(buildStore());
 
   useEffect(() => {
     const newStore = buildStore();
 
     setStore(newStore);
-    populateStore(newStore, mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap);
+    populateStore(newStore, mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap, graphViewConfig);
   }, [mdf, changelogUrl, readMeUrl, pdfDownloadEnabled, iconMap]);
 
   return (
