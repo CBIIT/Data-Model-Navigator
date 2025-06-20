@@ -75,7 +75,7 @@ class DataDictionaryNode extends React.Component {
               properties={node.properties}
               requiredProperties={node.required}
               preferredProperties={node.preferred}
-              // horizontal // supports horizontal orientation
+            // horizontal // supports horizontal orientation
             />
           </div>
         )}
@@ -94,7 +94,7 @@ DataDictionaryNode.propTypes = {
 DataDictionaryNode.defaultProps = {
   description: "",
   expanded: false,
-  onExpandNode: () => {},
+  onExpandNode: () => { },
 };
 
 export default withStyles(styles)(DataDictionaryNode);
