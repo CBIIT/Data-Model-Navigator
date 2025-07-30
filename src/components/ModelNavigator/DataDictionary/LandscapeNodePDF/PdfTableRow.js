@@ -256,7 +256,7 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
           {propInfo.enum ? (
             <Text style={styles.tableCell}>
               {typeof propInfo?.type?.value_type === "string" &&
-              propInfo?.type.value_type === "list"
+                propInfo?.type.value_type === "list"
                 ? "list\n\n"
                 : ""}
               {"Acceptable Values: "}
@@ -282,28 +282,28 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
           </>
         )}
       </View>
-      {propInfo.CDECode && (
+      {propInfo?.Term?.length > 0 && (
         <>
           <View style={styles.horizontalCells}>
             <Text style={styles.cellHorizontalHeader}>CDE FULL NAME</Text>
             <Text style={styles.horizontalTableCell}>
-              {getTableCell(propInfo.CDEFullName)}
+              {getTableCell(propInfo?.Term?.map((term) => term.Value).join(", "))}
             </Text>
 
             <Text style={styles.cellHeader}>VERSION</Text>
             <Text style={styles.horizontalTableCell}>
-              {getTableCell(propInfo.CDEVersion)}
+              {getTableCell(propInfo?.Term?.map((term) => term.Version).join(", "))}
             </Text>
 
             <Text style={styles.cellHeader}>PUBLIC ID</Text>
             <Text style={styles.horizontalTableCell}>
-              {getTableCell(propInfo.CDECode)}
+              {getTableCell(propInfo?.Term?.map((term) => term.Code).join(", "))}
             </Text>
           </View>
           <View style={styles.horizontalCells}>
             <Text style={styles.cellHorizontalHeader}>ORIGIN</Text>
             <Text style={styles.horizontalTableCell}>
-              {getTableCell(propInfo.CDEOrigin)}
+              {getTableCell(propInfo?.Term?.map((term) => term.Origin).join(", "))}
             </Text>
           </View>
         </>

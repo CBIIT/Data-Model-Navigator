@@ -23,18 +23,16 @@ export const prepareSearchData = (dictionary) => {
         if (type === 'UNDEFINED') type = undefined;
         const propertyDescription = getPropertyDescription(node.properties[propertyKey]);
         const splitText = propertyDescription ? propertyDescription.split('<br>')[0] : propertyDescription;
-        const CDEFullName = node.properties[propertyKey].CDEFullName;
-        // const CDEPublicID = node.properties[propertyKey].CDEPublicID;
-        const CDEVersion = node.properties[propertyKey].CDEVersion;
-        const CDEOrigin = node.properties[propertyKey].CDEOrigin;
-        const CDECode = node.properties[propertyKey].CDECode;
+        const CDEFullName = node.properties[propertyKey]?.Term?.map((term) => term.Value).join(", ") || '';
+        const CDEVersion = node.properties[propertyKey]?.Term?.map((term) => term.Version).join(", ") || '';
+        const CDEOrigin = node.properties[propertyKey]?.Term?.map((term) => term.Origin).join(", ") || '';
+        const CDECode = node.properties[propertyKey]?.Term?.map((term) => term.Code).join(", ") || '';
         return {
           name: formatText(propertyKey),
           description: formatText(splitText),
           type,
           CDEFullName,
           CDEOrigin,
-          // CDEPublicID,
           CDEVersion,
           CDECode
         };
@@ -115,7 +113,6 @@ export const searchKeyword = (searchData, keyword) => {
       'properties.description',
       'properties.type',
       'properties.CDEFullName',
-      // 'properties.CDEPublicID',
       'properties.CDECode',
       'properties.CDEVersion',
       'properties.CDEOrigin'

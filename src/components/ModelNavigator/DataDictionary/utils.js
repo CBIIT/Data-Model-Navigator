@@ -360,10 +360,10 @@ export const isFileManifest = (node) => node.id === 'file';
  * - title (Label: Node)
  * - property
  * - $.type
- * - $.CDEFullName
- * - $.CDEVersion
- * - $.CDECode
- * - $.CDEOrigin
+ * - $.Term[].Value (Label: CDEFullName)
+ * - $.Term[].Version (Label: CDEVersion)
+ * - $.Term[].Code (Label: CDECode)
+ * - $.Term[].Origin (Label: CDEOrigin)
  * - $.enum (Label: Acceptable Values)
  * - $.propertyType (Label: required)
  * - $.description
@@ -391,10 +391,10 @@ export const generateNodeTSV = (node, headerLine = true, onlyRequired = false) =
     tsv += `${node.title || ''}\t`;
     tsv += `${key}\t`;
     tsv += `${formatPropertyType(property)}\t`;
-    tsv += `${property.CDEFullName || ''}\t`;
-    tsv += `${property.CDEVersion || ''}\t`;
-    tsv += `${property.CDECode || ''}\t`;
-    tsv += `${property.CDEOrigin || ''}\t`;
+    tsv += `${property?.Term?.map((term) => term.Value).join(", ") || ''}\t`;
+    tsv += `${property?.Term?.map((term) => term.Version).join(", ") || ''}\t`;
+    tsv += `${property?.Term?.map((term) => term.Code).join(", ") || ''}\t`;
+    tsv += `${property?.Term?.map((term) => term.Origin).join(", ") || ''}\t`;
     tsv += `${property.enum ? JSON.stringify(property?.enum?.map((v) => escapeForTSV(v))) : ''}\t`;
     tsv += `${property.propertyType || ''}\t`;
     tsv += `${escapeForTSV(property.description) || ''}\t`;
@@ -426,10 +426,10 @@ export const generateNodeJSON = (node, onlyRequired = false) => {
       Node: node.title || '',
       Property: key,
       Type: formatPropertyType(property),
-      CDEFullName: property.CDEFullName || '',
-      CDEVersion: property.CDEVersion || '',
-      CDECode: property.CDECode || '',
-      CDEOrigin: property.CDEOrigin || '',
+      CDEFullName: property.Term?.map((term) => term.Value).join(", ") || '',
+      CDEVersion: property.Term?.map((term) => term.Version).join(", ") || '',
+      CDECode: property.Term?.map((term) => term.Code).join(", ") || '',
+      CDEOrigin: property.Term?.map((term) => term.Origin).join(", ") || '',
       "Acceptable Values": property.enum ? property.enum : '',
       Required: property.propertyType || '',
       Description: escapeForTSV(property.description) || '',

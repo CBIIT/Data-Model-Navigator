@@ -236,26 +236,21 @@ export const getMatchInsideProperty = (propertyIndex, propertyKey, property, all
           descriptionMatch = item;
         }
       } else if (item.key === 'properties.CDEFullName') {
-        const CDEFullName = property.CDEFullName
+        const CDEFullName = property?.Term?.map((term) => term.Value).join(", ") || '';
         if (CDEFullName === item.value) {
             CDEInfoMatchList.push(item)
         }
       } else if (item.key === 'properties.CDEVersion') {
-        const CDEVersion = property.CDEVersion
+        const CDEVersion = property?.Term?.map((term) => term.Version).join(", ") || '';
         if (CDEVersion === item.value) {
             CDEInfoMatchList.push(item)
         }
       } else if (item.key === 'properties.CDEOrigin') {
-        const CDEOrigin = property.CDEOrigin
+        const CDEOrigin = property?.Term?.map((term) => term.Origin).join(", ") || '';
         if (CDEOrigin === item.value) {
             CDEInfoMatchList.push(item)
         }
-      } /*else if (item.key === 'properties.CDEPublicID') {
-        const CDEPublicID = property.CDEPublicID
-        if (CDEPublicID === item.value) {
-            CDEInfoMatchList.push(item)
-        }
-      }*/ else if (item.key === 'properties.type') {
+      } else if (item.key === 'properties.type') {
         const type = getType(property);
         if (typeof type === 'string') {
           if (type === item.value) {

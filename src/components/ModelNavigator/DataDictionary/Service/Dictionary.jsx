@@ -20,7 +20,6 @@ export async function getModelExploreData(...urls) {
   // translate the json file here
   const dataList = {};
   const keyMaps = new Set();
-  const cdeMap = new Map();
 
   // using the following code the convert MDF to Gen3 format
   for (const [key, value] of Object.entries(modelData.Nodes)) {
@@ -69,10 +68,7 @@ export async function getModelExploreData(...urls) {
               ? modelData.PropDefinitions[propertyName]?.Tags?.Labeled
                 ? modelData.PropDefinitions[propertyName]?.Tags?.Labeled : undefined : undefined;
             propertiesItem.category = key;
-            const caDSRTerm = modelData.PropDefinitions[propertyName]?.Term?.find((term) => term?.Origin?.toLowerCase()?.indexOf("cadsr") !== -1);
-            if (caDSRTerm?.Code) {
-              cdeMap.set(`${key}.${propertyName};${caDSRTerm.Code}.${caDSRTerm.Version}`, { CDECode: caDSRTerm?.Code, CDEVersion: caDSRTerm?.Version, CDEOrigin: caDSRTerm?.Origin });
-            }
+            propertiesItem.Term = modelData?.PropDefinitions[propertyName]?.Term || [];
             propertiesItem.description = modelData?.PropDefinitions[propertyName]?.Desc || "N/A";
             propertiesItem.type = modelData?.PropDefinitions[propertyName]?.Type
               || modelData?.PropDefinitions[propertyName]?.Enum;
@@ -213,7 +209,6 @@ export async function getModelExploreData(...urls) {
   const newDataList = dataList;
   return {
     data: newDataList,
-    cdeMap: cdeMap,
     version: {
       model: modelData.Version,
       ...version,

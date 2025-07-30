@@ -8,17 +8,9 @@ import {
     addHighlightingSpans,
 } from '../../../Utils/highlightHelper';
 
-function isLink(value) {
-    return !!value.CDELink;
-}
-
-const wrapLinkInLink = ({ CDELink, CDECode }) => {
-    return <a target='_blank' href={CDELink}>{CDECode}</a>;
-};
-
 const CDEListComponent = ({
     classes,
-    items,
+    property,
     CDEInfoMatchList,
     isSearchMode,
 }) => {
@@ -57,19 +49,84 @@ const CDEListComponent = ({
         );
     };
 
+    /**
+     * Generates a dictionary link based on the CDE origin, code, and version.
+     * 
+     * @param {string} origin 
+     * @param {string} code 
+     * @param {string} version 
+     * @returns {string|null} Returns a URL if the origin is 'cadsr', otherwise returns null.
+     */
+    const getCDELink = (origin, code, version) => {
+        if (origin?.toLowerCase() === 'cadsr') {
+            return `https://cadsr.cancer.gov/onedata/dmdirect/NIH/NCI/CO/CDEDD?filter=CDEDD.ITEM_ID=${code}%20and%20ver_nr=${version}`;
+        }
+
+        return null;
+    };
+
+    /**
+     * Renders a CDE attribute with highlighting.
+     * 
+     * @param {any} value 
+     * @param {number} index 
+     * @returns {JSX.Element} Returns a span element with highlighted text.
+     */
+    const renderCDEAttribute = (value, index) => {
+        return (
+            <span key={value}>
+                {highlightMatchingProperties(value)}
+                {index < allCodes.length - 1 ? ', ' : ''}
+            </span>
+        );
+    };
+
+    const allValues = property?.Term?.map((term) => term?.Value) || [];
+    const allVersions = property?.Term?.map((term) => term?.Version) || [];
+    const allCodes = property?.Term?.map((term) => {
+        const codeLink = getCDELink(term?.Origin, term?.Code, term?.Version);
+        return codeLink ? <a target='_blank' href={codeLink}>{term?.Code}</a> : term?.Code;
+    }) || [];
+    const allOrigins = property?.Term?.map((term) => term?.Origin) || [];
+
     return (
         <div className={classes.listWrapper}>
-            {
-                items.map(({ label, value }) => {
-                    return (
-                        <div className={classes.listItem}>
-                            <div style={{
-                            }}>{label}</div>
-                            <div>{!isLink(value) ? highlightMatchingProperties(value) : <div>{wrapLinkInLink(value)}</div>}</div>
-                        </div>
-                    )
-                })
-            }
+            {/* CDE Full Name */}
+            {allValues.length > 0 && (
+                <div className={classes.listItem}>
+                    <div><strong>CDE Full Name</strong></div>
+                    <div>
+                        {allValues.map(renderCDEAttribute)}
+                    </div>
+                </div>
+            )}
+            {/* CDE Version */}
+            {allVersions.length > 0 && (
+                <div className={classes.listItem}>
+                    <div><strong>Version</strong></div>
+                    <div>
+                        {allVersions.map(renderCDEAttribute)}
+                    </div>
+                </div>
+            )}
+            {/* CDE Code/Public ID */}
+            {allCodes.length > 0 && (
+                <div className={classes.listItem}>
+                    <div><strong>Public ID</strong></div>
+                    <div>
+                        {allCodes.map(renderCDEAttribute)}
+                    </div>
+                </div>
+            )}
+            {/* CDE Origin */}
+            {allOrigins.length > 0 && (
+                <div className={classes.listItem}>
+                    <div><strong>Origin</strong></div>
+                    <div>
+                        {allOrigins.map(renderCDEAttribute)}
+                    </div>
+                </div>
+            )}
         </div>
     )
 };
