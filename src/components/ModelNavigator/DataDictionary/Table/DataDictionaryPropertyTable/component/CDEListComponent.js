@@ -14,7 +14,7 @@ const CDEListComponent = ({
     CDEInfoMatchList,
     isSearchMode,
 }) => {
-    const highlightMatchingProperties = (item) => {
+    const highlightMatchingProperties = (item, suffix = "") => {
         if (isSearchMode && CDEInfoMatchList && CDEInfoMatchList.length > 0) {
             const matchItem = CDEInfoMatchList.map((prop) => {
                 if (prop.value === item) {
@@ -23,29 +23,25 @@ const CDEListComponent = ({
             }).filter((c) => c);
             if (matchItem.length) {
                 return (
-                    <ListItemText>
-                        <span className={classes.listItemText}>
-                            {item.substring}
-                            {
-                                addHighlightingSpans(
-                                    item,
-                                    matchItem[0].indices,
-                                    'data-dictionary-property-table__span',
-                                )
-                            }
-                        </span>
-                    </ListItemText>
+                    <Typography className={classes.listItemText}>
+                        {item.substring}
+                        {
+                            addHighlightingSpans(
+                                item,
+                                matchItem[0].indices,
+                                'data-dictionary-property-table__span',
+                            )
+                        }
+                        {suffix}
+                    </Typography>
                 );
             }
         }
         return (
-            <ListItemText
-                primary={(
-                    <Typography className={classes.listItemText}>
-                        {item}
-                    </Typography>
-                )}
-            />
+            <Typography className={classes.listItemText}>
+                {item}
+                {suffix}
+            </Typography>
         );
     };
 
@@ -73,12 +69,7 @@ const CDEListComponent = ({
      * @returns {JSX.Element} Returns a span element with highlighted text.
      */
     const renderCDEAttribute = (value, index) => {
-        return (
-            <span key={value}>
-                {highlightMatchingProperties(value)}
-                {index < allCodes.length - 1 ? ', ' : ''}
-            </span>
-        );
+        return highlightMatchingProperties(value, index < allValues.length - 1 ? ', ' : '');
     };
 
     const allValues = property?.Term?.map((term) => term?.Value) || [];
@@ -95,7 +86,7 @@ const CDEListComponent = ({
             {allValues.length > 0 && (
                 <div className={classes.listItem}>
                     <div><strong>CDE Full Name</strong></div>
-                    <div>
+                    <div className={classes.listItemContainer}>
                         {allValues.map(renderCDEAttribute)}
                     </div>
                 </div>
@@ -104,7 +95,7 @@ const CDEListComponent = ({
             {allVersions.length > 0 && (
                 <div className={classes.listItem}>
                     <div><strong>Version</strong></div>
-                    <div>
+                    <div className={classes.listItemContainer}>
                         {allVersions.map(renderCDEAttribute)}
                     </div>
                 </div>
@@ -113,7 +104,7 @@ const CDEListComponent = ({
             {allCodes.length > 0 && (
                 <div className={classes.listItem}>
                     <div><strong>Public ID</strong></div>
-                    <div>
+                    <div className={classes.listItemContainer}>
                         {allCodes.map(renderCDEAttribute)}
                     </div>
                 </div>
@@ -122,7 +113,7 @@ const CDEListComponent = ({
             {allOrigins.length > 0 && (
                 <div className={classes.listItem}>
                     <div><strong>Origin</strong></div>
-                    <div>
+                    <div className={classes.listItemContainer}>
                         {allOrigins.map(renderCDEAttribute)}
                     </div>
                 </div>
@@ -132,10 +123,15 @@ const CDEListComponent = ({
 };
 
 const styles = () => ({
+    listItemContainer: {
+        maxWidth: "280px",
+    },
     listItemText: {
         fontWeight: '300',
         fontSize: '14px',
         whiteSpace: 'pre-wrap',
+        wordBreak: 'break-word',
+        display: 'inline',
     },
     listWrapper: {
         // paddingLeft: '380px',
