@@ -54,7 +54,7 @@ const CDEListComponent = ({
      * @returns {string|null} Returns a URL if the origin is 'cadsr', otherwise returns null.
      */
     const getCDELink = (origin, code, version) => {
-        if (origin?.toLowerCase() === 'cadsr') {
+        if (origin?.toLowerCase()?.indexOf("cadsr") >= 0) {
             return `https://cadsr.cancer.gov/onedata/dmdirect/NIH/NCI/CO/CDEDD?filter=CDEDD.ITEM_ID=${code}%20and%20ver_nr=${version}`;
         }
 
