@@ -86,7 +86,7 @@ const TableRow = ({
         let category = "";
         let termLink = "";
         let type = "";
-        let enums = "";
+        let enums = [];
         let key = false;
         if ("src" in property) {
           try {
@@ -104,8 +104,8 @@ const TableRow = ({
             type = property.type;
           } catch (err) { }
         }
-        if ("enum" in property) {
-          enums = property.enum;
+        if ("enum" in property && property.enum instanceof Array) {
+          enums = [...property.enum].sort((a, b) => a?.toLowerCase()?.localeCompare(b?.toLowerCase()));
         }
         if ("key" in property) {
           key = property.key;
@@ -138,7 +138,7 @@ const TableRow = ({
                 : propertyNameFragment}
             </td>
             <td className={classes.rowItem}>
-              {enums ? (
+              {enums?.length ? (
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <span>
                     {typeof type?.value_type === "string" && type.value_type === "list" ? <p>"list" <br /><br /></p> : null}

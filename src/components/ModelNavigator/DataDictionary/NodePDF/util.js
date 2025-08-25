@@ -30,14 +30,3 @@ export const FontRegistry = (font) => {
   Font.register(fontConfig);
   return font;
 };
-
-export const formatEnumValues = (enums) => {
-  if (Array.isArray(enums)) {
-    let concatEnums = '';
-    enums.forEach((value) => {
-      concatEnums += `'${value}'; `;
-    });
-    return concatEnums;
-  }
-  return JSON.stringify(enums);
-};

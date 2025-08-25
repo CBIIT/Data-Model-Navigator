@@ -395,7 +395,7 @@ export const generateNodeTSV = (node, headerLine = true, onlyRequired = false) =
     tsv += `${property?.Term?.map((term) => term.Version).join(", ") || ''}\t`;
     tsv += `${property?.Term?.map((term) => term.Code).join(", ") || ''}\t`;
     tsv += `${property?.Term?.map((term) => term.Origin).join(", ") || ''}\t`;
-    tsv += `${property.enum ? JSON.stringify(property?.enum?.map((v) => escapeForTSV(v))) : ''}\t`;
+    tsv += `${property.enum instanceof Array ? JSON.stringify(sortAlphabetically(property.enum).map((v) => escapeForTSV(v))) : ''}\t`;
     tsv += `${property.propertyType || ''}\t`;
     tsv += `${escapeForTSV(property.description) || ''}\t`;
     tsv += `${property.src || ''}\t`;
@@ -430,7 +430,7 @@ export const generateNodeJSON = (node, onlyRequired = false) => {
       CDEVersion: property.Term?.map((term) => term.Version).join(", ") || '',
       CDECode: property.Term?.map((term) => term.Code).join(", ") || '',
       CDEOrigin: property.Term?.map((term) => term.Origin).join(", ") || '',
-      "Acceptable Values": property.enum ? property.enum : '',
+      "Acceptable Values": property.enum instanceof Array ? sortAlphabetically(property.enum) : '',
       Required: property.propertyType || '',
       Description: escapeForTSV(property.description) || '',
       Src: property.src || '',
@@ -529,8 +529,8 @@ export const generateVocabFullDownload = (fullDictionary, format, prefix = "ICDC
       const propertyKeyList = Object.keys(properties);
       propertyKeyList.forEach((propertyKey) => {
         const property = properties[propertyKey];
-        if (property.enum) {
-          enumArr.push({ title, enums: property.enum, propertyKey });
+        if (property.enum instanceof Array) {
+          enumArr.push({ title, enums: sortAlphabetically(property.enum), propertyKey });
         }
       });
     });
@@ -620,4 +620,18 @@ export const getDictionaryFilename = (prefix, nodeName, onlyRequired, modelVersi
   }
 
   return filename;
+};
+
+/**
+ * Performs a case-insensitive sort of an array of strings. Does not mutate the original array.
+ * 
+ * @param {Readonly<Array<string>>} arr 
+ * @returns {Array<string>} The sorted array.
+ */
+export const sortAlphabetically = (arr) => {
+  if (!Array.isArray(arr)) {
+    return [];
+  }
+
+  return [...arr].sort((a, b) => a?.toLowerCase()?.localeCompare(b?.toLowerCase()));
 };

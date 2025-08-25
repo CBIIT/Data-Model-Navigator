@@ -163,7 +163,7 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
   const validateEnums = (enums) => {
     if (Array.isArray(enums)) {
       let concatEnums = "";
-      enums.forEach((value) => {
+      [...enums].sort((a, b) => a?.toLowerCase()?.localeCompare(b?.toLowerCase())).forEach((value) => {
         concatEnums += textContent(`'${value}'; `, "/");
       });
       return concatEnums;
