@@ -21,9 +21,10 @@ const getData = async (url) => {
   return data;
 };
 
-async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS) {
+export async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_MODEL_PROPS) {
   const icdcMData = await getData(modelUrl);
   const icdcMPData = await getData(modelPropsUrl);
+
 
   // translate the json file here
   const dataList = {};
@@ -39,7 +40,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
       item.category = value.Tags.Category;
     } else if ('Category' in value) {
       item.category = (value.Category && value.Category.length > 0)
-        ? value.Category : 'Undefined';   
+        ? value.Category : 'Undefined';
     } else {
       item.category = 'Undefined';
     }
@@ -62,7 +63,7 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
     const pOptional = [];
 
     const Yes = [];
-    const No  = [];
+    const No = [];
     if (icdcMData.Nodes[key].Props != null) {
       for (let i = 0; i < icdcMData.Nodes[key].Props.length; i++) {
         const nodeP = icdcMData.Nodes[key].Props[i];
@@ -96,11 +97,11 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
 
             if (icdcMPData.PropDefinitions[propertyName].Tags &&
               icdcMPData.PropDefinitions[propertyName].Tags.Labeled) {
-                Yes.push(nodeP);
-                propertiesItem['display'] = 'yes';
+              Yes.push(nodeP);
+              propertiesItem['display'] = 'yes';
             } else {
-                No.push(nodeP);
-                propertiesItem['display'] = 'no';
+              No.push(nodeP);
+              propertiesItem['display'] = 'no';
             }
           }
         }
@@ -206,7 +207,10 @@ async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl = DATA_M
   const newDataList = dataList;
   return {
     data: newDataList,
-    version,
+    version: {
+      ...version,
+      modelVersion: icdcMData.Version
+    },
   };
 }
 

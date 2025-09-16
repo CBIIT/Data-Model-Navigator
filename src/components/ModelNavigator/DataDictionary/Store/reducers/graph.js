@@ -129,7 +129,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         pdfDownloadConfig: action.pdfDownloadConfig,
         graphConfig: action.graphConfig,
         assetConfig: action.assetConfig,
-        graphViewConfig: {...action.graphViewConfig, ...state.graphViewConfig},
+        graphViewConfig: { ...action.graphViewConfig, ...state.graphViewConfig },
       }
     }
     case 'REACT_FLOW_SET_GRAPH_DATA': {
@@ -168,18 +168,18 @@ const ddgraph = (state = ddgraphInitialState, action) => {
 
       return {
         ...state,
-          highlightingMatchedNodeID: action.nodeID,
-          highlightingNode: state.dictionary[action.nodeID],
-          highlightingMatchedNodeOpened: false,
-          overlayPropertyHidden: true,
-          expandNodeView: true,
-          highlightedNodes: newArray,
-          highlightParentNodes: highlightNodes,
+        highlightingMatchedNodeID: action.nodeID,
+        highlightingNode: state.dictionary[action.nodeID],
+        highlightingMatchedNodeOpened: false,
+        overlayPropertyHidden: true,
+        expandNodeView: true,
+        highlightedNodes: newArray,
+        highlightParentNodes: highlightNodes,
       }
     }
     case 'GRAPH_CLICK_NODE': {
       if (state.isSearchMode) {
-      // clicking node in search mode opens property table
+        // clicking node in search mode opens property table
         return {
           ...state,
           highlightingMatchedNodeID: action.nodeID,
@@ -190,7 +190,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
       let newHighlightingNode = null;
       let newSecondHighlightingNodeID = null;
       if (action.nodeID) {
-      // if no node is selected, select this node as highlight node
+        // if no node is selected, select this node as highlight node
         if (!state.highlightingNode) {
           newHighlightingNode = state.nodes.find((n) => n.id === action.nodeID);
         } else if (state.highlightingNode) {
@@ -198,13 +198,13 @@ const ddgraph = (state = ddgraphInitialState, action) => {
 
           // if is clicking the same node
           if (state.highlightingNode.id === action.nodeID) {
-          // if no second node is selected, regard this as cancel selecting
+            // if no second node is selected, regard this as cancel selecting
             if (!state.secondHighlightingNodeID) {
               newHighlightingNode = null;
             }
           } else if (state.secondHighlightingNodeCandidateIDs.length > 1
-          && state.secondHighlightingNodeCandidateIDs.includes(action.nodeID)) {
-          // regard as canceling selecting second highlight node
+            && state.secondHighlightingNodeCandidateIDs.includes(action.nodeID)) {
+            // regard as canceling selecting second highlight node
             if (state.secondHighlightingNodeID === action.nodeID) {
               newSecondHighlightingNodeID = null;
             } else { // select this as second highlight node
@@ -304,7 +304,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
         searchResult: action.searchResult,
         matchedNodeIDs: action.searchResultSummary.generalMatchedNodeIDs,
         matchedNodeIDsInNameAndDescription:
-        action.searchResultSummary.matchedNodeIDsInNameAndDescription,
+          action.searchResultSummary.matchedNodeIDsInNameAndDescription,
         matchedNodeIDsInProperties: action.searchResultSummary.matchedNodeIDsInProperties,
         isGraphView: true,
         isSearchMode: true,
@@ -381,7 +381,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
     case actionTypes.CNAVAS_WIDTH_CHANGE:
       return {
         ...state,
-        graphViewConfig: onCnavasWidthChange({...action, ...state}),
+        graphViewConfig: onCnavasWidthChange({ ...action, ...state }),
       }
     default:
       return state;
@@ -395,6 +395,7 @@ const versionInfo = (state = {}, action) => {
         ...state,
         dictionaryVersion: action.data.dictionary.version || 'unknown',
         apiVersion: action.data.version || 'unknown',
+        modelVersion: action.data.modelVersion || 'unknown'
       };
     default:
       return state;
