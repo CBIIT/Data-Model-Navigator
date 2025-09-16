@@ -9,6 +9,7 @@ import styles from './Header.style';
 import CustomTheme from './Header.theme.config';
 import ReadMeComponent from '../ReadMe/ReadMe.controller';
 import DownloadDropdownMenu from './components/download-dropdown-menu';
+import { toUpper } from 'lodash';
 
 const dogIconSrc = 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/4a3fb8e201e6ba2a858d7ec1226d2fd6ea2b5298/icdc/images/svgs/Icon-DMNav.85x85.svg';
 const HeaderComponent = ({
@@ -21,6 +22,7 @@ const HeaderComponent = ({
     ? state.submission.readMeConfig : undefined));
   const pageConfig = useSelector((state) => (state.submission && state.submission.pageConfig ? state.submission.pageConfig : undefined));
   const loadingExampleConfig = useSelector((state) => (state.submission && state.submission.loadingExampleConfig ? state.submission.loadingExampleConfig : undefined));
+  const modelVersion = useSelector((state) => state.versionInfo && state.versionInfo.modelVersion ? state.versionInfo.modelVersion : undefined)
 
   useEffect(() => {
     if (config && config.readMeUrl) {
@@ -50,17 +52,21 @@ const HeaderComponent = ({
               alt="dog-icon"
               src={pageConfig?.iconSrc || dogIconSrc}
             />
-            <h2
-              className={classes.title}
-            >
-              {pageConfig?.title || "Data Model Navigator"}
-            </h2>
+            <div className={classes.titleAndVersion}>
+              <h2
+                className={classes.title}
+              >
+                {pageConfig?.title || "Data Model Navigator"}
+              </h2>
+              {modelVersion && <p className={classes.versionText}>{`Version ${toUpper(modelVersion)}`}</p>}
+
+            </div>
           </div>
 
           <div
             className={classes.btnGroup}
           >
-            {typeof(config?.readMeUrl) === "string" && (
+            {typeof (config?.readMeUrl) === "string" && (
               <Button
                 classes={{
                   root: classes.readMeBtnRoot,

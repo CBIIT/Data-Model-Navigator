@@ -12,6 +12,12 @@ export default () => ({
   logoAndTitle: {
     display: "flex",
     gap: "13px",
+    alignItems: 'center'
+  },
+  titleAndVersion: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px'
   },
   dogIcon: {
     height: "85px",
@@ -25,6 +31,14 @@ export default () => ({
     fontWeight: "bold",
     letterSpacing: "1px",
     fontFamily: "Raleway",
+    margin: 0
+  },
+  versionText: {
+    margin: 0,
+    color: 'rgba(87, 87, 87, 0.9)',
+    fontFamily: 'Nunito Sans',
+    fontWeight: 400,
+    fontSize: '12px'
   },
   btnGroup: {
     display: "flex",
