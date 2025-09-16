@@ -17,7 +17,6 @@ export default () => ({
   titleAndVersion: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px'
   },
   dogIcon: {
     height: "85px",
