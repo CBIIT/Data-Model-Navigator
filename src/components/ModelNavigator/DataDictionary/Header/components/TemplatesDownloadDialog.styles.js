@@ -1,0 +1,82 @@
+export default () => ({
+  dialogPaper: {
+    maxWidth: "none",
+    width: "704px !important",
+    padding: "38px 34px 60px",
+    borderRadius: "8px",
+    border: "2px solid #6B7294",
+    background: "linear-gradient(0deg, #F2F6FA 0%, #F2F6FA 100%), #2E4D7B",
+    boxShadow: "0px 4px 45px 0px rgba(0, 0, 0, 0.40)",
+    fontFamily: "'Nunito', sans-serif",
+    "-webkit-font-smoothing": "antialiased",
+  },
+  formControlLabel: {
+    width: "100%",
+    marginLeft: 0,
+    "& .MuiFormControlLabel-label": {
+      display: "block",
+      flex: 1,
+      minWidth: 0,
+      width: "100%",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+
+      fontFamily: "'Nunito', sans-serif",
+      fontStyle: "normal",
+      fontWeight: 400,
+      fontSize: "16px",
+      lineHeight: "20px",
+      color: "#083A50",
+    },
+    "& .MuiCheckbox-root": {
+      padding: "5px 10px",
+    },
+  },
+  checkboxGrid: {
+    rowGap: 1,
+    columnGap: 0,
+  },
+  checkboxIcon: {
+    backgroundColor: "#FFFFFF",
+  },
+  divider: {
+    marginBottom: "20.5px",
+    backgroundColor: "#6B7294",
+  },
+  actionsRow: {
+    marginTop: "55.5px",
+    alignSelf: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: "16px",
+  },
+  actionBtn: {
+    minWidth: "128px",
+    width: "128px",
+    padding: "17.5px 25px",
+    fontSize: "16px",
+    fontStyle: "normal",
+    lineHeight: "16px",
+    letterSpacing: "0.32px",
+    textTransform: "none",
+    alignSelf: "center",
+    background: "#FFFFFF",
+    border: "1.5px solid #6B7294",
+    fontWeight: 500,
+    boxShadow: "none",
+    "&:hover": {
+      border: "1.5px solid #6B7294",
+      background: "#FFFFFF",
+    },
+    "&.Mui-disabled": {
+      fontWeight: 700,
+      color: "#EDEDED",
+      background: "#B1B1B1",
+      border: "1.5px solid #6B7294",
+    },
+  },
+});
+
