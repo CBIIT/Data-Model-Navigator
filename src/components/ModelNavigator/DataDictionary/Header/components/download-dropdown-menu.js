@@ -34,6 +34,7 @@ import {
 } from '../../utils';
 import { cloneDeep } from 'lodash';
 import GenericDownloadIconDark from "../../Table/icons/icon_download_dark.svg";
+import TemplatesDownloadDialog from './TemplatesDownloadDialog';
 
 const {
   FILE_TYPE_FULL_DICTIONARY,
@@ -43,7 +44,6 @@ const {
   FILE_TYPE_FULL_DICTIONARY_JSON,
   FILE_TYPE_REQUIRED_DICTIONARY_JSON,
   FILE_TYPE_README,
-  FILE_TYPE_TEMPLATES,
   FILE_TYPE_CONTROLLED_VOCAB_TSV,
   FILE_TYPE_CONTROLLED_VOCAB_JSON,
   FILE_TYPE_LOADING_EXAMPLE,
@@ -55,7 +55,6 @@ const {
   FILE_TYPE_FULL_DICTIONARY_JSON: { label: 'Data Dictionary', type: "(JSON)" },
   FILE_TYPE_REQUIRED_DICTIONARY_JSON: { label: 'Data Dictionary (Required)', type: "(JSON)" },
   FILE_TYPE_README: { label: 'Data Model README', type: "(PDF)" },
-  FILE_TYPE_TEMPLATES: { label: 'Submission Templates', type: "(TSV)" },
   FILE_TYPE_CONTROLLED_VOCAB_TSV: { label: 'All Vocabularies', type: "(TSV)" },
   FILE_TYPE_CONTROLLED_VOCAB_JSON: { label: 'All Vocabularies', type: "(JSON)" },
   FILE_TYPE_LOADING_EXAMPLE: { label: 'Example Templates', type: "" },
@@ -69,7 +68,6 @@ const FILE_TYPES = [
   // FILE_TYPE_REQUIRED_DICTIONARY_TSV,
   // FILE_TYPE_FULL_DICTIONARY_JSON,
   // FILE_TYPE_REQUIRED_DICTIONARY_JSON,
-  FILE_TYPE_TEMPLATES,
   FILE_TYPE_CONTROLLED_VOCAB_TSV,
   FILE_TYPE_CONTROLLED_VOCAB_JSON,
   FILE_TYPE_LOADING_EXAMPLE,
@@ -179,6 +177,9 @@ const DownloadFileTypeBtn = ({
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [isLoading, setLoading] = React.useState(false);
   const [toggledMenus, setToggledMenus] = React.useState([]);
+  
+  const [templatesDialogOpen, setTemplatesDialogOpen] = React.useState(false);
+  const [templatesSelectAllDefault, setTemplatesSelectAllDefault] = React.useState(false);
 
   const fullDictionaryC2nl = category2NodeList(fullDictionary);
   const processedFullDictionary = sortByCategory(fullDictionaryC2nl, fullDictionary);
@@ -210,10 +211,18 @@ const DownloadFileTypeBtn = ({
     }, 50);
   };
 
-  const downloadAllTemplates = (prefix = "ICDC_", fileTransferManifestName = "") => {
-    const fullDictionaryTemplates = Object.fromEntries(Object.entries(fullDictionary).filter(([_key, value]) => value.template === 'Yes'));
-    const nodesValueArray = Object.values(fullDictionaryTemplates);
-    const nodesKeyArray = Object.keys(fullDictionaryTemplates);
+ const templateEntries = React.useMemo(() => {
+    return Object.entries(fullDictionary || {}).filter(([_, value]) => value?.template === 'Yes');
+  }, [fullDictionary]);
+
+  const downloadSelectedTemplates = (selectedKeys = [], prefix = "ICDC_", fileTransferManifestName = "") => {
+    const fullDictionaryTemplates = Object.fromEntries(templateEntries);
+    const selectedMap = Object.fromEntries(
+      Object.entries(fullDictionaryTemplates).filter(([k]) => selectedKeys.includes(k))
+    );
+
+    const nodesValueArray = Object.values(selectedMap);
+    const nodesKeyArray = Object.keys(selectedMap);
     const nodesTSV = nodesValueArray.map(
       (elem) => (isFileManifest(elem) ? {
         type: 'file-manifest',
@@ -279,8 +288,6 @@ const DownloadFileTypeBtn = ({
         return downloadAllJSON(true);
       case FILE_TYPE_README:
         return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix, config?.footnote);
-      case FILE_TYPE_TEMPLATES:
-        return downloadAllTemplates(config?.downloadPrefix, config?.fileTransferManifestName);
       case FILE_TYPE_CONTROLLED_VOCAB_TSV:
         return generateVocabFullDownload(fullDictionary, 'TSV', config?.downloadPrefix);
       case FILE_TYPE_CONTROLLED_VOCAB_JSON:
@@ -308,6 +315,23 @@ const DownloadFileTypeBtn = ({
       })
       .map((item) => getMenuItem(item, () => handleDownloadClick(item)));
   }, [FILE_TYPES, readMeConfig]);
+
+  const openTemplatesDialog = (selectAllDefault) => {
+    setAnchorElement(null);
+    setToggledMenus([]);
+    setTemplatesSelectAllDefault(selectAllDefault);
+    setTemplatesDialogOpen(true);
+  };
+
+  const handleTemplatesDownload = (selectedKeys) => {
+    const prefixArg = config?.downloadPrefix || 'ICDC_';
+    downloadSelectedTemplates(selectedKeys, prefixArg, config?.fileTransferManifestName);
+    setTemplatesDialogOpen(false);
+  };
+
+  const handleTemplatesClose = () => {
+    setTemplatesDialogOpen(false);
+  };
 
   return (
     <>
@@ -366,9 +390,38 @@ const DownloadFileTypeBtn = ({
             </StyledMenuItem>
           </List>
         </Collapse>
+
+        {/* Submission Templates Items */}
+        <StyledMenuItem onClick={() => handleMenuClick("submission_templates")}>
+          <StyledListItemIcon>
+            {!toggledMenus.includes("submission_templates") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          </StyledListItemIcon>
+          <StyledListItemText primary="Submission Templates" />
+        </StyledMenuItem>
+        <Collapse in={toggledMenus.includes("submission_templates")} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <StyledMenuItem onClick={() => openTemplatesDialog('all')}>
+              <div className={classes.indent} />
+              <StyledListItemText primary="All Templates" />
+            </StyledMenuItem>
+            <StyledMenuItem onClick={() => openTemplatesDialog('selective')}>
+              <div className={classes.indent} />
+              <StyledListItemText primary="Selective Templates" />
+            </StyledMenuItem>
+          </List>
+        </Collapse>
+
         {/* Standard items */}
         {options}
       </StyledMenu>
+
+      <TemplatesDownloadDialog
+        open={templatesDialogOpen}
+        onClose={handleTemplatesClose}
+        onConfirm={handleTemplatesDownload}
+        entries={templateEntries}
+        defaultSelectAll={templatesSelectAllDefault}
+      />
     </>
   );
 };
