@@ -91,7 +91,6 @@ export default () => ({
     padding: "10px",
     fontSize: "16px",
     fontStyle: "normal",
-    fontWeight: 700,
     lineHeight: "24px",
     letterSpacing: "0.32px",
     textTransform: "none",
