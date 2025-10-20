@@ -177,9 +177,7 @@ const DownloadFileTypeBtn = ({
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [isLoading, setLoading] = React.useState(false);
   const [toggledMenus, setToggledMenus] = React.useState([]);
-  
-  const [templatesDialogOpen, setTemplatesDialogOpen] = React.useState(false);
-  const [templatesSelectAllDefault, setTemplatesSelectAllDefault] = React.useState(false);
+  const [templatesDialogMode, setTemplatesDialogMode] = React.useState(null);
 
   const fullDictionaryC2nl = category2NodeList(fullDictionary);
   const processedFullDictionary = sortByCategory(fullDictionaryC2nl, fullDictionary);
@@ -316,21 +314,20 @@ const DownloadFileTypeBtn = ({
       .map((item) => getMenuItem(item, () => handleDownloadClick(item)));
   }, [FILE_TYPES, readMeConfig]);
 
-  const openTemplatesDialog = (selectAllDefault) => {
+  const openTemplatesDialog = (type) => {
     setAnchorElement(null);
     setToggledMenus([]);
-    setTemplatesSelectAllDefault(selectAllDefault);
-    setTemplatesDialogOpen(true);
+    setTemplatesDialogMode(type);
   };
 
   const handleTemplatesDownload = (selectedKeys) => {
     const prefixArg = config?.downloadPrefix || 'ICDC_';
     downloadSelectedTemplates(selectedKeys, prefixArg, config?.fileTransferManifestName);
-    setTemplatesDialogOpen(false);
+    setTemplatesDialogMode(null);
   };
 
   const handleTemplatesClose = () => {
-    setTemplatesDialogOpen(false);
+    setTemplatesDialogMode(null);
   };
 
   return (
@@ -416,11 +413,11 @@ const DownloadFileTypeBtn = ({
       </StyledMenu>
 
       <TemplatesDownloadDialog
-        open={templatesDialogOpen}
+        open={!!templatesDialogMode}
         onClose={handleTemplatesClose}
         onConfirm={handleTemplatesDownload}
         entries={templateEntries}
-        defaultSelectAll={templatesSelectAllDefault}
+        defaultSelectAll={templatesDialogMode === 'all'}
       />
     </>
   );
