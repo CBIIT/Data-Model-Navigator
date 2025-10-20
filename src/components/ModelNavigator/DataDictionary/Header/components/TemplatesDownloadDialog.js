@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import CustomDialog from "../../../../CustomDialog";
+import CustomDialog from "../../CustomDialog/CustomDialog.component";
 import {
   Box,
   Checkbox,

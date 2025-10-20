@@ -1,5 +1,5 @@
 import React from "react";
-import CloseIconSvg from "../../assets/icons/close_icon.svg";
+import CloseIconSvg from "../../../../assets/icons/close_icon.svg";
 import styles from "./CustomDialog.style";
 import {
   Button,
