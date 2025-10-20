@@ -22,6 +22,57 @@ const TemplatesDownloadDialog = ({
 }) => {
   const [selected, setSelected] = useState({});
   const keys = useMemo(() => entries.map(([k]) => k), [entries]);
+
+  /**
+   * Build a map of each node to its direct parents
+   */
+  const parentMap = useMemo(() => {
+    const map = {};
+    entries.forEach(([id]) => {
+      map[id] = [];
+    });
+
+    entries.forEach(([_id, value]) => {
+      (value?.links || []).forEach((l) => {
+        if (l?.Src && l?.Dst) {
+          const parent = l.Dst;
+          const child = l.Src;
+          if (map[child] && !map[child].includes(parent)) {
+            map[child].push(parent);
+          }
+        }
+      });
+    });
+
+    return map;
+  }, [entries]);
+
+  /**
+   * Build a map of each node to all its ancestors (direct and indirect)
+   */
+  const ancestorMap = useMemo(() => {
+    const cache = {};
+    const getAllAncestors = (node, seen = new Set()) => {
+      if (seen.has(node)) {
+        return [];
+      }
+
+      seen.add(node);
+      const directParents = parentMap[node] || [];
+      const indirectAncestors = directParents.flatMap((p) =>
+        getAllAncestors(p, seen)
+      );
+
+      return [...new Set([...directParents, ...indirectAncestors])];
+    };
+
+    Object.keys(parentMap).forEach((k) => {
+      cache[k] = getAllAncestors(k);
+    });
+
+    return cache;
+  }, [parentMap]);
+
   const selectedCount = useMemo(
     () => Object.values(selected).filter(Boolean).length,
     [selected]
@@ -56,7 +107,19 @@ const TemplatesDownloadDialog = ({
   };
 
   const toggleOne = (k) => {
-    setSelected((prev) => ({ ...prev, [k]: !prev[k] }));
+    setSelected((prev) => {
+      const isCurrentlySelected = !!prev[k];
+      const next = { ...prev, [k]: !isCurrentlySelected };
+
+      // If selecting this node, also select all its ancestors
+      if (!isCurrentlySelected) {
+        (ancestorMap[k] || parentMap[k] || []).forEach((parentId) => {
+          next[parentId] = true;
+        });
+      }
+
+      return next;
+    });
   };
 
   const handleConfirm = () => {
