@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   withStyles,
   Grid,
+  Tooltip,
 } from "@material-ui/core";
 import styles from "./TemplatesDownloadDialog.styles";
 import checkboxCheckedSrc from "../../../../../assets/icons/checkbox_checked.svg";
@@ -202,7 +203,16 @@ const TemplatesDownloadDialog = ({
                     }
                   />
                 }
-                label={k}
+                label={
+                  <Tooltip
+                    classes={{ tooltip: classes.checkboxTooltip }}
+                    title={k}
+                    placement="top"
+                    arrow
+                  >
+                    <span>{k}</span>
+                  </Tooltip>
+                }
                 title={k}
               />
             </Grid>
