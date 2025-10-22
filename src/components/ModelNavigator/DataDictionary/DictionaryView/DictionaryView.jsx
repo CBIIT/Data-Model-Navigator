@@ -2,15 +2,18 @@ import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
+import axios from "axios";
 import Styles from "./DictionaryStyle";
 import Tab from "./Tab/Tab";
 import TabPanel from "./Tab/TabPanel";
 import TabThemeProvider from "./Tab/TabThemeConfig";
 import ReduxDataDictionaryTable from "../Table/DataDictionaryTable";
 import CanvasView from "../ReactFlowGraph/Canvas/CanvasController";
+import VersionHistory from "../VersionHistory/VersionHistory";
 import { setCanvasWidth, setGraphView } from "../Store/actions/graph";
 
-const tabItems = [
+// Base tabs without version history
+const baseTabs = [
   {
     index: 0,
     label: "Graph View",
@@ -31,8 +34,12 @@ const DictionaryView = ({
   graphView,
   onSetGraphView,
   onWidthChange,
+  versionHistoryUrl,
 }) => {
   const [currentTab, setCurrentTab] = React.useState(0);
+  const [tabItems, setTabItems] = useState(baseTabs);
+  const [versionHistoryAvailable, setVersionHistoryAvailable] = useState(false);
+
   /**
    * get witdh of the tab to position nodes in the graph view
    */
@@ -42,6 +49,36 @@ const DictionaryView = ({
     setTabViewWidth(ref.current.offsetWidth);
     onWidthChange(ref.current.offsetWidth);
   };
+
+  // Check if version history URL is provided and file exists
+  useEffect(() => {
+    const checkVersionHistoryFile = async () => {
+      if (!versionHistoryUrl) {
+        setVersionHistoryAvailable(false);
+        return;
+      }
+
+      try {
+        const response = await axios.head(versionHistoryUrl);
+        if (response.status === 200) {
+          setVersionHistoryAvailable(true);
+          setTabItems([
+            ...baseTabs,
+            {
+              index: 2,
+              label: "Version History",
+              value: "version_history",
+            }
+          ]);
+        }
+      } catch (error) {
+        console.log('Version history file not available:', error);
+        setVersionHistoryAvailable(false);
+      }
+    };
+
+    checkVersionHistoryFile();
+  }, [versionHistoryUrl]);
 
   useEffect(() => {
     onWidthChange(ref.current.offsetWidth);
@@ -98,6 +135,13 @@ const DictionaryView = ({
                   />
                 </div>
               </TabPanel>
+              {versionHistoryAvailable && (
+                <TabPanel value={currentTab} index={2}>
+                  <div className={classes.tableView}>
+                    <VersionHistory markdownUrl={versionHistoryUrl} />
+                  </div>
+                </TabPanel>
+              )}
             </div>
           </div>
         </div>
@@ -116,6 +160,11 @@ const mapDispatchToProps = (dispatch) => ({
   onSetGraphView: (isGraphView) => dispatch(setGraphView(isGraphView)),
   onWidthChange: (canvasWidth) => dispatch(setCanvasWidth(canvasWidth)),
 });
+
+// Set default props
+DictionaryView.defaultProps = {
+  versionHistoryUrl: null,
+};
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
