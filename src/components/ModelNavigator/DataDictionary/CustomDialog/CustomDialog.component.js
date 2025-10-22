@@ -81,7 +81,7 @@ const CustomDialog = ({
         <Button
           id="dialog-close-button"
           variant="contained"
-          color="info"
+          color="secondary"
           onClick={onClose}
           aria-label="Cancel button"
           data-testid="dialog-cancel-button"
