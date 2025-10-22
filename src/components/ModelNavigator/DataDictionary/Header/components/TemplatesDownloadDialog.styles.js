@@ -69,8 +69,7 @@ export default () => ({
     maxHeight: "200px",
     overflowY: "auto",
     overflowX: "hidden",
-    paddingRight: "10px",
-    marginTop: "20px",
+    padding: "13px 19px 13px 29px",
   },
   checkboxGrid: {
     rowGap: 1,
@@ -81,14 +80,16 @@ export default () => ({
   },
   description: {
     padding: "0 10px",
+    marginTop: "5px",
+    marginBottom: "39px",
   },
   divider: {
-    marginTop: "20px",
-    marginBottom: "19px",
+    marginTop: "17px",
+    marginBottom: "9px",
     backgroundColor: "#6B7294",
   },
   bottomDivider: {
-    marginTop: "25px",
+    marginTop: "11px",
     marginBottom: "0",
     backgroundColor: "#6B7294",
   },

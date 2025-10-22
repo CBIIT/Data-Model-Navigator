@@ -188,8 +188,6 @@ const TemplatesDownloadDialog = ({
         download.
       </Box>
 
-      <Divider className={classes.divider} />
-
       <Box className={classes.toggleButtonsRow}>
         <Button
           id="dialog-select-all-button"
@@ -214,6 +212,8 @@ const TemplatesDownloadDialog = ({
           Deselect All
         </Button>
       </Box>
+
+      <Divider className={classes.divider} />
 
       <Box className={classes.checkboxGridWrapper}>
         <Grid
