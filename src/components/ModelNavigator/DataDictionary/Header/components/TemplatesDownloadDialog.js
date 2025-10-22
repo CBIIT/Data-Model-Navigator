@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import CustomDialog from "../../CustomDialog/CustomDialog.component";
 import {
   Box,
@@ -13,6 +13,7 @@ import {
 import styles from "./TemplatesDownloadDialog.styles";
 import checkboxCheckedSrc from "../../../../../assets/icons/checkbox_checked.svg";
 import checkboxUncheckedSrc from "../../../../../assets/icons/checkbox_unchecked.svg";
+import { calculateTextWidth } from "../../utils";
 
 const TemplatesDownloadDialog = ({
   classes,
@@ -23,6 +24,12 @@ const TemplatesDownloadDialog = ({
   defaultSelectAll = false,
 }) => {
   const [selected, setSelected] = useState({});
+  const [checkboxOverflowMap, setCheckboxOverflowMap] = useState(new Map());
+  const gridRef = useRef(null);
+
+  /**
+   * Extract data types from entries and sort them
+   */
   const dataTypes = useMemo(
     () =>
       entries
@@ -74,20 +81,20 @@ const TemplatesDownloadDialog = ({
       return [...new Set([...directParents, ...indirectAncestors])];
     };
 
-    Object.keys(parentMap).forEach((k) => {
-      cache[k] = getAllAncestors(k);
+    Object.keys(parentMap).forEach((node) => {
+      cache[node] = getAllAncestors(node);
     });
 
     return cache;
   }, [parentMap]);
 
+  /**
+   * Get the count of currently selected data types
+   */
   const selectedCount = useMemo(
     () => Object.values(selected).filter(Boolean).length,
     [selected]
   );
-
-  const allChecked = dataTypes.length > 0 && selectedCount === dataTypes.length;
-  const allUnchecked = dataTypes.length > 0 && selectedCount === 0;
 
   useEffect(() => {
     if (!open) {
@@ -102,28 +109,67 @@ const TemplatesDownloadDialog = ({
     onSelectAll();
   }, [open, defaultSelectAll, dataTypes]);
 
+  useEffect(() => {
+    if (!open || !dataTypes?.length || !gridRef.current?.children?.length) {
+      return;
+    }
+
+    const checkboxes =
+      gridRef.current.getElementsByClassName("data-type-checkbox");
+    if (!checkboxes?.length) {
+      return;
+    }
+
+    const checkForOverflows = () => {
+      const values = new Map();
+
+      dataTypes.forEach((dataType, index) => {
+        const labelWidth = checkboxes[index]?.parentNode?.clientWidth || 0;
+        const textWidth =
+          calculateTextWidth(dataType, "Nunito", "16px", "400") || 0;
+
+        values.set(dataType, textWidth < labelWidth);
+      });
+
+      setCheckboxOverflowMap(values);
+    };
+
+    // To avoid excessive re-calculating, overflows are only checked once per grid render
+    checkForOverflows();
+  }, [gridRef.current]);
+
   const onSelectAll = () => {
+    if (!dataTypes?.length) {
+      return;
+    }
+
     const all = {};
-    dataTypes.forEach((k) => {
-      all[k] = true;
+    dataTypes.forEach((dataType) => {
+      all[dataType] = true;
     });
     setSelected(all);
   };
 
   const onDeselectAll = () => {
+    if (!dataTypes?.length) {
+      return;
+    }
+
     setSelected({});
   };
 
-  const toggleOne = (k) => {
+  const toggleOne = (dataType) => {
     setSelected((prev) => {
-      const isCurrentlySelected = !!prev[k];
-      const next = { ...prev, [k]: !isCurrentlySelected };
+      const isCurrentlySelected = !!prev[dataType];
+      const next = { ...prev, [dataType]: !isCurrentlySelected };
 
       // If selecting this node, also select all its ancestors
       if (!isCurrentlySelected) {
-        (ancestorMap[k] || parentMap[k] || []).forEach((parentId) => {
-          next[parentId] = true;
-        });
+        (ancestorMap[dataType] || parentMap[dataType] || []).forEach(
+          (parentId) => {
+            next[parentId] = true;
+          }
+        );
       }
 
       return next;
@@ -131,7 +177,7 @@ const TemplatesDownloadDialog = ({
   };
 
   const handleConfirm = () => {
-    const chosen = dataTypes.filter((k) => selected[k]);
+    const chosen = dataTypes.filter((dataType) => selected[dataType]);
     onConfirm?.(chosen);
   };
 
@@ -150,7 +196,6 @@ const TemplatesDownloadDialog = ({
           variant="contained"
           color="primary"
           onClick={onSelectAll}
-          disabled={allChecked}
           aria-label="Select all button"
           data-testid="dialog-select-all-button"
           className={classes.toggleButton}
@@ -162,7 +207,6 @@ const TemplatesDownloadDialog = ({
           variant="contained"
           color="primary"
           onClick={onDeselectAll}
-          disabled={allUnchecked}
           aria-label="Deselect all button"
           data-testid="dialog-deselect-all-button"
           className={classes.toggleButton}
@@ -175,49 +219,54 @@ const TemplatesDownloadDialog = ({
         <Grid
           container
           alignItems="flex-start"
+          ref={gridRef}
           className={classes.checkboxGrid}
         >
-          {dataTypes?.map((k) => (
-            <Grid item key={k} xs={12} sm={6}>
-              <FormControlLabel
-                className={classes.formControlLabel}
-                control={
-                  <Checkbox
-                    color="primary"
-                    checked={!!selected[k]}
-                    onChange={() => toggleOne(k)}
-                    icon={
-                      <img
-                        className={classes.checkboxIcon}
-                        src={checkboxUncheckedSrc}
-                        alt="Unchecked checkbox"
-                        width={24}
-                        height={24}
-                      />
-                    }
-                    checkedIcon={
-                      <img
-                        className={classes.checkboxIcon}
-                        src={checkboxCheckedSrc}
-                        alt="Checked checkbox"
-                        width={24}
-                        height={24}
-                      />
-                    }
-                  />
-                }
-                label={
-                  <Tooltip
-                    classes={{ tooltip: classes.checkboxTooltip }}
-                    title={k}
-                    placement="top"
-                    arrow
-                  >
-                    <span className={classes.checkboxLabel}>{k}</span>
-                  </Tooltip>
-                }
-                title={k}
-              />
+          {dataTypes?.map((dataType) => (
+            <Grid item key={dataType} xs={12} sm={6}>
+              <Tooltip
+                classes={{ tooltip: classes.checkboxTooltip }}
+                title={dataType}
+                placement="top"
+                arrow
+                disableHoverListener={checkboxOverflowMap.get(dataType)}
+              >
+                <FormControlLabel
+                  className={classes.formControlLabel}
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={!!selected[dataType]}
+                      onChange={() => toggleOne(dataType)}
+                      icon={
+                        <img
+                          className={classes.checkboxIcon}
+                          src={checkboxUncheckedSrc}
+                          alt="Unchecked checkbox"
+                          width={24}
+                          height={24}
+                        />
+                      }
+                      checkedIcon={
+                        <img
+                          className={classes.checkboxIcon}
+                          src={checkboxCheckedSrc}
+                          alt="Checked checkbox"
+                          width={24}
+                          height={24}
+                        />
+                      }
+                    />
+                  }
+                  label={
+                    <span
+                      className={`${classes.checkboxLabel} data-type-checkbox`}
+                    >
+                      {dataType}
+                    </span>
+                  }
+                />
+              </Tooltip>
             </Grid>
           ))}
         </Grid>

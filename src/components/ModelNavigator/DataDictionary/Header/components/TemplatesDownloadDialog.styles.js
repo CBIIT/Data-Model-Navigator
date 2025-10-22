@@ -1,7 +1,7 @@
 export default () => ({
   dialogPaper: {
     maxWidth: "none",
-    width: "527px !important",
+    width: "671px !important",
     padding: "38px 34px 60px",
     borderRadius: "8px",
     border: "2px solid #6B7294",
@@ -30,7 +30,7 @@ export default () => ({
       color: "#083A50",
     },
     "& .MuiCheckbox-root": {
-      padding: "5px 10px",
+      padding: "3px 10px",
     },
   },
   toggleButtonsRow: {
@@ -143,6 +143,11 @@ export default () => ({
   },
   checkboxLabel: {
     textTransform: "capitalize",
+    fontFamily: "'Nunito', sans-serif",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: "16px",
+    letterSpacing: 0,
   },
 });
 
