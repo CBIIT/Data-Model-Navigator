@@ -177,7 +177,7 @@ const DownloadFileTypeBtn = ({
   const [anchorElement, setAnchorElement] = React.useState(null);
   const [isLoading, setLoading] = React.useState(false);
   const [toggledMenus, setToggledMenus] = React.useState([]);
-  const [templatesDialogMode, setTemplatesDialogMode] = React.useState(null);
+  const [openSubmissionTemplatesDialog, setOpenSubmissionTemplatesDialog] = React.useState(false);
 
   const fullDictionaryC2nl = category2NodeList(fullDictionary);
   const processedFullDictionary = sortByCategory(fullDictionaryC2nl, fullDictionary);
@@ -212,6 +212,11 @@ const DownloadFileTypeBtn = ({
  const templateEntries = React.useMemo(() => {
     return Object.entries(fullDictionary || {}).filter(([_, value]) => value?.template === 'Yes');
   }, [fullDictionary]);
+
+  const downloadAllTemplates = (prefix = "ICDC_", fileTransferManifestName = "") => {
+    const allKeys = templateEntries?.map(([key]) => key) || [];
+    downloadSelectedTemplates(allKeys, prefix, fileTransferManifestName);
+  }
 
   const downloadSelectedTemplates = (selectedKeys = [], prefix = "ICDC_", fileTransferManifestName = "") => {
     const fullDictionaryTemplates = Object.fromEntries(templateEntries);
@@ -314,20 +319,20 @@ const DownloadFileTypeBtn = ({
       .map((item) => getMenuItem(item, () => handleDownloadClick(item)));
   }, [FILE_TYPES, readMeConfig]);
 
-  const openTemplatesDialog = (type) => {
+  const openTemplatesDialog = () => {
     setAnchorElement(null);
     setToggledMenus([]);
-    setTemplatesDialogMode(type);
+    setOpenSubmissionTemplatesDialog(true);
   };
 
   const handleTemplatesDownload = (selectedKeys) => {
     const prefixArg = config?.downloadPrefix || 'ICDC_';
     downloadSelectedTemplates(selectedKeys, prefixArg, config?.fileTransferManifestName);
-    setTemplatesDialogMode(null);
+    setOpenSubmissionTemplatesDialog(false);
   };
 
   const handleTemplatesClose = () => {
-    setTemplatesDialogMode(null);
+    setOpenSubmissionTemplatesDialog(false);
   };
 
   return (
@@ -397,11 +402,11 @@ const DownloadFileTypeBtn = ({
         </StyledMenuItem>
         <Collapse in={toggledMenus.includes("submission_templates")} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <StyledMenuItem onClick={() => openTemplatesDialog('all')}>
+            <StyledMenuItem onClick={() => downloadAllTemplates(config?.downloadPrefix, config?.fileTransferManifestName)}>
               <div className={classes.indent} />
               <StyledListItemText primary="All Templates" />
             </StyledMenuItem>
-            <StyledMenuItem onClick={() => openTemplatesDialog('selective')}>
+            <StyledMenuItem onClick={() => openTemplatesDialog()}>
               <div className={classes.indent} />
               <StyledListItemText primary="Selective Templates" />
             </StyledMenuItem>
@@ -413,11 +418,11 @@ const DownloadFileTypeBtn = ({
       </StyledMenu>
 
       <TemplatesDownloadDialog
-        open={!!templatesDialogMode}
+        open={openSubmissionTemplatesDialog}
         onClose={handleTemplatesClose}
         onConfirm={handleTemplatesDownload}
         entries={templateEntries}
-        defaultSelectAll={templatesDialogMode === 'all'}
+        defaultSelectAll={false}
       />
     </>
   );
