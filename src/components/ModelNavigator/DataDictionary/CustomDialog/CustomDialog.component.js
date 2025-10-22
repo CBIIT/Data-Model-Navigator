@@ -95,7 +95,7 @@ const CustomDialog = ({
           variant="contained"
           color="primary"
           onClick={onConfirm}
-          aria-label="Confirm to Remove button"
+          aria-label="Confirm button"
           data-testid="dialog-confirm-button"
           className={`${mergedClasses.btn} ${mergedClasses.confirmBtn}`}
           {...confirmButtonProps}
