@@ -8,6 +8,7 @@ import {
   withStyles,
   Grid,
   Tooltip,
+  Button,
 } from "@material-ui/core";
 import styles from "./TemplatesDownloadDialog.styles";
 import checkboxCheckedSrc from "../../../../../assets/icons/checkbox_checked.svg";
@@ -22,7 +23,13 @@ const TemplatesDownloadDialog = ({
   defaultSelectAll = false,
 }) => {
   const [selected, setSelected] = useState({});
-  const keys = useMemo(() => entries.map(([k]) => k), [entries]);
+  const dataTypes = useMemo(
+    () =>
+      entries
+        .map(([k]) => k)
+        .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())),
+    [entries]
+  );
 
   /**
    * Build a map of each node to its direct parents
@@ -78,8 +85,9 @@ const TemplatesDownloadDialog = ({
     () => Object.values(selected).filter(Boolean).length,
     [selected]
   );
-  const allChecked = keys.length > 0 && selectedCount === keys.length;
-  const indeterminate = selectedCount > 0 && selectedCount < keys.length;
+
+  const allChecked = dataTypes.length > 0 && selectedCount === dataTypes.length;
+  const allUnchecked = dataTypes.length > 0 && selectedCount === 0;
 
   useEffect(() => {
     if (!open) {
@@ -91,20 +99,19 @@ const TemplatesDownloadDialog = ({
       return;
     }
 
-    toggleAll(true);
-  }, [open, defaultSelectAll, keys]);
+    onSelectAll();
+  }, [open, defaultSelectAll, dataTypes]);
 
-  const toggleAll = (checked) => {
-    if (!checked) {
-      setSelected({});
-      return;
-    }
-
+  const onSelectAll = () => {
     const all = {};
-    keys.forEach((k) => {
+    dataTypes.forEach((k) => {
       all[k] = true;
     });
     setSelected(all);
+  };
+
+  const onDeselectAll = () => {
+    setSelected({});
   };
 
   const toggleOne = (k) => {
@@ -124,58 +131,54 @@ const TemplatesDownloadDialog = ({
   };
 
   const handleConfirm = () => {
-    const chosen = keys.filter((k) => selected[k]);
+    const chosen = dataTypes.filter((k) => selected[k]);
     onConfirm?.(chosen);
   };
 
   const description = (
     <>
-      <Box sx={{ mb: 2 }}>
+      <Box className={classes.description}>
         Select the data types you'd like to include in your submission template
         download.
       </Box>
 
-      <FormControlLabel
-        className={classes.formControlLabel}
-        label="Select all"
-        control={
-          <Checkbox
-            color="primary"
-            checked={allChecked}
-            indeterminate={indeterminate}
-            onChange={(e) => toggleAll(e.target.checked)}
-            icon={
-              <img
-                className={classes.checkboxIcon}
-                src={checkboxUncheckedSrc}
-                alt="Unchecked checkbox"
-                width={24}
-                height={24}
-              />
-            }
-            checkedIcon={
-              <img
-                className={classes.checkboxIcon}
-                src={checkboxCheckedSrc}
-                alt="Checked checkbox"
-                width={24}
-                height={24}
-              />
-            }
-          />
-        }
-      />
-
       <Divider className={classes.divider} />
 
-      <Box>
+      <Box className={classes.toggleButtonsRow}>
+        <Button
+          id="dialog-select-all-button"
+          variant="contained"
+          color="primary"
+          onClick={onSelectAll}
+          disabled={allChecked}
+          aria-label="Select all button"
+          data-testid="dialog-select-all-button"
+          className={classes.toggleButton}
+        >
+          Select All
+        </Button>
+        <Button
+          id="dialog-deselect-all-button"
+          variant="contained"
+          color="primary"
+          onClick={onDeselectAll}
+          disabled={allUnchecked}
+          aria-label="Deselect all button"
+          data-testid="dialog-deselect-all-button"
+          className={classes.toggleButton}
+        >
+          Deselect All
+        </Button>
+      </Box>
+
+      <Box className={classes.checkboxGridWrapper}>
         <Grid
           container
           alignItems="flex-start"
           className={classes.checkboxGrid}
         >
-          {keys?.map((k) => (
-            <Grid item key={k} xs={12} sm={6} md={4}>
+          {dataTypes?.map((k) => (
+            <Grid item key={k} xs={12} sm={6}>
               <FormControlLabel
                 className={classes.formControlLabel}
                 control={
@@ -210,7 +213,7 @@ const TemplatesDownloadDialog = ({
                     placement="top"
                     arrow
                   >
-                    <span>{k}</span>
+                    <span className={classes.checkboxLabel}>{k}</span>
                   </Tooltip>
                 }
                 title={k}
@@ -219,6 +222,8 @@ const TemplatesDownloadDialog = ({
           ))}
         </Grid>
       </Box>
+
+      <Divider className={classes.bottomDivider} />
     </>
   );
 
@@ -233,6 +238,7 @@ const TemplatesDownloadDialog = ({
       closeText="Cancel"
       confirmText="Download"
       confirmButtonProps={{ disabled: selectedCount === 0 }}
+      scroll="paper"
       classesOverride={{
         actionsRow: classes.actionsRow,
         confirmBtn: classes.actionBtn,

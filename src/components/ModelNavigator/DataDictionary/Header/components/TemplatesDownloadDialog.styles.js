@@ -1,7 +1,7 @@
 export default () => ({
   dialogPaper: {
     maxWidth: "none",
-    width: "704px !important",
+    width: "527px !important",
     padding: "38px 34px 60px",
     borderRadius: "8px",
     border: "2px solid #6B7294",
@@ -33,6 +33,45 @@ export default () => ({
       padding: "5px 10px",
     },
   },
+  toggleButtonsRow: {
+    display: "flex",
+    flexDirection: "row",
+    gap: "12px",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  toggleButton: {
+    fontFamily: "'Raleway', sans-serif",
+    fontSize: "12px",
+    fontWeight: 500,
+    lineHeight: "13px",
+    padding: "5.5px 8px",
+    backgroundColor: "#42779A",
+    color: "#ffffff",
+    textTransform: "none",
+    letterSpacing: 0,
+    boxShadow: "none",
+    "-webkit-font-smoothing": "antialiased",
+
+    "&:hover": {
+      backgroundColor: "#42779A",
+      boxShadow: "none",
+    },
+
+    "&:disabled": {
+      backgroundColor: "#42779A",
+      color: "#ffffff",
+      boxShadow: "none",
+      opacity: 0.4,
+    },
+  },
+  checkboxGridWrapper: {
+    maxHeight: "200px",
+    overflowY: "auto",
+    overflowX: "hidden",
+    paddingRight: "10px",
+    marginTop: "20px",
+  },
   checkboxGrid: {
     rowGap: 1,
     columnGap: 0,
@@ -40,8 +79,17 @@ export default () => ({
   checkboxIcon: {
     backgroundColor: "#FFFFFF",
   },
+  description: {
+    padding: "0 10px",
+  },
   divider: {
-    marginBottom: "20.5px",
+    marginTop: "20px",
+    marginBottom: "19px",
+    backgroundColor: "#6B7294",
+  },
+  bottomDivider: {
+    marginTop: "25px",
+    marginBottom: "0",
     backgroundColor: "#6B7294",
   },
   actionsRow: {
@@ -92,6 +140,9 @@ export default () => ({
       lineHeight: "19px",
       boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.15)",
     },
+  },
+  checkboxLabel: {
+    textTransform: "capitalize",
   },
 });
 
