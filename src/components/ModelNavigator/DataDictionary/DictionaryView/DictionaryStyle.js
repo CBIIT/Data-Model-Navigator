@@ -64,4 +64,8 @@ export default () => ({
   tableViewTabPanel: {
     overflow: "scroll",
   },
+  versionHistoryContainer: {
+    padding: "20px",
+    fontFamily: "Lato, sans-serif",
+  },
 });

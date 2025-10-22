@@ -14,6 +14,7 @@ const DataDictionary = ({
   isGraphView,
   pdfDownloadConfig,
   dictionary,
+  versionHistoryUrl,
 }) => {
   const dictionarySearcherRef = React.useRef();
   const setGraphView = (isGraphView) => {
@@ -48,6 +49,7 @@ const DataDictionary = ({
           handleClearSearchResult={handleClearSearchResult}
           dictionary={dictionary}
           isGraphView={isGraphView}
+          versionHistoryUrl={versionHistoryUrl}
         />
       </div>
     </div>
@@ -60,7 +62,7 @@ DataDictionary.propTypes = {
 };
 
 DataDictionary.defaultProps = {
-  onSetGraphView: () => {},
+  onSetGraphView: () => { },
   isGraphView: false,
 };
 
