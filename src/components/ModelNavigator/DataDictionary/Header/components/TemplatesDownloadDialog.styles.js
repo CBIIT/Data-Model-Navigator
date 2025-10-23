@@ -1,13 +1,14 @@
 export default () => ({
   dialogPaper: {
     maxWidth: "none",
-    width: "603px !important",
+    width: "675px !important",
     padding: "38px 34px 60px",
     borderRadius: "8px",
     border: "2px solid #6B7294",
     background: "linear-gradient(0deg, #F2F6FA 0%, #F2F6FA 100%), #2E4D7B",
     boxShadow: "0px 4px 45px 0px rgba(0, 0, 0, 0.40)",
     fontFamily: "'Nunito', sans-serif",
+    boxSizing: "border-box",
     "-webkit-font-smoothing": "antialiased",
   },
   formControlLabel: {
