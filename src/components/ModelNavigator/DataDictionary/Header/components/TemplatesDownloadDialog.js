@@ -287,7 +287,7 @@ const TemplatesDownloadDialog = ({
       closeText="Cancel"
       confirmText="Download"
       confirmButtonProps={{ disabled: selectedCount === 0 }}
-      scroll="paper"
+      scroll="body"
       classesOverride={{
         actionsRow: classes.actionsRow,
         confirmBtn: classes.actionBtn,

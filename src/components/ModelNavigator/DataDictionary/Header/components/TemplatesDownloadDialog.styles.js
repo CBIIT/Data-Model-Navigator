@@ -9,6 +9,7 @@ export default () => ({
     boxShadow: "0px 4px 45px 0px rgba(0, 0, 0, 0.40)",
     fontFamily: "'Nunito', sans-serif",
     boxSizing: "border-box",
+    maxheight: "none",
     "-webkit-font-smoothing": "antialiased",
   },
   formControlLabel: {
