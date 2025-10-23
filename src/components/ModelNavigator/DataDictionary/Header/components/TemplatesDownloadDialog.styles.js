@@ -1,7 +1,7 @@
 export default () => ({
   dialogPaper: {
     maxWidth: "none",
-    width: "671px !important",
+    width: "603px !important",
     padding: "38px 34px 60px",
     borderRadius: "8px",
     border: "2px solid #6B7294",
@@ -82,6 +82,7 @@ export default () => ({
     padding: "0 10px",
     marginTop: "5px",
     marginBottom: "39px",
+    whiteSpace: "nowrap",
   },
   divider: {
     marginTop: "17px",
