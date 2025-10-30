@@ -2,6 +2,7 @@ export default () => ({
   mainWindow: {
     height: '100%',
     display: 'block',
+    position: 'relative',
   },
   controls: {
     position: 'absolute',

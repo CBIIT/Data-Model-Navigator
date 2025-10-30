@@ -21,7 +21,7 @@ const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden, iconMap
   */
   const scrollBarWidth = document.documentElement.clientWidth;
   const rightMargin = window.innerWidth - scrollBarWidth;
-  const positionRight = rightMargin > 0 ? rightMargin : 17;
+  const positionRight = rightMargin > 0 ? 0 : scrollBarWidth;
   const position = { right: positionRight };
 
   const categoryListComponent = categoryItems.map((category) => (

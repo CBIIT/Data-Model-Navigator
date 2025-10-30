@@ -1,7 +1,7 @@
 export default () => ({
   legendExpand: {
     position: "absolute",
-    top: "400px",
+    top: "20px",
     backgroundColor: "#494949",
     border: "2px solid #5486AF",
     borderTopLeftRadius: "10px 10px",
@@ -13,7 +13,7 @@ export default () => ({
   },
   legendCollapse: {
     position: "absolute",
-    top: "400px",
+    top: "20px",
     backgroundColor: "#18588C",
     border: "1px solid #125C5D",
     borderTopLeftRadius: "10px 10px",
