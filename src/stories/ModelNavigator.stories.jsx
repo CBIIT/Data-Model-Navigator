@@ -45,11 +45,11 @@ export const ModelNavigator = Template.bind({});
 
 ModelNavigator.args = {
   mdf: [
-    "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/refs/heads/dev2/cache/CDS/7.0.0/cds-model.yml",
-    "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/refs/heads/dev2/cache/CDS/7.0.0/cds-model-props.yml",
+    "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/refs/heads/dev2/cache/CDS/10.0.0/cds-model.yml",
+    "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/refs/heads/dev2/cache/CDS/10.0.0/cds-model-props.yml",
   ].join("\n"),
-  readMeUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/7.0.0/README.md",
-  changelogUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/7.0.0/version-history.md",
+  readMeUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/10.0.0/README.md",
+  changelogUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/10.0.0/version-history.md",
   pdfDownloadEnabled: true,
   iconMap: null,
 };

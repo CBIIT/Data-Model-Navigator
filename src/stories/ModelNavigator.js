@@ -22,27 +22,27 @@ const pdfDownloadConfig = {
 
 const graphViewConfig = {
   legend: {
-    styles: {
-      legendExpand: {
-        position: 'absolute',
-        right: '25px',
-        top: '300px',
-        backgroundColor: '#494949',
-        border: '2px solid #5486AF',
-        borderTopLeftRadius: '10px 10px',
-        borderBottomLeftRadius: '10px 10px',
-        paddingBottom: '15px',
-      },
-      legendCollapse: {
-        position: 'absolute',
-        right: '25px',
-        top: '300px',
-        backgroundColor: '#18588C',
-        border: '1px solid #125C5D',
-        borderTopLeftRadius: '10px 10px',
-        borderBottomLeftRadius: '10px 10px',
-      },
-    }
+    // styles: {
+    //   legendExpand: {
+    //     position: 'absolute',
+    //     right: '25px',
+    //     top: '300px',
+    //     backgroundColor: '#494949',
+    //     border: '2px solid #5486AF',
+    //     borderTopLeftRadius: '10px 10px',
+    //     borderBottomLeftRadius: '10px 10px',
+    //     paddingBottom: '15px',
+    //   },
+    //   legendCollapse: {
+    //     position: 'absolute',
+    //     right: '25px',
+    //     top: '300px',
+    //     backgroundColor: '#18588C',
+    //     border: '1px solid #125C5D',
+    //     borderTopLeftRadius: '10px 10px',
+    //     borderBottomLeftRadius: '10px 10px',
+    //   },
+    // }
   },
   canvas: {
     fit: {
