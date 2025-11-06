@@ -176,7 +176,8 @@ below to see the available icons and their corresponding names.
 |![image](src/assets/icons/analysis.svg)|`analysis`|
 |![image](src/assets/icons/biospecimen.svg)|`biospecimen`|
 |![image](src/assets/icons/case.svg)|`case`|
-|![image](src/assets/icons/clinical_trial.svg)|`clinical_trial`|
+|![image](src/assets/icons/clinical_trial_human.svg)|`clinical_trial`|
+|![image](src/assets/icons/clinical_trial.svg)|`clinical_trial_canine`|
 |![image](src/assets/icons/clinical.svg)|`clinical`|
 |![image](src/assets/icons/data_file.svg)|`data_file`|
 |![image](src/assets/icons/imaging.svg)|`imaging`|

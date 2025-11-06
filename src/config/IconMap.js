@@ -13,6 +13,9 @@ import CasePng from '../assets/icons/case.png';
 import ClinicalTrialSvg from '../assets/icons/clinical_trial.svg';
 import ClinicalTrialSvgRounded from '../assets/icons/clinical_trial_rounded.svg';
 import ClinicalTrialPng from '../assets/icons/clinical_trial.png';
+import ClinicalTrialSvgHuman from '../assets/icons/clinical_trial_human.svg';
+import ClinicalTrialSvgRoundedHuman from '../assets/icons/clinical_trial_rounded_human.svg';
+import ClinicalTrialPngHuman from '../assets/icons/clinical_trial_human.png';
 import ClinicalSvg from '../assets/icons/clinical.svg';
 import ClinicalSvgRounded from '../assets/icons/clinical_rounded.svg';
 import ClinicalPng from '../assets/icons/clinical.png';
@@ -72,10 +75,17 @@ export const IconMap = {
     "color": "#FF7E14",
     "background": "#672900",
   },
-  "clinical_trial": {
+  "clinical_trial_canine": {
     "svg": ClinicalTrialSvg,
     "svg_rounded": ClinicalTrialSvgRounded,
     "png": ClinicalTrialPng,
+    "color": "#00A0BA",
+    "background": "#043F55",
+  },
+  "clinical_trial": {
+    "svg": ClinicalTrialSvgHuman,
+    "svg_rounded": ClinicalTrialSvgRoundedHuman,
+    "png": ClinicalTrialPngHuman,
     "color": "#00A0BA",
     "background": "#043F55",
   },
