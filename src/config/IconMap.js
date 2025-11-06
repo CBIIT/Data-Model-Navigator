@@ -103,6 +103,13 @@ export const IconMap = {
     "color": "#00AC0E",
     "background": "#023806",
   },
+  "file": {
+    "svg": DataFileSvg,
+    "svg_rounded": DataFileSvgRounded,
+    "png": DataFilePng,
+    "color": "#00AC0E",
+    "background": "#023806",
+  },
   "imaging": {
     "svg": ImagingSvg,
     "svg_rounded": ImagingSvg,

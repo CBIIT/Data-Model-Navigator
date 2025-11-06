@@ -180,6 +180,7 @@ below to see the available icons and their corresponding names.
 |![image](src/assets/icons/clinical_trial.svg)|`clinical_trial_canine`|
 |![image](src/assets/icons/clinical.svg)|`clinical`|
 |![image](src/assets/icons/data_file.svg)|`data_file`|
+|![image](src/assets/icons/data_file.svg)|`file`|
 |![image](src/assets/icons/imaging.svg)|`imaging`|
 |![image](src/assets/icons/notation.svg)|`notation`|
 |![image](src/assets/icons/participant.svg)|`participant`|
