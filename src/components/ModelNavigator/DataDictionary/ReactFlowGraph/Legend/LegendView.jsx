@@ -12,18 +12,6 @@ const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden, iconMap
   const [display, setDisplay] = useState(true);
   const toggleLegend = () => setDisplay(!display);
 
-  /**
-  * set legend position - scroll bar width varies based on browser so
-  * legend position must be
-  * adjusted by window.innerWidth and document.documentElement.clientWidth
-  * (refrane from using hard coded value)
-  * latest version of browse will have scroll bar over browser
-  */
-  const scrollBarWidth = document.documentElement.clientWidth;
-  const rightMargin = window.innerWidth - scrollBarWidth;
-  const positionRight = rightMargin > 0 ? 0 : scrollBarWidth;
-  const position = { right: positionRight };
-
   const categoryListComponent = categoryItems.map((category) => (
     <div key={category} className={classes.category}>
       <div className={classes.categoryIcon}>
@@ -66,8 +54,8 @@ const Legend = ({ classes, categoryItems, styles, overlayPropertyHidden, iconMap
         })}
         style={
           display
-            ? { ...styles?.legendExpand, ...position }
-            : { ...styles?.legendCollapse, ...position }
+            ? { ...styles?.legendExpand, right: 0, }
+            : { ...styles?.legendCollapse, right: 0 }
         }
       >
         {
