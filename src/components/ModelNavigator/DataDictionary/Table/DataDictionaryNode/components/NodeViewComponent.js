@@ -188,6 +188,7 @@ const NodeViewComponent = ({
               }
               variant="contained"
               disableElevation
+              toggled={expandState === "relationships"}
               onClick={() => onExpandClick("relationships")}
             >
               <span className="item-count">{linkCount}</span>
