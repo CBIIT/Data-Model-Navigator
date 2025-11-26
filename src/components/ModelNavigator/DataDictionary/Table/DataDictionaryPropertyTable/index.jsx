@@ -1,10 +1,7 @@
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable no-empty */
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { SearchResultItemShape } from '../../Utils/utils';
 import {
   getMatchesSummaryForProperties,
@@ -18,7 +15,6 @@ const DataDictionaryPropertyTable = ({
   classes,
   onlyShowMatchedProperties,
   properties,
-  hasBorder,
   needHighlightSearchResult,
   matchedResult,
   hideIsRequired,
@@ -59,7 +55,7 @@ const DataDictionaryPropertyTable = ({
     ) : [];
 
   return (
-    <div className={classes.propertyTable}>
+    <div className={classes.propertyTableWrapper}>
       <table className={classes.propertyTable}>
         <TableHead hideIsRequired={hideIsRequired} />
         <tbody>
@@ -79,19 +75,19 @@ const DataDictionaryPropertyTable = ({
         </tbody>
       </table>
       {items.length > 0
-      && (
-      <DialogBox
-        display={display}
-        closeHandler={closeHandler}
-        items={items}
-        maxNoOfItems={config.maxNoOfItems}
-        maxNoOfItemDlgBox={config.maxNoOfItemDlgBox}
-        isSearchMode={isSearchMode}
-        typeMatchList={matchedItem}
-        node={title}
-        property={property}
-      />
-      )}
+        && (
+          <DialogBox
+            display={display}
+            closeHandler={closeHandler}
+            items={items}
+            maxNoOfItems={config.maxNoOfItems}
+            maxNoOfItemDlgBox={config.maxNoOfItemDlgBox}
+            isSearchMode={isSearchMode}
+            typeMatchList={matchedItem}
+            node={title}
+            property={property}
+          />
+        )}
     </div>
   );
 }
@@ -99,7 +95,6 @@ const DataDictionaryPropertyTable = ({
 DataDictionaryPropertyTable.propTypes = {
   properties: PropTypes.object.isRequired,
   requiredProperties: PropTypes.array,
-  hasBorder: PropTypes.bool,
   needHighlightSearchResult: PropTypes.bool,
   matchedResult: SearchResultItemShape,
   hideIsRequired: PropTypes.bool,
@@ -108,7 +103,6 @@ DataDictionaryPropertyTable.propTypes = {
 
 DataDictionaryPropertyTable.defaultProps = {
   requiredProperties: [],
-  hasBorder: true,
   needHighlightSearchResult: false,
   matchedResult: {},
   hideIsRequired: false,
@@ -116,15 +110,16 @@ DataDictionaryPropertyTable.defaultProps = {
 };
 
 const styles = () => ({
-  propertyTable: {
-    backgroundColor: `var(--g3-color__white)`,
-    borderCollapse: 'collapse',
-    width: '100%',
-    borderBottom: '1px solid #adbec4'
+  propertyTableWrapper: {
+    borderRadius: '8px',
+    width: 'calc(100% - 20px)',
+    border: "2px solid #237488",
+    marginLeft: "10px",
+    marginRight: "10px",
   },
-  withOutBorder: {
-
-  }
+  propertyTable: {
+    borderCollapse: 'collapse',
+  },
 });
 
 export default withStyles(styles)(DataDictionaryPropertyTable);

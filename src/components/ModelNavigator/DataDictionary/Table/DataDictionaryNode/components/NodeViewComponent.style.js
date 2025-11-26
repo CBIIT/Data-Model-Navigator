@@ -14,19 +14,15 @@ export default () => ({
   tagsAndDescriptionContainer: {
     display: "flex",
     flexDirection: "column",
-    gap: "34px",
-    width: "100%",
-    paddingRight: "5px",
-  },
-  tagsAndBtnContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+    gap: "10px",
     width: "100%",
   },
   assignmentAndClassTags: {
     display: "flex",
     gap: "15px",
+    marginTop: "15px",
+    marginRight: "-21px",
+    justifyContent: "flex-end",
   },
   overlaySpacer: {
     width: "74px",
@@ -95,6 +91,11 @@ export default () => ({
     fontFamily: "Nunito",
   },
   exportButtonGroup: {
+    display: "flex",
+    gap: "15px",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginLeft: "auto",
     height: "32px",
   }
 });

@@ -8,8 +8,6 @@ export default () => ({
     borderLeftWidth: "5px",
     borderLeftStyle: "solid",
     borderLeftColor: "var(--dictionary-border-color)",
-    cursor: "pointer",
-    //marginBottom: "5px",
     "&:last-child": {
       marginBottom: "0",
     },
@@ -140,7 +138,6 @@ export default () => ({
   },
   property: {
     backgroundColor: "#fff",
-    paddingTop: "10px",
     position: "relative",
     margin: "0",
   },

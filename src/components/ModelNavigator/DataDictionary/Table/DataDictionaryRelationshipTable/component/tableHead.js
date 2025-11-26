@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 
-const TableHeader = ({ classes, hideIsRequired }) => (
+const TableHeader = ({ classes }) => (
   <thead className={classes.tableHead}>
     <tr>
       <th className={classes.item}>
@@ -11,20 +11,13 @@ const TableHeader = ({ classes, hideIsRequired }) => (
         Type
       </th>
       <th className={classes.item}>
-        CDE Info
+        Parent
       </th>
-      {
-        !hideIsRequired && (
-          <th className={classes.item}>
-            Required
-          </th>
-        )
-      }
+      <th className={classes.item}>
+        Relationship
+      </th>
       <th className={classes.item}>
         Description
-      </th>
-      <th className={classes.item}>
-        Source
       </th>
     </tr>
   </thead>
