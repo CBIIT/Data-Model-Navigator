@@ -88,10 +88,11 @@ export default () => ({
     width: "32px",
   },
   property: {
-    marginTop: "-5px",
+    position: "relative",
+    marginTop: "-8px",
+    paddingBottom: "15px",
   },
   propertyTable: {
-    paddingBottom: "15px",
     backgroundColor: "#fff",
     borderRight: "1px solid #ADBEC4",
     borderBottom: "1px solid #ADBEC4",

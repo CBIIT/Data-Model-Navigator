@@ -137,9 +137,8 @@ export default () => ({
     },
   },
   property: {
-    backgroundColor: "#fff",
     position: "relative",
-    margin: "0",
+    marginTop: "-8px",
     paddingBottom: "15px",
   },
   propertySummary: {
