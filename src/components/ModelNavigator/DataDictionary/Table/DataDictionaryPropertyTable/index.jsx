@@ -119,6 +119,13 @@ const styles = () => ({
   },
   propertyTable: {
     borderCollapse: 'collapse',
+    width: '100%',
+    "& tr:last-child td:first-child": {
+      borderBottomLeftRadius: "8px",
+    },
+    "& tr:last-child td:last-child": {
+      borderBottomRightRadius: "8px",
+    },
   },
 });
 

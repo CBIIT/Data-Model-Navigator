@@ -140,6 +140,7 @@ export default () => ({
     backgroundColor: "#fff",
     position: "relative",
     margin: "0",
+    paddingBottom: "15px",
   },
   propertySummary: {
     /* margin: 5px 0', */

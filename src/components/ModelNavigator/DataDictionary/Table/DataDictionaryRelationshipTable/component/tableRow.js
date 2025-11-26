@@ -55,12 +55,6 @@ const styles = () => ({
       },
     },
   },
-  labeledSpan: {
-    fontWeight: "600",
-  },
-  labeled: {
-    marginTop: "2em",
-  },
   row: {
     padding: "10px 10px 10px 15px",
     border: "0",
@@ -86,38 +80,6 @@ const styles = () => ({
     textAlign: "center",
     padding: "15px",
     color: "#666666",
-  },
-  required: {
-    color: "#8D432A",
-    fontSize: "13px",
-    fontWeight: "900",
-  },
-  keyProperty: {
-    display: "inline-block",
-    minWidth: "220px",
-    fontWeight: "700",
-    color: "#0d71a3",
-    "& p": {
-      float: "left",
-      margin: "auto",
-    },
-  },
-  acceptValue: {
-    margin: "0",
-    minWidth: "130px",
-  },
-  keyPropertyIcon: {
-    width: "25px",
-    marginLeft: "8px",
-    paddingTop: "5px",
-  },
-  description: {
-    "& span": {
-      "&:last-child:not(:first-child)": {
-        display: "block",
-        marginTop: "13px",
-      },
-    },
   },
 });
 

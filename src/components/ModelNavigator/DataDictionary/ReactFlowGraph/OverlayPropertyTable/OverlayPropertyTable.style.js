@@ -91,7 +91,7 @@ export default () => ({
     marginTop: "-5px",
   },
   propertyTable: {
-    padding: "10px 18px 18px 23px",
+    paddingBottom: "15px",
     backgroundColor: "#fff",
     borderRight: "1px solid #ADBEC4",
     borderBottom: "1px solid #ADBEC4",

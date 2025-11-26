@@ -6,20 +6,8 @@ import { controlVocabConfig as ctrlConfig } from '../../../bento/dataDictionaryD
 import TableHead from './component/tableHead';
 import TableRow from './component/tableRow';
 
-const DataDictionaryRelationshipTable = ({
-  classes,
-  node,
-}) => {
-  const [display, setDisplay] = useState(false);
+const DataDictionaryRelationshipTable = ({ classes, node }) => {
   const parentLinks = useMemo(() => node?.links?.filter((link) => typeof link?.backref === "string"), [node?.links]);
-
-  const openBoxHandler = () => {
-    setDisplay(true);
-  };
-
-  const closeHandler = () => {
-    setDisplay(false);
-  };
 
   return (
     <div className={classes.propertyTableWrapper}>
@@ -38,11 +26,7 @@ DataDictionaryRelationshipTable.propTypes = {
 };
 
 DataDictionaryRelationshipTable.defaultProps = {
-  requiredProperties: [],
-  needHighlightSearchResult: false,
-  matchedResult: {},
-  hideIsRequired: false,
-  onlyShowMatchedProperties: false,
+  node: {},
 };
 
 const styles = () => ({
@@ -56,6 +40,12 @@ const styles = () => ({
   propertyTable: {
     width: '100%',
     borderCollapse: 'collapse',
+    "& tr:last-child td:first-child": {
+      borderBottomLeftRadius: "8px",
+    },
+    "& tr:last-child td:last-child": {
+      borderBottomRightRadius: "8px",
+    },
   },
 });
 
