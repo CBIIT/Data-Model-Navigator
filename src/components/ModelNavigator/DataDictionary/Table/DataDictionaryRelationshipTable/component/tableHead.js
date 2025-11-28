@@ -34,7 +34,7 @@ const styles = () => ({
       borderTopRightRadius: "8px",
     },
     '& th': {
-      fontWeight: '900',
+      fontWeight: '600',
       borderBottom: "2px solid #237488",
     },
   },
