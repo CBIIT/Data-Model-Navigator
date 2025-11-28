@@ -10,8 +10,6 @@ const TableRow = ({ classes, links = [] }) => {
     );
   }
 
-  console.log(links);
-
   return links.map((link) => (
     <tr key={`${link.targetId}_${link.target_type}`} className={classes.row}>
       <td className={classes.rowItem}>
