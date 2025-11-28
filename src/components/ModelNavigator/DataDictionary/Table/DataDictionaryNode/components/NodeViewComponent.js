@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Button, withStyles } from "@material-ui/core";
+import { Button, createTheme, MuiThemeProvider, withStyles } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import styles from "./NodeViewComponent.style";
@@ -14,10 +14,24 @@ import {
   getNodeTitleFragment,
 } from "../../../Utils/highlightHelper";
 
+const theme = createTheme({
+  overrides: {
+    MuiButton: {
+      root: {
+        minWidth: '35px',
+        paddingRight: '10px',
+        '&:hover': {
+          backgroundColor: 'none',
+        },
+      },
+    },
+  },
+});
+
 const StyledButton = withStyles({
   root: {
     padding: "8px",
-    fontFamily: "Raleway",
+    fontFamily: "Nunito",
     fontSize: "13px",
     fontWeight: 500,
     borderRadius: "6px",
@@ -67,7 +81,7 @@ const StyledButton = withStyles({
       marginLeft: "-17px",
     },
   },
-})(({ toggled, ...props }) => <Button {...props} />);
+})(React.forwardRef(({ toggled, ...props }, ref) => <Button ref={ref} {...props} />));
 
 /**
  * 
@@ -164,36 +178,38 @@ const NodeViewComponent = ({
             </div>
           </p>
           <div className={classes.exportButtonGroup}>
-            <StyledButton
-              startIcon={
-                expandState !== "properties" ? (
-                  <ExpandMoreIcon />
-                ) : (
-                  <ExpandLessIcon />
-                )
-              }
-              disableElevation
-              toggled={expandState === "properties"}
-              onClick={() => onExpandClick("properties")}
-            >
-              <span className="item-count">{propertyCount}</span>
-              {propertyCount === 1 ? "Property" : "Properties"}
-            </StyledButton>
-            <StyledButton
-              startIcon={
-                expandState !== "relationships" ? (
-                  <ExpandMoreIcon />
-                ) : (
-                  <ExpandLessIcon />
-                )
-              }
-              disableElevation
-              toggled={expandState === "relationships"}
-              onClick={() => onExpandClick("relationships")}
-            >
-              <span className="item-count">{linkCount}</span>
-              {linkCount === 1 ? "Relationship" : "Relationships"}
-            </StyledButton>
+            <MuiThemeProvider theme={theme}>
+              <StyledButton
+                startIcon={
+                  expandState !== "properties" ? (
+                    <ExpandMoreIcon />
+                  ) : (
+                    <ExpandLessIcon />
+                  )
+                }
+                disableElevation
+                toggled={expandState === "properties"}
+                onClick={() => onExpandClick("properties")}
+              >
+                <span className="item-count">{propertyCount}</span>
+                {propertyCount === 1 ? "Property" : "Properties"}
+              </StyledButton>
+              <StyledButton
+                startIcon={
+                  expandState !== "relationships" ? (
+                    <ExpandMoreIcon />
+                  ) : (
+                    <ExpandLessIcon />
+                  )
+                }
+                disableElevation
+                toggled={expandState === "relationships"}
+                onClick={() => onExpandClick("relationships")}
+              >
+                <span className="item-count">{linkCount}</span>
+                {linkCount === 1 ? "Relationship" : "Relationships"}
+              </StyledButton>
+            </MuiThemeProvider>
             {pdfDownloadConfig.enabled && (isTemplate || (isManifest && isTemplate)) && (
               <TemplateButton
                 documentData={node}
