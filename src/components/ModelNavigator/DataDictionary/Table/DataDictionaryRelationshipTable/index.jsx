@@ -1,8 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
-import { controlVocabConfig as ctrlConfig } from '../../../bento/dataDictionaryData';
 import TableHead from './component/tableHead';
 import TableRow from './component/tableRow';
 

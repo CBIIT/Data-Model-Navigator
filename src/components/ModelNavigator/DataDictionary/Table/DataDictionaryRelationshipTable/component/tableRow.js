@@ -1,11 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import "../DataDictionaryPropertyTable.css";
 
-const TableRow = ({
-  classes,
-  links,
-}) => {
+const TableRow = ({ classes, links = [] }) => {
   if (!links || links?.length === 0) {
     return (
       <tr className={classes.row}>
@@ -59,7 +55,7 @@ const styles = () => ({
     padding: "10px 10px 10px 15px",
     border: "0",
     textAlign: "left",
-    fontFamily: "raleway",
+    fontFamily: "Nunito Sans",
     verticalAlign: "top",
     "& p": {
       margin: "auto",
