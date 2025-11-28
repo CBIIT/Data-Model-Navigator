@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Button, createTheme, MuiThemeProvider, withStyles } from "@material-ui/core";
+import { Button, withStyles } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import styles from "./NodeViewComponent.style";
@@ -13,20 +13,6 @@ import {
   getNodeDescriptionFragment,
   getNodeTitleFragment,
 } from "../../../Utils/highlightHelper";
-
-const theme = createTheme({
-  overrides: {
-    MuiButton: {
-      root: {
-        minWidth: '35px',
-        paddingRight: '10px',
-        '&:hover': {
-          backgroundColor: 'none',
-        },
-      },
-    },
-  },
-});
 
 const StyledButton = withStyles({
   root: {
@@ -40,7 +26,7 @@ const StyledButton = withStyles({
     color: (props) => (props.toggled ? "#ffffff" : "#000000"),
     background: (props) => (props.toggled ? "#237488 !important" : "#F3F8FB !important"),
     borderColor: (props) => (props.toggled ? "#fff" : "#237488"),
-    boxShadow: (props) => (props.toggled ? "0px 3px 7px 0px #00000040 !important" : "none"),
+    boxShadow: (props) => (props.toggled ? "0px 3px 7px 0px rgba(0, 0, 0, 0.25) !important" : "none"),
     textTransform: "none",
     transition: "all 0.2s ease",
     height: "32px",
@@ -62,7 +48,7 @@ const StyledButton = withStyles({
       pointerEvents: "none",
       borderColor: "rgba(35, 116, 136, 0)",
       borderTopColor: (props) => (props.toggled ? "#237488" : "transparent"),
-      filter: (props) => (props.toggled ? "drop-shadow(0px 3px 7px #00000040)" : "none"),
+      filter: (props) => (props.toggled ? "drop-shadow(0px 3px 7px rgba(0, 0, 0, 0.25))" : "none"),
       borderWidth: "14px",
       marginLeft: "-14px",
     },
@@ -178,38 +164,36 @@ const NodeViewComponent = ({
             </div>
           </p>
           <div className={classes.exportButtonGroup}>
-            <MuiThemeProvider theme={theme}>
-              <StyledButton
-                startIcon={
-                  expandState !== "properties" ? (
-                    <ExpandMoreIcon />
-                  ) : (
-                    <ExpandLessIcon />
-                  )
-                }
-                disableElevation
-                toggled={expandState === "properties"}
-                onClick={() => onExpandClick("properties")}
-              >
-                <span className="item-count">{propertyCount}</span>
-                {propertyCount === 1 ? "Property" : "Properties"}
-              </StyledButton>
-              <StyledButton
-                startIcon={
-                  expandState !== "relationships" ? (
-                    <ExpandMoreIcon />
-                  ) : (
-                    <ExpandLessIcon />
-                  )
-                }
-                disableElevation
-                toggled={expandState === "relationships"}
-                onClick={() => onExpandClick("relationships")}
-              >
-                <span className="item-count">{linkCount}</span>
-                {linkCount === 1 ? "Relationship" : "Relationships"}
-              </StyledButton>
-            </MuiThemeProvider>
+            <StyledButton
+              startIcon={
+                expandState !== "properties" ? (
+                  <ExpandMoreIcon />
+                ) : (
+                  <ExpandLessIcon />
+                )
+              }
+              disableElevation
+              toggled={expandState === "properties"}
+              onClick={() => onExpandClick("properties")}
+            >
+              <span className="item-count">{propertyCount}</span>
+              {propertyCount === 1 ? "Property" : "Properties"}
+            </StyledButton>
+            <StyledButton
+              startIcon={
+                expandState !== "relationships" ? (
+                  <ExpandMoreIcon />
+                ) : (
+                  <ExpandLessIcon />
+                )
+              }
+              disableElevation
+              toggled={expandState === "relationships"}
+              onClick={() => onExpandClick("relationships")}
+            >
+              <span className="item-count">{linkCount}</span>
+              {linkCount === 1 ? "Relationship" : "Relationships"}
+            </StyledButton>
             {pdfDownloadConfig.enabled && (isTemplate || (isManifest && isTemplate)) && (
               <TemplateButton
                 documentData={node}

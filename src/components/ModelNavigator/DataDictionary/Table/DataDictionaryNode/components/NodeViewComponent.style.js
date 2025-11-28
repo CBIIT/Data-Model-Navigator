@@ -82,12 +82,12 @@ export default () => ({
   },
   nodeAssignment: {
     color: "#036077",
-    fontWeight: "600",
+    fontWeight: "700",
     fontFamily: "Nunito",
   },
   nodeClass: {
     color: "#036077",
-    fontWeight: "600",
+    fontWeight: "700",
     fontFamily: "Nunito",
   },
   exportButtonGroup: {
