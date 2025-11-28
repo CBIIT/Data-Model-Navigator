@@ -96,6 +96,7 @@ export default () => ({
     alignItems: "center",
     justifyContent: "flex-end",
     marginLeft: "auto",
+    marginRight: "12px",
     height: "32px",
   }
 });

@@ -72,7 +72,7 @@ export default () => ({
     backgroundColor: "#fff",
     display: "flex",
     minHeight: "40px",
-    padding: "15px",
+    padding: "15px 5px 14px 22px",
     border: "1px solid #e7e7e7",
     borderTop: "none",
   },
