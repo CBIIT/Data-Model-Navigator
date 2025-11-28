@@ -172,7 +172,6 @@ const NodeViewComponent = ({
                   <ExpandLessIcon />
                 )
               }
-              variant="contained"
               disableElevation
               toggled={expandState === "properties"}
               onClick={() => onExpandClick("properties")}
@@ -188,7 +187,6 @@ const NodeViewComponent = ({
                   <ExpandLessIcon />
                 )
               }
-              variant="contained"
               disableElevation
               toggled={expandState === "relationships"}
               onClick={() => onExpandClick("relationships")}
