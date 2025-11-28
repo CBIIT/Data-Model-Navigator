@@ -23,19 +23,27 @@ const StyledButton = withStyles({
     borderRadius: "6px",
     borderWidth: "2px",
     borderStyle: "solid",
-    color: (props) => (props.toggled ? "#ffffff" : "#000000"),
-    background: (props) => (props.toggled ? "#237488 !important" : "#F3F8FB !important"),
-    borderColor: (props) => (props.toggled ? "#fff" : "#237488"),
-    boxShadow: (props) => (props.toggled ? "0px 3px 7px 0px rgba(0, 0, 0, 0.25) !important" : "none"),
+    color: "#000000",
+    background: "#F3F8FB",
+    borderColor: "#237488",
     textTransform: "none",
     transition: "all 0.2s ease",
     height: "32px",
     position: "relative",
     zIndex: 1,
+    "&.toggled": {
+      color: "#ffffff !important",
+      background: "#237488 !important",
+      borderColor: "#fff !important",
+      boxShadow: "0px 3px 7px 0px rgba(0, 0, 0, 0.25) !important",
+    },
     "& .item-count": {
       fontWeight: "700",
       paddingRight: "12px",
-      color: (props) => (props.toggled ? "#ffffff" : "#237488"),
+      color: "#237488",
+    },
+    "&.toggled .item-count": {
+      color: "#FFFFFF !important",
     },
     "&::after": {
       top: "100%",
@@ -47,10 +55,14 @@ const StyledButton = withStyles({
       position: "absolute",
       pointerEvents: "none",
       borderColor: "rgba(35, 116, 136, 0)",
-      borderTopColor: (props) => (props.toggled ? "#237488" : "transparent"),
-      filter: (props) => (props.toggled ? "drop-shadow(0px 3px 7px rgba(0, 0, 0, 0.25))" : "none"),
+      borderTopColor: "transparent",
+      filter: "none",
       borderWidth: "14px",
       marginLeft: "-14px",
+    },
+    "&.toggled::after": {
+      borderTopColor: "#237488",
+      filter: "drop-shadow(0px 3px 7px rgba(0, 0, 0, 0.25))",
     },
     "&::before": {
       top: "100%",
@@ -62,12 +74,15 @@ const StyledButton = withStyles({
       position: "absolute",
       pointerEvents: "none",
       borderColor: "rgba(255, 255, 255, 0)",
-      borderTopColor: (props) => (props.toggled ? "#fff" : "transparent"),
+      borderTopColor: "transparent",
       borderWidth: "17px",
       marginLeft: "-17px",
     },
+    "&.toggled::before": {
+      borderTopColor: "#fff",
+    },
   },
-})(React.forwardRef(({ toggled, ...props }, ref) => <Button ref={ref} {...props} />));
+})(React.forwardRef((props, ref) => <Button ref={ref} {...props} />));
 
 /**
  * 
@@ -173,7 +188,7 @@ const NodeViewComponent = ({
                 )
               }
               disableElevation
-              toggled={expandState === "properties"}
+              className={expandState === "properties" ? "toggled" : ""}
               onClick={() => onExpandClick("properties")}
             >
               <span className="item-count">{propertyCount}</span>
@@ -188,7 +203,7 @@ const NodeViewComponent = ({
                 )
               }
               disableElevation
-              toggled={expandState === "relationships"}
+              className={expandState === "relationships" ? "toggled" : ""}
               onClick={() => onExpandClick("relationships")}
             >
               <span className="item-count">{linkCount}</span>
