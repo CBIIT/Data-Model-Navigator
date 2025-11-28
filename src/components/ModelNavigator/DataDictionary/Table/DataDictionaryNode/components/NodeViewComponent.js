@@ -67,7 +67,7 @@ const StyledButton = withStyles({
       marginLeft: "-17px",
     },
   },
-})(Button);
+})(({ toggled, ...props }) => <Button {...props} />);
 
 /**
  * 
