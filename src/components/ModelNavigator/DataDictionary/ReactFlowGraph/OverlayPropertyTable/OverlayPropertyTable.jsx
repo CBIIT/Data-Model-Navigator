@@ -124,8 +124,8 @@ const OverlayPropertyTable = (props) => {
             className={classes.propertyTable}
             style={{ borderLeftColor: iconDetails.color }}
           >
-            {expandState === "properties" && (
-              <div className={classes.property}>
+            <div className={classes.property}>
+              {expandState === "properties" && (
                 <DataDictionaryPropertyTable
                   title={node.title}
                   properties={node.properties}
@@ -136,11 +136,11 @@ const OverlayPropertyTable = (props) => {
                   matchedResult={props.matchedResult}
                   isSearchMode={isSearchMode}
                 />
-              </div>
-            )}
-            {expandState === "relationships" && (
-              <DataDictionaryRelationshipTable node={node} />
-            )}
+              )}
+              {expandState === "relationships" && (
+                <DataDictionaryRelationshipTable node={node} />
+              )}
+            </div>
           </div>
         </div>
       </div>
