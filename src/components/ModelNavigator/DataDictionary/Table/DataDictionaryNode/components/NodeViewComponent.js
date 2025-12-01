@@ -98,7 +98,7 @@ const StyledButton = withStyles({
  * @param {(expandState: "properties" | "relationships") => void} props.onExpandClick
  * @param {boolean} props.isOverlay
  * @param {string} props.modelVersion
- * @returns 
+ * @returns {JSX.Element} The NodeViewComponent component
  */
 const NodeViewComponent = ({
   classes,
