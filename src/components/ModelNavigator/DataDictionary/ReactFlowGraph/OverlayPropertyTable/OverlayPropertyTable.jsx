@@ -31,7 +31,7 @@ const OverlayPropertyTable = (props) => {
   /**
    * An onClick handler for expanding either properties or relationships
    * 
-   * @param {"properties" | "relationships"} newExpandState 
+   * @param {"properties" | "relationships"} newExpandState The new expand state to set
    */
   const handleClickExpand = (newExpandState) => {
     setExpandState((prevExpandState) =>
