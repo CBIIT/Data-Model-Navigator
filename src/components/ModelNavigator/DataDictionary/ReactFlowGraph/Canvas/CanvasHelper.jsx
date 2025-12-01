@@ -174,3 +174,60 @@ export const getNodePosition = ({
     return position;
 }
 
+/**
+ * Build a map of child nodes to their parent nodes from dictionary
+ * @param {object} dictionary - The complete dictionary
+ * @returns {object} Map of { childNodeId: [parentNodeId1, parentNodeId2, ...] }
+ */
+export const buildParentMap = (dictionary) => {
+    const parentMap = {};
+    
+    Object.keys(dictionary).forEach(nodeId => {
+        const node = dictionary[nodeId];
+        if (node.links && Array.isArray(node.links)) {
+            node.links.forEach(link => {
+                const childNode = link.backref;
+                const parentNode = link.name;
+                
+                if (childNode && parentNode && childNode !== parentNode) {
+                    if (!parentMap[childNode]) {
+                        parentMap[childNode] = [];
+                    }
+                    if (!parentMap[childNode].includes(parentNode)) {
+                        parentMap[childNode].push(parentNode);
+                    }
+                }
+            });
+        }
+    });
+    
+    return parentMap;
+};
+
+/**
+ * Get all ancestor nodes (parents, grandparents, etc.) from a starting node up to root nodes
+ * @param {string} nodeId - The starting node ID
+ * @param {object} parentMap - Map of child to parent relationships
+ * @returns {Set} Set of all ancestor node IDs including the starting node
+ */
+export const getAncestorNodes = (nodeId, parentMap) => {
+    const ancestors = new Set([nodeId]);
+    const queue = [nodeId];
+    const visited = new Set([nodeId]);
+    
+    while (queue.length > 0) {
+        const currentNode = queue.shift();
+        const parents = parentMap[currentNode] || [];
+        
+        parents.forEach(parentId => {
+            if (!visited.has(parentId)) {
+                ancestors.add(parentId);
+                queue.push(parentId);
+                visited.add(parentId);
+            }
+        });
+    }
+    
+    return ancestors;
+};
+

@@ -155,3 +155,12 @@ export const onNodeDragStart = () => ({
   type: actionTypes.ON_REACT_FLOW_NODE_DRAG_START,
 });
 
+export const setAncestorFilter = (ancestorNodeIds) => ({
+  type: 'SET_ANCESTOR_FILTER',
+  ancestorNodeIds,
+});
+
+export const clearAncestorFilter = () => ({
+  type: 'CLEAR_ANCESTOR_FILTER',
+});
+

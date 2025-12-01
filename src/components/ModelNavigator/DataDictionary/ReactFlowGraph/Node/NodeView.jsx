@@ -24,6 +24,7 @@ const NodeView = ({
   onNodeFocus,
   focusedNodeId,
   iconMapInfo,
+  onClearAncestorFilter,
 }) => {
   const [display, setDisplay] = useState(false);
   /**
@@ -36,6 +37,7 @@ const NodeView = ({
     setDisplay(!display);
     if (display) {
       onCollapseNodeView();
+      onClearAncestorFilter();
     }
   };
   const {

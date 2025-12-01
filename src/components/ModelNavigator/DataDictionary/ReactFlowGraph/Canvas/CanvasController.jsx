@@ -38,7 +38,8 @@ const CanvasController = ({
   highlightedNodes,
   graphViewConfig,
   onGraphPanelClick,
-  assetConfig
+  assetConfig,
+  ancestorFilterNodeIds
 }) => {
     if (tabViewWidth === 0 || !graphViewConfig) {
       return <CircularProgress />;
@@ -106,6 +107,7 @@ const CanvasController = ({
      * update states
      * 1. nodes and edges
      * 2. toggle between on/off for serach mode
+     * 3. filter nodes/edges based on ancestor filter
      */
     useEffect(() => {
         const flowData = createNodesAndEdges({dictionary}, true, []);
@@ -113,9 +115,21 @@ const CanvasController = ({
             flowData.nodes,
             flowData.edges,
         );
-        setNodes(layoutedNodes);
-        setEdges(layoutedEdges);
-    }, [dictionary, currentSearchKeyword]);
+        
+        if (ancestorFilterNodeIds) {
+            const filteredNodes = layoutedNodes.filter(node => 
+                ancestorFilterNodeIds.has(node.id)
+            );
+            const filteredEdges = layoutedEdges.filter(edge => 
+                ancestorFilterNodeIds.has(edge.source) && ancestorFilterNodeIds.has(edge.target)
+            );
+            setNodes(filteredNodes);
+            setEdges(filteredEdges);
+        } else {
+            setNodes(layoutedNodes);
+            setEdges(layoutedEdges);
+        }
+    }, [dictionary, currentSearchKeyword, ancestorFilterNodeIds]);
 
     const onConnect = useCallback(
       (params) =>
@@ -156,11 +170,15 @@ const mapStateToProps = (state) => ({
     unfilteredDictionary: state.submission.unfilteredDictionary,
     graphViewConfig: state.ddgraph.graphViewConfig,
     assetConfig: state.ddgraph.assetConfig,
+    ancestorFilterNodeIds: state.ddgraph.ancestorFilterNodeIds,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setGraphData: (graphData) => {dispatch(setReactFlowGraphData(graphData))},
-  onGraphPanelClick: () => {dispatch(onPanelViewClick())},
+  onGraphPanelClick: () => {
+    dispatch(onPanelViewClick());
+    dispatch({ type: 'CLEAR_ANCESTOR_FILTER' });
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CanvasController);
