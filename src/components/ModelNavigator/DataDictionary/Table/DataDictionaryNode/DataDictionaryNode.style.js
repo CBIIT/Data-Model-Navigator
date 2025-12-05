@@ -4,12 +4,10 @@ export default () => ({
     borderRight: "1px solid var(--dictionary-border-color)",
     display: "flex",
     justifyContent: "space-between",
-    padding: "15px 5px 14px 22px",
+    padding: "10px 5px 14px 22px",
     borderLeftWidth: "5px",
     borderLeftStyle: "solid",
     borderLeftColor: "var(--dictionary-border-color)",
-    cursor: "pointer",
-    //marginBottom: "5px",
     "&:last-child": {
       marginBottom: "0",
     },
@@ -139,15 +137,19 @@ export default () => ({
     },
   },
   property: {
-    backgroundColor: "#fff",
-    paddingTop: "10px",
     position: "relative",
-    margin: "0",
+    marginTop: "-8px",
+    paddingBottom: "15px",
   },
   propertySummary: {
     /* margin: 5px 0', */
     color: "#7a7a7a",
     paddingLeft: "17px",
     marginBottom: "8px",
+  },
+  divider: {
+    height: "1px",
+    marginTop: "8px",
+    background: "#CFCFCF",
   },
 });

@@ -33,7 +33,6 @@ const theme = createTheme({
 
 const StyledButton = withStyles({
   root: {
-    marginLeft: "8px",
     background: "#0A4A6D !important",
     padding: "8px",
     color: "#fff",
@@ -42,6 +41,7 @@ const StyledButton = withStyles({
     fontWeight: 500,
     borderRadius: "6px",
     textTransform: "none",
+    height: "32px",
   },
 })(Button);
 
@@ -132,9 +132,9 @@ const DictionaryButton = ({
     const blob = await pdf((<LandscapePDFDoc
       nodes={[node]}
       icon={config.catagoryIcon}
-      pdfDownloadConfig={pdfDownloadConfig} 
+      pdfDownloadConfig={pdfDownloadConfig}
       iconMapInfo={iconMapInfo}
-      />)).toBlob();
+    />)).toBlob();
     saveAs(blob, `${fileName}.pdf`)
   };
 

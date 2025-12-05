@@ -1,176 +1,151 @@
-/* eslint-disable max-len */
-/* eslint-disable react/forbid-prop-types */
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import IconButton from "@material-ui/core/IconButton";
-import { Grid, withStyles } from "@material-ui/core";
-// eslint-disable-next-line no-unused-vars
+import { withStyles } from "@material-ui/core";
 import {
   getNodeDescriptionFragment,
   getNodeTitleFragment,
 } from "../../Utils/highlightHelper";
-
 import { SearchResultItemShape } from "../../Utils/utils";
-import { capitalizeFirstLetter, createFileName } from "../../utils";
+import { capitalizeFirstLetter } from "../../utils";
 import DataDictionaryPropertyTable from "../../Table/DataDictionaryPropertyTable";
 import styles from "./OverlayPropertyTable.style";
 import NodeViewComponent from "../../Table/DataDictionaryNode/components/NodeViewComponent";
 import { getIconDetails } from "../../../../../utils/iconUtils";
 import { DefaultIcon } from "../../../../../config/IconMap";
+import DataDictionaryRelationshipTable from "../../Table/DataDictionaryRelationshipTable";
 
-class OverlayPropertyTable extends React.Component {
-  getTitle = () => {
-    if (this.props.isSearchMode) {
-      const nodeTitleFragment = getNodeTitleFragment(
-        this.props.matchedResult.matches,
-        this.props.node.title,
-        "overlay-property-table__span"
-      );
-      return nodeTitleFragment;
-    }
+const OverlayPropertyTable = (props) => {
+  const { classes, isSearchMode, node, hidden, iconMapInfo } = props;
 
-    return this.props.node.title;
-  };
-
-  getDescription = () => {
-    if (this.props.isSearchMode) {
-      const nodeDescriptionFragment = getNodeDescriptionFragment(
-        this.props.matchedResult.matches,
-        this.props.node.description,
-        "overlay-property-table__span"
-      );
-      return nodeDescriptionFragment;
-    }
-
-    return this.props.node.description;
-  };
+  const [expandState, setExpandState] = useState("properties");
 
   /**
    * Close the whole overlay property table
    */
-  handleClose = () => {
-    this.props.onCloseOverlayPropertyTable();
+  const handleClose = () => {
+    props.onCloseOverlayPropertyTable();
   };
 
   /**
-   * Toggle the property tabl to display all properties
+   * An onClick handler for expanding either properties or relationships
+   * 
+   * @param {"properties" | "relationships"} newExpandState The new expand state to set
    */
-  handleOpenAllProperties = () => {
-    this.props.onOpenMatchedProperties();
-  };
+  const handleClickExpand = (newExpandState) => {
+    setExpandState((prevExpandState) =>
+      prevExpandState === newExpandState ? "" : newExpandState
+    );
+  }
 
-  /**
-   * Toggle the property table to display matched properties only
-   */
-  handleDisplayOnlyMatchedProperties = () => {
-    this.props.onCloseMatchedProperties();
-  };
+  if (!node || hidden) {
+    return <></>;
+  }
 
-  render() {
-    const { classes, isSearchMode, node, hidden, iconMapInfo } = this.props;
-    if (!node || hidden) return <></>;
+  const needHighlightSearchResult = isSearchMode;
+  const iconDetails = getIconDetails(node.category, iconMapInfo?.map);
 
-    const needHighlightSearchResult = isSearchMode;
-    const iconDetails = getIconDetails(node.category, iconMapInfo?.map);
-    return (
-      <div className={classes.table}>
-        <div className={classes.background} />
-        <div className={classes.fixedContainer}>
-          <div className={classes.content}>
-            <div className={classes.header}>
-              <div
-                className={classes.category}
-                style={{
-                  borderLeftColor: iconDetails.color,
-                  backgroundColor: iconDetails.background,
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    paddingLeft: '4px'
-                  }}
-                >
-                  <img
-                    src={iconDetails.svg}
-                    alt="icon"
-                    className={classes.categoryIcon}
-                    onError={({ currentTarget }) => {
-                      currentTarget.onerror = null;
-                      currentTarget.src = DefaultIcon.svg;
-                    }}
-                  />
-                  <h4
-                    style={{ color: "#FFF" }}
-                    className={classes.categoryText}
-                  >
-                    {capitalizeFirstLetter(node.category)}
-                  </h4>
-                </div>
-                <div>
-                  <IconButton
-                    className={classes.iconCloseRounded}
-                    onClick={this.handleClose}
-                    aria-label="close overlay button"
-                  >
-                    <CloseRoundedIcon
-                      style={{ color: "#FFF", fontSize: "20px" }}
-                    />
-                  </IconButton>
-                </div>
-              </div>
-            </div>
+  return (
+    <div className={classes.table}>
+      <div className={classes.background} />
+      <div className={classes.fixedContainer}>
+        <div className={classes.content}>
+          <div className={classes.header}>
             <div
-              className={classes.categoryDivider}
-              style={{ borderLeftColor: iconDetails.color }}
-            />
-            <div
-              className={classes.node}
+              className={classes.category}
               style={{
                 borderLeftColor: iconDetails.color,
-                marginBottom: "0px",
-                borderRight: "1px solid #ADBEC4",
-                backgroundColor: "white",
+                backgroundColor: iconDetails.background,
               }}
             >
-              <NodeViewComponent
-                node={node}
-                description={this.props.description}
-                isSearchMode={isSearchMode}
-                matchedResult={this.props.matchedResult}
-                pdfDownloadConfig={this.props.pdfDownloadConfig}
-                propertyCount={Object.keys(node.properties).length}
-                isOverlay={true}
-              />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  paddingLeft: '4px'
+                }}
+              >
+                <img
+                  src={iconDetails.svg}
+                  alt="icon"
+                  className={classes.categoryIcon}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = DefaultIcon.svg;
+                  }}
+                />
+                <h4
+                  style={{ color: "#FFF" }}
+                  className={classes.categoryText}
+                >
+                  {capitalizeFirstLetter(node.category)}
+                </h4>
+              </div>
+              <div>
+                <IconButton
+                  className={classes.iconCloseRounded}
+                  onClick={handleClose}
+                  aria-label="close overlay button"
+                >
+                  <CloseRoundedIcon
+                    style={{ color: "#FFF", fontSize: "20px" }}
+                  />
+                </IconButton>
+              </div>
             </div>
+          </div>
+          <div
+            className={classes.categoryDivider}
+            style={{ borderLeftColor: iconDetails.color }}
+          />
+          <div
+            className={classes.node}
+            style={{
+              borderLeftColor: iconDetails.color,
+              marginBottom: "0px",
+              borderRight: "1px solid #ADBEC4",
+              backgroundColor: "white",
+            }}
+          >
+            <NodeViewComponent
+              node={node}
+              description={props.description}
+              isSearchMode={isSearchMode}
+              matchedResult={props.matchedResult}
+              pdfDownloadConfig={props.pdfDownloadConfig}
+              expandState={expandState}
+              onExpandClick={handleClickExpand}
+            />
+          </div>
 
-            <div
-              className={classes.propertyTable}
-              style={{ borderLeftColor: iconDetails.color }}
-            >
-              <div className={classes.property}>
+          <div
+            className={classes.propertyTable}
+            style={{ borderLeftColor: iconDetails.color }}
+          >
+            <div className={classes.property}>
+              {expandState === "properties" && (
                 <DataDictionaryPropertyTable
                   title={node.title}
                   properties={node.properties}
                   requiredProperties={node.required}
                   preferredProperties={node.preferred}
-                  hasBorder={false}
                   onlyShowMatchedProperties={false}
                   needHighlightSearchResult={needHighlightSearchResult}
-                  // hideIsRequired={searchedNodeNotOpened}
-                  matchedResult={this.props.matchedResult}
+                  matchedResult={props.matchedResult}
                   isSearchMode={isSearchMode}
                 />
-              </div>
+              )}
+              {expandState === "relationships" && (
+                <DataDictionaryRelationshipTable node={node} />
+              )}
             </div>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 OverlayPropertyTable.propTypes = {

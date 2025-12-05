@@ -256,7 +256,7 @@ const styles = () => ({
     padding: "10px 10px 10px 15px",
     border: "0",
     textAlign: "left",
-    fontFamily: "raleway",
+    fontFamily: "Nunito Sans",
     verticalAlign: "top",
     "& p": {
       margin: "auto",

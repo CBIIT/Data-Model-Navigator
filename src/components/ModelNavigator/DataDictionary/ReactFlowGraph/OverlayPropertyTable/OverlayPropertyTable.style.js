@@ -72,7 +72,7 @@ export default () => ({
     backgroundColor: "#fff",
     display: "flex",
     minHeight: "40px",
-    padding: "15px",
+    padding: "15px 5px 14px 22px",
     border: "1px solid #e7e7e7",
     borderTop: "none",
   },
@@ -88,10 +88,11 @@ export default () => ({
     width: "32px",
   },
   property: {
-    marginTop: "-5px",
+    position: "relative",
+    marginTop: "-8px",
+    paddingBottom: "15px",
   },
   propertyTable: {
-    padding: "10px 18px 18px 23px",
     backgroundColor: "#fff",
     borderRight: "1px solid #ADBEC4",
     borderBottom: "1px solid #ADBEC4",
