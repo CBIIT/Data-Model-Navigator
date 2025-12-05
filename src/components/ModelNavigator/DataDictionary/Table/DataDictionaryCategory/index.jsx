@@ -46,11 +46,7 @@ const DataDictionaryCategory = ({
           <span>{capitalizeFirstLetter(category)} </span>
         </div>
       </div>
-      <div
-
-        style={{ borderLeftColor: iconDetails.color }}
-      />
-      {nodes.map((node) => (
+      {nodes.map((node, idx) => (
         <DataDictionaryNode
           node={node}
           key={node.id}
@@ -59,6 +55,7 @@ const DataDictionaryCategory = ({
           expanded={highlightingNodeID && highlightingNodeID.includes(node.id)}
           onExpandNode={onExpandNode}
           iconMapInfo={iconMapInfo}
+          isLastNode={idx === nodes.length - 1}
         />
       ))}
     </div>

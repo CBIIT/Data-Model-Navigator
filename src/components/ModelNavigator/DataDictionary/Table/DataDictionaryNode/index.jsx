@@ -10,7 +10,7 @@ import { getIconDetails } from "../../../../../utils/iconUtils";
 import DataDictionaryRelationshipTable from "../DataDictionaryRelationshipTable";
 
 const DataDictionaryNode = (props) => {
-  const { classes, node, pdfDownloadConfig, description, iconMapInfo } = props;
+  const { classes, node, pdfDownloadConfig, description, iconMapInfo, isLastNode } = props;
 
   const [expandState, setExpandState] = useState("");
 
@@ -54,6 +54,7 @@ const DataDictionaryNode = (props) => {
         {expandState === "relationships" && (
           <DataDictionaryRelationshipTable node={node} />
         )}
+        {!isLastNode && <div className={classes.divider} />}
       </div>
     </>
   );
