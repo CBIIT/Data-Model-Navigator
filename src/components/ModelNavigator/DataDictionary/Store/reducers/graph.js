@@ -4,7 +4,7 @@ import {
   clearSearchHistoryItems,
   addSearchHistoryItems,
   onViewChange,
-  onCnavasWidthChange,
+  onCanvasWidthChange,
 } from '../../Utils/utils';
 import * as actionTypes from '../actions/actionTypes';
 import { buildParentMap, getAncestorNodes } from '../../ReactFlowGraph/Canvas/CanvasHelper';
@@ -381,7 +381,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
     case actionTypes.CNAVAS_WIDTH_CHANGE:
       return {
         ...state,
-        graphViewConfig: onCnavasWidthChange({...action, ...state}),
+        graphViewConfig: onCanvasWidthChange({...action, ...state}),
       }
     case 'SET_ANCESTOR_FILTER':
       return {
