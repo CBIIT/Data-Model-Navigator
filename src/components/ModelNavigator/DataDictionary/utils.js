@@ -404,6 +404,6 @@ export const generateLoadingExample = async (configUrl = "https://raw.githubuser
   }
 }
 
-export const downloadLoadingExample = async (zipUrl = "") => {
+export const downloadLoadingExample = async (zipUrl = "https://github.com/CBIIT/icdc-model-tool/raw/refs/heads/develop/model-desc/ICDC_Example_Files.zip") => {
   window.open(zipUrl, '_blank');
 };
