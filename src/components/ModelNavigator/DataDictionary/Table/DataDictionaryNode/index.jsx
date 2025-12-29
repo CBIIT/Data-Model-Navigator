@@ -1,86 +1,64 @@
 /* eslint-disable react/forbid-prop-types */
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-// import { PDFDownloadLink } from '@react-pdf/renderer';
-// eslint-disable-next-line no-unused-vars
 import { withStyles } from "@material-ui/core";
-import { downloadTemplate } from "../../Utils/utils";
 import DataDictionaryPropertyTable from "../DataDictionaryPropertyTable";
 import "./DataDictionaryNode.css";
 import styles from "./DataDictionaryNode.style";
-// import PdfDocument from '../../NodePDF';
 import NodeViewComponent from "./components/NodeViewComponent";
 import { getIconDetails } from "../../../../../utils/iconUtils";
+import DataDictionaryRelationshipTable from "../DataDictionaryRelationshipTable";
 
-const NODE_STATE = {
-  OPEN: "open",
-  CLOSE: "close",
-};
+const DataDictionaryNode = (props) => {
+  const { classes, node, pdfDownloadConfig, description, iconMapInfo, isLastNode } = props;
 
-class DataDictionaryNode extends React.Component {
-  notHorizontal = true; // supports landscape orientation
+  const [expandState, setExpandState] = useState("");
 
-  handleClickNode(nodeID) {
-    const { expanded, onExpandNode } = this.props;
-    if (!expanded) {
-      onExpandNode(nodeID, NODE_STATE.OPEN);
-    } else {
-      onExpandNode(nodeID, NODE_STATE.CLOSE);
-    }
-  }
-
-  handleCloseNode = () => {
-    const { onExpandNode } = this.props;
-    onExpandNode(null);
-  };
-
-  handleDownloadTemplate = (e, format) => {
-    const { node } = this.props;
-    e.stopPropagation(); // no toggling
-    downloadTemplate(format, node.id);
-  };
-
-  render() {
-    const { classes, node, pdfDownloadConfig, description, expanded, iconMapInfo } =
-      this.props;
-    const propertyCount = Object.keys(node.properties).length;
-    return (
-      <>
-        <div
-          className={classes.node}
-          style={{ borderLeftColor: getIconDetails(node.category, iconMapInfo?.map).color }}
-          onClick={() => this.handleClickNode(node.id)}
-          onKeyPress={() => this.handleClickNode(node.id)}
-        >
-          <NodeViewComponent
-            node={node}
-            isExpanded={expanded}
-            description={description}
-            pdfDownloadConfig={pdfDownloadConfig}
-            propertyCount={propertyCount}
-          />
-        </div>
-        {expanded && (
-          <div
-            className={classes.property}
-            style={{
-              borderLeft: `5px solid ${getIconDetails(node.category, iconMapInfo?.map).color}`,
-              borderBottom: `1px solid #adbec4`,
-            }}
-          >
-            <DataDictionaryPropertyTable
-              title={node.title}
-              properties={node.properties}
-              requiredProperties={node.required}
-              preferredProperties={node.preferred}
-              // horizontal // supports horizontal orientation
-            />
-          </div>
-        )}
-      </>
+  /**
+   * An onClick handler for expanding either properties or relationships
+   * 
+   * @param {"properties" | "relationships"} newExpandState 
+   */
+  const handleClickExpand = (newExpandState) => {
+    setExpandState((prevExpandState) =>
+      prevExpandState === newExpandState ? "" : newExpandState
     );
   }
-}
+
+  return (
+    <>
+      <div
+        className={classes.node}
+        style={{ borderLeftColor: getIconDetails(node.category, iconMapInfo?.map).color }}
+      >
+        <NodeViewComponent
+          node={node}
+          expandState={expandState}
+          description={description}
+          onExpandClick={handleClickExpand}
+          pdfDownloadConfig={pdfDownloadConfig}
+        />
+      </div>
+      <div
+        className={classes.property}
+        style={{ borderLeft: `5px solid ${getIconDetails(node.category, iconMapInfo?.map).color}` }}
+      >
+        {expandState === "properties" && (
+          <DataDictionaryPropertyTable
+            title={node.title}
+            properties={node.properties}
+            requiredProperties={node.required}
+            preferredProperties={node.preferred}
+          />
+        )}
+        {expandState === "relationships" && (
+          <DataDictionaryRelationshipTable node={node} />
+        )}
+        {!isLastNode && <div className={classes.divider} />}
+      </div>
+    </>
+  );
+};
 
 DataDictionaryNode.propTypes = {
   node: PropTypes.object.isRequired,
@@ -92,7 +70,7 @@ DataDictionaryNode.propTypes = {
 DataDictionaryNode.defaultProps = {
   description: "",
   expanded: false,
-  onExpandNode: () => {},
+  onExpandNode: () => { },
 };
 
 export default withStyles(styles)(DataDictionaryNode);

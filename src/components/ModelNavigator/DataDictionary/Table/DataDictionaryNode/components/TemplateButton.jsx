@@ -64,6 +64,7 @@ const styles = () => ({
     fontWeight: 500,
     borderRadius: "6px",
     textTransform: "none",
+    height: "32px",
   }
 });
 
