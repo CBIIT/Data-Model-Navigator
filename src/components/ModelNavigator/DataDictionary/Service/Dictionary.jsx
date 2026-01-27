@@ -77,6 +77,7 @@ export async function getModelExploreData(modelUrl = DATA_MODEL, modelPropsUrl =
               ? icdcMPData.PropDefinitions[propertyName]?.Tags?.Labeled
                 ? icdcMPData.PropDefinitions[propertyName]?.Tags?.Labeled : undefined : undefined;
             propertiesItem.category = key;
+            propertiesItem.Term = icdcMPData?.PropDefinitions[propertyName]?.Term || [];
             propertiesItem.description = icdcMPData?.PropDefinitions[propertyName]?.Desc;
             propertiesItem.type = icdcMPData?.PropDefinitions[propertyName]?.Type
               || icdcMPData?.PropDefinitions[propertyName]?.Enum;
