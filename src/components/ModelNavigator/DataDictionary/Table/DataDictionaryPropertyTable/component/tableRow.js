@@ -12,6 +12,7 @@ import KeyIconSvg from "../../../../assets/key_icon.svg";
 import { controlVocabConfig as ctrlConfig } from "../../../../bento/dataDictionaryData";
 import "../DataDictionaryPropertyTable.css";
 import DownloadFileTypeBtn from "./DownloadFileTypeBtn";
+import CDEListComponent from "./CDEListComponent";
 
 const TableRow = ({
   classes,
@@ -67,6 +68,7 @@ const TableRow = ({
         let nameMatch = null;
         let descriptionMatch = null;
         let typeMatchList = null;
+        let CDEInfoMatchList = null;
         if (needHighlightSearchResult && matchedPropertiesSummary.length > 0) {
           const matchedSummaryItem = matchedPropertiesSummary.find(
             (item) => item.propertyKey === propertyKey
@@ -75,6 +77,7 @@ const TableRow = ({
             nameMatch = matchedSummaryItem.nameMatch;
             descriptionMatch = matchedSummaryItem.descriptionMatch;
             typeMatchList = matchedSummaryItem.typeMatchList;
+            CDEInfoMatchList = matchedSummaryItem.CDEInfoMatchList;
           } else if (onlyShowMatchedProperties) {
             return null;
           }
@@ -172,6 +175,13 @@ const TableRow = ({
                   )}
                 </>
               )}
+            </td>
+            <td className={classes.rowItem}>
+              <CDEListComponent
+                isSearchMode={isSearchMode}
+                CDEInfoMatchList={CDEInfoMatchList}
+                property={property}
+              />
             </td>
             {!hideIsRequired && (
               <td className={classes.rowItem}>
