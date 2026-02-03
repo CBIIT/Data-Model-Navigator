@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import { FontRegistry } from "./util";
+import { wrappableText } from "../Utils/pdfUtils";
 
 const styles = StyleSheet.create({
   row: {
@@ -141,6 +142,27 @@ const styles = StyleSheet.create({
     color: "#ff5a20",
     fontFamily: FontRegistry("NunitoExtraBold"),
   },
+  regexPatternLabel: {
+    fontSize: "6px",
+    fontWeight: "600",
+    fontFamily: FontRegistry("NunitoSans"),
+    paddingTop: "3px",
+    lineHeight: 1.2,
+  },
+  regexPatternCode: {
+    backgroundColor: "#e8e8e8",
+    borderRadius: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
+    marginTop: 4,
+    alignSelf: "flex-start",
+  },
+  regexPatternText: {
+    fontSize: 8,
+    fontFamily: FontRegistry("NunitoNormal"),
+    color: "#333333",
+    flexShrink: 1,
+  },
 });
 
 const PdfTableRow = ({ propInfo, node, thisProperty }) => {
@@ -163,9 +185,11 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
   const validateEnums = (enums) => {
     if (Array.isArray(enums)) {
       let concatEnums = "";
-      [...enums].sort((a, b) => a?.toLowerCase()?.localeCompare(b?.toLowerCase())).forEach((value) => {
-        concatEnums += textContent(`'${value}'; `, "/");
-      });
+      [...enums]
+        .sort((a, b) => a?.toLowerCase()?.localeCompare(b?.toLowerCase()))
+        .forEach((value) => {
+          concatEnums += textContent(`'${value}'; `, "/");
+        });
       return concatEnums;
     }
     return JSON.stringify(enums);
@@ -187,9 +211,20 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
       return "list";
     }
     if (type === "object") {
+      if (property !== null && typeof property.pattern === "string") {
+        return null;
+      }
       return textContent(JSON.stringify(property), "]");
     }
     return property;
+  };
+
+  const isPatternType = (property) => {
+    return (
+      typeof property === "object" &&
+      property !== null &&
+      typeof property.pattern === "string"
+    );
   };
 
   const required = (key) => {
@@ -252,20 +287,29 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
       </View>
       <View style={styles.test}>
         <Text style={styles.cellHeader}>TYPE</Text>
-        <>
+        <View style={styles.tableColDesc}>
           {propInfo.enum ? (
             <Text style={styles.tableCell}>
               {typeof propInfo?.type?.value_type === "string" &&
-                propInfo?.type.value_type === "list"
+              propInfo?.type.value_type === "list"
                 ? "list\n\n"
                 : ""}
               {"Acceptable Values: "}
               {validateEnums(propInfo.enum)}
             </Text>
+          ) : isPatternType(propInfo.type) ? (
+            <>
+              <Text style={styles.regexPatternLabel}>REGEX PATTERN:</Text>
+              <View style={styles.regexPatternCode}>
+                <Text style={styles.regexPatternText}>
+                  {wrappableText(propInfo.type.pattern)}
+                </Text>
+              </View>
+            </>
           ) : (
             <Text style={styles.tableCell}>{validateType(propInfo.type)}</Text>
           )}
-        </>
+        </View>
       </View>
       <View style={styles.horizontalCells}>
         <Text style={styles.cellHorizontalHeader}>REQUIRED</Text>
