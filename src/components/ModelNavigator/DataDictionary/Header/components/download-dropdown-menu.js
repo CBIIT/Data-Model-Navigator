@@ -178,9 +178,9 @@ const DownloadFileTypeBtn = ({
       case FILE_TYPE_CONTROLLED_VOCAB_JSON:
         return generateVocabFullDownload(fullDictionary, 'JSON', config?.downloadPrefix);
       case FILE_TYPE_LOADING_EXAMPLE:
-        return loadingExampleConfig?.type === "static"
-          ? downloadLoadingExample(loadingExampleConfig?.url)
-          : generateLoadingExample(loadingExampleConfig?.url);
+        return loadingExampleConfig?.type === "dynamic"
+          ? generateLoadingExample(loadingExampleConfig?.url)
+          : downloadLoadingExample(loadingExampleConfig?.url);
       default:
         return null;
     }

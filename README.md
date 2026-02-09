@@ -141,10 +141,18 @@ export const pdfDownloadConfig = {
   footnote: "", // Override PDF Footer Text
 };
 
+// Loading File Examples Configuration (optional)
+// Defaults to static mode if not configured
 export const loadingExampleConfig = {
-  type: 'dynamic', // static or dynamic
-  url: 'https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/main/config.json', // premade ZIP for static, config.json for dynamic
-}
+  type: 'static',  // 'static' = direct ZIP download, 'dynamic' = generate ZIP from config.json
+  url: 'https://github.com/CBIIT/icdc-model-tool/raw/refs/heads/develop/model-desc/ICDC_Example_Files.zip',
+};
+
+// Dynamic mode example:
+// export const loadingExampleConfig = {
+//   type: 'dynamic',
+//   url: 'https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/main/config.json',
+// };
 
 see filter ICDC config (above link)
 
