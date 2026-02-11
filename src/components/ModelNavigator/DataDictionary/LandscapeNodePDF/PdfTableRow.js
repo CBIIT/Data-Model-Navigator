@@ -143,11 +143,12 @@ const styles = StyleSheet.create({
     fontFamily: FontRegistry("NunitoExtraBold"),
   },
   regexPatternLabel: {
-    fontSize: "6px",
-    fontWeight: "600",
-    fontFamily: FontRegistry("NunitoSans"),
-    paddingTop: "3px",
+    fontSize: 8,
+    overflowWrap: "break-word",
     lineHeight: 1.2,
+    paddingTop: "3px",
+    paddingBottom: 0,
+    fontFamily: FontRegistry("NunitoNormal"),
   },
   regexPatternCode: {
     backgroundColor: "#e8e8e8",
@@ -299,7 +300,7 @@ const PdfTableRow = ({ propInfo, node, thisProperty }) => {
             </Text>
           ) : isPatternType(propInfo.type) ? (
             <>
-              <Text style={styles.regexPatternLabel}>REGEX PATTERN:</Text>
+              <Text style={styles.regexPatternLabel}>RegEx Pattern:</Text>
               <View style={styles.regexPatternCode}>
                 <Text style={styles.regexPatternText}>
                   {wrappableText(propInfo.type.pattern)}
