@@ -133,6 +133,19 @@ export const getPropertyNameFragment = (propertyName, matchedItem, spanClassName
 
 export const getPropertyTypeFragment = (property, typeMatchList, spanClassName) => {
   const type = getType(property);
+
+  if (
+    typeof type === "object" &&
+    type !== null &&
+    typeof type.pattern === "string"
+  ) {
+    return (
+      <span className="regex-pattern-container">
+        <span className="regex-pattern-label">RegEx Pattern:</span>{' '}
+        <code className="regex-pattern-code">{type.pattern}</code>
+      </span>
+    );
+  }
   let propertyTypeFragment;
   if (typeof type === 'string') {
     propertyTypeFragment = (

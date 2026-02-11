@@ -61,6 +61,23 @@ const TableRow = ({
     );
   };
 
+  const renderPropertyType = (type, isSearchMode, propertyTypeFragment) => {
+    if (isSearchMode) {
+      return propertyTypeFragment;
+    }
+
+    if (typeof type === "object" && type !== null && typeof type.pattern === "string") {
+      return (
+        <span className="regex-pattern-container">
+          <span className="regex-pattern-label">RegEx Pattern:</span>{' '}
+          <code className="regex-pattern-code">{type.pattern}</code>
+        </span>
+      );
+    }
+
+    return JSON.stringify(type?.value_type === "list" ? "list" : type);
+  };
+
   return (
     <>
       {propertyKeysList.map((propertyKey) => {
@@ -174,13 +191,7 @@ const TableRow = ({
                   />
                 </div>
               ) : (
-                <>
-                  {isSearchMode ? (
-                    <>{propertyTypeFragment}</>
-                  ) : (
-                    <>{JSON.stringify(type?.value_type === "list" ? "list" : type)}</>
-                  )}
-                </>
+                renderPropertyType(type, isSearchMode, propertyTypeFragment)
               )}
             </td>
             <td className={classes.rowItem}>
