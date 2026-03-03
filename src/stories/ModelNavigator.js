@@ -18,6 +18,7 @@ const pdfDownloadConfig = {
   landscape: 'true',
   footnote: 'test',
   enabled: false,
+  // useTimestampInFilename: true, // Uncomment and set to true to use timestamps instead of model version
 };
 
 const graphViewConfig = {
