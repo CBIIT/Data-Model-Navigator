@@ -63,8 +63,24 @@ export default () => ({
       color: "#fff",
     },
   },
+  labelWrapperExpanded: {
+    fontSize: "16px",
+    fontWeight: "500",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "0 8px",
+    "&:hover": {
+      cursor: "default",
+    },
+  },
   nodeButtonOuterWrapper: {
     borderRadius: "15px",
+  },
+  nodeButtonInnerWrapperOnExpand: {
+    '&:hover': {
+      cursor: 'grab',
+    },
   },
   nodeButtonInnerWrapper: {
     border: "3px solid #2E2E2E",
