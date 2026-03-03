@@ -76,10 +76,11 @@ const FILE_TYPES = [
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #0A4A6D',
-    width: '257px',
-    borderRadius: "8px",
-    marginLeft: "-10px",
-    maxHeight: "288px",
+    width: '233px',
+    borderRadius: "0 0 8px 8px",
+    marginLeft: "0px",
+    marginTop: "-1px",
+    backgroundColor: '#3C597C',
   },
   list: {
     paddingTop: "0 !important",
@@ -103,7 +104,7 @@ const StyledMenu = withStyles({
 
 const StyledListItemIcon = withStyles({
   root: {
-    color: "#0A4A6D",
+    color: "#FFFFFF",
     minWidth: "28px",
     paddingLeft: "4px",
   }
@@ -124,18 +125,22 @@ const StyledListItemText = withStyles({
     gap: "6px",
   },
   primary: {
-    fontFamily: "Nunito",
-    fontSize: "16px",
-    fontWeight: 500,
-    color: "#0A4A6D",
-    lineHeight: 0,
+    fontFamily: "Lato",
+    fontSize: "15px",
+    fontWeight: 400,
+    color: "#FFFFFF",
+    lineHeight: '0px',
+    letterSpacing: '0%',
+    verticalAlign: 'middle',
   },
   secondary: {
-    fontFamily: "Nunito",
-    color: "#0A4A6D",
-    fontSize: "13px",
+    fontFamily: "Lato",
+    color: "#FFFFFF",
+    fontSize: "15px",
     fontWeight: 400,
-    lineHeight: 0,
+    lineHeight: '0px',
+    letterSpacing: '0%',
+    verticalAlign: 'middle',
   }
 })(ListItemText);
 
@@ -342,8 +347,8 @@ const DownloadFileTypeBtn = ({
           root: classes.downloadButton,
           label: classes.downloadButtonLabel,
         }}
-        endIcon={<img src={GenericDownloadIconDark} className={classes.startIcon} alt="Download" />}
-        startIcon={!Boolean(anchorElement) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+        style={Boolean(anchorElement) ? { borderRadius: '8px 8px 0 0' } : {}}
+        endIcon={!Boolean(anchorElement) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
         onClick={clickHandler}
         disableRipple
         disableElevation
@@ -433,15 +438,22 @@ const styles = () => ({
     width: '20px',
   },
   downloadButton: {
-    border: "1px solid #004A80",
+    border: "1px solid #30405C",
     borderRadius: "8px",
     padding: "5px 10px",
+    backgroundColor: '#FFFFFF',
+    width: '235px',
+    boxSizing: 'border-box',
+    justifyContent: 'space-between',
   },
   downloadButtonLabel: {
-    fontFamily: "Nunito",
-    fontSize: '16px',
+    fontFamily: "Lato",
+    fontSize: '15px',
+    fontWeight: 400,
+    lineHeight: '16px',
+    letterSpacing: '0%',
     textTransform: 'none',
-    color: '#004A80',
+    color: '#30405C',
     padding: "0 5px",
   },
   indent: {
