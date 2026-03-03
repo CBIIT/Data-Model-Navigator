@@ -6,7 +6,7 @@ import {
   createTheme,
   MuiThemeProvider,
 } from '@material-ui/core';
-import GenericDownloadIcon from "../../icons/icon_download.svg";
+import GenericDownloadIcon from "../../icons/icon_download_TSV.svg";
 import { convertToTSV, generateFileManifest } from '../../../utils';
 
 const DownloadButton = ({
@@ -41,10 +41,9 @@ const DownloadButton = ({
         type="button"
         disableRipple
         className={classes.button}
-        endIcon={<img className={classes.icon} src={GenericDownloadIcon} alt="Download" />}
         onClick={download}
       >
-        Template
+        <img className={classes.icon} src={GenericDownloadIcon} alt="Download" />
       </Button>
     </MuiThemeProvider>
   );
@@ -52,18 +51,21 @@ const DownloadButton = ({
 
 const styles = () => ({
   icon: {
-    width: "24px",
-    paddingRight: "7px",
+    width: "26px",
+    height: "27px",
+    display: "block",
   },
   button: {
     background: "#42779A !important",
-    padding: "8px",
+    padding: "0",
     color: "#fff",
     fontFamily: "Nunito",
     fontSize: "13px",
     fontWeight: 500,
     borderRadius: "6px",
     textTransform: "none",
+    minWidth: "32px",
+    width: "32px",
     height: "32px",
   }
 });

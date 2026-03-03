@@ -91,8 +91,8 @@ const styles = () => ({
     lineHeight: "23px",
   },
   sidebar: {
-    width: "320px",
-    minWidth: "320px",
+    width: "280px",
+    minWidth: "280px",
     height: "100%",
     marginTop: "-3px",
     overflowY: "auto",
@@ -101,11 +101,11 @@ const styles = () => ({
   },
 
   mainGraphView: {
-    width: "calc(100vw - 320px)",
+    width: "calc(100vw - 280px)",
     minWidth: "900px",
   },
   mainTableView: {
-    width: "calc(100vw - 320px)",
+    width: "calc(100vw - 280px)",
     minWidth: "900px",
     overflowY: "scroll",
   },

@@ -59,8 +59,7 @@ export default () => ({
     alignItems: "center",
     padding: "0 8px",
     "&:hover": {
-      backgroundColor: "#ef8523",
-      color: "#fff",
+      outline: "1.5px solid #01E1FF",
     },
   },
   nodeButtonOuterWrapper: {

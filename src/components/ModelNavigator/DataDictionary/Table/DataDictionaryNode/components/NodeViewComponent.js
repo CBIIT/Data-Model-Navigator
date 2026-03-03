@@ -17,34 +17,38 @@ import {
 const StyledButton = withStyles({
   root: {
     padding: "8px",
-    fontFamily: "Nunito",
+    fontFamily: "Raleway",
     fontSize: "13px",
-    fontWeight: 500,
+    fontWeight: 400,
+    lineHeight: "13px",
+    letterSpacing: "0%",
     borderRadius: "6px",
-    borderWidth: "2px",
-    borderStyle: "solid",
+    border: "none",
     color: "#000000",
     background: "#F3F8FB",
-    borderColor: "#237488",
+    boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.52)",
     textTransform: "none",
     transition: "all 0.2s ease",
     height: "32px",
     position: "relative",
     zIndex: 1,
-    "&.toggled": {
-      color: "#ffffff !important",
-      background: "#237488 !important",
-      borderColor: "#fff !important",
-      boxShadow: "0px 3px 7px 0px rgba(0, 0, 0, 0.25) !important",
-    },
+    // "&.toggled": {
+    //   color: "#ffffff !important",
+    //   background: "#237488 !important",
+    //   boxShadow: "0px 3px 7px 0px rgba(0, 0, 0, 0.25) !important",
+    // },
     "& .item-count": {
+      fontFamily: "Open Sans",
       fontWeight: "700",
+      fontSize: "14px",
+      lineHeight: "14px",
+      letterSpacing: "0%",
       paddingRight: "12px",
       color: "#237488",
     },
-    "&.toggled .item-count": {
-      color: "#FFFFFF !important",
-    },
+    // "&.toggled .item-count": {
+    //   color: "#FFFFFF !important",
+    // },
     "&::after": {
       top: "100%",
       left: "50%",
@@ -60,10 +64,10 @@ const StyledButton = withStyles({
       borderWidth: "14px",
       marginLeft: "-14px",
     },
-    "&.toggled::after": {
-      borderTopColor: "#237488",
-      filter: "drop-shadow(0px 3px 7px rgba(0, 0, 0, 0.25))",
-    },
+    // "&.toggled::after": {
+    //   borderTopColor: "#237488",
+    //   filter: "drop-shadow(0px 3px 7px rgba(0, 0, 0, 0.25))",
+    // },
     "&::before": {
       top: "100%",
       left: "50%",
@@ -78,9 +82,9 @@ const StyledButton = withStyles({
       borderWidth: "17px",
       marginLeft: "-17px",
     },
-    "&.toggled::before": {
-      borderTopColor: "#fff",
-    },
+    // "&.toggled::before": {
+    //   borderTopColor: "#fff",
+    // },
   },
 })(React.forwardRef((props, ref) => <Button ref={ref} {...props} />));
 
@@ -155,6 +159,40 @@ const NodeViewComponent = ({
         <div className={classes.tagsAndDescriptionContainer}>
           <p className={classes.nodeDescription}>
             {node.desc ? getDescription(node.desc) : description}
+          </p>
+          <div className={classes.exportButtonGroup}>
+            <div className={classes.expandButtonsContainer}>
+              <StyledButton
+                startIcon={
+                  expandState !== "properties" ? (
+                    <ExpandMoreIcon />
+                  ) : (
+                    <ExpandLessIcon />
+                  )
+                }
+                disableElevation
+                className={expandState === "properties" ? "toggled" : ""}
+                onClick={() => onExpandClick("properties")}
+              >
+                <span className="item-count">{propertyCount}</span>
+                {propertyCount === 1 ? "Property" : "Properties"}
+              </StyledButton>
+              {/* <StyledButton
+                startIcon={
+                  expandState !== "relationships" ? (
+                    <ExpandMoreIcon />
+                  ) : (
+                    <ExpandLessIcon />
+                  )
+                }
+                disableElevation
+                className={expandState === "relationships" ? "toggled" : ""}
+                onClick={() => onExpandClick("relationships")}
+              >
+                <span className="item-count">{linkCount}</span>
+                {linkCount === 1 ? "Relationship" : "Relationships"}
+              </StyledButton> */}
+            </div>
             <div className={classes.assignmentAndClassTags}>
               {node.assignment && (
                 <>
@@ -177,52 +215,22 @@ const NodeViewComponent = ({
                 </>
               )}
             </div>
-          </p>
-          <div className={classes.exportButtonGroup}>
-            <StyledButton
-              startIcon={
-                expandState !== "properties" ? (
-                  <ExpandMoreIcon />
-                ) : (
-                  <ExpandLessIcon />
-                )
-              }
-              disableElevation
-              className={expandState === "properties" ? "toggled" : ""}
-              onClick={() => onExpandClick("properties")}
-            >
-              <span className="item-count">{propertyCount}</span>
-              {propertyCount === 1 ? "Property" : "Properties"}
-            </StyledButton>
-            <StyledButton
-              startIcon={
-                expandState !== "relationships" ? (
-                  <ExpandMoreIcon />
-                ) : (
-                  <ExpandLessIcon />
-                )
-              }
-              disableElevation
-              className={expandState === "relationships" ? "toggled" : ""}
-              onClick={() => onExpandClick("relationships")}
-            >
-              <span className="item-count">{linkCount}</span>
-              {linkCount === 1 ? "Relationship" : "Relationships"}
-            </StyledButton>
-            {pdfDownloadConfig.enabled && (isTemplate || (isManifest && isTemplate)) && (
-              <TemplateButton
-                documentData={node}
-                isFileManifest={isManifest}
-                fileName={
-                  isManifest
-                    ? createFileName(
-                      node.id,
-                      pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix, modelVersion, true)
-                    : createFileName(node.id, csvBtnDownloadConfig.prefix, modelVersion, true)
-                }
-              />
-            )}
-            {pdfDownloadConfig.enabled && (<DictionaryButton config={{ pdfDownloadConfig }} documentData={node} />)}
+            <div className={classes.downloadButtonsContainer}>
+              {pdfDownloadConfig.enabled && (isTemplate || (isManifest && isTemplate)) && (
+                <TemplateButton
+                  documentData={node}
+                  isFileManifest={isManifest}
+                  fileName={
+                    isManifest
+                      ? createFileName(
+                        node.id,
+                        pdfDownloadConfig?.fileTransferManifestName || pdfDownloadConfig.downloadPrefix || fileManifestDownloadSettings.filename_prefix, modelVersion, true)
+                      : createFileName(node.id, csvBtnDownloadConfig.prefix, modelVersion, true)
+                  }
+                />
+              )}
+              {pdfDownloadConfig.enabled && (<DictionaryButton config={{ pdfDownloadConfig }} documentData={node} />)}
+            </div>
           </div>
         </div>
       </div>

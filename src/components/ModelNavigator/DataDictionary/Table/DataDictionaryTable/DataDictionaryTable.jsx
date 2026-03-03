@@ -125,11 +125,12 @@ DataDictionaryTable.defaultProps = {
 
 const styles = () => ({
   tableBody: {
+    marginLeft: '10px',
   },
   tableInfo: {
-    marginTop: '0',
-    marginBottom: '0',
-    marginLeft: '15px',
+    marginTop: '10px',
+    marginLeft: '10px',
+    marginBottom: '10px',
     color: '#32495A',
     fontFamily: 'Lato',
     fontSize: '16px',

@@ -20,9 +20,7 @@ export default () => ({
   assignmentAndClassTags: {
     display: "flex",
     gap: "15px",
-    marginTop: "15px",
-    marginRight: "-21px",
-    justifyContent: "flex-end",
+    alignItems: "center",
   },
   overlaySpacer: {
     width: "74px",
@@ -94,9 +92,19 @@ export default () => ({
     display: "flex",
     gap: "15px",
     alignItems: "center",
-    justifyContent: "flex-end",
-    marginLeft: "auto",
+    justifyContent: "space-between",
     marginRight: "12px",
+    marginLeft: "0px",
     height: "32px",
-  }
+  },
+  expandButtonsContainer: {
+    display: "flex",
+    gap: "15px",
+    alignItems: "center",
+  },
+  downloadButtonsContainer: {
+    display: "flex",
+    gap: "15px",
+    alignItems: "center",
+  },
 });

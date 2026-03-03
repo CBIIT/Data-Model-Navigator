@@ -32,7 +32,6 @@ export default () => ({
     marginRight: "17px",
     borderRadius: "25px",
     overflowY: "auto",
-    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
   },
   tabPrimaryColor: {
     fontWeight: "700",

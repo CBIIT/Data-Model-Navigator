@@ -10,7 +10,7 @@ import styles from './Header.style';
 import CustomTheme from './Header.theme.config';
 import ReadMeComponent from '../ReadMe/ReadMe.controller';
 import DownloadDropdownMenu from './components/download-dropdown-menu';
-import IconQuestionDark from "./icons/icon_question_dark.svg";
+import IconQuestionLight from "./icons/icon_question_light.svg";
 import GenericIcon from "./icons/generic_icon.png";
 
 const HeaderComponent = ({
@@ -87,7 +87,7 @@ const HeaderComponent = ({
                       color: "#0F4C91"
                     }}
                     alt="readme btn icon"
-                    src={IconQuestionDark}
+                    src={IconQuestionLight}
                   />
                 )}
                 disableRipple

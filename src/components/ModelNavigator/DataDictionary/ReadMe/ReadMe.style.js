@@ -3,8 +3,8 @@ export default () => ({
     overflowY: "scroll",
   },
   dialogPaper: {
-    width: "1500px",
-    height: "750px",
+    width: "960px",
+    height: "593px",
     maxWidth: "80%",
     maxHeight: "85%",
     paddingBottom: "10px",
@@ -50,7 +50,7 @@ export default () => ({
     width: "30px",
   },
   content: {
-    height: "700px",
+    height: "543px",
     overflowY: "scroll",
     paddingRight: "20px",
     paddingLeft: "25px",
