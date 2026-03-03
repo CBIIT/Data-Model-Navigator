@@ -106,30 +106,33 @@ const StyledListItemIcon = withStyles({
   root: {
     color: "#FFFFFF",
     minWidth: "28px",
-    paddingLeft: "4px",
+    justifyContent: "flex-end",
   }
 })(ListItemIcon);
 
 const StyledMenuItem = withStyles({
   root: {
     padding: "10px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 })(MenuItem);
 
 const StyledListItemText = withStyles({
   root: {
-    padding: "10px",
-    paddingLeft: "6px",
+    padding: "0",
     display: 'flex',
     alignItems: 'center',
     gap: "6px",
+    flex: 1,
   },
   primary: {
     fontFamily: "Lato",
     fontSize: "15px",
     fontWeight: 400,
     color: "#FFFFFF",
-    lineHeight: '0px',
+    lineHeight: '15px',
     letterSpacing: '0%',
     verticalAlign: 'middle',
   },
@@ -138,7 +141,7 @@ const StyledListItemText = withStyles({
     color: "#FFFFFF",
     fontSize: "15px",
     fontWeight: 400,
-    lineHeight: '0px',
+    lineHeight: '15px',
     letterSpacing: '0%',
     verticalAlign: 'middle',
   }
@@ -364,10 +367,10 @@ const DownloadFileTypeBtn = ({
       >
         {/* Data Dictionary Items */}
         <StyledMenuItem onClick={() => handleMenuClick("data_dictionary")}>
+          <StyledListItemText primary="Data Dictionary" />
           <StyledListItemIcon>
             {!toggledMenus.includes("data_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           </StyledListItemIcon>
-          <StyledListItemText primary="Data Dictionary" />
         </StyledMenuItem>
         <Collapse in={toggledMenus.includes("data_dictionary")} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
@@ -400,10 +403,10 @@ const DownloadFileTypeBtn = ({
 
         {/* Submission Templates Items */}
         <StyledMenuItem onClick={() => handleMenuClick("submission_templates")}>
+          <StyledListItemText primary="Submission Templates" />
           <StyledListItemIcon>
             {!toggledMenus.includes("submission_templates") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           </StyledListItemIcon>
-          <StyledListItemText primary="Submission Templates" />
         </StyledMenuItem>
         <Collapse in={toggledMenus.includes("submission_templates")} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
