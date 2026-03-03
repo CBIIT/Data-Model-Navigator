@@ -443,7 +443,7 @@ const styles = () => ({
   downloadButton: {
     border: "1px solid #30405C",
     borderRadius: "8px",
-    padding: "5px 10px",
+    padding: "10px",
     backgroundColor: '#FFFFFF',
     width: '235px',
     boxSizing: 'border-box',
@@ -457,7 +457,7 @@ const styles = () => ({
     letterSpacing: '0%',
     textTransform: 'none',
     color: '#30405C',
-    padding: "0 5px",
+    padding: "0",
   },
   indent: {
     width: "25px",

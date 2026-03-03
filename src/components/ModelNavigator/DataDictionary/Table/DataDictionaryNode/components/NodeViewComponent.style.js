@@ -81,12 +81,12 @@ export default () => ({
     whiteSpace: "nowrap",
   },
   nodeAssignment: {
-    color: "#036077",
+    color: "#009DC4",
     fontWeight: "700",
     fontFamily: "Nunito",
   },
   nodeClass: {
-    color: "#036077",
+    color: "#009DC4",
     fontWeight: "700",
     fontFamily: "Nunito",
   },
