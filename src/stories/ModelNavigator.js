@@ -17,8 +17,8 @@ const pdfDownloadConfig = {
   fileTransferManifestName: "CDS_Data_Loading_Template-file-manifest",
   landscape: 'true',
   footnote: 'test',
-  enabled: false,
-  // useTimestampInFilename: true, // Uncomment and set to true to use timestamps instead of model version
+  enabled: true,
+  useTimestampInFilename: '', // Set to true to test timestamp filenames, false for model version, or undefined for default behavior
 };
 
 const graphViewConfig = {
