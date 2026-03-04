@@ -88,9 +88,10 @@ const NodeView = ({
     onNodeFocus(id);
   };
 
+
   return (
     <>
-      <div className={clsx({ [classes.propDialog]: display })}>
+      <div className={clsx({ [classes.propDialog]: display })} >
         <div
           className={
             display ? classes.customNodeExpand : classes.customNodeCollapse
@@ -114,9 +115,12 @@ const NodeView = ({
                 style={{
                   border: display && "2px solid white",
                 }}
-                onClick={isSearchMode ? displayOverviewTable : expandNode}
+                onClick={isSearchMode ? displayOverviewTable : display ? undefined : expandNode}
               >
-                <div className={classes.nodeButtonInnerWrapper}>
+                <div className={clsx(
+                  classes.nodeButtonInnerWrapper,
+                  { [classes.nodeButtonInnerWrapperOnExpand]: expandNodeView }
+                  )}>
                   <div
                     style={{
                       borderRadius: "11px",
@@ -139,7 +143,10 @@ const NodeView = ({
                     </div>
                   </div>
 
-                  <div className={classes.labelWrapper}>
+                  <div className={clsx(
+                    display && !isSearchMode ? classes.labelWrapperExpanded : classes.labelWrapper,
+                    { [classes.labelWrapperCollapse]: !expandNodeView },
+                    )}>
                     {isSearchMode && matchedNodeNameQuery ? (
                       <>
                         {highlightMatchingTitle(
