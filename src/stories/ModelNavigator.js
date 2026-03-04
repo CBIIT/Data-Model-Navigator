@@ -82,7 +82,7 @@ function buildStore() {
   return store;
 }
 
-async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "", pdfDownloadEnabled = true, iconMap = {}) {
+async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "", pdfDownloadEnabled = true, iconMap = {}, readMeAllowDownload = true) {
   const response = await getModelExploreData(...mdf.split("\n"))?.catch((e) => { console.log(e); return null; });
   const changelogMD = await getChangelog(changelogUrl)?.catch((e) => { console.log(e); return null; });
 
@@ -99,6 +99,7 @@ async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "",
         readMeConfig: {
           readMeUrl,
           readMeTitle: "Understanding the Data Model",
+          allowDownload: readMeAllowDownload,
         },
         graphViewConfig: graphViewConfig,
         pdfDownloadConfig: { ...pdfDownloadConfig, enabled: pdfDownloadEnabled },
@@ -140,15 +141,15 @@ async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "",
   await Promise.all(dispatches);
 }
 
-const ModelNavigator = ({ mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap }) => {
+const ModelNavigator = ({ mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap, readMeAllowDownload }) => {
   const [store, setStore] = React.useState(buildStore());
 
   useEffect(() => {
     const newStore = buildStore();
 
     setStore(newStore);
-    populateStore(newStore, mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap);
-  }, [mdf, changelogUrl, readMeUrl, pdfDownloadEnabled, iconMap]);
+    populateStore(newStore, mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap, readMeAllowDownload);
+  }, [mdf, changelogUrl, readMeUrl, pdfDownloadEnabled, iconMap, readMeAllowDownload]);
 
   return (
     <Provider store={store}>
