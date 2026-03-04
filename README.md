@@ -122,8 +122,6 @@ export default ModelNavigator;
 **xIntervel & yIntervel space between nodes**
 **nodeTree customize position of node to display in the tree (Please include all the nodes to be displayed)**
 
-### For Direct Integration (Bento apps)
-
 ```javascript
 export const pdfDownloadConfig = {
   fileType: 'pdf',
@@ -142,45 +140,6 @@ export const loadingExampleConfig = {
   type: 'dynamic', // static or dynamic
   url: 'https://raw.githubusercontent.com/CBIIT/icdc-data-loading-example-sets/main/config.json', // premade ZIP for static, config.json for dynamic
 }
-```
-
-### For crdc-data-model-navigator Applications
-
-If you're using the `crdc-data-model-navigator` React application, configuration is loaded from an external `content.json` file hosted in your data model repository (e.g., `ctdc-data-model-navigator-landing`).
-
-**To configure download filename formatting**, update your `content.json`:
-
-```json
-{
-  "ui_settings": {
-    "configuration": {
-      "pageTitle": "CTDC Data Model Navigator",
-      "pdfConfig": {
-        "downloadPrefix": "CTDC_",
-        "footnote": "Cancer Translational Research Data Commons",
-        "landscape": true,
-        "useTimestampInFilename": true
-      }
-    }
-  },
-  "model-files": ["model.yaml"],
-  "readme-file": "README.md",
-  "current-version": "1.0.0"
-}
-```
-
-**Configuration Path:** `ui_settings.configuration.pdfConfig.useTimestampInFilename`
-
-**Options:**
-- `true`: All downloads use timestamps (e.g., `CTDC_Dictionary_All 2026-03-03 14-30-45.pdf`)
-- `false` or omitted: Uses model version if available (e.g., `CTDC_Dictionary_All_v1.2.0.pdf`)
-
-**Applies to all download types:**
-- Data Dictionary (PDF, JSON, TSV)
-- All Vocabularies (TSV, JSON)
-- Submission Templates
-- README PDFs
-- Individual node/property downloads
 
 see filter ICDC config (above link)
 
