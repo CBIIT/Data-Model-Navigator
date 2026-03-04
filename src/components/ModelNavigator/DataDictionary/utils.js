@@ -284,11 +284,6 @@ export function createFileName(fileName, filePreFix, modelVersion = undefined, i
 
   if (seconds < 10) { seconds = `0${seconds}`; }
 
-  if (isTemplate && modelVersion) {
-    return filePreFix ? `${filePreFix}Data_Loading_Template_${fileName}_${modelVersion}`
-      : `${fileName}_${modelVersion}`
-  }
-
   // Determine whether to use timestamp or modelVersion based on configuration
   // When useTimestamp is undefined (not configured): use original behavior (modelVersion if available, else timestamp)
   // When useTimestamp is true: always use timestamp
@@ -309,6 +304,10 @@ export function createFileName(fileName, filePreFix, modelVersion = undefined, i
     // useTimestamp is undefined - maintain original/backward-compatible behavior
     // Original behavior: use modelVersion if available, otherwise use timestamp
     suffix = modelVersion ? `_${modelVersion}` : `${todaysDate} ${hours}-${minutes}-${seconds}`;
+  }
+
+  if (isTemplate) {
+    return filePreFix ? `${filePreFix}Data_Loading_Template_${fileName}${suffix}` : `${fileName}${suffix}`;
   }
 
   return filePreFix ? `${filePreFix}${fileName}${suffix}` : `${fileName}${suffix}`;
