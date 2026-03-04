@@ -88,18 +88,10 @@ const NodeView = ({
     onNodeFocus(id);
   };
 
-  /**
-   * Prevent click propagation when clicking inside the modal
-   */
-  const handleModalClick = (e) => {
-    if (display) {
-      e.stopPropagation();
-    }
-  };
 
   return (
     <>
-      <div className={clsx({ [classes.propDialog]: display })} onClick={handleModalClick}>
+      <div className={clsx({ [classes.propDialog]: display })} >
         <div
           className={
             display ? classes.customNodeExpand : classes.customNodeCollapse
@@ -122,8 +114,6 @@ const NodeView = ({
                 }
                 style={{
                   border: display && "2px solid white",
-                  cursor: display && !isSearchMode ? 'default' : 'pointer',
-                  pointerEvents: display && !isSearchMode ? 'none' : 'auto',
                 }}
                 onClick={isSearchMode ? displayOverviewTable : display ? undefined : expandNode}
               >
