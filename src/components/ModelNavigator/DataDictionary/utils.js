@@ -291,19 +291,19 @@ export function createFileName(fileName, filePreFix, modelVersion = undefined, i
   let suffix = '';
   if (useTimestamp === true) {
     // Explicitly configured to use timestamp
-    suffix = `${todaysDate} ${hours}-${minutes}-${seconds}`;
+    suffix = ` ${todaysDate} ${hours}-${minutes}-${seconds}`;
   } else if (useTimestamp === false) {
     // Explicitly configured to use modelVersion
     if (modelVersion) {
       suffix = `_${modelVersion}`;
     } else {
       // No modelVersion available, fallback to timestamp
-      suffix = `${todaysDate} ${hours}-${minutes}-${seconds}`;
+      suffix = ` ${todaysDate} ${hours}-${minutes}-${seconds}`;
     }
   } else {
     // useTimestamp is undefined - maintain original/backward-compatible behavior
     // Original behavior: use modelVersion if available, otherwise use timestamp
-    suffix = modelVersion ? `_${modelVersion}` : `${todaysDate} ${hours}-${minutes}-${seconds}`;
+    suffix = modelVersion ? `_${modelVersion}` : ` ${todaysDate} ${hours}-${minutes}-${seconds}`;
   }
 
   if (isTemplate) {

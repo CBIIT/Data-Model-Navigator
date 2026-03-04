@@ -18,7 +18,7 @@ const pdfDownloadConfig = {
   landscape: 'true',
   footnote: 'test',
   enabled: false,
-  useTimestampInFilename: '', // Set to true to test timestamp filenames, false for model version, or undefined for default behavior
+  useTimestampInFilename: undefined, // Set to true to test timestamp filenames, false for model version, or undefined for default behavior
 };
 
 const graphViewConfig = {
