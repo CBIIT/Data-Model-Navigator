@@ -76,10 +76,11 @@ const FILE_TYPES = [
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #0A4A6D',
-    width: '257px',
-    borderRadius: "8px",
-    marginLeft: "-10px",
-    maxHeight: "288px",
+    width: '233px',
+    borderRadius: "0 0 8px 8px",
+    marginLeft: "0px",
+    marginTop: "-1px",
+    backgroundColor: '#3C597C',
   },
   list: {
     paddingTop: "0 !important",
@@ -103,39 +104,46 @@ const StyledMenu = withStyles({
 
 const StyledListItemIcon = withStyles({
   root: {
-    color: "#0A4A6D",
+    color: "#FFFFFF",
     minWidth: "28px",
-    paddingLeft: "4px",
+    justifyContent: "flex-end",
   }
 })(ListItemIcon);
 
 const StyledMenuItem = withStyles({
   root: {
     padding: "10px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 })(MenuItem);
 
 const StyledListItemText = withStyles({
   root: {
-    padding: "10px",
-    paddingLeft: "6px",
+    padding: "0",
     display: 'flex',
     alignItems: 'center',
     gap: "6px",
+    flex: 1,
   },
   primary: {
-    fontFamily: "Nunito",
-    fontSize: "16px",
-    fontWeight: 500,
-    color: "#0A4A6D",
-    lineHeight: 0,
+    fontFamily: "Lato",
+    fontSize: "15px",
+    fontWeight: 400,
+    color: "#FFFFFF",
+    lineHeight: '15px',
+    letterSpacing: '0%',
+    verticalAlign: 'middle',
   },
   secondary: {
-    fontFamily: "Nunito",
-    color: "#0A4A6D",
-    fontSize: "13px",
+    fontFamily: "Lato",
+    color: "#FFFFFF",
+    fontSize: "15px",
     fontWeight: 400,
-    lineHeight: 0,
+    lineHeight: '15px',
+    letterSpacing: '0%',
+    verticalAlign: 'middle',
   }
 })(ListItemText);
 
@@ -342,8 +350,8 @@ const DownloadFileTypeBtn = ({
           root: classes.downloadButton,
           label: classes.downloadButtonLabel,
         }}
-        endIcon={<img src={GenericDownloadIconDark} className={classes.startIcon} alt="Download" />}
-        startIcon={!Boolean(anchorElement) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+        style={Boolean(anchorElement) ? { borderRadius: '8px 8px 0 0' } : {}}
+        endIcon={!Boolean(anchorElement) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
         onClick={clickHandler}
         disableRipple
         disableElevation
@@ -359,10 +367,10 @@ const DownloadFileTypeBtn = ({
       >
         {/* Data Dictionary Items */}
         <StyledMenuItem onClick={() => handleMenuClick("data_dictionary")}>
+          <StyledListItemText primary="Data Dictionary" />
           <StyledListItemIcon>
             {!toggledMenus.includes("data_dictionary") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           </StyledListItemIcon>
-          <StyledListItemText primary="Data Dictionary" />
         </StyledMenuItem>
         <Collapse in={toggledMenus.includes("data_dictionary")} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
@@ -395,10 +403,10 @@ const DownloadFileTypeBtn = ({
 
         {/* Submission Templates Items */}
         <StyledMenuItem onClick={() => handleMenuClick("submission_templates")}>
+          <StyledListItemText primary="Submission Templates" />
           <StyledListItemIcon>
             {!toggledMenus.includes("submission_templates") ? <ExpandMoreIcon /> : <ExpandLessIcon />}
           </StyledListItemIcon>
-          <StyledListItemText primary="Submission Templates" />
         </StyledMenuItem>
         <Collapse in={toggledMenus.includes("submission_templates")} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
@@ -433,16 +441,23 @@ const styles = () => ({
     width: '20px',
   },
   downloadButton: {
-    border: "1px solid #004A80",
+    border: "1px solid #30405C",
     borderRadius: "8px",
-    padding: "5px 10px",
+    padding: "10px",
+    backgroundColor: '#FFFFFF',
+    width: '235px',
+    boxSizing: 'border-box',
+    justifyContent: 'space-between',
   },
   downloadButtonLabel: {
-    fontFamily: "Nunito",
-    fontSize: '16px',
+    fontFamily: "Lato",
+    fontSize: '15px',
+    fontWeight: 400,
+    lineHeight: '16px',
+    letterSpacing: '0%',
     textTransform: 'none',
-    color: '#004A80',
-    padding: "0 5px",
+    color: '#30405C',
+    padding: "0",
   },
   indent: {
     width: "25px",

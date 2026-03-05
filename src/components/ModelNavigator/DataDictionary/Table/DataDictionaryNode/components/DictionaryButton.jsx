@@ -14,7 +14,7 @@ import {
 import { pdf } from '@react-pdf/renderer';
 import { cloneDeep } from 'lodash';
 import LandscapePDFDoc from '../../../LandscapeNodePDF/Pdf';
-import GenericDownloadIcon from "../../icons/icon_download.svg";
+import GenericDownloadIcon from "../../icons/icon_download_PDF.svg";
 import { generateNodeJSON, generateNodeTSV, getDictionaryFilename } from '../../../utils';
 
 const theme = createTheme({
@@ -34,13 +34,15 @@ const theme = createTheme({
 const StyledButton = withStyles({
   root: {
     background: "#0A4A6D !important",
-    padding: "8px",
+    padding: "0",
     color: "#fff",
     fontFamily: "Nunito",
     fontSize: "13px",
     fontWeight: 500,
     borderRadius: "6px",
     textTransform: "none",
+    minWidth: "32px",
+    width: "32px",
     height: "32px",
   },
 })(Button);
@@ -162,11 +164,10 @@ const DictionaryButton = ({
         aria-haspopup="true"
         variant="contained"
         color="primary"
-        endIcon={<img className={classes.icon} src={GenericDownloadIcon} alt="Download" />}
         onClick={handleClick}
         disableElevation
       >
-        Data Dictionary
+        <img className={classes.icon} src={GenericDownloadIcon} alt="Download" />
       </StyledButton>
       <StyledMenu
         id="dictionary-options-menu"
@@ -201,8 +202,9 @@ const DictionaryButton = ({
 
 const styles = () => ({
   icon: {
-    width: "24px",
-    paddingRight: "7px",
+    width: "26px",
+    height: "27px",
+    display: "block",
   },
 });
 

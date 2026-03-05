@@ -2,6 +2,11 @@
   background-color: var(--g3-color__white);
   border-collapse: collapse;
   width: 100%;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 13px;
+  letter-spacing: 0%;
 }
 
 .data-dictionary-property-table__data {
@@ -39,14 +44,18 @@ td.data-dictionary-property-table__data:nth-child(2) > p {
 
 .data-dictionary-property-table__head {
   color: #606060;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 600;
   font-size: 13px;
+  line-height: 13px;
+  letter-spacing: 0%;
   background: #fff;
   border-top: 2px solid #606060;
   border-bottom: 2px solid #606060;
 }
 
 .data-dictionary-property-table__head th {
-  font-weight: 900;
+  font-weight: 400;
 }
 
 .data-dictionary-property-table__row:nth-child(odd) {
@@ -59,8 +68,13 @@ td.data-dictionary-property-table__data:nth-child(2) > p {
 
 .data-dictionary-property-table__required {
   color: #ff5a20;
+  font-family: 'Nunito Sans';
+  font-weight: 700;
   font-size: 13px;
-  font-weight: 900;
+  font-style: Bold;
+  line-height: 13px;
+  letter-spacing: 0%;
+
 }
 
 .data-dictionary-property-table__required-icon {
@@ -74,9 +88,11 @@ td.data-dictionary-property-table__data:nth-child(2) > p {
 .data-dictionary-property-table__span--highlight {
   /* color: var(--g3-color__highlight-orange); */
   color: var(--g3-color__black);
-  font-size: 14px;
   font-family: 'Nunito Sans', sans-serif;
-  font-weight: 900;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 13px;
+  letter-spacing: 0%;
 }
 
 .data-dictionary-property-table__span--new-line {
@@ -121,7 +137,9 @@ ul.data-dictionary-property-table__span{
 .regex-pattern-label {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 13px;
+  line-height: 13px;
+  letter-spacing: 0%;
 }
 
 .regex-pattern-code {

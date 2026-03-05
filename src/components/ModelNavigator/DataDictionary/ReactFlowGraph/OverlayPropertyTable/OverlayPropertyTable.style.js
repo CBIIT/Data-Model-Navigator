@@ -27,6 +27,8 @@ export default () => ({
     borderRadius: "5px",
     padding: "19px 17px",
     boxShadow: "-5px 4px 21px 18px rgba(27,28,28,0.32)",
+    maxWidth: "1210px",
+    margin: "0 auto",
   },
   header: {
     // position: '-webkit-sticky',

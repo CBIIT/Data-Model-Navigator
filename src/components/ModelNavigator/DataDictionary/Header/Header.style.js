@@ -49,6 +49,7 @@ export default () => ({
   },
   divider: {
     position: "relative",
+    marginBottom: "15px",
     bottom: "13px",
     zIndex: "1",
     borderColor: "#686F7F",
@@ -56,14 +57,13 @@ export default () => ({
     backgroundColor: "#686F7F",
   },
   readMeBtnRoot: {
-    height: "38px",
-    width: "137px",
-    background: "#transparent !important",
-    border: "1px solid #0A4A6D",
+    width: "141px",
+    background: "#3C597C !important",
+    border: "1.25px solid #0B3556",
     borderRadius: "8px",
   },
   readMeBtnLabel: {
-    color: "#0A4A6D",
+    color: "#ffffff",
     fontFamily: "Lato",
     fontSize: "16px",
     lineHeight: "22px",

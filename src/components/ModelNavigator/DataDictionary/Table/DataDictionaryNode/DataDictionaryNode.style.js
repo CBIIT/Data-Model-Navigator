@@ -140,6 +140,7 @@ export default () => ({
     position: "relative",
     marginTop: "-8px",
     paddingBottom: "15px",
+    background: "#F3F8FB",
   },
   propertySummary: {
     /* margin: 5px 0', */

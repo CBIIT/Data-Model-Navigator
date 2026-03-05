@@ -20,9 +20,7 @@ export default () => ({
   assignmentAndClassTags: {
     display: "flex",
     gap: "15px",
-    marginTop: "15px",
-    marginRight: "-21px",
-    justifyContent: "flex-end",
+    alignItems: "center",
   },
   overlaySpacer: {
     width: "74px",
@@ -81,12 +79,12 @@ export default () => ({
     whiteSpace: "nowrap",
   },
   nodeAssignment: {
-    color: "#036077",
+    color: "#009DC4",
     fontWeight: "700",
     fontFamily: "Nunito",
   },
   nodeClass: {
-    color: "#036077",
+    color: "#009DC4",
     fontWeight: "700",
     fontFamily: "Nunito",
   },
@@ -94,9 +92,19 @@ export default () => ({
     display: "flex",
     gap: "15px",
     alignItems: "center",
-    justifyContent: "flex-end",
-    marginLeft: "auto",
+    justifyContent: "space-between",
     marginRight: "12px",
+    marginLeft: "0px",
     height: "32px",
-  }
+  },
+  expandButtonsContainer: {
+    display: "flex",
+    gap: "15px",
+    alignItems: "center",
+  },
+  downloadButtonsContainer: {
+    display: "flex",
+    gap: "15px",
+    alignItems: "center",
+  },
 });
