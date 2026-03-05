@@ -18,6 +18,12 @@ export default {
         type: 'text',
       }
     },
+    readMeAllowDownload: {
+      name: 'ReadMe Download Enabled',
+      control: {
+        type: 'boolean',
+      },
+    },
     changelogUrl: {
       name: 'Version History Markdown URL',
       control: {
@@ -52,5 +58,6 @@ ModelNavigator.args = {
   changelogUrl: "https://raw.githubusercontent.com/CBIIT/crdc-datahub-models/dev2/cache/CDS/10.0.0/version-history.md",
   pdfDownloadEnabled: true,
   iconMap: null,
+  readMeAllowDownload: true,
 };
 
