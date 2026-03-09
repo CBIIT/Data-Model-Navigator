@@ -156,11 +156,11 @@ export const onNodeDragStart = () => ({
 });
 
 export const setAncestorFilter = (ancestorNodeIds) => ({
-  type: 'SET_ANCESTOR_FILTER',
+  type: actionTypes.SET_ANCESTOR_FILTER,
   ancestorNodeIds,
 });
 
 export const clearAncestorFilter = () => ({
-  type: 'CLEAR_ANCESTOR_FILTER',
+  type: actionTypes.CLEAR_ANCESTOR_FILTER,
 });
 
