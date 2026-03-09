@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { clickNode, focusNode, onPanelViewClick, setOverlayPropertyTableHidden } from '../../Store/actions/graph';
+import { clearAncestorFilter, clickNode, focusNode, onPanelViewClick, setOverlayPropertyTableHidden } from '../../Store/actions/graph';
 import NodeView from './NodeView';
 
 const ReduxNodeView = (props) => (<NodeView {...props} />);
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
   onNodeFocus: (nodeID) => dispatch(focusNode(nodeID)),
   onViewTable: (hide) => dispatch(setOverlayPropertyTableHidden(hide)),
   onCollapseNodeView: () => {dispatch(onPanelViewClick())},
-  onClearAncestorFilter: () => dispatch({ type: 'CLEAR_ANCESTOR_FILTER' }),
+  onClearAncestorFilter: () => dispatch(clearAncestorFilter()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxNodeView);
