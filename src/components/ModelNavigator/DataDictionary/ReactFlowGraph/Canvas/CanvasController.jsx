@@ -129,7 +129,7 @@ const CanvasController = ({
     /**
      * update states
      * 1. nodes and edges
-     * 2. toggle between on/off for serach mode
+     * 2. toggle between on/off for search mode
      * 3. filter nodes/edges based on ancestor filter
      */
     useEffect(() => {
