@@ -306,10 +306,12 @@ export function createFileName(fileName, filePreFix, modelVersion = undefined, i
     suffix = modelVersion ? `_${modelVersion}` : ` ${todaysDate} ${hours}-${minutes}-${seconds}`;
   }
 
-  if (isTemplate) {
+  if (isTemplate && modelVersion) {
+    // For templates with a modelVersion, use the Data_Loading_Template_ prefix
     return filePreFix ? `${filePreFix}Data_Loading_Template_${fileName}${suffix}` : `${fileName}${suffix}`;
   }
 
+  // For non-templates or templates without a modelVersion, fall back to the non-template path
   return filePreFix ? `${filePreFix}${fileName}${suffix}` : `${fileName}${suffix}`;
 }
 
