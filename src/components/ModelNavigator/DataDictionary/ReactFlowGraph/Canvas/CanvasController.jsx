@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import {
     addEdge,
+  applyNodeChanges,
     useNodesState,
     useEdgesState,
 } from 'reactflow';
@@ -45,9 +46,26 @@ const CanvasController = ({
       return <CircularProgress />;
     }
 
-    const [nodes, setNodes, onNodesChange] = useNodesState([]);
+    const [nodes, setNodes] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [categories, setCategories] = useState([]);
+    const nodePositionsRef = useRef({});
+
+    const cacheNodePositions = useCallback((nodeList) => {
+      nodeList.forEach((node) => {
+        if (node?.id && node?.position) {
+          nodePositionsRef.current[node.id] = node.position;
+        }
+      });
+    }, []);
+
+    const onNodesChange = useCallback((changes) => {
+      setNodes((currentNodes) => {
+        const updatedNodes = applyNodeChanges(changes, currentNodes);
+        cacheNodePositions(updatedNodes);
+        return updatedNodes;
+      });
+    }, [setNodes, cacheNodePositions]);
 
     /**
      * initalize category item for Legend
@@ -93,6 +111,11 @@ const CanvasController = ({
             if(!node.data.icon) {
               node.data.icon = DefaultIcon.svg;
             }
+            const persistedPosition = nodePositionsRef.current[node.id];
+            if (persistedPosition) {
+              node.position = persistedPosition;
+              return;
+            }
             const position = nodePosition[node.id];
             node.position = {
               x: position[0],
@@ -125,11 +148,13 @@ const CanvasController = ({
             );
             setNodes(filteredNodes);
             setEdges(filteredEdges);
+            cacheNodePositions(filteredNodes);
         } else {
             setNodes(layoutedNodes);
             setEdges(layoutedEdges);
+            cacheNodePositions(layoutedNodes);
         }
-    }, [dictionary, currentSearchKeyword, ancestorFilterNodeIds]);
+      }, [dictionary, currentSearchKeyword, ancestorFilterNodeIds, setNodes, setEdges, cacheNodePositions]);
 
     const onConnect = useCallback(
       (params) =>
