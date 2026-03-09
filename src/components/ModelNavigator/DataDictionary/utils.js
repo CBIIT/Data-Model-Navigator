@@ -470,6 +470,14 @@ export const formatPropertyType = (property) => {
     return "list";
   }
 
+  if (
+    typeof type === "object" &&
+    type !== null &&
+    typeof type.pattern === "string"
+  ) {
+    return `RegEx Pattern: ${type.pattern}`;
+  }
+
   if (typeof type === "object") {
     return JSON.stringify(type);
   }

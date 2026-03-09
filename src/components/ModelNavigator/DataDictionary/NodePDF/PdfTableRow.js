@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import { FontRegistry } from "./util";
 import keyIcon from "./assets/key_icon.png";
+import { wrappableText } from "../Utils/pdfUtils";
 
 const styles = StyleSheet.create({
   row: {
@@ -86,6 +87,28 @@ const styles = StyleSheet.create({
   labeledContainer: {
     marginTop: "16px",
   },
+  regexPatternLabel: {
+    fontSize: 8,
+    overflowWrap: "break-word",
+    lineHeight: 1.2,
+    paddingTop: "3px",
+    paddingBottom: 0,
+    fontFamily: FontRegistry("NunitoNormal"),
+  },
+  regexPatternCode: {
+    backgroundColor: "#e8e8e8",
+    borderRadius: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
+    marginTop: 4,
+    alignSelf: "flex-start",
+  },
+  regexPatternText: {
+    fontSize: 8,
+    fontFamily: FontRegistry("NunitoNormal"),
+    color: "#333333",
+    flexShrink: 1,
+  },
 });
 
 const PdfTableRow = ({ node }) => {
@@ -117,9 +140,20 @@ const PdfTableRow = ({ node }) => {
     }
     const type = typeof property;
     if (type === "object") {
+      if (property !== null && typeof property.pattern === "string") {
+        return null;
+      }
       return textContent(JSON.stringify(property), "]");
     }
     return property;
+  };
+
+  const isPatternType = (property) => {
+    return (
+      typeof property === "object" &&
+      property !== null &&
+      typeof property.pattern === "string"
+    );
   };
 
   const required = (key) => {
@@ -175,6 +209,15 @@ const PdfTableRow = ({ node }) => {
             {"Acceptable Values: "}
             {validateEnums(node.properties[key].enum)}
           </Text>
+        ) : isPatternType(node.properties[key].type) ? (
+          <>
+            <Text style={styles.regexPatternLabel}>RegEx Pattern:</Text>
+            <View style={styles.regexPatternCode}>
+              <Text style={styles.regexPatternText}>
+                {wrappableText(node.properties[key].type.pattern)}
+              </Text>
+            </View>
+          </>
         ) : (
           <Text style={styles.tableCell}>
             {validateType(node.properties[key].type)}
