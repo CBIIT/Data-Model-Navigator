@@ -19,7 +19,8 @@ const mapDispatchToProps = (dispatch) => ({
   onClickNode: (nodeID) => dispatch(clickNode(nodeID)),
   onNodeFocus: (nodeID) => dispatch(focusNode(nodeID)),
   onViewTable: (hide) => dispatch(setOverlayPropertyTableHidden(hide)),
-  onCollapseNodeView: () => {dispatch(onPanelViewClick())}
+  onCollapseNodeView: () => {dispatch(onPanelViewClick())},
+  onClearAncestorFilter: () => dispatch({ type: 'CLEAR_ANCESTOR_FILTER' }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReduxNodeView);
