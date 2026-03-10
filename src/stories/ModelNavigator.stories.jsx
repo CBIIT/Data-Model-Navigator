@@ -24,6 +24,12 @@ export default {
         type: 'boolean',
       },
     },
+    useTimestampInFilename: {
+      name: "Use Timestamp in Downloaded Filename",
+      control: {
+        type: 'boolean',
+      },
+    },
     changelogUrl: {
       name: 'Version History Markdown URL',
       control: {
@@ -59,5 +65,6 @@ ModelNavigator.args = {
   pdfDownloadEnabled: true,
   iconMap: null,
   readMeAllowDownload: true,
+  useTimestampInFilename: false,
 };
 

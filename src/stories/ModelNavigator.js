@@ -83,7 +83,7 @@ function buildStore() {
   return store;
 }
 
-async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "", pdfDownloadEnabled = true, iconMap = {}, readMeAllowDownload = true) {
+async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "", pdfDownloadEnabled = true, iconMap = {}, readMeAllowDownload = true, useTimestampInFilename = false) {
   const response = await getModelExploreData(...mdf.split("\n"))?.catch((e) => { console.log(e); return null; });
   const changelogMD = await getChangelog(changelogUrl)?.catch((e) => { console.log(e); return null; });
 
@@ -103,13 +103,13 @@ async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "",
           allowDownload: readMeAllowDownload,
         },
         graphViewConfig: graphViewConfig,
-        pdfDownloadConfig: { ...pdfDownloadConfig, enabled: pdfDownloadEnabled },
+        pdfDownloadConfig: { ...pdfDownloadConfig, enabled: pdfDownloadEnabled, useTimestampInFilename: useTimestampInFilename },
       },
     }),
     store.dispatch({
       type: 'REACT_FLOW_GRAPH_DICTIONARY',
       dictionary: response.data,
-      pdfDownloadConfig: { ...pdfDownloadConfig, enabled: pdfDownloadEnabled },
+      pdfDownloadConfig: { ...pdfDownloadConfig, enabled: pdfDownloadEnabled, useTimestampInFilename: useTimestampInFilename },
       graphViewConfig: graphViewConfig,
     }),
     store.dispatch({
@@ -142,15 +142,15 @@ async function populateStore(store, mdf = "", readMeUrl = "", changelogUrl = "",
   await Promise.all(dispatches);
 }
 
-const ModelNavigator = ({ mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap, readMeAllowDownload }) => {
+const ModelNavigator = ({ mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap, readMeAllowDownload, useTimestampInFilename }) => {
   const [store, setStore] = React.useState(buildStore());
 
   useEffect(() => {
     const newStore = buildStore();
 
     setStore(newStore);
-    populateStore(newStore, mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap, readMeAllowDownload);
-  }, [mdf, changelogUrl, readMeUrl, pdfDownloadEnabled, iconMap, readMeAllowDownload]);
+    populateStore(newStore, mdf, readMeUrl, changelogUrl, pdfDownloadEnabled, iconMap, readMeAllowDownload, useTimestampInFilename);
+  }, [mdf, changelogUrl, readMeUrl, pdfDownloadEnabled, iconMap, readMeAllowDownload, useTimestampInFilename]);
 
   return (
     <Provider store={store}>
