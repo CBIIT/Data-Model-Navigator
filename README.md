@@ -133,7 +133,7 @@ export const pdfDownloadConfig = {
   useTimestampInFilename: undefined, // Controls filename suffix behavior:
                                      // - undefined (default): uses model version if available, otherwise timestamp
                                      // - true: always uses timestamp (YYYY-MM-DD HH-MM-SS)
-                                     // - false: uses model version only (no timestamp fallback)
+                                     // - false: uses model version if available; if missing, falls back to timestamp
 };
 
 export const loadingExampleConfig = {
