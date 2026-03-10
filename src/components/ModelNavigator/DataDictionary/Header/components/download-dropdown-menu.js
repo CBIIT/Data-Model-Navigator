@@ -202,7 +202,8 @@ const DownloadFileTypeBtn = ({
   };
 
   const downloadFullDictionaryPdf = (pdfDownloadConfig, onlyRequired) => {
-    const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion);
+    const useTimestamp = pdfDownloadConfig?.useTimestampInFilename;
+    const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion, useTimestamp);
     setLoading(true);
     setTimeout(() => {
       generatePdfDocument(processedFullDictionary, config, setLoading, fileName, pdfDownloadConfig, onlyRequired, iconMapInfo);
@@ -238,13 +239,14 @@ const DownloadFileTypeBtn = ({
     );
 
     const zip = new JSZip();
+    const useTimestamp = pdfDownloadConfig?.useTimestampInFilename;
 
     nodesTSV.forEach((nodeTSV, index) => {
-      zip.file(`${createFileName(nodesKeyArray[index], prefix, modelVersion, true)}.tsv`, nodeTSV.content);
+      zip.file(`${createFileName(nodesKeyArray[index], prefix, modelVersion, true, useTimestamp)}.tsv`, nodeTSV.content);
     });
 
     zip.generateAsync({ type: 'blob' }).then((thisContent) => {
-      saveAs(thisContent, `${createFileName('', prefix + 'Data_Loading_Templates', modelVersion)}.zip`);
+      saveAs(thisContent, `${createFileName('', prefix + 'Data_Loading_Templates', modelVersion, false, useTimestamp)}.zip`);
     });
   };
 
@@ -256,7 +258,8 @@ const DownloadFileTypeBtn = ({
     });
 
     const exportData = new Blob([JSON.stringify(nodeJson, null, 2)], { type: 'data:application/json' });
-    const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion);
+    const useTimestamp = pdfDownloadConfig?.useTimestampInFilename;
+    const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion, useTimestamp);
     saveAs(exportData, `${fileName}.json`);
   };
 
@@ -269,7 +272,8 @@ const DownloadFileTypeBtn = ({
     });
 
     const exportData = new Blob([tsv], { type: 'data:text/tab-separated-values' });
-    const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion);
+    const useTimestamp = pdfDownloadConfig?.useTimestampInFilename;
+    const fileName = getDictionaryFilename(config?.prefix, null, onlyRequired, modelVersion, useTimestamp);
     saveAs(exportData, `${fileName}.tsv`);
   };
 
@@ -290,11 +294,11 @@ const DownloadFileTypeBtn = ({
       case FILE_TYPE_REQUIRED_DICTIONARY_JSON:
         return downloadAllJSON(true);
       case FILE_TYPE_README:
-        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix, config?.footnote);
+        return downloadMarkdownPdf(readMeConfig.readMeTitle, readMeContent, config?.iconSrc, config?.downloadPrefix, config?.footnote, pdfDownloadConfig?.useTimestampInFilename);
       case FILE_TYPE_CONTROLLED_VOCAB_TSV:
-        return generateVocabFullDownload(fullDictionary, 'TSV', config?.downloadPrefix);
+        return generateVocabFullDownload(fullDictionary, 'TSV', config?.downloadPrefix, pdfDownloadConfig?.useTimestampInFilename);
       case FILE_TYPE_CONTROLLED_VOCAB_JSON:
-        return generateVocabFullDownload(fullDictionary, 'JSON', config?.downloadPrefix);
+        return generateVocabFullDownload(fullDictionary, 'JSON', config?.downloadPrefix, pdfDownloadConfig?.useTimestampInFilename);
       case FILE_TYPE_LOADING_EXAMPLE:
         return loadingExampleConfig?.type === "static"
           ? downloadLoadingExample(loadingExampleConfig?.url)

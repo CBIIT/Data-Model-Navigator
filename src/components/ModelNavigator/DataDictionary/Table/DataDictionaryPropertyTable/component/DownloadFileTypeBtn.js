@@ -83,7 +83,8 @@ const DownloadFileTypeBtn = ({ classes, data, node, propertyKey }) => {
   const download = (thisData, fileType, contentType) => {
     const exportData = new Blob([thisData], { type: contentType });
     const nodeTitle = capitalizeFirstLetter(node);
-    const fileName = createFileName(`${nodeTitle}-${propertyKey}`, pdfConfig?.downloadPrefix || filePerfix);
+    const useTimestamp = pdfConfig?.useTimestampInFilename;
+    const fileName = createFileName(`${nodeTitle}-${propertyKey}`, pdfConfig?.downloadPrefix || filePerfix, undefined, false, useTimestamp);
     saveAs(exportData, `${fileName}.${fileType.toLowerCase()}`);
   };
 

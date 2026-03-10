@@ -37,7 +37,8 @@ export const downloadMarkdownPdf = async (
   content,
   iconSrc = nihLogo,
   filePrefix = "ICDC_Data_Model-",
-  footnote = ""
+  footnote = "",
+  useTimestamp = undefined
 ) => {
   const html = marked(content);
   const htmlWithPageBreaks = html.replace(
@@ -59,7 +60,7 @@ export const downloadMarkdownPdf = async (
   readMeContent.innerHTML += htmlWithPageBreaks;
 
   /** set pdf fileneam */
-  const fileName = createFileName("read_me", filePrefix);
+  const fileName = createFileName("read_me", filePrefix, undefined, false, useTimestamp);
   /** configure pdf increase pixel of the PDF */
   const options = {
     margin: [0.5, 0.5, 0.5, 0.5],
@@ -170,7 +171,8 @@ const ReadMeDialogComponent = ({
                     content,
                     pdfConfig?.iconSrc,
                     pdfConfig?.prefix,
-                    pdfConfig?.footnote
+                    pdfConfig?.footnote,
+                    pdfConfig?.useTimestampInFilename
                   )
                 }
               >
