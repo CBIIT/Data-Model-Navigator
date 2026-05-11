@@ -5,7 +5,7 @@ const TableRow = ({ classes, links = [] }) => {
   if (!links || links?.length === 0) {
     return (
       <tr className={classes.row}>
-        <td colSpan={5} className={classes.noRelationships}>No relationships found.</td>
+        <td colSpan={6} className={classes.noRelationships}>No relationships found.</td>
       </tr>
     );
   }
@@ -23,6 +23,9 @@ const TableRow = ({ classes, links = [] }) => {
       </td>
       <td className={classes.rowItem}>
         {link.multiplicity}
+      </td>
+      <td className={classes.rowItem}>
+        {link.required ? "Yes" : "No"}
       </td>
       <td className={classes.rowItem}>
         At least one relationship must be specified.
