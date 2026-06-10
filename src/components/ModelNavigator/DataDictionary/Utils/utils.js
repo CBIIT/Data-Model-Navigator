@@ -255,7 +255,7 @@ export const onViewChange = (payload) => {
   return payload;
 }
 
-export const onCnavasWidthChange = ({ canvasWidth, graphViewConfig}) => {
+export const onCanvasWidthChange = ({ canvasWidth, graphViewConfig}) => {
   const updateGraphViewConfig = _.cloneDeep(graphViewConfig);
   if (updateGraphViewConfig) {
     updateGraphViewConfig.canvas.width = canvasWidth;

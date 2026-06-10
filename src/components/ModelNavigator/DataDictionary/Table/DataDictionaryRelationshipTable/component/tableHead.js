@@ -17,6 +17,9 @@ const TableHeader = ({ classes }) => (
         Relationship
       </th>
       <th className={classes.item}>
+        Required
+      </th>
+      <th className={classes.item}>
         Description
       </th>
     </tr>

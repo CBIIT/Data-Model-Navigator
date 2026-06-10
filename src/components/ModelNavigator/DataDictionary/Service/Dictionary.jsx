@@ -144,23 +144,20 @@ export async function getModelExploreData(...urls) {
     for (const property in modelData.Relationships) {
       item.multiplicity = startCase(modelData.Relationships[property].Mul);
       const label = propertyName;
-      // const multiplicity = modelData.Relationships[propertyName].Mul;
-      const required = false;
       for (let i = 0; i < modelData.Relationships[property].Ends.length; i++) {
         const linkItem = {};
         if (modelData.Relationships[property].Ends[i].Src === key) {
-          const backref = modelData.Relationships[property].Ends[i].Src;
-          const name = modelData.Relationships[property].Ends[i].Dst;
+          const end = modelData.Relationships[property].Ends[i];
+          const name = end.Dst;
+          const backref = end.Src;
           if (name !== backref) {
-            const target = modelData.Relationships[property].Ends[i].Dst;
-            const multiplicity = modelData.Relationships[property].Ends[i].Mul
-              ? modelData.Relationships[property].Ends[i].Mul
-              : modelData.Relationships[property].Mul;
+            const multiplicity = end.Mul ? end.Mul : modelData.Relationships[property].Mul;
+            const isRequired = (typeof end.Req === "boolean" && end.Req === true) || (typeof end.Req === "string" && end.Req.toLowerCase() === "yes") ? end.Req : false;
             linkItem.name = name;
             linkItem.backref = backref;
             linkItem.label = label;
-            linkItem.target_type = target;
-            linkItem.required = required;
+            linkItem.target_type = name;
+            linkItem.required = isRequired;
             linkItem.multiplicity = multiplicity;
 
             if (!some(link, linkItem)) {

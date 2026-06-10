@@ -130,6 +130,10 @@ export const pdfDownloadConfig = {
   landscape: 'true',
   iconSrc: "", // PDF Header Icon SRC (.png only)
   footnote: "", // Override PDF Footer Text
+  useTimestampInFilename: undefined, // Controls filename suffix behavior:
+                                     // - undefined (default): uses model version if available, otherwise timestamp
+                                     // - true: always uses timestamp (YYYY-MM-DD HH-MM-SS)
+                                     // - false: uses model version if available; if missing, falls back to timestamp
 };
 
 export const loadingExampleConfig = {

@@ -263,7 +263,7 @@ export const isFooterHidden = (pathname) => (!!((pathname
     || pathname.toLowerCase().startsWith('/dd/')
   ))));
 
-export function createFileName(fileName, filePreFix, modelVersion = undefined, isTemplate = false) {
+export function createFileName(fileName, filePreFix, modelVersion = undefined, isTemplate = false, useTimestamp = undefined) {
   const date = new Date();
   const yyyy = date.getFullYear();
   let dd = date.getDate();
@@ -284,13 +284,35 @@ export function createFileName(fileName, filePreFix, modelVersion = undefined, i
 
   if (seconds < 10) { seconds = `0${seconds}`; }
 
-  if (isTemplate && modelVersion) {
-    return filePreFix ? `${filePreFix}Data_Loading_Template_${fileName}_${modelVersion}`
-      : `${fileName}_${modelVersion}`
+  // Determine whether to use timestamp or modelVersion based on configuration
+  // When useTimestamp is undefined (not configured): use original behavior (modelVersion if available, else timestamp)
+  // When useTimestamp is true: always use timestamp
+  // When useTimestamp is false: always use modelVersion (or timestamp if no modelVersion)
+  let suffix = '';
+  if (useTimestamp === true) {
+    // Explicitly configured to use timestamp
+    suffix = `${todaysDate} ${hours}-${minutes}-${seconds}`;
+  } else if (useTimestamp === false) {
+    // Explicitly configured to use modelVersion
+    if (modelVersion) {
+      suffix = `_${modelVersion}`;
+    } else {
+      // No modelVersion available, fallback to timestamp
+      suffix = `${todaysDate} ${hours}-${minutes}-${seconds}`;
+    }
+  } else {
+    // useTimestamp is undefined - maintain original/backward-compatible behavior
+    // Original behavior: use modelVersion if available, otherwise use timestamp
+    suffix = modelVersion ? `_${modelVersion}` : `${todaysDate} ${hours}-${minutes}-${seconds}`;
   }
 
-  return filePreFix ? `${filePreFix}${fileName}${modelVersion ? `_${modelVersion}` : `${todaysDate} ${hours}-${minutes}-${seconds}`}`
-    : `${fileName}${modelVersion ? `_${modelVersion}` : `${todaysDate} ${hours}-${minutes}-${seconds}`}`;
+  if (isTemplate && modelVersion) {
+    // For templates with a modelVersion, use the Data_Loading_Template_ prefix
+    return filePreFix ? `${filePreFix}Data_Loading_Template_${fileName}${suffix}` : `${fileName}${suffix}`;
+  }
+
+  // For non-templates or templates without a modelVersion, fall back to the non-template path
+  return filePreFix ? `${filePreFix}${fileName}${suffix}` : `${fileName}${suffix}`;
 }
 
 /**
@@ -526,7 +548,7 @@ export const generateFileManifest = (node) => {
   return text;
 };
 
-export const generateVocabFullDownload = (fullDictionary, format, prefix = "ICDC_") => {
+export const generateVocabFullDownload = (fullDictionary, format, prefix = "ICDC_", useTimestamp = undefined) => {
   const c2nl = category2NodeList(fullDictionary);
   const enumArr = [];
   const zip = new JSZip();
@@ -544,8 +566,8 @@ export const generateVocabFullDownload = (fullDictionary, format, prefix = "ICDC
     });
   });
 
-  const zipFileName = createFileName(prefix + 'Controlled_Vocabularies', '');
-  const getFileName = (title, propertyKey, format) => `${createFileName(`${title}-${propertyKey}`, prefix + 'Controlled_Vocabulary-')}.${format}`
+  const zipFileName = createFileName(prefix + 'Controlled_Vocabularies', '', undefined, false, useTimestamp);
+  const getFileName = (title, propertyKey, format) => `${createFileName(`${title}-${propertyKey}`, prefix + 'Controlled_Vocabulary-', undefined, false, useTimestamp)}.${format}`
   switch (format) {
     case 'TSV': {
       const vocabTSVArr = enumArr.map(({ enums, title, propertyKey }) => {
@@ -612,8 +634,9 @@ export const downloadLoadingExample = async (zipUrl = "") => {
  * @param {string|null} nodeName The name of the node to generate the file name for. If null, it's omitted
  * @param {boolean} onlyRequired Whether the download included only required properties.
  * @param {string|number|undefined} modelVersion The version of the model to include in the file name. If undefined, it's omitted.
+ * @param {boolean|undefined} useTimestamp Whether to use timestamp instead of modelVersion. If undefined, defaults to modelVersion behavior.
  */
-export const getDictionaryFilename = (prefix, nodeName, onlyRequired, modelVersion) => {
+export const getDictionaryFilename = (prefix, nodeName, onlyRequired, modelVersion, useTimestamp = undefined) => {
   let filename = `${prefix || ""}Dictionary`;
   if (nodeName) {
     filename += `_${nodeName}`;
@@ -623,12 +646,36 @@ export const getDictionaryFilename = (prefix, nodeName, onlyRequired, modelVersi
   } else {
     filename += "_All";
   }
-  if (modelVersion) {
-    filename += `_${modelVersion}`;
+  
+  // Add version or timestamp based on configuration
+  // When useTimestamp is undefined (not configured): use original behavior (modelVersion only if provided)
+  // When useTimestamp is true: always add timestamp
+  // When useTimestamp is false: add modelVersion only if provided
+  if (useTimestamp === true) {
+    // Explicitly configured to use timestamp
+    const date = new Date();
+    const yyyy = date.getFullYear();
+    let dd = date.getDate();
+    let mm = (date.getMonth() + 1);
+    if (dd < 10) { dd = `0${dd}`; }
+    if (mm < 10) { mm = `0${mm}`; }
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    if (hours < 10) { hours = `0${hours}`; }
+    if (minutes < 10) { minutes = `0${minutes}`; }
+    if (seconds < 10) { seconds = `0${seconds}`; }
+    filename += ` ${yyyy}-${mm}-${dd} ${hours}-${minutes}-${seconds}`;
+  } else if (useTimestamp === false || useTimestamp === undefined) {
+    // Explicitly configured to use modelVersion, or not configured (original behavior)
+    // Original behavior: only add modelVersion if it's provided
+    if (modelVersion) {
+      filename += `_${modelVersion}`;
+    }
   }
 
   return filename;
-};
+}
 
 /**
  * Performs a case-insensitive sort of an array of strings. Does not mutate the original array.

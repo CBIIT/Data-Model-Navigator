@@ -139,7 +139,8 @@ const DictionaryButton = ({
   };
 
   const download = (type, onlyRequired) => {
-    const fileName = getDictionaryFilename(pdfDownloadConfig.prefix, documentData.title, onlyRequired, modelVersion);
+    const useTimestamp = pdfDownloadConfig?.useTimestampInFilename;
+    const fileName = getDictionaryFilename(pdfDownloadConfig.prefix, documentData.title, onlyRequired, modelVersion, useTimestamp);
     if (type === 'pdf') {
       generatePdfDocument(documentData, onlyRequired, fileName);
     } else if (type === "tsv") {

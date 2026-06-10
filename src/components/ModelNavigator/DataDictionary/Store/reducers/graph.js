@@ -4,9 +4,10 @@ import {
   clearSearchHistoryItems,
   addSearchHistoryItems,
   onViewChange,
-  onCnavasWidthChange,
+  onCanvasWidthChange,
 } from '../../Utils/utils';
 import * as actionTypes from '../actions/actionTypes';
+import { buildParentMap, getAncestorNodes } from '../../ReactFlowGraph/Canvas/CanvasHelper';
 
 const ddgraphInitialState = {
   isGraphView: true,
@@ -37,6 +38,7 @@ const ddgraphInitialState = {
   highlightingMatchedNodeOpened: false,
   dictionary: {},
   pdfDownloadConfig: { enabled: true },
+  ancestorFilterNodeIds: null, // Set of node IDs to show (null = show all)
 };
 
 const ddgraph = (state = ddgraphInitialState, action) => {
@@ -162,7 +164,9 @@ const ddgraph = (state = ddgraphInitialState, action) => {
           highlightedNodes: newArray,
         };
       }
-      // if serach mode is false
+      const parentMap = buildParentMap(state.dictionary);
+      const ancestorNodeIds = getAncestorNodes(action.nodeID, parentMap);
+      
       return {
         ...state,
           highlightingMatchedNodeID: action.nodeID,
@@ -171,6 +175,7 @@ const ddgraph = (state = ddgraphInitialState, action) => {
           overlayPropertyHidden: true,
           expandNodeView: true,
           highlightedNodes: newArray,
+          ancestorFilterNodeIds: ancestorNodeIds,
       }
     }
     case 'GRAPH_CLICK_NODE': {
@@ -376,8 +381,21 @@ const ddgraph = (state = ddgraphInitialState, action) => {
     case actionTypes.CNAVAS_WIDTH_CHANGE:
       return {
         ...state,
-        graphViewConfig: onCnavasWidthChange({...action, ...state}),
+        graphViewConfig: onCanvasWidthChange({...action, ...state}),
       }
+    case 'SET_ANCESTOR_FILTER':
+      return {
+        ...state,
+        ancestorFilterNodeIds: action.ancestorNodeIds,
+      };
+    case 'CLEAR_ANCESTOR_FILTER':
+      return {
+        ...state,
+        ancestorFilterNodeIds: null,
+        expandNodeView: false,
+        highlightingNode: null,
+        overlayPropertyHidden: true,
+      };
     default:
       return state;
   }

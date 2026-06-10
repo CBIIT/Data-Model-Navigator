@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import _ from 'underscore';
 
 export const nodeColor = (node) => { 
