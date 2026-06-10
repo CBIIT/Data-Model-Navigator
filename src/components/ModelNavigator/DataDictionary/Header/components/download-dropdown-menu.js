@@ -317,7 +317,7 @@ const DownloadFileTypeBtn = ({
         return true;
       })
       .map((item) => getMenuItem(item, () => handleDownloadClick(item)));
-  }, [FILE_TYPES, readMeConfig]);
+  }, [FILE_TYPES, readMeConfig, readMeContent]);
 
   const openTemplatesDialog = () => {
     setAnchorElement(null);
