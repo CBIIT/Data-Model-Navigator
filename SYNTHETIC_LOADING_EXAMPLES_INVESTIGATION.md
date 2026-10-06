@@ -143,7 +143,7 @@ The team has not measured production response times or costs. Those measurements
 
 ## Recommended next steps and decisions
 
-First, confirm the file requirements with the team responsible for the ICDC import software. Test the output in a validation-only process or an approved isolated environment.
+First, confirm the file requirements. Test the output in a validation-only process.
 
 Also confirm whether the database records may be used for shared examples. New identifiers do not remove the need to review copied text and sampled characteristics.
 
