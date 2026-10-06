@@ -203,3 +203,7 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+# Local synthetic loading-file POC artifacts (may contain source-derived values)
+/poc/loading-examples/output/
+/poc/loading-examples/__pycache__/
